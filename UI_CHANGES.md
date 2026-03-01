@@ -4,7 +4,25 @@ This document tracks all changes (UI/UX and Backend) made to the application.
 
 ## Changes Log
 
-### 2026-02-28 (Latest)
+### 2026-03-01
+
+#### 9. Multi-Product Subpath Setup
+**Files Modified:** All app routes
+
+**Changes:**
+- Moved entire app to `/kanoon` subpath
+- Created new home page at `/` for kraftai.in product listing
+- Updated all API routes to `/kanoon/api/*`
+- Updated middleware to protect `/kanoon/dashboard` routes
+- Added basePath config for NextAuth
+- Updated navbar with home link and proper navigation
+
+**New Routes:**
+- `/` - Home page (kraftai.in)
+- `/kanoon` - Kanoon Simplified app
+- `/kanoon/dashboard` - User dashboard
+- `/kanoon/login` - Login page
+- `/kanoon/api/*` - API routes
 
 #### 1. Calendar/DatePicker Fix
 **Files Modified:** `src/components/date-picker.tsx`, `src/components/ui/calendar.tsx`

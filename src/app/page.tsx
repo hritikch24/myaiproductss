@@ -1,10 +1,46 @@
 import Link from "next/link";
 import { Scale, Gamepad2, Bot, ArrowRight } from "lucide-react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "KraftAI — AI-Powered Products for India | Legal Documents, Games, Chatbot",
+  description: "Discover AI-powered products designed to simplify your life. Kanoon Simplified for legal documents, AI Games for entertainment, and more coming soon. Made in India.",
+  keywords: [
+    "AI products India",
+    "AI legal documents",
+    "legal document generator",
+    "AI games online",
+    "AI chatbot India",
+    "online legal documents",
+    "rental agreement generator",
+    "NDA generator",
+    "freelancer contract",
+    "कृत्रिम बुद्धिमत्ता",
+    "AI tools India",
+  ],
+  openGraph: {
+    title: "KraftAI — AI-Powered Products for India",
+    description: "AI-powered products designed to simplify your life. Legal documents, games, and more.",
+    url: "https://kraftai.in",
+    siteName: "KraftAI",
+    locale: "en_IN",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "KraftAI — AI-Powered Products for India",
+    description: "AI-powered products designed to simplify your life.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+};
 
 const products = [
   {
     name: "Kanoon Simplified",
-    description: "AI-powered legal document generator for India. Create rental agreements, NDAs, and freelancer contracts in multiple Indian languages.",
+    description: "AI-powered legal document generator for India. Create rental agreements, NDAs, and freelancer contracts in 10 Indian languages.",
     href: "/kanoon",
     icon: Scale,
     color: "text-orange-500",
@@ -13,7 +49,7 @@ const products = [
   },
   {
     name: "AI Games",
-    description: "Play AI-powered games online. Experience the future of gaming with intelligent opponents and dynamic gameplay.",
+    description: "Play AI-powered games online. Experience the future of gaming with intelligent opponents.",
     href: "#",
     icon: Gamepad2,
     color: "text-purple-500",
@@ -22,7 +58,7 @@ const products = [
   },
   {
     name: "AI Chatbot",
-    description: "Advanced AI chatbot for business and personal use. Get instant answers, automate support, and boost productivity.",
+    description: "Advanced AI chatbot for business and personal use. Automate support and boost productivity.",
     href: "#",
     icon: Bot,
     color: "text-blue-500",
@@ -52,7 +88,7 @@ export default function Home() {
             href="/kanoon"
             className="rounded-lg bg-orange-500 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-orange-600"
           >
-            Get Started
+            Explore Products
           </Link>
         </div>
       </nav>
@@ -64,7 +100,7 @@ export default function Home() {
         </h1>
         <p className="mt-6 text-lg leading-8 text-slate-300">
           A collection of AI-powered products designed to simplify your life.
-          From legal documents to gaming, we&apos;re building the future of intelligent tools.
+          From legal documents to gaming, we&apos;re building the future of intelligent tools for India.
         </p>
       </section>
 
