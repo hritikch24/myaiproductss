@@ -3,7 +3,7 @@ CREATE TABLE documents (
   user_id BIGINT NOT NULL REFERENCES users(id),
   doc_type TEXT NOT NULL,
   form_data JSONB NOT NULL,
-  generated_content TEXT,
+  generated_content TEXT,/Users/hritik/Projects/kanoon-simplified/migrations/003_create_payments.sql
   status TEXT DEFAULT 'draft',
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
