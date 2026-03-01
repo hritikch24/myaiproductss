@@ -13,16 +13,15 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "KanoonSimplified — Legal Documents Made Easy | India",
+  title: "KraftAI — AI-Powered Products for India",
   description:
-    "Generate legally valid Rental Agreements, NDAs, and Contracts in minutes. AI-powered, bilingual (English + Hindi), starting at Rs.99.",
+    "A collection of AI-powered products designed to simplify your life. From legal documents to gaming, we're building the future of intelligent tools.",
   keywords: [
-    "legal documents India",
-    "rental agreement online",
-    "NDA generator",
-    "freelancer contract India",
-    "AI legal documents",
-    "Hindi legal documents",
+    "AI products",
+    "legal documents",
+    "AI games",
+    "chatbot",
+    "India",
   ],
 };
 

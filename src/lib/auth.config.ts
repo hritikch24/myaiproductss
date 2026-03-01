@@ -7,6 +7,7 @@ export default {
   providers: [Google],
   session: { strategy: "jwt" },
   pages: {
-    signIn: "/login",
+    signIn: "/kanoon/login",
   },
+  basePath: "/kanoon/api/auth",
 } satisfies NextAuthConfig;
