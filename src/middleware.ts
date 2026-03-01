@@ -1,22 +1,34 @@
-import NextAuth from "next-auth";
-import authConfig from "@/lib/auth.config";
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
-// Use the Edge-compatible config (no pg/Node.js imports)
-const { auth } = NextAuth(authConfig);
-
-export default auth((req) => {
-  const { pathname } = req.nextUrl;
-
-  if (!req.auth && pathname.startsWith("/dashboard")) {
-    const loginUrl = new URL("/login", req.url);
-    loginUrl.searchParams.set("callbackUrl", pathname);
-    return Response.redirect(loginUrl);
+export async function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+  
+  // Only check auth for dashboard routes
+  if (pathname.startsWith("/dashboard")) {
+    // Check for session cookie
+    const sessionCookie = request.cookies.get("next-auth.session-token") || 
+                         request.cookies.get("__Secure-next-auth.session-token");
+    
+    if (!sessionCookie) {
+      const loginUrl = new URL("/login", request.url);
+      loginUrl.searchParams.set("callbackUrl", pathname);
+      return NextResponse.redirect(loginUrl);
+    }
   }
 
-  if (req.auth && pathname === "/login") {
-    return Response.redirect(new URL("/dashboard", req.url));
+  // Redirect logged in users away from login
+  if (pathname === "/login") {
+    const sessionCookie = request.cookies.get("next-auth.session-token") || 
+                         request.cookies.get("__Secure-next-auth.session-token");
+    
+    if (sessionCookie) {
+      return NextResponse.redirect(new URL("/dashboard", request.url));
+    }
   }
-});
+  
+  return NextResponse.next();
+}
 
 export const config = {
   matcher: ["/dashboard/:path*", "/login"],
