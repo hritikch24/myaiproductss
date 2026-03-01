@@ -4,26 +4,16 @@ import type { NextRequest } from "next/server";
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   
-  // Only check auth for dashboard routes
+  // Only protect dashboard routes
   if (pathname.startsWith("/dashboard")) {
-    // Check for session cookie
-    const sessionCookie = request.cookies.get("next-auth.session-token") || 
-                         request.cookies.get("__Secure-next-auth.session-token");
+    const cookies = request.cookies.getAll();
+    const hasSession = cookies.some(cookie => 
+      cookie.name.startsWith("next-auth.") || 
+      cookie.name.startsWith("__Secure-")
+    );
     
-    if (!sessionCookie) {
-      const loginUrl = new URL("/login", request.url);
-      loginUrl.searchParams.set("callbackUrl", pathname);
-      return NextResponse.redirect(loginUrl);
-    }
-  }
-
-  // Redirect logged in users away from login
-  if (pathname === "/login") {
-    const sessionCookie = request.cookies.get("next-auth.session-token") || 
-                         request.cookies.get("__Secure-next-auth.session-token");
-    
-    if (sessionCookie) {
-      return NextResponse.redirect(new URL("/dashboard", request.url));
+    if (!hasSession) {
+      return NextResponse.redirect(new URL("/login", request.url));
     }
   }
   
@@ -31,5 +21,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/login"],
+  matcher: ["/dashboard/:path*"],
 };

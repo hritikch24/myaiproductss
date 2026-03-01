@@ -1,15 +1,7 @@
 import { signIn } from "@/lib/auth";
 import { Scale } from "lucide-react";
-import { redirect } from "next/navigation";
-import { auth } from "@/lib/auth";
 
-export default async function LoginPage() {
-  const session = await auth();
-  
-  if (session) {
-    redirect("/dashboard");
-  }
-  
+export default function LoginPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
       <div className="w-full max-w-sm px-6">
