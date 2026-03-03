@@ -39,9 +39,9 @@ export const metadata: Metadata = {
 
 const products = [
   {
-    name: "Kanoon Simplified",
-    description: "AI-powered legal document generator for India. Create rental agreements, NDAs, and freelancer contracts in 10 Indian languages.",
-    href: "/kanoon",
+    name: "LegalDocs",
+    description: "AI-powered legal document generator for India. Create rental agreements, NDAs and freelancer contracts in 10 Indian languages.",
+    href: "/legal-docs",
     icon: Scale,
     color: "text-orange-500",
     bgColor: "bg-orange-500/10",

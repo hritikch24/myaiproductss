@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
 import { Loader2, X, CreditCard } from "lucide-react";
 import { DOC_PRICE_DISPLAY } from "@/lib/pricing";
 
@@ -83,7 +82,7 @@ export function PaymentModal({
 
     try {
       // Create order
-      const orderRes = await fetch("/api/payments/create-order", {
+      const orderRes = await fetch("/legal-docs/api/payments/create-order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ docType, formData }),
@@ -101,14 +100,14 @@ export function PaymentModal({
         key: keyId,
         amount,
         currency,
-        name: "KanoonSimplified",
+        name: "KraftAI LegalDocs",
         description: `${docTypeName} Document`,
         order_id: orderId,
         handler: async (response: RazorpayResponse) => {
           // Verify payment and generate document
           setLoading(true);
           try {
-            const verifyRes = await fetch("/api/payments/verify", {
+            const verifyRes = await fetch("/legal-docs/api/payments/verify", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(response),
@@ -120,7 +119,7 @@ export function PaymentModal({
             }
 
             const { documentId } = await verifyRes.json();
-            router.push(`/dashboard/documents/${documentId}`);
+            router.push(`/legal-docs/dashboard/documents/${documentId}`);
           } catch (err) {
             setError(
               err instanceof Error ? err.message : "Payment verification failed"
@@ -146,46 +145,52 @@ export function PaymentModal({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-      <div className="relative mx-4 w-full max-w-md rounded-xl border border-slate-700 bg-slate-900 p-6 shadow-2xl">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md">
+      <div className="relative mx-4 w-full max-w-md glass-card rounded-2xl p-6 sm:p-8 shadow-2xl shadow-orange-500/5">
         <button
           onClick={onClose}
-          className="absolute right-4 top-4 text-slate-400 hover:text-white transition-colors"
+          className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/[0.04] text-slate-400 hover:text-white hover:bg-white/[0.08] transition-all"
         >
-          <X className="h-5 w-5" />
+          <X className="h-4 w-4" />
         </button>
 
         <div className="mb-6 text-center">
-          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-orange-500/10">
-            <CreditCard className="h-6 w-6 text-orange-500" />
+          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-500 to-amber-600 shadow-lg shadow-orange-500/20">
+            <CreditCard className="h-6 w-6 text-white" />
           </div>
-          <h2 className="text-xl font-bold text-white">Payment Required</h2>
-          <p className="mt-1 text-sm text-slate-400">
-            You&apos;ve used your free documents. Pay to generate this {docTypeName}.
+          <h2 className="text-xl font-bold tracking-tight text-white">
+            Upgrade to Continue
+          </h2>
+          <p className="mt-1.5 text-sm text-slate-400">
+            You&apos;ve used your free documents. Pay once to generate this {docTypeName}.
           </p>
         </div>
 
-        <div className="mb-6 rounded-lg border border-slate-700 bg-slate-800/50 p-4">
+        <div className="mb-6 rounded-xl bg-white/[0.03] border border-white/[0.06] p-4">
           <div className="flex items-center justify-between">
-            <span className="text-sm text-slate-300">{docTypeName}</span>
-            <span className="text-2xl font-bold text-white">
-              Rs.{price}
-            </span>
+            <div>
+              <span className="text-sm font-medium text-slate-200">{docTypeName}</span>
+              <p className="mt-0.5 text-[11px] text-slate-500">
+                One-time payment &middot; Includes PDF download
+              </p>
+            </div>
+            <div className="text-right">
+              <span className="text-2xl font-bold text-white">&#8377;{price}</span>
+            </div>
           </div>
-          <p className="mt-1 text-xs text-slate-500">
-            One-time payment. Includes PDF download.
-          </p>
         </div>
 
         {error && (
-          <p className="mb-4 text-sm text-red-400 text-center">{error}</p>
+          <div className="mb-4 rounded-xl bg-red-500/10 border border-red-500/20 px-4 py-3 text-sm text-red-400 text-center">
+            {error}
+          </div>
         )}
 
-        <div className="space-y-3">
-          <Button
+        <div className="space-y-2.5">
+          <button
             onClick={handlePayment}
             disabled={loading || !scriptLoaded}
-            className="w-full bg-orange-600 hover:bg-orange-700 text-white"
+            className="btn-gradient w-full flex items-center justify-center gap-2 rounded-xl h-11 text-sm font-medium text-white disabled:opacity-60 disabled:cursor-not-allowed"
           >
             {loading ? (
               <>
@@ -193,17 +198,23 @@ export function PaymentModal({
                 Processing...
               </>
             ) : (
-              `Pay Rs.${price}`
+              <>
+                <CreditCard className="h-4 w-4" />
+                Pay &#8377;{price}
+              </>
             )}
-          </Button>
-          <Button
+          </button>
+          <button
             onClick={onClose}
-            variant="ghost"
-            className="w-full text-slate-400 hover:text-white"
+            className="w-full flex items-center justify-center rounded-xl h-10 text-[13px] text-slate-500 hover:text-white hover:bg-white/[0.04] transition-all"
           >
             Cancel
-          </Button>
+          </button>
         </div>
+
+        <p className="mt-4 text-center text-[10px] text-slate-600">
+          Secured by Razorpay &middot; 256-bit encryption
+        </p>
       </div>
     </div>
   );

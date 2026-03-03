@@ -4,8 +4,7 @@ import { useState, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent } from "@/components/ui/card";
-import { ArrowLeft, Loader2, AlertCircle } from "lucide-react";
+import { ArrowLeft, Loader2, AlertCircle, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { PaymentModal } from "./payment-modal";
 import { DatePicker } from "./date-picker";
@@ -18,7 +17,6 @@ export interface FormField {
   placeholder?: string;
   required?: boolean;
   options?: { label: string; value: string }[];
-  // Validation & UX enhancements
   helperText?: string;
   min?: number;
   max?: number;
@@ -27,8 +25,8 @@ export interface FormField {
   patternMessage?: string;
   prefix?: string;
   suffix?: string;
-  minDate?: string; // "today" or ISO date
-  maxDate?: string; // "today" or ISO date
+  minDate?: string;
+  maxDate?: string;
 }
 
 interface DocumentFormProps {
@@ -44,7 +42,6 @@ function resolveDate(value?: string): Date | undefined {
   return new Date(value);
 }
 
-// Format number as Indian currency style: 1,00,000
 function formatIndianNumber(value: string): string {
   const num = value.replace(/[^0-9]/g, "");
   if (!num) return "";
@@ -69,7 +66,6 @@ export function DocumentForm({
   const [charCounts, setCharCounts] = useState<Record<string, number>>({});
   const [currencyDisplays, setCurrencyDisplays] = useState<Record<string, string>>({});
 
-  // Apply extracted fields from Smart Fill
   const handleSmartFill = useCallback(
     (extracted: Record<string, string>) => {
       if (!formRef.current) return;
@@ -80,7 +76,6 @@ export function DocumentForm({
         if (!el) continue;
 
         if (el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement) {
-          // Use native setter to trigger React state updates
           const nativeSetter = Object.getOwnPropertyDescriptor(
             el instanceof HTMLTextAreaElement
               ? HTMLTextAreaElement.prototype
@@ -95,12 +90,10 @@ export function DocumentForm({
             el.value = value;
           }
 
-          // Update char count for textareas
           if (el instanceof HTMLTextAreaElement) {
             setCharCounts((prev) => ({ ...prev, [key]: value.length }));
           }
 
-          // Update currency display for number fields with prefix ₹
           const field = fields.find((f) => f.name === key);
           if (field?.prefix === "₹" && value) {
             setCurrencyDisplays((prev) => ({
@@ -109,7 +102,6 @@ export function DocumentForm({
             }));
           }
         } else if (el instanceof HTMLSelectElement) {
-          // Try exact match first, then case-insensitive
           const option = Array.from(el.options).find(
             (o) =>
               o.value === value ||
@@ -128,7 +120,6 @@ export function DocumentForm({
     if (field.required !== false && !value.trim()) {
       return `${field.label} is required`;
     }
-
     if (field.type === "number" && value) {
       const num = parseFloat(value);
       if (isNaN(num)) return "Please enter a valid number";
@@ -137,25 +128,21 @@ export function DocumentForm({
       if (field.max !== undefined && num > field.max)
         return `Maximum value is ${field.max.toLocaleString("en-IN")}`;
     }
-
     if (field.maxLength && value.length > field.maxLength) {
       return `Maximum ${field.maxLength} characters allowed`;
     }
-
     if (field.pattern && value) {
       const regex = new RegExp(field.pattern);
       if (!regex.test(value)) {
         return field.patternMessage || "Invalid format";
       }
     }
-
     return null;
   }
 
   function validateAll(data: Record<string, string>): boolean {
     const errors: Record<string, string> = {};
     let hasError = false;
-
     for (const field of fields) {
       const value = data[field.name] || "";
       const err = validateField(field, value);
@@ -164,7 +151,6 @@ export function DocumentForm({
         hasError = true;
       }
     }
-
     setFieldErrors(errors);
     return !hasError;
   }
@@ -179,9 +165,7 @@ export function DocumentForm({
       data[key] = value as string;
     }
 
-    // Validate
     if (!validateAll(data)) {
-      // Scroll to first error
       const firstErrorField = fields.find((f) => fieldErrors[f.name]);
       if (firstErrorField) {
         document
@@ -209,7 +193,7 @@ export function DocumentForm({
     }, 3000);
 
     try {
-      const res = await fetch("/api/documents/generate", {
+      const res = await fetch("/legal-docs/api/documents/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ docType, formData: data }),
@@ -229,7 +213,7 @@ export function DocumentForm({
       }
 
       const { documentId } = await res.json();
-      router.push(`/dashboard/documents/${documentId}`);
+      router.push(`/legal-docs/dashboard/documents/${documentId}`);
     } catch (err) {
       clearInterval(interval);
       setError(err instanceof Error ? err.message : "Something went wrong");
@@ -244,7 +228,6 @@ export function DocumentForm({
         [field.name]: value ? formatIndianNumber(value) : "",
       }));
     }
-    // Clear field error on change
     if (fieldErrors[field.name]) {
       setFieldErrors((prev) => {
         const next = { ...prev };
@@ -267,174 +250,177 @@ export function DocumentForm({
   return (
     <div>
       <Link
-        href="/dashboard"
-        className="mb-6 inline-flex items-center gap-1 text-sm text-slate-400 hover:text-white transition-colors"
+        href="/legal-docs/dashboard"
+        className="mb-6 inline-flex items-center gap-1.5 text-[13px] text-slate-500 hover:text-white transition-colors"
       >
-        <ArrowLeft className="h-4 w-4" />
+        <ArrowLeft className="h-3.5 w-3.5" />
         Back to Dashboard
       </Link>
 
       <div className="mb-8 flex items-start justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-white">{title}</h1>
-          <p className="text-orange-400">{titleHi}</p>
-          <p className="mt-1 text-sm text-slate-400">
-            Fill in the details below and we&apos;ll generate your document.
+          <h1 className="text-2xl font-bold tracking-tight text-white">{title}</h1>
+          <p className="text-sm text-orange-400/80">{titleHi}</p>
+          <p className="mt-2 text-[13px] text-slate-500">
+            Fill in the details and our AI will generate your document.
           </p>
         </div>
         <SmartFill docType={docType} onFieldsExtracted={handleSmartFill} />
       </div>
 
-      <Card className="border-slate-800 bg-slate-900/50">
-        <CardContent className="p-6">
-          <form ref={formRef} onSubmit={handleSubmit} className="space-y-5">
-            {fields.map((field) => (
-              <div key={field.name}>
-                <label
-                  htmlFor={field.name}
-                  className="mb-1.5 block text-sm font-medium text-slate-300"
-                >
-                  {field.label}
-                  {field.required !== false && (
-                    <span className="text-orange-500"> *</span>
-                  )}
-                </label>
+      <div className="glass-card rounded-2xl p-6 sm:p-8">
+        <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
+          {fields.map((field) => (
+            <div key={field.name}>
+              <label
+                htmlFor={field.name}
+                className="mb-2 block text-[13px] font-medium text-slate-300"
+              >
+                {field.label}
+                {field.required !== false && (
+                  <span className="text-orange-500/70 ml-0.5">*</span>
+                )}
+              </label>
 
-                {field.type === "select" ? (
-                  <select
+              {field.type === "select" ? (
+                <select
+                  id={field.name}
+                  name={field.name}
+                  required={field.required !== false}
+                  onChange={() => handleFieldChange(field.name)}
+                  className="h-10 w-full rounded-xl border border-white/[0.06] bg-white/[0.03] px-3.5 py-1 text-sm text-white shadow-xs outline-none focus-visible:border-orange-500/30 focus-visible:ring-orange-500/10 focus-visible:ring-[3px] transition-all"
+                >
+                  {field.options?.map((opt) => (
+                    <option
+                      key={opt.value}
+                      value={opt.value}
+                      className="bg-slate-900"
+                    >
+                      {opt.label}
+                    </option>
+                  ))}
+                </select>
+              ) : field.type === "date" ? (
+                <DatePicker
+                  name={field.name}
+                  id={field.name}
+                  required={field.required !== false}
+                  placeholder={field.placeholder || "Pick a date"}
+                  minDate={resolveDate(field.minDate)}
+                  maxDate={resolveDate(field.maxDate)}
+                />
+              ) : field.type === "textarea" ? (
+                <div>
+                  <textarea
                     id={field.name}
                     name={field.name}
+                    placeholder={field.placeholder}
                     required={field.required !== false}
-                    onChange={() => handleFieldChange(field.name)}
-                    className="h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm text-white shadow-xs outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] dark:bg-input/30 dark:border-input"
-                  >
-                    {field.options?.map((opt) => (
-                      <option
-                        key={opt.value}
-                        value={opt.value}
-                        className="bg-slate-900"
-                      >
-                        {opt.label}
-                      </option>
-                    ))}
-                  </select>
-                ) : field.type === "date" ? (
-                  <DatePicker
-                    name={field.name}
-                    id={field.name}
-                    required={field.required !== false}
-                    placeholder={field.placeholder || "Pick a date"}
-                    minDate={resolveDate(field.minDate)}
-                    maxDate={resolveDate(field.maxDate)}
+                    maxLength={field.maxLength}
+                    rows={3}
+                    onChange={(e) => {
+                      setCharCounts((prev) => ({
+                        ...prev,
+                        [field.name]: e.target.value.length,
+                      }));
+                      handleFieldChange(field.name);
+                    }}
+                    className="w-full rounded-xl border border-white/[0.06] bg-white/[0.03] px-3.5 py-2.5 text-sm text-white shadow-xs outline-none focus-visible:border-orange-500/30 focus-visible:ring-orange-500/10 focus-visible:ring-[3px] placeholder:text-slate-600 resize-none transition-all"
                   />
-                ) : field.type === "textarea" ? (
-                  <div>
-                    <textarea
-                      id={field.name}
-                      name={field.name}
-                      placeholder={field.placeholder}
-                      required={field.required !== false}
-                      maxLength={field.maxLength}
-                      rows={3}
-                      onChange={(e) => {
-                        setCharCounts((prev) => ({
-                          ...prev,
-                          [field.name]: e.target.value.length,
-                        }));
-                        handleFieldChange(field.name);
-                      }}
-                      className="w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm text-white shadow-xs outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] dark:bg-input/30 dark:border-input placeholder:text-muted-foreground resize-none"
-                    />
-                    {field.maxLength && (
-                      <p className="mt-1 text-xs text-slate-500 text-right">
-                        {charCounts[field.name] || 0} / {field.maxLength}
-                      </p>
-                    )}
-                  </div>
-                ) : field.type === "number" && field.prefix ? (
-                  <div>
-                    <div className="relative">
-                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-slate-400">
-                        {field.prefix}
-                      </span>
-                      <Input
-                        id={field.name}
-                        name={field.name}
-                        type="number"
-                        placeholder={field.placeholder}
-                        required={field.required !== false}
-                        min={field.min}
-                        max={field.max}
-                        className="text-white pl-7"
-                        onChange={(e) =>
-                          handleNumberInput(field, e.target.value)
-                        }
-                      />
-                    </div>
-                    {currencyDisplays[field.name] && (
-                      <p className="mt-1 text-xs text-slate-500">
-                        ₹{currencyDisplays[field.name]}
-                      </p>
-                    )}
-                  </div>
-                ) : (
+                  {field.maxLength && (
+                    <p className="mt-1.5 text-[11px] text-slate-600 text-right tabular-nums">
+                      {charCounts[field.name] || 0} / {field.maxLength}
+                    </p>
+                  )}
+                </div>
+              ) : field.type === "number" && field.prefix ? (
+                <div>
                   <div className="relative">
+                    <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-sm text-slate-500">
+                      {field.prefix}
+                    </span>
                     <Input
                       id={field.name}
                       name={field.name}
-                      type={field.type}
+                      type="number"
                       placeholder={field.placeholder}
                       required={field.required !== false}
-                      maxLength={field.maxLength}
-                      pattern={field.pattern}
-                      title={field.patternMessage}
-                      className="text-white"
-                      onChange={() => handleFieldChange(field.name)}
+                      min={field.min}
+                      max={field.max}
+                      className="text-white pl-8 h-10 rounded-xl border-white/[0.06] bg-white/[0.03] focus-visible:border-orange-500/30 focus-visible:ring-orange-500/10"
+                      onChange={(e) =>
+                        handleNumberInput(field, e.target.value)
+                      }
                     />
-                    {field.suffix && (
-                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-500">
-                        {field.suffix}
-                      </span>
-                    )}
                   </div>
-                )}
-
-                {/* Helper text */}
-                {field.helperText && !fieldErrors[field.name] && (
-                  <p className="mt-1 text-xs text-slate-500">
-                    {field.helperText}
-                  </p>
-                )}
-
-                {/* Field error */}
-                {fieldErrors[field.name] && (
-                  <p className="mt-1 text-xs text-red-400 flex items-center gap-1">
-                    <AlertCircle className="h-3 w-3" />
-                    {fieldErrors[field.name]}
-                  </p>
-                )}
-              </div>
-            ))}
-
-            {error && <p className="text-sm text-red-400">{error}</p>}
-
-            <Button
-              type="submit"
-              disabled={loading}
-              className="w-full bg-orange-600 hover:bg-orange-700 text-white"
-            >
-              {loading ? (
-                <>
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                  {loadingText}
-                </>
+                  {currencyDisplays[field.name] && (
+                    <p className="mt-1.5 text-[11px] text-slate-500 tabular-nums">
+                      ₹{currencyDisplays[field.name]}
+                    </p>
+                  )}
+                </div>
               ) : (
-                "Generate Document"
+                <div className="relative">
+                  <Input
+                    id={field.name}
+                    name={field.name}
+                    type={field.type}
+                    placeholder={field.placeholder}
+                    required={field.required !== false}
+                    maxLength={field.maxLength}
+                    pattern={field.pattern}
+                    title={field.patternMessage}
+                    className="text-white h-10 rounded-xl border-white/[0.06] bg-white/[0.03] focus-visible:border-orange-500/30 focus-visible:ring-orange-500/10"
+                    onChange={() => handleFieldChange(field.name)}
+                  />
+                  {field.suffix && (
+                    <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[11px] text-slate-500">
+                      {field.suffix}
+                    </span>
+                  )}
+                </div>
               )}
-            </Button>
-          </form>
-        </CardContent>
-      </Card>
+
+              {field.helperText && !fieldErrors[field.name] && (
+                <p className="mt-1.5 text-[11px] text-slate-600">
+                  {field.helperText}
+                </p>
+              )}
+
+              {fieldErrors[field.name] && (
+                <p className="mt-1.5 text-[11px] text-red-400 flex items-center gap-1">
+                  <AlertCircle className="h-3 w-3" />
+                  {fieldErrors[field.name]}
+                </p>
+              )}
+            </div>
+          ))}
+
+          {error && (
+            <div className="rounded-xl bg-red-500/10 border border-red-500/20 px-4 py-3 text-sm text-red-400">
+              {error}
+            </div>
+          )}
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="btn-gradient w-full flex items-center justify-center gap-2 rounded-xl h-11 text-sm font-medium text-white disabled:opacity-60 disabled:cursor-not-allowed"
+          >
+            {loading ? (
+              <>
+                <Loader2 className="h-4 w-4 animate-spin" />
+                {loadingText}
+              </>
+            ) : (
+              <>
+                <Sparkles className="h-4 w-4" />
+                Generate Document
+              </>
+            )}
+          </button>
+        </form>
+      </div>
 
       {showPayment && pendingFormData && (
         <PaymentModal

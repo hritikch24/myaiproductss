@@ -46,7 +46,7 @@ export function SmartFill({ docType, onFieldsExtracted }: SmartFillProps) {
         const formData = new FormData();
         formData.append("file", file);
 
-        const res = await fetch("/api/documents/extract-pdf", {
+        const res = await fetch("/legal-docs/api/documents/extract-pdf", {
           method: "POST",
           body: formData,
         });
@@ -96,7 +96,7 @@ export function SmartFill({ docType, onFieldsExtracted }: SmartFillProps) {
     setExtracted(null);
 
     try {
-      const res = await fetch("/api/documents/extract", {
+      const res = await fetch("/legal-docs/api/documents/extract", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text, docType }),

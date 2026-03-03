@@ -4,6 +4,25 @@ This document tracks all changes (UI/UX and Backend) made to the application.
 
 ## Changes Log
 
+### 2026-03-02
+
+#### 10. Rename to LegalDocs + SEO + Tracking
+**Files Modified:** All routes, auth, database
+
+**Changes:**
+- Renamed `/kanoon` to `/legal-docs`
+- Created stunning landing page with animations
+- Added comprehensive SEO for all India (languages, cities, laws)
+- Created `site_stats` table for tracking visits and user logins
+- Track user logins in database on authentication
+- Added legal disclaimer footer on landing page
+- Updated homepage to link to LegalDocs
+
+**New Routes:**
+- `/legal-docs` - LegalDocs landing page
+- `/legal-docs/dashboard` - Dashboard (protected)
+- `/legal-docs/login` - Login page
+
 ### 2026-03-01
 
 #### 9. Multi-Product Subpath Setup

@@ -4,8 +4,8 @@ import type { NextRequest } from "next/server";
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   
-  // Only protect kanoon dashboard routes
-  if (pathname.startsWith("/kanoon/dashboard")) {
+  // Only protect legal-docs dashboard routes
+  if (pathname.startsWith("/legal-docs/dashboard")) {
     const cookies = request.cookies.getAll();
     const hasSession = cookies.some(cookie => 
       cookie.name.startsWith("next-auth.") || 
@@ -13,7 +13,7 @@ export async function middleware(request: NextRequest) {
     );
     
     if (!hasSession) {
-      return NextResponse.redirect(new URL("/kanoon/login", request.url));
+      return NextResponse.redirect(new URL("/legal-docs/login", request.url));
     }
   }
   
@@ -21,5 +21,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/kanoon/dashboard/:path*"],
+  matcher: ["/legal-docs/dashboard/:path*"],
 };
