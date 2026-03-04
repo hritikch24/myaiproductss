@@ -10,7 +10,8 @@ export async function PATCH(req: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { taskId, status } = await req.json();
+    const body = await req.json();
+    const { taskId, status, quizScore, quizTaken } = body;
 
     // Get student
     const studentResult = await pool.query(
@@ -25,16 +26,18 @@ export async function PATCH(req: NextRequest) {
     const studentId = studentResult.rows[0].id;
 
     // Update task
-    const markedDoneAt = status === 'done' ? new Date() : null;
-    
-    await pool.query(
-      `UPDATE padhai_goal_tasks 
-       SET status = $1, marked_done_at = $2
-       WHERE id = $3 AND weekly_goal_id IN (
-         SELECT id FROM padhai_weekly_goals WHERE student_id = $4
-       )`,
-      [status, markedDoneAt, taskId, studentId]
-    );
+    if (taskId) {
+      const markedDoneAt = status === 'done' ? new Date() : null;
+      
+      await pool.query(
+        `UPDATE padhai_goal_tasks 
+         SET status = $1, marked_done_at = $2, quiz_score = $3, quiz_taken = $4
+         WHERE id = $5 AND weekly_goal_id IN (
+           SELECT id FROM padhai_weekly_goals WHERE student_id = $6
+         )`,
+        [status, markedDoneAt, quizScore, quizTaken, taskId, studentId]
+      );
+    }
 
     // Update streak if task is marked as done
     if (status === 'done') {
