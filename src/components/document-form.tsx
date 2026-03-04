@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ArrowLeft, Loader2, AlertCircle, Sparkles, CreditCard } from "lucide-react";
-import { DOC_PRICE_DISPLAY } from "@/lib/pricing";
+import { DOC_PRICE_DISPLAY, PREMIUM_ENABLED } from "@/lib/pricing";
 import Link from "next/link";
 import { PaymentModal } from "./payment-modal";
 import { DatePicker } from "./date-picker";
@@ -534,37 +534,41 @@ export function DocumentForm({
               )}
             </button>
 
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-white/[0.06]" />
-              </div>
-              <div className="relative flex justify-center text-[10px]">
-                <span className="bg-[#0f172a]/80 px-3 text-slate-600 uppercase tracking-wider">or</span>
-              </div>
-            </div>
+            {PREMIUM_ENABLED && (
+              <>
+                <div className="relative">
+                  <div className="absolute inset-0 flex items-center">
+                    <div className="w-full border-t border-white/[0.06]" />
+                  </div>
+                  <div className="relative flex justify-center text-[10px]">
+                    <span className="bg-[#0f172a]/80 px-3 text-slate-600 uppercase tracking-wider">or</span>
+                  </div>
+                </div>
 
-            <button
-              type="button"
-              disabled={loading}
-              onClick={() => {
-                if (!formRef.current) return;
-                const formData = new FormData(formRef.current);
-                const data: Record<string, string> = {};
-                for (const [key, value] of formData.entries()) {
-                  data[key] = value as string;
-                }
-                if (!validateAll(data)) return;
-                setPendingFormData(data);
-                setShowPayment(true);
-              }}
-              className="w-full flex items-center justify-center gap-2 rounded-xl h-11 text-sm font-medium text-white border border-orange-500/30 bg-orange-500/5 hover:bg-orange-500/10 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
-            >
-              <CreditCard className="h-4 w-4 text-orange-400" />
-              Pay &#8377;{DOC_PRICE_DISPLAY[docType] || "99"} &amp; Generate
-            </button>
-            <p className="text-center text-[10px] text-slate-600">
-              2 free documents available &middot; Premium includes PDF download
-            </p>
+                <button
+                  type="button"
+                  disabled={loading}
+                  onClick={() => {
+                    if (!formRef.current) return;
+                    const formData = new FormData(formRef.current);
+                    const data: Record<string, string> = {};
+                    for (const [key, value] of formData.entries()) {
+                      data[key] = value as string;
+                    }
+                    if (!validateAll(data)) return;
+                    setPendingFormData(data);
+                    setShowPayment(true);
+                  }}
+                  className="w-full flex items-center justify-center gap-2 rounded-xl h-11 text-sm font-medium text-white border border-orange-500/30 bg-orange-500/5 hover:bg-orange-500/10 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
+                >
+                  <CreditCard className="h-4 w-4 text-orange-400" />
+                  Pay &#8377;{DOC_PRICE_DISPLAY[docType] || "99"} &amp; Generate
+                </button>
+                <p className="text-center text-[10px] text-slate-600">
+                  2 free documents available &middot; Premium includes PDF download
+                </p>
+              </>
+            )}
           </div>
         </form>
       </div>

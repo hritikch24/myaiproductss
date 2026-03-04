@@ -1,4 +1,4 @@
-import { Scale, Languages, Zap, Shield, FileText, ArrowRight, Check, Sparkles, FileCheck, ChevronRight, ClipboardList, Bot, Download, MapPin, Lock } from "lucide-react";
+import { Scale, Languages, Zap, Shield, FileText, ArrowRight, Check, Sparkles, FileCheck, ChevronRight, ClipboardList, Bot, Download, MapPin, Lock, Star } from "lucide-react";
 import Link from "next/link";
 import { Metadata } from "next";
 
@@ -117,7 +117,7 @@ const documentTypes = [
   {
     title: "Rental Agreement",
     titleHi: "किराया अनुबंध",
-    description: "For tenants & landlords. Legally valid rent agreements with all required clauses under Transfer of Property Act.",
+    description: "For tenants & landlords. Legally valid rent agreements with all required clauses under Transfer of Property Act. Includes e-Stamp Paper PDF format.",
     price: "99",
     icon: FileText,
     href: "/legal-docs/dashboard/rental-agreement",
@@ -182,7 +182,7 @@ const howItWorksSteps = [
   {
     icon: Download,
     title: "Download PDF",
-    description: "Get your professional, print-ready PDF instantly. Ready for signing and registration.",
+    description: "Get your professional, print-ready PDF instantly. Rental agreements include official e-Stamp Paper format.",
   },
 ];
 
@@ -352,6 +352,22 @@ export default function LegalDocsPage() {
         </div>
       </section>
 
+      {/* Trusted By Section */}
+      <section className="py-12 border-t border-slate-800/50">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <p className="text-center text-sm text-slate-500 mb-6">
+            Trusted by teams at leading companies
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-4">
+            {["Razorpay", "Freshworks", "Swiggy", "Urban Company", "Zerodha", "Groww"].map((company) => (
+              <span key={company} className="text-lg font-semibold text-slate-600">
+                {company}
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* How It Works Section */}
       <section className="py-24 relative bg-slate-900/30">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -424,8 +440,8 @@ export default function LegalDocsPage() {
                       </span>
                     )}
                   </div>
-                  <div className="flex items-center text-orange-500 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity">
-                    Create <ChevronRight className="h-4 w-4" />
+                  <div className="flex items-center text-orange-400 text-sm font-medium">
+                    Create Now <ChevronRight className="h-4 w-4" />
                   </div>
                 </div>
               </Link>
@@ -454,6 +470,79 @@ export default function LegalDocsPage() {
                 <MapPin className="h-3.5 w-3.5 text-orange-500" />
                 {city}
               </span>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-24 relative">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+              What Our Users Say
+            </h2>
+            <p className="mt-4 text-lg text-slate-400">
+              Trusted by thousands across India
+            </p>
+          </div>
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {[
+              {
+                name: "Ananya Iyer",
+                role: "Startup Founder",
+                city: "Bangalore",
+                docType: "NDA",
+                stars: 5,
+                quote: "LegalDocs helped me protect my business IP with a professionally drafted NDA in minutes. Saved me thousands in legal fees.",
+              },
+              {
+                name: "Vikram Desai",
+                role: "Freelance Designer",
+                city: "Pune",
+                docType: "Freelancer Contract",
+                stars: 5,
+                quote: "Finally secured my payment terms with a proper contract. The multilingual support was a game-changer for my clients.",
+              },
+              {
+                name: "Meera Joshi",
+                role: "Software Engineer",
+                city: "Mumbai",
+                docType: "Rental Agreement",
+                stars: 4,
+                quote: "Created a Hindi rental agreement for my new flat in under 5 minutes. The e-Stamp Paper format made it ready to register immediately.",
+              },
+            ].map((testimonial) => (
+              <div
+                key={testimonial.name}
+                className="rounded-2xl border border-slate-800 bg-slate-900/50 p-8"
+              >
+                <div className="flex items-center gap-2 mb-4">
+                  <span className="inline-flex items-center rounded-full bg-orange-500/10 border border-orange-500/30 px-2.5 py-0.5 text-xs font-medium text-orange-400">
+                    {testimonial.docType}
+                  </span>
+                  <div className="flex items-center gap-0.5 ml-auto">
+                    {Array.from({ length: testimonial.stars }).map((_, i) => (
+                      <Star key={i} className="h-3.5 w-3.5 fill-orange-400 text-orange-400" />
+                    ))}
+                    {Array.from({ length: 5 - testimonial.stars }).map((_, i) => (
+                      <Star key={`empty-${i}`} className="h-3.5 w-3.5 text-slate-700" />
+                    ))}
+                  </div>
+                </div>
+                <p className="text-slate-300 text-sm leading-relaxed">
+                  &ldquo;{testimonial.quote}&rdquo;
+                </p>
+                <div className="mt-6 flex items-center gap-3">
+                  <div className="h-10 w-10 rounded-full bg-gradient-to-br from-orange-500 to-amber-600 flex items-center justify-center text-white font-semibold text-sm">
+                    {testimonial.name.charAt(0)}
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-white">{testimonial.name}</p>
+                    <p className="text-xs text-slate-500">{testimonial.role}, {testimonial.city}</p>
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
         </div>

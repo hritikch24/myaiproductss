@@ -1,3 +1,5 @@
+export const PREMIUM_ENABLED = process.env.NEXT_PUBLIC_PREMIUM_ENABLED === "true";
+
 export const DOC_PRICES: Record<string, number> = {
   rental_agreement: 9900, // Rs.99 in paise
   nda: 14900, // Rs.149 in paise

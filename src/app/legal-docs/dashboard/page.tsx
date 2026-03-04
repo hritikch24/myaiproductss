@@ -15,6 +15,8 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
+const premiumEnabled = process.env.NEXT_PUBLIC_PREMIUM_ENABLED === "true";
+
 const documentTypes = [
   {
     title: "Rental Agreement",
@@ -86,7 +88,9 @@ export default async function DashboardPage() {
             Welcome back, {session.user.name?.split(" ")[0] ?? "there"}
           </h1>
           <p className="mt-2 text-slate-400">
-            Generate AI-powered legal documents in minutes.
+            {premiumEnabled
+              ? "Generate AI-powered legal documents in minutes."
+              : "Generate AI-powered legal documents — completely free."}
           </p>
         </div>
         {freeDocsRemaining > 0 ? (
@@ -120,10 +124,16 @@ export default async function DashboardPage() {
               <p className="text-[13px] leading-relaxed text-slate-400">{doc.description}</p>
 
               <div className="mt-5 flex items-center justify-between">
-                <div className="flex items-baseline gap-1">
-                  <span className="text-2xl font-bold text-white">&#8377;{doc.price}</span>
-                  <span className="text-xs text-slate-500">/ doc</span>
-                </div>
+                {premiumEnabled ? (
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-2xl font-bold text-white">&#8377;{doc.price}</span>
+                    <span className="text-xs text-slate-500">/ doc</span>
+                  </div>
+                ) : (
+                  <span className="inline-flex items-center rounded-full bg-green-500/10 border border-green-500/30 px-3 py-1 text-sm font-semibold text-green-400">
+                    Free
+                  </span>
+                )}
                 <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/[0.04] transition-all group-hover:bg-orange-500/20 group-hover:scale-110">
                   <ArrowRight className="h-4 w-4 text-slate-500 transition-colors group-hover:text-orange-400" />
                 </div>
@@ -140,73 +150,75 @@ export default async function DashboardPage() {
       </div>
 
       {/* Pricing Section */}
-      <div className="mt-12">
-        <div className="mb-6 text-center">
-          <h2 className="text-xl font-bold tracking-tight text-white flex items-center justify-center gap-2">
-            <Crown className="h-5 w-5 text-orange-400" />
-            Simple Pay-Per-Document Pricing
-          </h2>
-          <p className="mt-2 text-sm text-slate-400">
-            Start with 2 free documents. Pay only when you need more &mdash; no subscription required.
-          </p>
-        </div>
-
-        <div className="glass-card rounded-2xl p-6 sm:p-8">
-          <div className="grid gap-6 sm:grid-cols-2">
-            {/* Free Tier */}
-            <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-5">
-              <div className="flex items-center gap-2 mb-3">
-                <Sparkles className="h-4 w-4 text-emerald-400" />
-                <h3 className="text-sm font-semibold text-white">Free</h3>
-              </div>
-              <p className="text-2xl font-bold text-white mb-1">&#8377;0</p>
-              <p className="text-xs text-slate-500 mb-4">2 documents included</p>
-              <ul className="space-y-2">
-                {["2 free documents", "AI-powered generation", "All document types", "10+ Indian languages"].map((item) => (
-                  <li key={item} className="flex items-center gap-2 text-[13px] text-slate-400">
-                    <Check className="h-3.5 w-3.5 text-emerald-400 shrink-0" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Premium */}
-            <div className="rounded-xl border border-orange-500/20 bg-gradient-to-br from-orange-500/5 to-amber-500/5 p-5 relative overflow-hidden">
-              <div className="absolute top-3 right-3 rounded-full bg-orange-500/10 px-2 py-0.5 text-[10px] font-medium text-orange-400 uppercase tracking-wider">
-                Popular
-              </div>
-              <div className="flex items-center gap-2 mb-3">
-                <CreditCard className="h-4 w-4 text-orange-400" />
-                <h3 className="text-sm font-semibold text-white">Per Document</h3>
-              </div>
-              <p className="text-2xl font-bold text-white mb-1">&#8377;99 <span className="text-sm font-normal text-slate-500">onwards</span></p>
-              <p className="text-xs text-slate-500 mb-4">Pay only when you need</p>
-              <ul className="space-y-2">
-                {["Stamp paper PDF styling", "PDF download included", "Priority AI generation", "Razorpay secure payment", "No subscription needed"].map((item) => (
-                  <li key={item} className="flex items-center gap-2 text-[13px] text-slate-400">
-                    <Check className="h-3.5 w-3.5 text-orange-400 shrink-0" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
+      {premiumEnabled && (
+        <div className="mt-12">
+          <div className="mb-6 text-center">
+            <h2 className="text-xl font-bold tracking-tight text-white flex items-center justify-center gap-2">
+              <Crown className="h-5 w-5 text-orange-400" />
+              Simple Pay-Per-Document Pricing
+            </h2>
+            <p className="mt-2 text-sm text-slate-400">
+              Start with 2 free documents. Pay only when you need more &mdash; no subscription required.
+            </p>
           </div>
 
-          <div className="mt-5 grid gap-2 sm:grid-cols-3 text-center">
-            {documentTypes.map((doc) => (
-              <Link
-                key={doc.title}
-                href={doc.href}
-                className="rounded-lg border border-white/[0.06] bg-white/[0.02] px-4 py-3 hover:border-orange-500/20 hover:bg-orange-500/5 transition-all group"
-              >
-                <span className="text-[13px] font-medium text-white">{doc.title}</span>
-                <span className="block text-lg font-bold text-orange-400 mt-0.5">&#8377;{doc.price}</span>
-              </Link>
-            ))}
+          <div className="glass-card rounded-2xl p-6 sm:p-8">
+            <div className="grid gap-6 sm:grid-cols-2">
+              {/* Free Tier */}
+              <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-5">
+                <div className="flex items-center gap-2 mb-3">
+                  <Sparkles className="h-4 w-4 text-emerald-400" />
+                  <h3 className="text-sm font-semibold text-white">Free</h3>
+                </div>
+                <p className="text-2xl font-bold text-white mb-1">&#8377;0</p>
+                <p className="text-xs text-slate-500 mb-4">2 documents included</p>
+                <ul className="space-y-2">
+                  {["2 free documents", "AI-powered generation", "All document types", "10+ Indian languages"].map((item) => (
+                    <li key={item} className="flex items-center gap-2 text-[13px] text-slate-400">
+                      <Check className="h-3.5 w-3.5 text-emerald-400 shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Premium */}
+              <div className="rounded-xl border border-orange-500/20 bg-gradient-to-br from-orange-500/5 to-amber-500/5 p-5 relative overflow-hidden">
+                <div className="absolute top-3 right-3 rounded-full bg-orange-500/10 px-2 py-0.5 text-[10px] font-medium text-orange-400 uppercase tracking-wider">
+                  Popular
+                </div>
+                <div className="flex items-center gap-2 mb-3">
+                  <CreditCard className="h-4 w-4 text-orange-400" />
+                  <h3 className="text-sm font-semibold text-white">Per Document</h3>
+                </div>
+                <p className="text-2xl font-bold text-white mb-1">&#8377;99 <span className="text-sm font-normal text-slate-500">onwards</span></p>
+                <p className="text-xs text-slate-500 mb-4">Pay only when you need</p>
+                <ul className="space-y-2">
+                  {["Stamp paper PDF styling", "PDF download included", "Priority AI generation", "Razorpay secure payment", "No subscription needed"].map((item) => (
+                    <li key={item} className="flex items-center gap-2 text-[13px] text-slate-400">
+                      <Check className="h-3.5 w-3.5 text-orange-400 shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <div className="mt-5 grid gap-2 sm:grid-cols-3 text-center">
+              {documentTypes.map((doc) => (
+                <Link
+                  key={doc.title}
+                  href={doc.href}
+                  className="rounded-lg border border-white/[0.06] bg-white/[0.02] px-4 py-3 hover:border-orange-500/20 hover:bg-orange-500/5 transition-all group"
+                >
+                  <span className="text-[13px] font-medium text-white">{doc.title}</span>
+                  <span className="block text-lg font-bold text-orange-400 mt-0.5">&#8377;{doc.price}</span>
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* Recent Documents */}
       <div className="mt-12">
