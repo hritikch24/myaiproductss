@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Scale, Gamepad2, Bot, ArrowRight } from "lucide-react";
+import { Scale, Gamepad2, Bot, ArrowRight, BookOpen } from "lucide-react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -38,6 +38,16 @@ export const metadata: Metadata = {
 };
 
 const products = [
+  {
+    name: "Padhai",
+    description: "Study tracker for Class 11, 12, JEE & NEET students. Set goals, verify with quizzes, keep parents updated.",
+    href: "/padhai",
+    icon: BookOpen,
+    color: "text-emerald-500",
+    bgColor: "bg-emerald-500/10",
+    borderColor: "border-emerald-500/30",
+    status: "Live",
+  },
   {
     name: "LegalDocs",
     description: "AI-powered legal document generator for India. Create rental agreements, NDAs and freelancer contracts in 10 Indian languages.",
@@ -104,12 +114,12 @@ export default function Home() {
       {/* Products */}
       <section className="mx-auto max-w-6xl px-6 pb-24">
         <h2 className="mb-8 text-2xl font-bold text-white">Our Products</h2>
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
           {products.map((product) => (
             <Link
               key={product.name}
               href={product.href}
-              className={`group relative overflow-hidden rounded-xl border border-slate-800 bg-slate-900/50 p-6 transition-all hover:${product.borderColor}`}
+              className="group relative overflow-hidden rounded-xl border border-slate-800 bg-slate-900/50 p-6 transition-all hover:border-slate-700"
             >
               <div className={`mb-4 inline-flex rounded-lg p-3 ${product.bgColor}`}>
                 <product.icon className={`h-6 w-6 ${product.color}`} />
