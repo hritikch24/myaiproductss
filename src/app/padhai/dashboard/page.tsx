@@ -214,9 +214,12 @@ export default async function PadhaiDashboard() {
                 </div>
               </div>
             </div>
-            <div className="flex items-center gap-1 text-xs text-slate-500">
-              <span className="capitalize">{student.subjects?.join(", ")}</span>
-            </div>
+            <Link
+              href="/padhai/syllabus"
+              className="text-sm text-emerald-400 hover:underline"
+            >
+              My Syllabus
+            </Link>
           </div>
         </div>
       </main>
