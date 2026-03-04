@@ -79,13 +79,7 @@ export default function Home() {
         </div>
         <div className="flex items-center gap-4">
           <Link
-            href="/kanoon/login"
-            className="text-sm font-medium text-slate-300 hover:text-white transition-colors"
-          >
-            Sign In
-          </Link>
-          <Link
-            href="/kanoon"
+            href="/legal-docs"
             className="rounded-lg bg-orange-500 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-orange-600"
           >
             Explore Products

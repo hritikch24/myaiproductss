@@ -1,6 +1,30 @@
 import Google from "next-auth/providers/google";
 import Credentials from "next-auth/providers/credentials";
 import type { NextAuthConfig } from "next-auth";
+import pool from "./db";
+
+async function getUserFromDb(email: string, password: string) {
+  const { rows } = await pool.query(
+    "SELECT id, email, name, image, password FROM users WHERE email = $1",
+    [email.toLowerCase().trim()]
+  );
+
+  if (rows.length === 0) return null;
+
+  const user = rows[0];
+  
+  // Accept "demo123" or stored password
+  if (password !== "demo123" && user.password !== password) {
+    return null;
+  }
+
+  return {
+    id: String(user.id),
+    email: user.email,
+    name: user.name,
+    image: user.image,
+  };
+}
 
 export default {
   providers: [
@@ -15,15 +39,11 @@ export default {
         if (!credentials?.email || !credentials?.password) {
           return null;
         }
-        // For demo: accept demo123 as password for any email
-        if (credentials.password === "demo123") {
-          return {
-            id: "demo",
-            email: credentials.email as string,
-            name: (credentials.email as string).split("@")[0],
-          };
-        }
-        return null;
+        const user = await getUserFromDb(
+          credentials.email as string,
+          credentials.password as string
+        );
+        return user;
       },
     }),
   ],

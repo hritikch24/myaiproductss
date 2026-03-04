@@ -262,24 +262,26 @@ export function DocumentForm({
 
   return (
     <div>
-      <Link
-        href="/legal-docs/dashboard"
-        className="mb-6 inline-flex items-center gap-1.5 text-[13px] text-slate-500 hover:text-white transition-colors"
-      >
-        <ArrowLeft className="h-3.5 w-3.5" />
-        Back to Dashboard
-      </Link>
+      {/* Sticky header */}
+      <div className="sticky top-0 z-30 -mx-6 px-6 pt-2 pb-4 bg-[#030712]/80 backdrop-blur-xl border-b border-white/[0.04]">
+        <Link
+          href="/legal-docs/dashboard"
+          className="mb-3 inline-flex items-center gap-1.5 text-[13px] text-slate-500 hover:text-white transition-colors"
+        >
+          <ArrowLeft className="h-3.5 w-3.5" />
+          Back to Dashboard
+        </Link>
 
-      <div className="mb-8 flex items-start justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight text-white">{title}</h1>
-          <p className="text-sm text-orange-400/80">{titleHi}</p>
-          <p className="mt-2 text-[13px] text-slate-500">
-            Fill in the details and our AI will generate your document.
-          </p>
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <h1 className="text-xl font-bold tracking-tight text-white">{title}</h1>
+            <p className="text-xs text-orange-400/80">{titleHi}</p>
+          </div>
+          <SmartFill docType={docType} onFieldsExtracted={handleSmartFill} />
         </div>
-        <SmartFill docType={docType} onFieldsExtracted={handleSmartFill} />
       </div>
+
+      <div className="mt-6" />
 
       <div className="glass-card rounded-2xl p-6 sm:p-8">
         <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
