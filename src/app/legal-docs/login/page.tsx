@@ -38,21 +38,19 @@ export default function LoginPage() {
         setPassword("");
       } catch {
         setError("Registration failed. Try again.");
+      } finally {
         setIsLoading(false);
       }
       return;
     }
 
     // Login via NextAuth server action
-    try {
-      const formData = new FormData();
-      formData.append("email", email);
-      formData.append("password", password);
-      await loginWithCredentials(formData);
-    } catch (err) {
-      console.error("Login error:", err);
-      setError("Invalid email or password");
-    } finally {
+    const formData = new FormData();
+    formData.append("email", email);
+    formData.append("password", password);
+    const result = await loginWithCredentials(formData);
+    if (result?.error) {
+      setError(result.error);
       setIsLoading(false);
     }
   }
