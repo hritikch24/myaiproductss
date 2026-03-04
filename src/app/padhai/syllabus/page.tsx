@@ -18,6 +18,7 @@ export default function MySyllabusPage() {
   const [saving, setSaving] = useState(false);
   const [examTarget, setExamTarget] = useState("");
   const [studentClass, setStudentClass] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
     async function fetchData() {
@@ -37,10 +38,14 @@ export default function MySyllabusPage() {
 
         // Get chapters
         const chaptersRes = await fetch(`/api/padhai/chapters?class=${studentData.student.class}&exam=${studentData.student.exam_target}`);
+        if (!chaptersRes.ok) {
+          throw new Error("Failed to load chapters");
+        }
         const chaptersData = await chaptersRes.json();
         setSubjects(chaptersData.subjects || {});
       } catch (err) {
         console.error(err);
+        setError("Failed to load syllabus. Please try again.");
       } finally {
         setLoading(false);
       }
@@ -73,6 +78,17 @@ export default function MySyllabusPage() {
     return (
       <div className="min-h-screen bg-[#030712] flex items-center justify-center">
         <Loader2 className="h-8 w-8 text-emerald-500 animate-spin" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-[#030712] flex flex-col items-center justify-center p-4">
+        <p className="text-red-400 mb-4">{error}</p>
+        <Link href="/padhai/dashboard" className="text-emerald-400 hover:underline">
+          Go back to dashboard
+        </Link>
       </div>
     );
   }

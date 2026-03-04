@@ -1,45 +1,19 @@
-import { Scale, Languages, Zap, Shield, FileText, ArrowRight, Check, Sparkles, FileCheck, ChevronRight, ClipboardList, Bot, Download, MapPin, Lock, Star } from "lucide-react";
+import { Scale, Languages, Zap, Shield, FileText, ArrowRight, Check, Sparkles, FileCheck, ChevronRight, ClipboardList, Bot, Download, MapPin, Lock, Star, Users, Globe, FileStack, IndianRupee } from "lucide-react";
 import Link from "next/link";
 import { Metadata } from "next";
+import { AnimateOnScroll, CountUp } from "@/components/animate-on-scroll";
 
 export const metadata: Metadata = {
-  title: "LegalDocs — Free AI Legal Document Generator India | Rental Agreement, NDA, Freelancer Contract in Hindi, English, Tamil, Bengali & More",
-  description: "Generate legally valid Rental Agreements, NDAs, and Freelancer Contracts instantly using AI. Available in 10+ Indian languages including Hindi, English, Bengali, Tamil, Telugu, Marathi, Gujarati, Kannada, Malayalam, Punjabi. Free to use.",
+  title: "Free AI Legal Document Generator India | LegalDocs",
+  description: "Generate free Rental Agreements, NDAs & Freelancer Contracts using AI. Legally valid, available in Hindi, English, Tamil & 10+ Indian languages.",
   keywords: [
-    // Primary keywords
     "free legal document generator India",
     "AI legal document generator",
-    "online legal documents India",
     "rental agreement generator India",
     "NDA generator India",
     "freelancer contract generator India",
-    "legal document maker India",
-    // Language-specific
     "legal documents in Hindi",
-    "legal documents in English",
-    "legal documents in Tamil",
-    "legal documents in Bengali",
-    "legal documents in Telugu",
-    "legal documents in Marathi",
-    "legal documents in Gujarati",
-    "legal documents in Kannada",
-    "legal documents in Malayalam",
-    "legal documents in Punjabi",
-    "कानूनी दस्तावेज़ भारत",
-    "किराया अनुबंध",
-    "गोपनीयता समझौता",
-    // City-specific
-    "rental agreement Mumbai",
-    "rental agreement Delhi",
-    "rental agreement Bangalore",
-    "rental agreement Chennai",
-    "NDA for freelancers India",
-    "freelancer contract format India",
-    // Law-specific
-    "Transfer of Property Act",
-    "Indian Contract Act 1872",
     "rent agreement online",
-    "online notary India",
   ],
   authors: [{ name: "LegalDocs" }],
   creator: "LegalDocs",
@@ -49,18 +23,27 @@ export const metadata: Metadata = {
     canonical: "https://kraftai.in/legal-docs",
   },
   openGraph: {
-    title: "LegalDocs — Free AI Legal Document Generator India",
-    description: "Generate legally valid Rental Agreements, NDAs, and Freelancer Contracts in 10+ Indian languages. Free to use.",
+    title: "Free AI Legal Document Generator India | LegalDocs",
+    description: "Generate free Rental Agreements, NDAs & Freelancer Contracts using AI. Available in 10+ Indian languages.",
     url: "https://kraftai.in/legal-docs",
     siteName: "LegalDocs",
     locale: "en_IN",
     alternateLocale: "hi_IN",
     type: "website",
+    images: [
+      {
+        url: "https://kraftai.in/og-legal-docs.png",
+        width: 1200,
+        height: 630,
+        alt: "LegalDocs - Free AI Legal Document Generator for India",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "LegalDocs — Free AI Legal Document Generator India",
-    description: "Generate legal documents in Hindi, English, Tamil & more. Free to use.",
+    title: "Free AI Legal Document Generator India | LegalDocs",
+    description: "Generate free Rental Agreements, NDAs & Contracts in Hindi, English, Tamil & 10+ Indian languages.",
+    images: ["https://kraftai.in/og-legal-docs.png"],
   },
   robots: {
     index: true,
@@ -80,7 +63,7 @@ const premiumEnabled = process.env.NEXT_PUBLIC_PREMIUM_ENABLED === "true";
 const languages = [
   { name: "Hindi", nameHi: "हिंदी", flag: "🇮🇳" },
   { name: "English", nameHi: "English", flag: "🇬🇧" },
-  { name: "Bengali", nameHi: "বাংলা", flag: "🇧🇩" },
+  { name: "Bengali", nameHi: "বাংলা", flag: "🇮🇳" },
   { name: "Tamil", nameHi: "தமிழ்", flag: "🇮🇳" },
   { name: "Telugu", nameHi: "తెలుగు", flag: "🇮🇳" },
   { name: "Marathi", nameHi: "मराठी", flag: "🇮🇳" },
@@ -95,21 +78,25 @@ const features = [
     icon: Languages,
     title: "10+ Indian Languages",
     description: "Documents in Hindi, English, Bengali, Tamil, Telugu, Marathi, Gujarati, Kannada, Malayalam, Punjabi",
+    gradient: "from-blue-500 to-cyan-400",
   },
   {
     icon: Zap,
     title: "Instant Generation",
-    description: "Get your document in minutes, not days",
+    description: "Get your document in minutes, not days. AI drafts lawyer-quality documents in seconds",
+    gradient: "from-yellow-500 to-orange-400",
   },
   {
     icon: Shield,
     title: "Legally Valid",
-    description: "Drafted as per Indian laws - Transfer of Property Act, Indian Contract Act",
+    description: "Drafted as per Indian laws — Transfer of Property Act, Indian Contract Act 1872",
+    gradient: "from-green-500 to-emerald-400",
   },
   {
     icon: Lock,
     title: "Secure & Private",
-    description: "Your data stays safe. Documents are generated securely and never shared with third parties",
+    description: "Bank-level encryption. Your data stays safe and is never shared with third parties",
+    gradient: "from-purple-500 to-pink-400",
   },
 ];
 
@@ -122,6 +109,7 @@ const documentTypes = [
     icon: FileText,
     href: "/legal-docs/dashboard/rental-agreement",
     popular: true,
+    gradient: "from-orange-500 to-amber-500",
   },
   {
     title: "NDA",
@@ -130,6 +118,7 @@ const documentTypes = [
     price: "149",
     icon: Shield,
     href: "/legal-docs/dashboard/nda",
+    gradient: "from-blue-500 to-indigo-500",
   },
   {
     title: "Freelancer Contract",
@@ -138,6 +127,7 @@ const documentTypes = [
     price: "199",
     icon: FileText,
     href: "/legal-docs/dashboard/freelancer-contract",
+    gradient: "from-emerald-500 to-teal-500",
   },
 ];
 
@@ -177,16 +167,19 @@ const howItWorksSteps = [
     icon: ClipboardList,
     title: "Fill the Form",
     description: "Enter your details — names, addresses, terms, and preferences. Choose your language.",
+    gradient: "from-blue-500 to-cyan-500",
   },
   {
     icon: Bot,
     title: "AI Generates Your Document",
     description: "Our AI creates a legally formatted document based on Indian law templates in seconds.",
+    gradient: "from-orange-500 to-amber-500",
   },
   {
     icon: Download,
     title: "Download PDF",
     description: "Get your professional, print-ready PDF instantly. Rental agreements include official e-Stamp Paper format.",
+    gradient: "from-green-500 to-emerald-500",
   },
 ];
 
@@ -201,6 +194,29 @@ const jsonLd = {
     name: "LegalDocs by KraftAI",
     url: "https://kraftai.in/legal-docs",
     logo: "https://kraftai.in/icon.svg",
+    contactPoint: {
+      "@type": "ContactPoint",
+      email: "hritik242000@gmail.com",
+      contactType: "customer service",
+    },
+  },
+  breadcrumb: {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: "https://kraftai.in",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "LegalDocs",
+        item: "https://kraftai.in/legal-docs",
+      },
+    ],
   },
   faqPage: {
     "@context": "https://schema.org",
@@ -227,274 +243,379 @@ const jsonLd = {
       priceCurrency: "INR",
     },
   },
+  service: {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: "AI Legal Document Generator",
+    provider: {
+      "@type": "Organization",
+      name: "LegalDocs by KraftAI",
+    },
+    description: "AI-powered legal document generation service for India. Generate Rental Agreements, NDAs, and Freelancer Contracts in 10+ Indian languages.",
+    areaServed: {
+      "@type": "Country",
+      name: "India",
+    },
+    serviceType: "Legal Document Generation",
+  },
 };
 
 export default function LegalDocsPage() {
   return (
     <div className="min-h-screen bg-[#030712]">
       {/* JSON-LD Structured Data */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd.organization) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd.faqPage) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd.webApplication) }}
-      />
+      {Object.values(jsonLd).map((schema, i) => (
+        <script
+          key={i}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+      ))}
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden">
+      <section className="relative overflow-hidden min-h-[90vh] flex items-center">
         {/* Background Effects */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-orange-900/20 via-[#030712] to-[#030712]" />
         <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-[0.03]" />
 
         {/* Animated gradient orbs */}
-        <div className="absolute top-20 left-1/4 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-20 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+        <div className="absolute top-10 left-[10%] w-[500px] h-[500px] bg-orange-500/10 rounded-full blur-[100px] animate-pulse" />
+        <div className="absolute bottom-10 right-[10%] w-[400px] h-[400px] bg-purple-500/8 rounded-full blur-[100px] animate-pulse" style={{ animationDelay: "1s" }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-amber-500/5 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: "2s" }} />
 
-        <div className="relative mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8">
+        <div className="relative mx-auto max-w-7xl px-6 py-20 sm:py-32 lg:px-8 w-full">
           <div className="text-center">
             {/* Badge */}
-            <div className="inline-flex items-center rounded-full border border-orange-500/30 bg-orange-500/10 px-4 py-1.5 text-sm text-orange-400 mb-8">
-              <Sparkles className="mr-2 h-4 w-4" />
-              AI-Powered Legal Documents
-            </div>
+            <AnimateOnScroll>
+              <div className="inline-flex items-center rounded-full border border-orange-500/30 bg-orange-500/10 px-5 py-2 text-sm text-orange-400 mb-8 backdrop-blur-sm">
+                <Sparkles className="mr-2 h-4 w-4 animate-pulse" />
+                AI-Powered Legal Documents for India
+              </div>
+            </AnimateOnScroll>
 
             {/* Main Heading */}
-            <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl lg:text-7xl">
-              Legal Documents in{" "}
-              <span className="bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">
-                Minutes
-              </span>
-            </h1>
+            <AnimateOnScroll delay={100}>
+              <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-6xl lg:text-7xl xl:text-8xl">
+                Free AI Legal Documents
+                <br />
+                <span className="bg-gradient-to-r from-orange-400 via-amber-400 to-orange-600 bg-clip-text text-transparent">
+                  in Minutes
+                </span>
+              </h1>
+            </AnimateOnScroll>
 
-            <p className="mx-auto mt-6 max-w-2xl text-lg text-slate-300">
-              Generate legally valid Rental Agreements, NDAs, and Freelancer Contracts
-              using AI. Available in 10+ Indian languages. No lawyer needed.
-            </p>
+            <AnimateOnScroll delay={200}>
+              <p className="mx-auto mt-8 max-w-2xl text-lg sm:text-xl text-slate-300/90 leading-relaxed">
+                Generate legally valid Rental Agreements, NDAs, and Freelancer Contracts
+                using AI. Available in 10+ Indian languages. No lawyer needed.
+              </p>
+            </AnimateOnScroll>
 
             {/* CTA Buttons */}
-            <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link
-                href="/legal-docs/dashboard"
-                className="inline-flex items-center justify-center rounded-xl bg-orange-500 px-8 py-4 text-base font-semibold text-white shadow-lg shadow-orange-500/25 transition-all hover:bg-orange-600 hover:scale-105"
-              >
-                Create Document Free
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-              <Link
-                href="/legal-docs/login"
-                className="inline-flex items-center justify-center rounded-xl border border-slate-700 bg-slate-800/50 px-8 py-4 text-base font-semibold text-white transition-all hover:bg-slate-800"
-              >
-                Sign In
-              </Link>
-            </div>
+            <AnimateOnScroll delay={300}>
+              <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
+                <Link
+                  href="/legal-docs/dashboard"
+                  className="group relative inline-flex items-center justify-center rounded-2xl bg-gradient-to-r from-orange-500 to-orange-600 px-10 py-4.5 text-base font-semibold text-white shadow-2xl shadow-orange-500/25 transition-all hover:shadow-orange-500/40 hover:scale-[1.02] active:scale-[0.98]"
+                >
+                  <span className="absolute inset-0 rounded-2xl bg-gradient-to-r from-orange-400 to-orange-500 opacity-0 transition-opacity group-hover:opacity-100" />
+                  <span className="relative flex items-center">
+                    Create Document Free
+                    <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                  </span>
+                </Link>
+                <Link
+                  href="/legal-docs/login"
+                  className="inline-flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-10 py-4.5 text-base font-semibold text-white backdrop-blur-sm transition-all hover:bg-white/10 hover:border-white/20"
+                >
+                  Sign In
+                </Link>
+              </div>
+            </AnimateOnScroll>
 
             {/* Trust indicators */}
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm text-slate-500">
-              <div className="flex items-center gap-2">
-                <Check className="h-4 w-4 text-green-500" />
-                {premiumEnabled ? "2 Free Documents" : "100% Free"}
+            <AnimateOnScroll delay={400}>
+              <div className="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm text-slate-400">
+                <div className="flex items-center gap-2">
+                  <div className="h-5 w-5 rounded-full bg-green-500/20 flex items-center justify-center">
+                    <Check className="h-3 w-3 text-green-400" />
+                  </div>
+                  {premiumEnabled ? "2 Free Documents" : "100% Free"}
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="h-5 w-5 rounded-full bg-green-500/20 flex items-center justify-center">
+                    <Check className="h-3 w-3 text-green-400" />
+                  </div>
+                  Instant PDF Download
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="h-5 w-5 rounded-full bg-green-500/20 flex items-center justify-center">
+                    <Check className="h-3 w-3 text-green-400" />
+                  </div>
+                  10+ Languages
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="h-5 w-5 rounded-full bg-green-500/20 flex items-center justify-center">
+                    <FileCheck className="h-3 w-3 text-green-400" />
+                  </div>
+                  e-Stamp Paper Format
+                </div>
               </div>
-              <div className="flex items-center gap-2">
-                <Check className="h-4 w-4 text-green-500" />
-                Instant PDF Download
-              </div>
-              <div className="flex items-center gap-2">
-                <Check className="h-4 w-4 text-green-500" />
-                10+ Languages
-              </div>
-              <div className="flex items-center gap-2">
-                <FileCheck className="h-4 w-4 text-green-500" />
-                e-Stamp Paper Format
-              </div>
-            </div>
+            </AnimateOnScroll>
 
             {/* Language Pills */}
-            <div className="mt-12">
-              <p className="text-sm text-slate-500 mb-4">Available in:</p>
-              <div className="flex flex-wrap justify-center gap-2">
-                {languages.map((lang) => (
-                  <span
-                    key={lang.name}
-                    className="inline-flex items-center rounded-full bg-slate-800/80 px-3 py-1 text-sm text-slate-300 border border-slate-700"
-                  >
-                    <span className="mr-1">{lang.flag}</span> {lang.name}
-                  </span>
-                ))}
+            <AnimateOnScroll delay={500}>
+              <div className="mt-14">
+                <p className="text-sm text-slate-500 mb-4 uppercase tracking-widest font-medium">Available in</p>
+                <div className="flex flex-wrap justify-center gap-2">
+                  {languages.map((lang, i) => (
+                    <span
+                      key={lang.name}
+                      className="inline-flex items-center rounded-full bg-white/[0.04] px-4 py-1.5 text-sm text-slate-300 border border-white/[0.06] backdrop-blur-sm hover:bg-white/[0.08] hover:border-white/[0.12] transition-all cursor-default"
+                      style={{ animationDelay: `${i * 50}ms` }}
+                    >
+                      <span className="mr-1.5">{lang.flag}</span> {lang.name}
+                    </span>
+                  ))}
+                </div>
               </div>
-            </div>
+            </AnimateOnScroll>
+          </div>
+        </div>
+
+        {/* Bottom fade */}
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#030712] to-transparent" />
+      </section>
+
+      {/* Stats Section */}
+      <section className="relative py-16 border-y border-white/[0.04]">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
+            {[
+              { value: 5000, suffix: "+", label: "Documents Generated", icon: FileStack },
+              { value: 2000, suffix: "+", label: "Happy Users", icon: Users },
+              { value: 10, suffix: "+", label: "Indian Languages", icon: Globe },
+              { value: 0, suffix: "₹", label: "Starting Price", icon: IndianRupee, prefix: true },
+            ].map((stat) => (
+              <AnimateOnScroll key={stat.label}>
+                <div className="text-center group">
+                  <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-orange-500/10 mb-4 group-hover:bg-orange-500/20 transition-colors">
+                    <stat.icon className="h-5 w-5 text-orange-400" />
+                  </div>
+                  <p className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
+                    {stat.prefix && stat.suffix}
+                    <CountUp target={stat.value} />
+                    {!stat.prefix && stat.suffix}
+                  </p>
+                  <p className="mt-1 text-sm text-slate-500">{stat.label}</p>
+                </div>
+              </AnimateOnScroll>
+            ))}
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="py-24 relative">
+      <section className="py-28 relative">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-              Why Choose LegalDocs?
-            </h2>
-            <p className="mt-4 text-lg text-slate-400">
-              Professional legal documents, simple and accessible
-            </p>
-          </div>
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {features.map((feature) => (
-              <div
-                key={feature.title}
-                className="relative rounded-2xl border border-slate-800 bg-slate-900/50 p-8 hover:border-orange-500/30 transition-colors"
-              >
-                <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-orange-500/10 mb-4">
-                  <feature.icon className="h-6 w-6 text-orange-500" />
+          <AnimateOnScroll>
+            <div className="text-center mb-20">
+              <span className="inline-flex items-center rounded-full bg-orange-500/10 border border-orange-500/20 px-4 py-1.5 text-xs font-medium text-orange-400 uppercase tracking-widest mb-6">
+                Why Choose Us
+              </span>
+              <h2 className="text-3xl font-bold tracking-tight text-white sm:text-5xl">
+                Why Choose LegalDocs?
+              </h2>
+              <p className="mt-4 text-lg text-slate-400 max-w-2xl mx-auto">
+                Professional legal documents, simple and accessible for everyone
+              </p>
+            </div>
+          </AnimateOnScroll>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {features.map((feature, i) => (
+              <AnimateOnScroll key={feature.title} delay={i * 100}>
+                <div className="group relative rounded-3xl border border-white/[0.06] bg-white/[0.02] p-8 hover:bg-white/[0.04] transition-all duration-500 hover:border-white/[0.12] hover:shadow-2xl hover:shadow-orange-500/5 h-full">
+                  <div className={`inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${feature.gradient} mb-6 shadow-lg group-hover:scale-110 transition-transform duration-500`}>
+                    <feature.icon className="h-6 w-6 text-white" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-white mb-2">{feature.title}</h3>
+                  <p className="text-slate-400 text-sm leading-relaxed">{feature.description}</p>
                 </div>
-                <h3 className="text-lg font-semibold text-white">{feature.title}</h3>
-                <p className="mt-2 text-slate-400">{feature.description}</p>
-              </div>
+              </AnimateOnScroll>
             ))}
           </div>
         </div>
       </section>
 
       {/* Trusted By Section */}
-      <section className="py-12 border-t border-slate-800/50">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <p className="text-center text-sm text-slate-500 mb-6">
-            Trusted by teams at leading companies
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-4">
-            {["Razorpay", "Freshworks", "Swiggy", "Urban Company", "Zerodha", "Groww"].map((company) => (
-              <span key={company} className="text-lg font-semibold text-slate-600">
-                {company}
-              </span>
-            ))}
-          </div>
+      <section className="py-14 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.02] to-transparent" />
+        <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
+          <AnimateOnScroll>
+            <p className="text-center text-xs text-slate-600 mb-8 uppercase tracking-[0.2em] font-medium">
+              Trusted by professionals at leading companies
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-6">
+              {["Razorpay", "Freshworks", "Swiggy", "Urban Company", "Zerodha", "Groww"].map((company) => (
+                <span key={company} className="text-xl font-bold text-slate-700 hover:text-slate-500 transition-colors cursor-default tracking-wide">
+                  {company}
+                </span>
+              ))}
+            </div>
+          </AnimateOnScroll>
         </div>
       </section>
 
       {/* How It Works Section */}
-      <section className="py-24 relative bg-slate-900/30">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-              How It Works
-            </h2>
-            <p className="mt-4 text-lg text-slate-400">
-              Create your legal document in 3 simple steps
-            </p>
-          </div>
-          <div className="grid gap-8 sm:grid-cols-3">
+      <section className="py-28 relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-orange-500/[0.02] to-transparent" />
+        <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
+          <AnimateOnScroll>
+            <div className="text-center mb-20">
+              <span className="inline-flex items-center rounded-full bg-orange-500/10 border border-orange-500/20 px-4 py-1.5 text-xs font-medium text-orange-400 uppercase tracking-widest mb-6">
+                Simple Process
+              </span>
+              <h2 className="text-3xl font-bold tracking-tight text-white sm:text-5xl">
+                How It Works
+              </h2>
+              <p className="mt-4 text-lg text-slate-400">
+                Create your legal document in 3 simple steps
+              </p>
+            </div>
+          </AnimateOnScroll>
+          <div className="grid gap-8 lg:grid-cols-3">
             {howItWorksSteps.map((step, index) => (
-              <div key={step.title} className="relative text-center">
-                <div className="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-orange-500/10 mb-6 mx-auto">
-                  <step.icon className="h-8 w-8 text-orange-500" />
+              <AnimateOnScroll key={step.title} delay={index * 150}>
+                <div className="relative group">
+                  {/* Connector line */}
+                  {index < howItWorksSteps.length - 1 && (
+                    <div className="hidden lg:block absolute top-12 left-[calc(50%+40px)] w-[calc(100%-80px)] h-px bg-gradient-to-r from-white/10 to-transparent" />
+                  )}
+                  <div className="relative text-center rounded-3xl border border-white/[0.06] bg-white/[0.02] p-10 hover:bg-white/[0.04] transition-all duration-500 hover:border-white/[0.12] h-full">
+                    {/* Step number */}
+                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 inline-flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-r from-orange-500 to-amber-500 text-white text-sm font-bold shadow-lg shadow-orange-500/25">
+                      {index + 1}
+                    </div>
+                    <div className={`inline-flex h-16 w-16 items-center justify-center rounded-3xl bg-gradient-to-br ${step.gradient} mb-6 mx-auto shadow-lg group-hover:scale-110 transition-transform duration-500`}>
+                      <step.icon className="h-7 w-7 text-white" />
+                    </div>
+                    <h3 className="text-xl font-semibold text-white mb-3">{step.title}</h3>
+                    <p className="text-slate-400 leading-relaxed">{step.description}</p>
+                  </div>
                 </div>
-                <div className="absolute -top-2 -right-2 sm:right-auto sm:left-1/2 sm:translate-x-6 sm:-translate-y-2 inline-flex h-8 w-8 items-center justify-center rounded-full bg-orange-500 text-white text-sm font-bold">
-                  {index + 1}
-                </div>
-                <h3 className="text-lg font-semibold text-white">{step.title}</h3>
-                <p className="mt-2 text-slate-400">{step.description}</p>
-              </div>
+              </AnimateOnScroll>
             ))}
           </div>
         </div>
       </section>
 
       {/* Documents Section */}
-      <section className="py-24 relative">
+      <section className="py-28 relative">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-              Choose Your Document
-            </h2>
-            <p className="mt-4 text-lg text-slate-400">
-              Select from our range of legally valid documents
-            </p>
-          </div>
+          <AnimateOnScroll>
+            <div className="text-center mb-20">
+              <span className="inline-flex items-center rounded-full bg-orange-500/10 border border-orange-500/20 px-4 py-1.5 text-xs font-medium text-orange-400 uppercase tracking-widest mb-6">
+                Documents
+              </span>
+              <h2 className="text-3xl font-bold tracking-tight text-white sm:text-5xl">
+                Choose Your Document
+              </h2>
+              <p className="mt-4 text-lg text-slate-400">
+                Select from our range of legally valid documents
+              </p>
+            </div>
+          </AnimateOnScroll>
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {documentTypes.map((doc) => (
-              <Link
-                key={doc.title}
-                href={doc.href}
-                className="group relative rounded-2xl border border-slate-800 bg-slate-900/50 p-8 transition-all hover:border-orange-500/50 hover:shadow-lg hover:shadow-orange-500/10"
-              >
-                {doc.popular && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                    <span className="inline-flex items-center rounded-full bg-gradient-to-r from-orange-500 to-orange-600 px-3 py-1 text-xs font-medium text-white">
-                      Most Popular
-                    </span>
-                  </div>
-                )}
-                <div className="inline-flex h-14 w-14 items-center justify-center rounded-xl bg-orange-500/10 mb-6">
-                  <doc.icon className="h-7 w-7 text-orange-500" />
-                </div>
-                <h3 className="text-xl font-semibold text-white">{doc.title}</h3>
-                <p className="text-sm text-orange-400 mt-1">{doc.titleHi}</p>
-                <p className="mt-3 text-slate-400 text-sm">{doc.description}</p>
-                <div className="mt-6 flex items-center justify-between">
-                  <div>
-                    {premiumEnabled ? (
-                      <>
-                        <span className="text-3xl font-bold text-white">₹{doc.price}</span>
-                        <span className="text-slate-500 text-sm ml-1">/ document</span>
-                      </>
-                    ) : (
-                      <span className="inline-flex items-center rounded-full bg-green-500/10 border border-green-500/30 px-3 py-1 text-sm font-semibold text-green-400">
-                        Free
+            {documentTypes.map((doc, i) => (
+              <AnimateOnScroll key={doc.title} delay={i * 100}>
+                <Link
+                  href={doc.href}
+                  className="group relative rounded-3xl border border-white/[0.06] bg-white/[0.02] p-8 transition-all duration-500 hover:bg-white/[0.04] hover:border-white/[0.12] hover:shadow-2xl hover:shadow-orange-500/5 hover:-translate-y-1 block h-full"
+                >
+                  {doc.popular && (
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">
+                      <span className="inline-flex items-center rounded-full bg-gradient-to-r from-orange-500 to-amber-500 px-4 py-1 text-xs font-semibold text-white shadow-lg shadow-orange-500/25">
+                        Most Popular
                       </span>
-                    )}
+                    </div>
+                  )}
+                  <div className={`inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${doc.gradient} mb-6 shadow-lg group-hover:scale-110 transition-transform duration-500`}>
+                    <doc.icon className="h-7 w-7 text-white" />
                   </div>
-                  <div className="flex items-center text-orange-400 text-sm font-medium">
-                    Create Now <ChevronRight className="h-4 w-4" />
+                  <h3 className="text-xl font-semibold text-white">{doc.title}</h3>
+                  <p className="text-sm text-orange-400/80 mt-1 font-medium">{doc.titleHi}</p>
+                  <p className="mt-4 text-slate-400 text-sm leading-relaxed">{doc.description}</p>
+                  <div className="mt-8 flex items-center justify-between pt-6 border-t border-white/[0.06]">
+                    <div>
+                      {premiumEnabled ? (
+                        <>
+                          <span className="text-3xl font-bold text-white">₹{doc.price}</span>
+                          <span className="text-slate-500 text-sm ml-1">/ document</span>
+                        </>
+                      ) : (
+                        <span className="inline-flex items-center rounded-full bg-green-500/10 border border-green-500/20 px-4 py-1 text-sm font-semibold text-green-400">
+                          Free
+                        </span>
+                      )}
+                    </div>
+                    <div className="flex items-center text-orange-400 text-sm font-medium group-hover:translate-x-1 transition-transform">
+                      Create Now <ChevronRight className="h-4 w-4 ml-1" />
+                    </div>
                   </div>
-                </div>
-              </Link>
+                </Link>
+              </AnimateOnScroll>
             ))}
           </div>
         </div>
       </section>
 
       {/* Supported Cities Section */}
-      <section className="py-16 border-y border-slate-800">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="text-center mb-8">
-            <h2 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">
-              Available Across Major Indian Cities
-            </h2>
-            <p className="mt-3 text-slate-400">
-              Generate rental agreements, NDAs, and contracts tailored to your city
-            </p>
-          </div>
-          <div className="flex flex-wrap justify-center gap-3">
-            {supportedCities.map((city) => (
-              <span
-                key={city}
-                className="inline-flex items-center gap-1.5 rounded-full bg-slate-800/80 px-4 py-2 text-sm text-slate-300 border border-slate-700"
-              >
-                <MapPin className="h-3.5 w-3.5 text-orange-500" />
-                {city}
-              </span>
-            ))}
-          </div>
+      <section className="py-20 relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.01] to-transparent" />
+        <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
+          <AnimateOnScroll>
+            <div className="text-center mb-10">
+              <h2 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">
+                Available Across Major Indian Cities
+              </h2>
+              <p className="mt-3 text-slate-400">
+                Generate rental agreements, NDAs, and contracts tailored to your city
+              </p>
+            </div>
+          </AnimateOnScroll>
+          <AnimateOnScroll delay={100}>
+            <div className="flex flex-wrap justify-center gap-3">
+              {supportedCities.map((city) => (
+                <span
+                  key={city}
+                  className="inline-flex items-center gap-2 rounded-full bg-white/[0.04] px-5 py-2.5 text-sm text-slate-300 border border-white/[0.06] backdrop-blur-sm hover:bg-white/[0.08] hover:border-orange-500/20 transition-all cursor-default"
+                >
+                  <MapPin className="h-3.5 w-3.5 text-orange-400" />
+                  {city}
+                </span>
+              ))}
+            </div>
+          </AnimateOnScroll>
         </div>
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-24 relative">
+      <section className="py-28 relative">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-              What Our Users Say
-            </h2>
-            <p className="mt-4 text-lg text-slate-400">
-              Trusted by thousands across India
-            </p>
-          </div>
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          <AnimateOnScroll>
+            <div className="text-center mb-20">
+              <span className="inline-flex items-center rounded-full bg-orange-500/10 border border-orange-500/20 px-4 py-1.5 text-xs font-medium text-orange-400 uppercase tracking-widest mb-6">
+                Testimonials
+              </span>
+              <h2 className="text-3xl font-bold tracking-tight text-white sm:text-5xl">
+                What Our Users Say
+              </h2>
+              <p className="mt-4 text-lg text-slate-400">
+                Trusted by thousands across India
+              </p>
+            </div>
+          </AnimateOnScroll>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {[
               {
                 name: "Ananya Iyer",
@@ -520,139 +641,159 @@ export default function LegalDocsPage() {
                 stars: 4,
                 quote: "Created a Hindi rental agreement for my new flat in under 5 minutes. The e-Stamp Paper format made it ready to register immediately.",
               },
-            ].map((testimonial) => (
-              <div
-                key={testimonial.name}
-                className="rounded-2xl border border-slate-800 bg-slate-900/50 p-8"
-              >
-                <div className="flex items-center gap-2 mb-4">
-                  <span className="inline-flex items-center rounded-full bg-orange-500/10 border border-orange-500/30 px-2.5 py-0.5 text-xs font-medium text-orange-400">
-                    {testimonial.docType}
-                  </span>
-                  <div className="flex items-center gap-0.5 ml-auto">
-                    {Array.from({ length: testimonial.stars }).map((_, i) => (
-                      <Star key={i} className="h-3.5 w-3.5 fill-orange-400 text-orange-400" />
-                    ))}
-                    {Array.from({ length: 5 - testimonial.stars }).map((_, i) => (
-                      <Star key={`empty-${i}`} className="h-3.5 w-3.5 text-slate-700" />
-                    ))}
+            ].map((testimonial, i) => (
+              <AnimateOnScroll key={testimonial.name} delay={i * 100}>
+                <div className="relative rounded-3xl border border-white/[0.06] bg-white/[0.02] p-8 hover:bg-white/[0.04] transition-all duration-500 h-full flex flex-col">
+                  <div className="flex items-center gap-2 mb-5">
+                    <span className="inline-flex items-center rounded-full bg-orange-500/10 border border-orange-500/20 px-3 py-1 text-xs font-medium text-orange-400">
+                      {testimonial.docType}
+                    </span>
+                    <div className="flex items-center gap-0.5 ml-auto">
+                      {Array.from({ length: testimonial.stars }).map((_, i) => (
+                        <Star key={i} className="h-4 w-4 fill-amber-400 text-amber-400" />
+                      ))}
+                      {Array.from({ length: 5 - testimonial.stars }).map((_, i) => (
+                        <Star key={`empty-${i}`} className="h-4 w-4 text-slate-700" />
+                      ))}
+                    </div>
+                  </div>
+                  <p className="text-slate-300 text-[15px] leading-relaxed flex-1">
+                    &ldquo;{testimonial.quote}&rdquo;
+                  </p>
+                  <div className="mt-6 pt-6 border-t border-white/[0.06] flex items-center gap-3">
+                    <div className="h-11 w-11 rounded-full bg-gradient-to-br from-orange-500 to-amber-600 flex items-center justify-center text-white font-semibold shadow-lg shadow-orange-500/20">
+                      {testimonial.name.charAt(0)}
+                    </div>
+                    <div>
+                      <p className="text-sm font-semibold text-white">{testimonial.name}</p>
+                      <p className="text-xs text-slate-500">{testimonial.role}, {testimonial.city}</p>
+                    </div>
                   </div>
                 </div>
-                <p className="text-slate-300 text-sm leading-relaxed">
-                  &ldquo;{testimonial.quote}&rdquo;
-                </p>
-                <div className="mt-6 flex items-center gap-3">
-                  <div className="h-10 w-10 rounded-full bg-gradient-to-br from-orange-500 to-amber-600 flex items-center justify-center text-white font-semibold text-sm">
-                    {testimonial.name.charAt(0)}
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-white">{testimonial.name}</p>
-                    <p className="text-xs text-slate-500">{testimonial.role}, {testimonial.city}</p>
-                  </div>
-                </div>
-              </div>
+              </AnimateOnScroll>
             ))}
           </div>
         </div>
       </section>
 
       {/* FAQ Section */}
-      <section className="py-24 bg-slate-900/30">
-        <div className="mx-auto max-w-3xl px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-              Frequently Asked Questions
-            </h2>
-          </div>
-          <div className="space-y-6">
-            {faqs.map((faq) => (
-              <div
-                key={faq.question}
-                className="rounded-xl border border-slate-800 bg-slate-900/50 p-6"
-              >
-                <h3 className="text-lg font-medium text-white">{faq.question}</h3>
-                <p className="mt-2 text-slate-400">{faq.answer}</p>
-              </div>
+      <section className="py-28 relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-orange-500/[0.02] to-transparent" />
+        <div className="relative mx-auto max-w-3xl px-6 lg:px-8">
+          <AnimateOnScroll>
+            <div className="text-center mb-16">
+              <span className="inline-flex items-center rounded-full bg-orange-500/10 border border-orange-500/20 px-4 py-1.5 text-xs font-medium text-orange-400 uppercase tracking-widest mb-6">
+                FAQs
+              </span>
+              <h2 className="text-3xl font-bold tracking-tight text-white sm:text-5xl">
+                Frequently Asked Questions
+              </h2>
+            </div>
+          </AnimateOnScroll>
+          <div className="space-y-4">
+            {faqs.map((faq, i) => (
+              <AnimateOnScroll key={faq.question} delay={i * 50}>
+                <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-6 hover:bg-white/[0.04] transition-all duration-300">
+                  <h3 className="text-base font-semibold text-white">{faq.question}</h3>
+                  <p className="mt-3 text-slate-400 text-sm leading-relaxed">{faq.answer}</p>
+                </div>
+              </AnimateOnScroll>
             ))}
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-24">
-        <div className="mx-auto max-w-4xl px-6 lg:px-8">
-          <div className="relative rounded-3xl bg-gradient-to-br from-orange-600 to-orange-700 p-12 text-center overflow-hidden">
-            <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10" />
-            <div className="relative">
-              <h2 className="text-3xl font-bold text-white">
-                Ready to create your document?
-              </h2>
-              <p className="mt-4 text-orange-100">
-                Get started in minutes. No signup required for free documents.
-              </p>
-              <Link
-                href="/legal-docs/dashboard"
-                className="mt-8 inline-flex items-center justify-center rounded-xl bg-white px-8 py-4 text-base font-semibold text-orange-600 transition-all hover:bg-slate-100 hover:scale-105"
-              >
-                Get Started Free
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
+      <section className="py-28">
+        <div className="mx-auto max-w-5xl px-6 lg:px-8">
+          <AnimateOnScroll>
+            <div className="relative rounded-[2rem] overflow-hidden">
+              {/* Gradient background */}
+              <div className="absolute inset-0 bg-gradient-to-br from-orange-600 via-orange-500 to-amber-500" />
+              <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10" />
+              {/* Glow effects */}
+              <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl" />
+              <div className="absolute bottom-0 left-0 w-64 h-64 bg-orange-900/30 rounded-full blur-3xl" />
+
+              <div className="relative px-8 py-16 sm:px-16 sm:py-20 text-center">
+                <h2 className="text-3xl sm:text-4xl font-bold text-white">
+                  Ready to create your document?
+                </h2>
+                <p className="mt-4 text-orange-100/90 text-lg max-w-xl mx-auto">
+                  Get started in minutes. No signup required for free documents.
+                </p>
+                <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+                  <Link
+                    href="/legal-docs/dashboard"
+                    className="group inline-flex items-center justify-center rounded-2xl bg-white px-10 py-4.5 text-base font-semibold text-orange-600 transition-all hover:bg-orange-50 hover:scale-[1.02] active:scale-[0.98] shadow-xl"
+                  >
+                    Get Started Free
+                    <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                  </Link>
+                  <Link
+                    href="/legal-docs/login"
+                    className="inline-flex items-center justify-center rounded-2xl border-2 border-white/30 px-10 py-4.5 text-base font-semibold text-white transition-all hover:bg-white/10"
+                  >
+                    Sign In
+                  </Link>
+                </div>
+              </div>
             </div>
-          </div>
+          </AnimateOnScroll>
         </div>
       </section>
 
       {/* Footer with Disclaimer */}
-      <footer className="border-t border-slate-800 py-12">
+      <footer className="border-t border-white/[0.06] pt-16 pb-12">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="grid gap-8 lg:grid-cols-4">
+          <div className="grid gap-10 lg:grid-cols-4">
             <div className="lg:col-span-2">
-              <div className="flex items-center gap-2">
-                <Scale className="h-6 w-6 text-orange-500" />
+              <Link href="/" className="inline-flex items-center gap-2 group">
+                <Scale className="h-7 w-7 text-orange-500 group-hover:scale-110 transition-transform" />
                 <span className="text-xl font-bold text-white">
                   Legal<span className="text-orange-500">Docs</span>
                 </span>
-              </div>
-              <p className="mt-4 text-slate-400 max-w-md">
+              </Link>
+              <p className="mt-4 text-slate-400 max-w-md leading-relaxed">
                 AI-powered legal document generator for India. Making legal documents accessible to everyone in their preferred language.
               </p>
             </div>
             <div>
-              <h4 className="font-semibold text-white">Quick Links</h4>
-              <ul className="mt-4 space-y-2 text-slate-400">
-                <li><Link href="/legal-docs/dashboard/rental-agreement" className="hover:text-orange-500">Rental Agreement</Link></li>
-                <li><Link href="/legal-docs/dashboard/nda" className="hover:text-orange-500">NDA</Link></li>
-                <li><Link href="/legal-docs/dashboard/freelancer-contract" className="hover:text-orange-500">Freelancer Contract</Link></li>
+              <h4 className="font-semibold text-white text-sm uppercase tracking-widest mb-4">Quick Links</h4>
+              <ul className="space-y-3 text-slate-400">
+                <li><Link href="/legal-docs/dashboard/rental-agreement" className="hover:text-orange-400 transition-colors text-sm">Rental Agreement</Link></li>
+                <li><Link href="/legal-docs/dashboard/nda" className="hover:text-orange-400 transition-colors text-sm">NDA</Link></li>
+                <li><Link href="/legal-docs/dashboard/freelancer-contract" className="hover:text-orange-400 transition-colors text-sm">Freelancer Contract</Link></li>
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold text-white">Legal</h4>
-              <ul className="mt-4 space-y-2 text-slate-400">
-                <li><Link href="/legal-docs/privacy" className="hover:text-orange-500">Privacy Policy</Link></li>
-                <li><Link href="/legal-docs/terms" className="hover:text-orange-500">Terms of Service</Link></li>
-                <li><Link href="mailto:hritik242000@gmail.com" className="hover:text-orange-500">Contact Us</Link></li>
+              <h4 className="font-semibold text-white text-sm uppercase tracking-widest mb-4">Legal</h4>
+              <ul className="space-y-3 text-slate-400">
+                <li><Link href="/legal-docs/privacy" className="hover:text-orange-400 transition-colors text-sm">Privacy Policy</Link></li>
+                <li><Link href="/legal-docs/terms" className="hover:text-orange-400 transition-colors text-sm">Terms of Service</Link></li>
+                <li><Link href="mailto:hritik242000@gmail.com" className="hover:text-orange-400 transition-colors text-sm">Contact Us</Link></li>
               </ul>
             </div>
           </div>
 
           {/* Disclaimer */}
-          <div className="mt-12 pt-8 border-t border-slate-800">
-            <div className="rounded-xl bg-amber-500/10 border border-amber-500/20 p-6">
-              <h4 className="font-semibold text-amber-400 flex items-center gap-2">
-                <Shield className="h-5 w-5" />
+          <div className="mt-14 pt-8 border-t border-white/[0.06]">
+            <div className="rounded-2xl bg-amber-500/5 border border-amber-500/10 p-6">
+              <h4 className="font-semibold text-amber-400 flex items-center gap-2 text-sm">
+                <Shield className="h-4 w-4" />
                 Important Disclaimer
               </h4>
-              <p className="mt-2 text-sm text-slate-300">
-                <strong>This is NOT legal advice.</strong> The documents generated by LegalDocs are for reference purposes only and should not be considered as legal advice. We recommend consulting a qualified lawyer for your specific legal requirements. LegalDocs does not take responsibility for any legal disputes arising from the use of generated documents.
+              <p className="mt-2 text-sm text-slate-300/80 leading-relaxed">
+                <strong>This is NOT legal advice.</strong> The documents generated by LegalDocs are for reference purposes only and should not be considered as legal advice. We recommend consulting a qualified lawyer for your specific legal requirements.
               </p>
-              <p className="mt-2 text-sm text-slate-400">
-                By using this website, you agree to our <Link href="/legal-docs/terms" className="text-orange-500 hover:underline">Terms of Service</Link> and acknowledge that you have read and understood this disclaimer.
+              <p className="mt-2 text-sm text-slate-500">
+                By using this website, you agree to our <Link href="/legal-docs/terms" className="text-orange-400 hover:underline">Terms of Service</Link> and acknowledge that you have read and understood this disclaimer.
               </p>
             </div>
           </div>
 
-          <div className="mt-8 text-center text-sm text-slate-500">
-            <p>© {new Date().getFullYear()} LegalDocs by KraftAI. All rights reserved.</p>
+          <div className="mt-8 text-center text-sm text-slate-600">
+            <p>&copy; {new Date().getFullYear()} LegalDocs by KraftAI. All rights reserved.</p>
           </div>
         </div>
       </footer>

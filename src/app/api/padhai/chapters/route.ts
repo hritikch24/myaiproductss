@@ -2,6 +2,57 @@ import { NextRequest, NextResponse } from "next/server";
 import pool from "@/lib/db";
 import { auth } from "@/lib/auth";
 
+export async function GET(req: NextRequest) {
+  try {
+    const session = await auth();
+    
+    if (!session?.user?.email) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const { searchParams } = new URL(req.url);
+    const studentClass = searchParams.get("class");
+    const examTarget = searchParams.get("exam");
+
+    if (!studentClass || !examTarget) {
+      return NextResponse.json({ error: "Missing parameters" }, { status: 400 });
+    }
+
+    // Get chapters grouped by subject
+    const chaptersResult = await pool.query(
+      `SELECT c.id, c.name, c.chapter_order, c.estimated_hours, s.name as subject_name 
+       FROM padhai_chapters c
+       JOIN padhai_subjects s ON c.subject_id = s.id
+       WHERE c.class = $1 AND c.exam_type IN ('BOTH', $2)
+       ORDER BY s.name, c.chapter_order`,
+      [studentClass, examTarget]
+    );
+
+    // Group chapters by subject
+    const chaptersBySubject: Record<string, any[]> = {};
+    for (const chapter of chaptersResult.rows) {
+      if (!chaptersBySubject[chapter.subject_name]) {
+        chaptersBySubject[chapter.subject_name] = [];
+      }
+      chaptersBySubject[chapter.subject_name].push({
+        id: chapter.id,
+        name: chapter.name,
+        chapter_order: chapter.chapter_order,
+        estimated_hours: chapter.estimated_hours,
+      });
+    }
+
+    return NextResponse.json({ 
+      subjects: chaptersBySubject,
+      examTarget,
+      studentClass 
+    });
+  } catch (error) {
+    console.error("Get chapters error:", error);
+    return NextResponse.json({ error: "Failed to fetch chapters" }, { status: 500 });
+  }
+}
+
 export async function POST(req: NextRequest) {
   try {
     const session = await auth();
@@ -12,19 +63,9 @@ export async function POST(req: NextRequest) {
 
     const { completedChapters } = await req.json();
 
-    // Get student
-    const studentResult = await pool.query(
-      "SELECT id FROM padhai_students WHERE email = $1",
-      [session.user.email]
-    );
-
-    if (studentResult.rows.length === 0) {
-      return NextResponse.json({ error: "Student not found" }, { status: 404 });
-    }
-
     await pool.query(
       "UPDATE padhai_students SET completed_chapters = $1 WHERE email = $2",
-      [JSON.stringify(completedChapters), session.user.email]
+      [JSON.stringify(completedChapters || []), session.user.email]
     );
 
     return NextResponse.json({ success: true });
