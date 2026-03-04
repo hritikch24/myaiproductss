@@ -30,8 +30,8 @@ const documentTypes = [
     price: "149",
     icon: Shield,
     href: "/legal-docs/dashboard/nda",
-    gradient: "from-blue-500/20 to-cyan-500/5",
-    iconBg: "from-blue-500 to-cyan-600",
+    gradient: "from-violet-500/20 to-indigo-500/5",
+    iconBg: "from-violet-500 to-indigo-600",
   },
   {
     title: "Freelancer Contract",

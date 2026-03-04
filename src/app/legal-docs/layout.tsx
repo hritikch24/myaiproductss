@@ -4,7 +4,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       {/* Animated gradient orbs */}
       <div className="gradient-orb fixed top-[-20%] left-[-10%] w-[600px] h-[600px] bg-orange-600" />
       <div className="gradient-orb fixed bottom-[-20%] right-[-10%] w-[500px] h-[500px] bg-purple-600" style={{ animationDelay: "-7s" }} />
-      <div className="gradient-orb fixed top-[40%] right-[20%] w-[300px] h-[300px] bg-blue-600" style={{ animationDelay: "-14s" }} />
+      <div className="gradient-orb fixed top-[40%] right-[20%] w-[300px] h-[300px] bg-amber-600" style={{ animationDelay: "-14s" }} />
 
       {/* Content */}
       <div className="relative z-10">
