@@ -220,6 +220,7 @@ const fields: FormField[] = [
     type: "date",
     placeholder: "Select start date",
     minDate: "today",
+    defaultDate: "today",
     section: "Financial Terms",
   },
   {

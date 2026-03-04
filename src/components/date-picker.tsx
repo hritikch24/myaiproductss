@@ -19,6 +19,7 @@ interface DatePickerProps {
   placeholder?: string;
   minDate?: Date;
   maxDate?: Date;
+  defaultDate?: Date;
 }
 
 export function DatePicker({
@@ -28,8 +29,9 @@ export function DatePicker({
   placeholder = "Pick a date",
   minDate,
   maxDate,
+  defaultDate,
 }: DatePickerProps) {
-  const [date, setDate] = useState<Date>();
+  const [date, setDate] = useState<Date | undefined>(defaultDate);
   const [open, setOpen] = useState(false);
 
   const mounted = useSyncExternalStore(

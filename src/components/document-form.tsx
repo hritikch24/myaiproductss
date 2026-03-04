@@ -4,7 +4,8 @@ import { useState, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ArrowLeft, Loader2, AlertCircle, Sparkles } from "lucide-react";
+import { ArrowLeft, Loader2, AlertCircle, Sparkles, CreditCard } from "lucide-react";
+import { DOC_PRICE_DISPLAY } from "@/lib/pricing";
 import Link from "next/link";
 import { PaymentModal } from "./payment-modal";
 import { DatePicker } from "./date-picker";
@@ -27,6 +28,7 @@ export interface FormField {
   suffix?: string;
   minDate?: string;
   maxDate?: string;
+  defaultDate?: string;
   section?: string;
 }
 
@@ -209,11 +211,21 @@ export function DocumentForm({
       }
 
       if (!res.ok) {
-        const body = await res.json();
-        throw new Error(body.error || "Failed to generate document");
+        let message = "Failed to generate document";
+        try {
+          const body = await res.json();
+          if (body.error) message = body.error;
+        } catch {
+          // Response wasn't JSON
+        }
+        throw new Error(message);
       }
 
-      const { documentId } = await res.json();
+      const result = await res.json();
+      if (!result.documentId) {
+        throw new Error("Invalid response from server");
+      }
+      const { documentId } = result;
       router.push(`/legal-docs/dashboard/documents/${documentId}`);
     } catch (err) {
       clearInterval(interval);
@@ -321,6 +333,7 @@ export function DocumentForm({
                   placeholder={field.placeholder || "Pick a date"}
                   minDate={resolveDate(field.minDate)}
                   maxDate={resolveDate(field.maxDate)}
+                  defaultDate={resolveDate(field.defaultDate)}
                 />
               ) : field.type === "textarea" ? (
                 <div>
@@ -416,23 +429,57 @@ export function DocumentForm({
             </div>
           )}
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="btn-gradient w-full flex items-center justify-center gap-2 rounded-xl h-11 text-sm font-medium text-white disabled:opacity-60 disabled:cursor-not-allowed"
-          >
-            {loading ? (
-              <>
-                <Loader2 className="h-4 w-4 animate-spin" />
-                {loadingText}
-              </>
-            ) : (
-              <>
-                <Sparkles className="h-4 w-4" />
-                Generate Document
-              </>
-            )}
-          </button>
+          <div className="space-y-3 pt-2">
+            <button
+              type="submit"
+              disabled={loading}
+              className="btn-gradient w-full flex items-center justify-center gap-2 rounded-xl h-11 text-sm font-medium text-white disabled:opacity-60 disabled:cursor-not-allowed"
+            >
+              {loading ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  {loadingText}
+                </>
+              ) : (
+                <>
+                  <Sparkles className="h-4 w-4" />
+                  Generate Document
+                </>
+              )}
+            </button>
+
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-white/[0.06]" />
+              </div>
+              <div className="relative flex justify-center text-[10px]">
+                <span className="bg-[#0f172a]/80 px-3 text-slate-600 uppercase tracking-wider">or</span>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              disabled={loading}
+              onClick={() => {
+                if (!formRef.current) return;
+                const formData = new FormData(formRef.current);
+                const data: Record<string, string> = {};
+                for (const [key, value] of formData.entries()) {
+                  data[key] = value as string;
+                }
+                if (!validateAll(data)) return;
+                setPendingFormData(data);
+                setShowPayment(true);
+              }}
+              className="w-full flex items-center justify-center gap-2 rounded-xl h-11 text-sm font-medium text-white border border-orange-500/30 bg-orange-500/5 hover:bg-orange-500/10 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
+            >
+              <CreditCard className="h-4 w-4 text-orange-400" />
+              Pay &#8377;{DOC_PRICE_DISPLAY[docType] || "99"} &amp; Generate
+            </button>
+            <p className="text-center text-[10px] text-slate-600">
+              2 free documents available &middot; Premium includes PDF download
+            </p>
+          </div>
         </form>
       </div>
 

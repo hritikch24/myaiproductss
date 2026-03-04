@@ -9,6 +9,9 @@ import {
   Clock,
   Sparkles,
   Zap,
+  CreditCard,
+  Check,
+  Crown,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -132,6 +135,75 @@ export default async function DashboardPage() {
       <div className="mt-6 flex items-center justify-center gap-2 text-xs text-slate-500">
         <Sparkles className="h-3 w-3 text-orange-500/50" />
         <span>Powered by Google Gemini AI &middot; 10+ Indian languages</span>
+      </div>
+
+      {/* Pricing Section */}
+      <div className="mt-12">
+        <div className="mb-6 text-center">
+          <h2 className="text-xl font-bold tracking-tight text-white flex items-center justify-center gap-2">
+            <Crown className="h-5 w-5 text-orange-400" />
+            Simple Pay-Per-Document Pricing
+          </h2>
+          <p className="mt-2 text-sm text-slate-400">
+            Start with 2 free documents. Pay only when you need more &mdash; no subscription required.
+          </p>
+        </div>
+
+        <div className="glass-card rounded-2xl p-6 sm:p-8">
+          <div className="grid gap-6 sm:grid-cols-2">
+            {/* Free Tier */}
+            <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-5">
+              <div className="flex items-center gap-2 mb-3">
+                <Sparkles className="h-4 w-4 text-emerald-400" />
+                <h3 className="text-sm font-semibold text-white">Free</h3>
+              </div>
+              <p className="text-2xl font-bold text-white mb-1">&#8377;0</p>
+              <p className="text-xs text-slate-500 mb-4">2 documents included</p>
+              <ul className="space-y-2">
+                {["2 free documents", "AI-powered generation", "All document types", "10+ Indian languages"].map((item) => (
+                  <li key={item} className="flex items-center gap-2 text-[13px] text-slate-400">
+                    <Check className="h-3.5 w-3.5 text-emerald-400 shrink-0" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Premium */}
+            <div className="rounded-xl border border-orange-500/20 bg-gradient-to-br from-orange-500/5 to-amber-500/5 p-5 relative overflow-hidden">
+              <div className="absolute top-3 right-3 rounded-full bg-orange-500/10 px-2 py-0.5 text-[10px] font-medium text-orange-400 uppercase tracking-wider">
+                Popular
+              </div>
+              <div className="flex items-center gap-2 mb-3">
+                <CreditCard className="h-4 w-4 text-orange-400" />
+                <h3 className="text-sm font-semibold text-white">Per Document</h3>
+              </div>
+              <p className="text-2xl font-bold text-white mb-1">&#8377;99 <span className="text-sm font-normal text-slate-500">onwards</span></p>
+              <p className="text-xs text-slate-500 mb-4">Pay only when you need</p>
+              <ul className="space-y-2">
+                {["Stamp paper PDF styling", "PDF download included", "Priority AI generation", "Razorpay secure payment", "No subscription needed"].map((item) => (
+                  <li key={item} className="flex items-center gap-2 text-[13px] text-slate-400">
+                    <Check className="h-3.5 w-3.5 text-orange-400 shrink-0" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          <div className="mt-5 grid gap-2 sm:grid-cols-3 text-center">
+            {documentTypes.map((doc) => (
+              <Link
+                key={doc.title}
+                href={doc.href}
+                className="rounded-lg border border-white/[0.06] bg-white/[0.02] px-4 py-3 hover:border-orange-500/20 hover:bg-orange-500/5 transition-all group"
+              >
+                <span className="text-[13px] font-medium text-white">{doc.title}</span>
+                <span className="block text-lg font-bold text-orange-400 mt-0.5">&#8377;{doc.price}</span>
+              </Link>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* Recent Documents */}
