@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Scale, Mail, Lock, ArrowRight, User, ArrowLeft } from "lucide-react";
+import { signIn } from "next-auth/react";
+import { Scale, Mail, Lock, ArrowRight, User } from "lucide-react";
 
 export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -17,51 +18,62 @@ export default function LoginPage() {
     setIsLoading(true);
     setError("");
     setSuccess("");
-    
-    try {
-      const endpoint = isSignup 
-        ? "/legal-docs/api/auth/register"
-        : "/legal-docs/api/auth/login";
-      
-      const response = await fetch(endpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password, name }),
-      });
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        setError(data.error || "Something went wrong");
-        setIsLoading(false);
-        return;
-      }
-
-      if (isSignup) {
-        setSuccess("Account created! Please login with your credentials.");
+    if (isSignup) {
+      // Register first
+      try {
+        const res = await fetch("/legal-docs/api/auth/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password, name }),
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          setError(data.error || "Registration failed");
+          setIsLoading(false);
+          return;
+        }
+        setSuccess("Account created! Please sign in.");
         setIsSignup(false);
         setPassword("");
-      } else {
-        window.location.href = "/legal-docs/dashboard";
+      } catch {
+        setError("Registration failed. Try again.");
+        setIsLoading(false);
       }
-    } catch (err) {
-      setError("Failed to connect. Please try again.");
+      return;
+    }
+
+    // Login
+    const result = await signIn("credentials", {
+      email,
+      password,
+      redirect: false,
+    });
+
+    if (result?.error) {
+      setError("Invalid email or password");
       setIsLoading(false);
+    } else {
+      window.location.href = "/legal-docs/dashboard";
     }
   }
 
   async function handleGoogleLogin() {
-    window.location.href = "/legal-docs/api/auth/signin?google";
+    await signIn("google", { callbackUrl: "/legal-docs/dashboard" });
+  }
+
+  async function handleGoogleSignup() {
+    await signIn("google", { callbackUrl: "/legal-docs/dashboard" });
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#030712] relative overflow-hidden">
+    <div className="flex min-h-screen items-center justify-center bg-[#030712] relative overflow-hidden p-4">
       {/* Background Effects */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-orange-900/20 via-[#030712] to-[#030712]" />
       <div className="absolute top-20 left-1/4 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl" />
       <div className="absolute bottom-20 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
 
-      <div className="relative w-full max-w-sm px-6">
+      <div className="relative w-full max-w-sm">
         {/* Logo */}
         <div className="mb-8 flex items-center justify-center gap-2">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 shadow-lg shadow-orange-500/20">
@@ -73,7 +85,7 @@ export default function LoginPage() {
         </div>
 
         {/* Card */}
-        <div className="rounded-2xl border border-slate-800 bg-slate-900/60 backdrop-blur-xl p-8 shadow-2xl">
+        <div className="rounded-2xl border border-slate-800 bg-slate-900/60 backdrop-blur-xl p-6 sm:p-8 shadow-2xl">
           <div className="flex items-center justify-between mb-2">
             <h1 className="text-xl font-semibold text-white">
               {isSignup ? "Create Account" : "Welcome back"}
@@ -81,7 +93,7 @@ export default function LoginPage() {
             <button
               type="button"
               onClick={() => { setIsSignup(!isSignup); setError(""); setSuccess(""); }}
-              className="text-sm text-orange-500 hover:text-orange-400"
+              className="text-sm text-orange-500 hover:text-orange-400 font-medium"
             >
               {isSignup ? "Sign In" : "Sign Up"}
             </button>
@@ -181,14 +193,16 @@ export default function LoginPage() {
               <div className="w-full border-t border-slate-800" />
             </div>
             <div className="relative flex justify-center text-xs">
-              <span className="bg-slate-900/80 px-3 text-slate-500">or continue with</span>
+              <span className="bg-slate-900/80 px-3 text-slate-500">
+                {isSignup ? "or sign up with" : "or continue with"}
+              </span>
             </div>
           </div>
 
           {/* Google Button */}
           <button
             type="button"
-            onClick={handleGoogleLogin}
+            onClick={isSignup ? handleGoogleSignup : handleGoogleLogin}
             disabled={isLoading}
             className="flex w-full items-center justify-center gap-3 rounded-lg border border-slate-700 bg-slate-800/30 px-4 py-2.5 text-sm font-medium text-white transition-all hover:bg-slate-800 disabled:opacity-50"
           >
@@ -198,7 +212,7 @@ export default function LoginPage() {
               <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05" />
               <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" />
             </svg>
-            Google
+            {isSignup ? "Sign up with Google" : "Google"}
           </button>
         </div>
 
