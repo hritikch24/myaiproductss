@@ -1,10 +1,10 @@
-import { Scale, Languages, IndianRupee, Mic, Shield, FileText, ArrowRight, Check, Sparkles, Zap, Globe, Users, Star, FileCheck, Clock, ChevronRight } from "lucide-react";
+import { Scale, Languages, Zap, Shield, FileText, ArrowRight, Check, Sparkles, FileCheck, ChevronRight, ClipboardList, Bot, Download, MapPin, Lock } from "lucide-react";
 import Link from "next/link";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "LegalDocs — Free AI Legal Document Generator India | Rental Agreement, NDA, Freelancer Contract in Hindi, English, Tamil, Bengali & More",
-  description: "Generate legally valid Rental Agreements, NDAs, and Freelancer Contracts instantly using AI. Available in 10+ Indian languages including Hindi, English, Bengali, Tamil, Telugu, Marathi, Gujarati, Kannada, Malayalam, Punjabi. Free to start. Starting at just ₹99.",
+  description: "Generate legally valid Rental Agreements, NDAs, and Freelancer Contracts instantly using AI. Available in 10+ Indian languages including Hindi, English, Bengali, Tamil, Telugu, Marathi, Gujarati, Kannada, Malayalam, Punjabi. Free to use.",
   keywords: [
     // Primary keywords
     "free legal document generator India",
@@ -44,14 +44,14 @@ export const metadata: Metadata = {
   authors: [{ name: "LegalDocs" }],
   creator: "LegalDocs",
   publisher: "LegalDocs",
-  metadataBase: new URL("https://legal-docs.in"),
+  metadataBase: new URL("https://kraftai.in"),
   alternates: {
-    canonical: "https://legal-docs.in/legal-docs",
+    canonical: "https://kraftai.in/legal-docs",
   },
   openGraph: {
     title: "LegalDocs — Free AI Legal Document Generator India",
-    description: "Generate legally valid Rental Agreements, NDAs, and Freelancer Contracts in 10+ Indian languages. Free to start, starting at ₹99.",
-    url: "https://legal-docs.in/legal-docs",
+    description: "Generate legally valid Rental Agreements, NDAs, and Freelancer Contracts in 10+ Indian languages. Free to use.",
+    url: "https://kraftai.in/legal-docs",
     siteName: "LegalDocs",
     locale: "en_IN",
     alternateLocale: "hi_IN",
@@ -60,7 +60,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "LegalDocs — Free AI Legal Document Generator India",
-    description: "Generate legal documents in Hindi, English, Tamil & more. Free to start.",
+    description: "Generate legal documents in Hindi, English, Tamil & more. Free to use.",
   },
   robots: {
     index: true,
@@ -74,6 +74,8 @@ export const metadata: Metadata = {
     },
   },
 };
+
+const premiumEnabled = process.env.NEXT_PUBLIC_PREMIUM_ENABLED === "true";
 
 const languages = [
   { name: "Hindi", nameHi: "हिंदी", flag: "🇮🇳" },
@@ -95,11 +97,6 @@ const features = [
     description: "Documents in Hindi, English, Bengali, Tamil, Telugu, Marathi, Gujarati, Kannada, Malayalam, Punjabi",
   },
   {
-    icon: IndianRupee,
-    title: "Starting at ₹99",
-    description: "Lawyer-quality documents at a fraction of the cost",
-  },
-  {
     icon: Zap,
     title: "Instant Generation",
     description: "Get your document in minutes, not days",
@@ -110,14 +107,9 @@ const features = [
     description: "Drafted as per Indian laws - Transfer of Property Act, Indian Contract Act",
   },
   {
-    icon: FileCheck,
-    title: "Professional Format",
-    description: "Industry-standard templates reviewed by legal experts",
-  },
-  {
-    icon: Users,
-    title: "Trusted by 10,000+",
-    description: "Documents generated for individuals and businesses across India",
+    icon: Lock,
+    title: "Secure & Private",
+    description: "Your data stays safe. Documents are generated securely and never shared with third parties",
   },
 ];
 
@@ -149,27 +141,6 @@ const documentTypes = [
   },
 ];
 
-const testimonials = [
-  {
-    name: "Rahul Sharma",
-    location: "Mumbai, Maharashtra",
-    text: "Generated my rental agreement in Hindi within 5 minutes. Saved ₹2000 on lawyer fees!",
-    rating: 5,
-  },
-  {
-    name: "Priya Menon",
-    location: "Bangalore, Karnataka",
-    text: "Amazing tool! Created an NDA for my startup in English and Kannada. Highly recommended.",
-    rating: 5,
-  },
-  {
-    name: "Amit Patel",
-    location: "Ahmedabad, Gujarat",
-    text: "Freelancer contract was perfect. All clauses were properly covered as per Indian law.",
-    rating: 5,
-  },
-];
-
 const faqs = [
   {
     question: "Are these documents legally valid in India?",
@@ -180,8 +151,16 @@ const faqs = [
     answer: "Agreements for more than 11 months require registration under the Registration Act, 1908. We provide guidance on this in the document.",
   },
   {
-    question: "Can I edit the documents after generation?",
-    answer: "Yes, you receive a downloadable PDF that you can further edit or take to a lawyer for customization.",
+    question: "Is an online rental agreement legally valid in India?",
+    answer: "Yes, online rental agreements are legally valid in India. Under the Indian Contract Act, 1872, a contract is valid as long as there is a lawful offer, acceptance, and consideration. The agreement should be printed on stamp paper of the required value and registered if the tenancy exceeds 11 months.",
+  },
+  {
+    question: "How much stamp duty for rental agreement?",
+    answer: "Stamp duty varies by state. For example, Maharashtra charges ₹500 for agreements up to 5 years, while Karnataka charges 1% of the total rent. Delhi charges 2% of the average annual rent. Our documents include state-specific guidance to help you comply with local stamp duty requirements.",
+  },
+  {
+    question: "Do I need a lawyer to create a rental agreement?",
+    answer: "No, you do not legally need a lawyer to create a rental agreement in India. LegalDocs uses AI to generate lawyer-quality agreements based on your inputs, drafted as per the Transfer of Property Act, 1882. However, we recommend consulting a lawyer for complex situations like commercial leases or high-value properties.",
   },
   {
     question: "What languages are available?",
@@ -189,15 +168,86 @@ const faqs = [
   },
 ];
 
+const howItWorksSteps = [
+  {
+    icon: ClipboardList,
+    title: "Fill the Form",
+    description: "Enter your details — names, addresses, terms, and preferences. Choose your language.",
+  },
+  {
+    icon: Bot,
+    title: "AI Generates Your Document",
+    description: "Our AI creates a legally formatted document based on Indian law templates in seconds.",
+  },
+  {
+    icon: Download,
+    title: "Download PDF",
+    description: "Get your professional, print-ready PDF instantly. Ready for signing and registration.",
+  },
+];
+
+const supportedCities = [
+  "Mumbai", "Delhi", "Bangalore", "Hyderabad", "Chennai", "Kolkata", "Pune", "Ahmedabad",
+];
+
+const jsonLd = {
+  organization: {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "LegalDocs by KraftAI",
+    url: "https://kraftai.in/legal-docs",
+    logo: "https://kraftai.in/icon.svg",
+  },
+  faqPage: {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
+  },
+  webApplication: {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    name: "LegalDocs",
+    url: "https://kraftai.in/legal-docs",
+    applicationCategory: "BusinessApplication",
+    operatingSystem: "Any",
+    offers: {
+      "@type": "Offer",
+      price: premiumEnabled ? "99" : "0",
+      priceCurrency: "INR",
+    },
+  },
+};
+
 export default function LegalDocsPage() {
   return (
     <div className="min-h-screen bg-[#030712]">
+      {/* JSON-LD Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd.organization) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd.faqPage) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd.webApplication) }}
+      />
+
       {/* Hero Section */}
       <section className="relative overflow-hidden">
         {/* Background Effects */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-orange-900/20 via-[#030712] to-[#030712]" />
         <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-[0.03]" />
-        
+
         {/* Animated gradient orbs */}
         <div className="absolute top-20 left-1/4 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl animate-pulse" />
         <div className="absolute bottom-20 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
@@ -209,7 +259,7 @@ export default function LegalDocsPage() {
               <Sparkles className="mr-2 h-4 w-4" />
               AI-Powered Legal Documents
             </div>
-            
+
             {/* Main Heading */}
             <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl lg:text-7xl">
               Legal Documents in{" "}
@@ -217,9 +267,9 @@ export default function LegalDocsPage() {
                 Minutes
               </span>
             </h1>
-            
+
             <p className="mx-auto mt-6 max-w-2xl text-lg text-slate-300">
-              Generate legally valid Rental Agreements, NDAs, and Freelancer Contracts 
+              Generate legally valid Rental Agreements, NDAs, and Freelancer Contracts
               using AI. Available in 10+ Indian languages. No lawyer needed.
             </p>
 
@@ -244,7 +294,7 @@ export default function LegalDocsPage() {
             <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm text-slate-500">
               <div className="flex items-center gap-2">
                 <Check className="h-4 w-4 text-green-500" />
-                2 Free Documents
+                {premiumEnabled ? "2 Free Documents" : "100% Free"}
               </div>
               <div className="flex items-center gap-2">
                 <Check className="h-4 w-4 text-green-500" />
@@ -282,10 +332,10 @@ export default function LegalDocsPage() {
               Why Choose LegalDocs?
             </h2>
             <p className="mt-4 text-lg text-slate-400">
-              Professional legal documents at a fraction of the cost
+              Professional legal documents, simple and accessible
             </p>
           </div>
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {features.map((feature) => (
               <div
                 key={feature.title}
@@ -302,8 +352,36 @@ export default function LegalDocsPage() {
         </div>
       </section>
 
-      {/* Documents Section */}
+      {/* How It Works Section */}
       <section className="py-24 relative bg-slate-900/30">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+              How It Works
+            </h2>
+            <p className="mt-4 text-lg text-slate-400">
+              Create your legal document in 3 simple steps
+            </p>
+          </div>
+          <div className="grid gap-8 sm:grid-cols-3">
+            {howItWorksSteps.map((step, index) => (
+              <div key={step.title} className="relative text-center">
+                <div className="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-orange-500/10 mb-6 mx-auto">
+                  <step.icon className="h-8 w-8 text-orange-500" />
+                </div>
+                <div className="absolute -top-2 -right-2 sm:right-auto sm:left-1/2 sm:translate-x-6 sm:-translate-y-2 inline-flex h-8 w-8 items-center justify-center rounded-full bg-orange-500 text-white text-sm font-bold">
+                  {index + 1}
+                </div>
+                <h3 className="text-lg font-semibold text-white">{step.title}</h3>
+                <p className="mt-2 text-slate-400">{step.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Documents Section */}
+      <section className="py-24 relative">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
@@ -335,8 +413,16 @@ export default function LegalDocsPage() {
                 <p className="mt-3 text-slate-400 text-sm">{doc.description}</p>
                 <div className="mt-6 flex items-center justify-between">
                   <div>
-                    <span className="text-3xl font-bold text-white">₹{doc.price}</span>
-                    <span className="text-slate-500 text-sm ml-1">/ document</span>
+                    {premiumEnabled ? (
+                      <>
+                        <span className="text-3xl font-bold text-white">₹{doc.price}</span>
+                        <span className="text-slate-500 text-sm ml-1">/ document</span>
+                      </>
+                    ) : (
+                      <span className="inline-flex items-center rounded-full bg-green-500/10 border border-green-500/30 px-3 py-1 text-sm font-semibold text-green-400">
+                        Free
+                      </span>
+                    )}
                   </div>
                   <div className="flex items-center text-orange-500 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity">
                     Create <ChevronRight className="h-4 w-4" />
@@ -348,58 +434,26 @@ export default function LegalDocsPage() {
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-20 border-y border-slate-800">
+      {/* Supported Cities Section */}
+      <section className="py-16 border-y border-slate-800">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="grid grid-cols-2 gap-8 lg:grid-cols-4">
-            <div className="text-center">
-              <div className="text-4xl font-bold text-orange-500">10+</div>
-              <div className="mt-2 text-slate-400">Languages</div>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-bold text-orange-500">₹99</div>
-              <div className="mt-2 text-slate-400">Starting Price</div>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-bold text-orange-500">5 min</div>
-              <div className="mt-2 text-slate-400">Avg. Generation Time</div>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-bold text-orange-500">24/7</div>
-              <div className="mt-2 text-slate-400">Available</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section className="py-24">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-              Trusted by Indians Everywhere
+          <div className="text-center mb-8">
+            <h2 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">
+              Available Across Major Indian Cities
             </h2>
-            <p className="mt-4 text-lg text-slate-400">
-              See what our users say about LegalDocs
+            <p className="mt-3 text-slate-400">
+              Generate rental agreements, NDAs, and contracts tailored to your city
             </p>
           </div>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {testimonials.map((testimonial) => (
-              <div
-                key={testimonial.name}
-                className="rounded-2xl border border-slate-800 bg-slate-900/50 p-6"
+          <div className="flex flex-wrap justify-center gap-3">
+            {supportedCities.map((city) => (
+              <span
+                key={city}
+                className="inline-flex items-center gap-1.5 rounded-full bg-slate-800/80 px-4 py-2 text-sm text-slate-300 border border-slate-700"
               >
-                <div className="flex gap-1 mb-4">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="h-4 w-4 fill-orange-500 text-orange-500" />
-                  ))}
-                </div>
-                <p className="text-slate-300">&ldquo;{testimonial.text}&rdquo;</p>
-                <div className="mt-4 pt-4 border-t border-slate-800">
-                  <div className="font-medium text-white">{testimonial.name}</div>
-                  <div className="text-sm text-slate-500">{testimonial.location}</div>
-                </div>
-              </div>
+                <MapPin className="h-3.5 w-3.5 text-orange-500" />
+                {city}
+              </span>
             ))}
           </div>
         </div>
@@ -469,21 +523,21 @@ export default function LegalDocsPage() {
             <div>
               <h4 className="font-semibold text-white">Quick Links</h4>
               <ul className="mt-4 space-y-2 text-slate-400">
-                <li><Link href="/legal-docs/dashboard" className="hover:text-orange-500">Rental Agreement</Link></li>
-                <li><Link href="/legal-docs/dashboard" className="hover:text-orange-500">NDA</Link></li>
-                <li><Link href="/legal-docs/dashboard" className="hover:text-orange-500">Freelancer Contract</Link></li>
+                <li><Link href="/legal-docs/dashboard/rental-agreement" className="hover:text-orange-500">Rental Agreement</Link></li>
+                <li><Link href="/legal-docs/dashboard/nda" className="hover:text-orange-500">NDA</Link></li>
+                <li><Link href="/legal-docs/dashboard/freelancer-contract" className="hover:text-orange-500">Freelancer Contract</Link></li>
               </ul>
             </div>
             <div>
               <h4 className="font-semibold text-white">Legal</h4>
               <ul className="mt-4 space-y-2 text-slate-400">
-                <li><Link href="#" className="hover:text-orange-500">Privacy Policy</Link></li>
-                <li><Link href="#" className="hover:text-orange-500">Terms of Service</Link></li>
-                <li><Link href="#" className="hover:text-orange-500">Contact Us</Link></li>
+                <li><Link href="/legal-docs/privacy" className="hover:text-orange-500">Privacy Policy</Link></li>
+                <li><Link href="/legal-docs/terms" className="hover:text-orange-500">Terms of Service</Link></li>
+                <li><Link href="mailto:support@kraftai.in" className="hover:text-orange-500">Contact Us</Link></li>
               </ul>
             </div>
           </div>
-          
+
           {/* Disclaimer */}
           <div className="mt-12 pt-8 border-t border-slate-800">
             <div className="rounded-xl bg-amber-500/10 border border-amber-500/20 p-6">
@@ -495,11 +549,11 @@ export default function LegalDocsPage() {
                 <strong>This is NOT legal advice.</strong> The documents generated by LegalDocs are for reference purposes only and should not be considered as legal advice. We recommend consulting a qualified lawyer for your specific legal requirements. LegalDocs does not take responsibility for any legal disputes arising from the use of generated documents.
               </p>
               <p className="mt-2 text-sm text-slate-400">
-                By using this website, you agree to our Terms of Service and acknowledge that you have read and understood this disclaimer.
+                By using this website, you agree to our <Link href="/legal-docs/terms" className="text-orange-500 hover:underline">Terms of Service</Link> and acknowledge that you have read and understood this disclaimer.
               </p>
             </div>
           </div>
-          
+
           <div className="mt-8 text-center text-sm text-slate-500">
             <p>© {new Date().getFullYear()} LegalDocs by KraftAI. All rights reserved.</p>
           </div>

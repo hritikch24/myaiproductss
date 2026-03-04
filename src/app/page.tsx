@@ -45,6 +45,7 @@ const products = [
     icon: Scale,
     color: "text-orange-500",
     bgColor: "bg-orange-500/10",
+    borderColor: "border-orange-500/30",
     status: "Live",
   },
   {
@@ -54,6 +55,7 @@ const products = [
     icon: Gamepad2,
     color: "text-purple-500",
     bgColor: "bg-purple-500/10",
+    borderColor: "border-purple-500/30",
     status: "Coming Soon",
   },
   {
@@ -63,6 +65,7 @@ const products = [
     icon: Bot,
     color: "text-blue-500",
     bgColor: "bg-blue-500/10",
+    borderColor: "border-blue-500/30",
     status: "Coming Soon",
   },
 ];
@@ -74,13 +77,13 @@ export default function Home() {
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
         <div className="flex items-center gap-2">
           <span className="text-2xl font-bold text-white">
-            Kraft<span className="text-orange-500">AI</span>
+            Kraft<span className="text-indigo-400">AI</span>
           </span>
         </div>
         <div className="flex items-center gap-4">
           <Link
             href="/legal-docs"
-            className="rounded-lg bg-orange-500 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-orange-600"
+            className="rounded-lg bg-indigo-500 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-600"
           >
             Explore Products
           </Link>
@@ -90,7 +93,7 @@ export default function Home() {
       {/* Hero */}
       <section className="mx-auto max-w-4xl px-6 py-20 text-center">
         <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">
-          Welcome to <span className="text-orange-500">KraftAI</span>
+          Welcome to <span className="bg-gradient-to-r from-indigo-400 to-indigo-600 bg-clip-text text-transparent">KraftAI</span>
         </h1>
         <p className="mt-6 text-lg leading-8 text-slate-300">
           A collection of AI-powered products designed to simplify your life.
@@ -106,7 +109,7 @@ export default function Home() {
             <Link
               key={product.name}
               href={product.href}
-              className="group relative overflow-hidden rounded-xl border border-slate-800 bg-slate-900/50 p-6 transition-all hover:border-slate-700"
+              className={`group relative overflow-hidden rounded-xl border border-slate-800 bg-slate-900/50 p-6 transition-all hover:${product.borderColor}`}
             >
               <div className={`mb-4 inline-flex rounded-lg p-3 ${product.bgColor}`}>
                 <product.icon className={`h-6 w-6 ${product.color}`} />
@@ -120,7 +123,7 @@ export default function Home() {
                 </span>
               </div>
               <p className="mt-2 text-sm text-slate-400">{product.description}</p>
-              <div className="mt-4 flex items-center text-sm font-medium text-orange-500 opacity-0 transition-opacity group-hover:opacity-100">
+              <div className="mt-4 flex items-center text-sm font-medium text-indigo-400 opacity-0 transition-opacity group-hover:opacity-100">
                 Explore <ArrowRight className="ml-1 h-4 w-4" />
               </div>
             </Link>
