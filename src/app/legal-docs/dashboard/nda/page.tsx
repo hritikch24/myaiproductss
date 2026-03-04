@@ -8,6 +8,7 @@ const fields: FormField[] = [
     placeholder: "Person or company name",
     helperText: "The party sharing confidential information",
     maxLength: 150,
+    section: "Disclosing Party",
   },
   {
     name: "disclosing_party_address",
@@ -15,6 +16,7 @@ const fields: FormField[] = [
     type: "textarea",
     placeholder: "Full address with pincode",
     maxLength: 300,
+    section: "Disclosing Party",
   },
   {
     name: "receiving_party",
@@ -23,6 +25,7 @@ const fields: FormField[] = [
     placeholder: "Person or company name",
     helperText: "The party receiving confidential information",
     maxLength: 150,
+    section: "Receiving Party",
   },
   {
     name: "receiving_party_address",
@@ -30,6 +33,7 @@ const fields: FormField[] = [
     type: "textarea",
     placeholder: "Full address with pincode",
     maxLength: 300,
+    section: "Receiving Party",
   },
   {
     name: "purpose",
@@ -38,6 +42,7 @@ const fields: FormField[] = [
     placeholder: "e.g. Discussing potential business partnership for a mobile app project",
     helperText: "Describe why confidential information is being shared",
     maxLength: 1000,
+    section: "Agreement Details",
   },
   {
     name: "duration_years",
@@ -48,6 +53,7 @@ const fields: FormField[] = [
     min: 1,
     max: 10,
     helperText: "How long the NDA remains in effect (1-10 years)",
+    section: "Agreement Details",
   },
   {
     name: "jurisdiction",
@@ -56,6 +62,7 @@ const fields: FormField[] = [
     placeholder: "e.g. New Delhi",
     helperText: "City where disputes will be resolved",
     maxLength: 50,
+    section: "Agreement Details",
   },
   {
     name: "language",
@@ -74,6 +81,7 @@ const fields: FormField[] = [
       { label: "Punjabi (ਪੰਜਾਬੀ)", value: "punjabi" },
       { label: "Both (English + Hindi)", value: "both" },
     ],
+    section: "Document Settings",
   },
 ];
 

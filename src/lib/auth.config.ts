@@ -2,6 +2,7 @@ import Google from "next-auth/providers/google";
 import Credentials from "next-auth/providers/credentials";
 import type { NextAuthConfig } from "next-auth";
 import pool from "./db";
+import bcrypt from "bcryptjs";
 
 async function getUserFromDb(email: string, password: string) {
   const { rows } = await pool.query(
@@ -12,11 +13,11 @@ async function getUserFromDb(email: string, password: string) {
   if (rows.length === 0) return null;
 
   const user = rows[0];
-  
-  // Accept "demo123" or stored password
-  if (password !== "demo123" && user.password !== password) {
-    return null;
-  }
+
+  if (!user.password) return null;
+
+  const isValid = await bcrypt.compare(password, user.password);
+  if (!isValid) return null;
 
   return {
     id: String(user.id),

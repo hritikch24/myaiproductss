@@ -8,6 +8,7 @@ const fields: FormField[] = [
     placeholder: "Person or company name",
     helperText: "Full legal name or registered company name",
     maxLength: 150,
+    section: "Client Details",
   },
   {
     name: "client_address",
@@ -16,6 +17,7 @@ const fields: FormField[] = [
     placeholder: "Full address with pincode",
     helperText: "Registered address for the contract",
     maxLength: 300,
+    section: "Client Details",
   },
   {
     name: "freelancer_name",
@@ -24,6 +26,7 @@ const fields: FormField[] = [
     placeholder: "Full legal name",
     helperText: "As it appears on PAN/Aadhaar",
     maxLength: 100,
+    section: "Freelancer Details",
   },
   {
     name: "freelancer_address",
@@ -32,6 +35,7 @@ const fields: FormField[] = [
     placeholder: "Full address with pincode",
     helperText: "Your current address",
     maxLength: 300,
+    section: "Freelancer Details",
   },
   {
     name: "project_description",
@@ -40,6 +44,7 @@ const fields: FormField[] = [
     placeholder: "Describe the project scope, objectives, and key requirements",
     helperText: "Be specific — this defines the scope of work in the contract",
     maxLength: 2000,
+    section: "Project Scope",
   },
   {
     name: "deliverables",
@@ -48,6 +53,7 @@ const fields: FormField[] = [
     placeholder: "e.g.\n• Website frontend (5 pages)\n• Admin dashboard\n• API integration\n• Source code handover",
     helperText: "List each deliverable clearly. Use bullet points for multiple items.",
     maxLength: 2000,
+    section: "Project Scope",
   },
   {
     name: "deadline",
@@ -55,6 +61,7 @@ const fields: FormField[] = [
     type: "date",
     placeholder: "Select deadline",
     minDate: "today",
+    section: "Payment & Timeline",
   },
   {
     name: "payment_amount",
@@ -65,6 +72,7 @@ const fields: FormField[] = [
     min: 100,
     max: 100000000,
     helperText: "Total project amount in Indian Rupees",
+    section: "Payment & Timeline",
   },
   {
     name: "payment_terms",
@@ -76,6 +84,7 @@ const fields: FormField[] = [
       { label: "Monthly", value: "monthly" },
     ],
     helperText: "Milestone-based is recommended for large projects",
+    section: "Payment & Timeline",
   },
   {
     name: "language",
@@ -94,6 +103,7 @@ const fields: FormField[] = [
       { label: "Punjabi (ਪੰਜਾਬੀ)", value: "punjabi" },
       { label: "Both (English + Hindi)", value: "both" },
     ],
+    section: "Document Settings",
   },
 ];
 

@@ -90,16 +90,18 @@ export default async function DashboardPage() {
           </p>
         </div>
         {freeDocsRemaining > 0 ? (
-          <div className="hidden sm:flex items-center gap-2 rounded-full bg-emerald-500/10 px-4 py-2 ring-1 ring-emerald-500/20">
+          <div className="flex items-center gap-2 rounded-full bg-emerald-500/10 px-3 sm:px-4 py-1.5 sm:py-2 ring-1 ring-emerald-500/20">
             <div className="status-dot bg-emerald-400" />
-            <span className="text-sm font-medium text-emerald-400">
-              {freeDocsRemaining} free doc{freeDocsRemaining !== 1 ? "s" : ""} left
+            <span className="text-xs sm:text-sm font-medium text-emerald-400">
+              {freeDocsRemaining} free
+              <span className="hidden sm:inline"> doc{freeDocsRemaining !== 1 ? "s" : ""}</span>
+              <span className="sm:hidden"> left</span>
             </span>
           </div>
         ) : (
-          <div className="hidden sm:flex items-center gap-2 rounded-full bg-orange-500/10 px-4 py-2 ring-1 ring-orange-500/20">
+          <div className="flex items-center gap-2 rounded-full bg-orange-500/10 px-3 sm:px-4 py-1.5 sm:py-2 ring-1 ring-orange-500/20">
             <Zap className="h-3.5 w-3.5 text-orange-400" />
-            <span className="text-sm font-medium text-orange-400">Pro user</span>
+            <span className="text-xs sm:text-sm font-medium text-orange-400">Pro</span>
           </div>
         )}
       </div>

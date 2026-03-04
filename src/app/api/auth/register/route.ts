@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import pool from "@/lib/db";
+import bcrypt from "bcryptjs";
 
 export async function POST(req: NextRequest) {
   try {
@@ -12,7 +13,13 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Check if user already exists
+    if (password.length < 6) {
+      return NextResponse.json(
+        { error: "Password must be at least 6 characters" },
+        { status: 400 }
+      );
+    }
+
     const existingUser = await pool.query(
       "SELECT id FROM users WHERE email = $1",
       [email.toLowerCase().trim()]
@@ -25,13 +32,13 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // For demo purposes, we store password as plain text
-    // In production, use bcrypt to hash passwords
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     const { rows } = await pool.query(
-      `INSERT INTO users (email, name, password) 
-       VALUES ($1, $2, $3) 
+      `INSERT INTO users (email, name, password)
+       VALUES ($1, $2, $3)
        RETURNING id, email, name`,
-      [email.toLowerCase().trim(), name || email.split("@")[0], password]
+      [email.toLowerCase().trim(), name || email.split("@")[0], hashedPassword]
     );
 
     // Track user registration

@@ -4,6 +4,7 @@ import pool from "@/lib/db";
 import { Button } from "@/components/ui/button";
 import { Download, Plus, ChevronRight } from "lucide-react";
 import Link from "next/link";
+import { EditAndRegenerateButton } from "./edit-button";
 
 const DOC_TYPE_ROUTES: Record<string, string> = {
   rental_agreement: "/legal-docs/dashboard/rental-agreement",
@@ -81,7 +82,12 @@ export default async function DocumentPreviewPage({
           </p>
         </div>
 
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-2.5 flex-wrap">
+          <EditAndRegenerateButton
+            docType={doc.doc_type}
+            formData={formData}
+            href={DOC_TYPE_ROUTES[doc.doc_type] || "/legal-docs/dashboard"}
+          />
           <Button
             asChild
             variant="ghost"
@@ -89,7 +95,7 @@ export default async function DocumentPreviewPage({
           >
             <Link href={DOC_TYPE_ROUTES[doc.doc_type] || "/legal-docs/dashboard"}>
               <Plus className="h-3.5 w-3.5" />
-              Generate Another
+              New
             </Link>
           </Button>
           <a

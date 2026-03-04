@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -68,6 +68,38 @@ export function DocumentForm({
   const [pendingFormData, setPendingFormData] = useState<Record<string, string> | null>(null);
   const [charCounts, setCharCounts] = useState<Record<string, number>>({});
   const [currencyDisplays, setCurrencyDisplays] = useState<Record<string, string>>({});
+  const [draftRestored, setDraftRestored] = useState(false);
+  const [filledCount, setFilledCount] = useState(0);
+  const requiredFields = fields.filter((f) => f.required !== false);
+  const totalRequired = requiredFields.length;
+  const progressPercent = totalRequired > 0 ? Math.round((filledCount / totalRequired) * 100) : 0;
+
+  const draftKey = `draft_${docType}`;
+
+  // Auto-save draft on form change
+  function saveDraft() {
+    if (!formRef.current) return;
+    const formData = new FormData(formRef.current);
+    const data: Record<string, string> = {};
+    let hasValue = false;
+    let filled = 0;
+    for (const [key, value] of formData.entries()) {
+      const v = value as string;
+      if (v.trim()) hasValue = true;
+      data[key] = v;
+    }
+    for (const f of requiredFields) {
+      if (data[f.name]?.trim()) filled++;
+    }
+    setFilledCount(filled);
+    if (hasValue) {
+      localStorage.setItem(draftKey, JSON.stringify(data));
+    }
+  }
+
+  function clearDraft() {
+    localStorage.removeItem(draftKey);
+  }
 
   const handleSmartFill = useCallback(
     (extracted: Record<string, string>) => {
@@ -118,6 +150,20 @@ export function DocumentForm({
     },
     [fields]
   );
+
+  // Restore draft from localStorage on mount
+  useEffect(() => {
+    if (draftRestored || !formRef.current) return;
+    try {
+      const saved = localStorage.getItem(draftKey);
+      if (!saved) { setDraftRestored(true); return; }
+      const data = JSON.parse(saved) as Record<string, string>;
+      handleSmartFill(data);
+      setDraftRestored(true);
+    } catch {
+      setDraftRestored(true);
+    }
+  }, [draftKey, draftRestored, handleSmartFill]);
 
   function validateField(field: FormField, value: string): string | null {
     if (field.required !== false && !value.trim()) {
@@ -226,6 +272,7 @@ export function DocumentForm({
         throw new Error("Invalid response from server");
       }
       const { documentId } = result;
+      clearDraft();
       router.push(`/legal-docs/dashboard/documents/${documentId}`);
     } catch (err) {
       clearInterval(interval);
@@ -277,14 +324,51 @@ export function DocumentForm({
             <h1 className="text-xl font-bold tracking-tight text-white">{title}</h1>
             <p className="text-xs text-orange-400/80">{titleHi}</p>
           </div>
-          <SmartFill docType={docType} onFieldsExtracted={handleSmartFill} />
+          <div className="flex items-center gap-2">
+            <SmartFill docType={docType} onFieldsExtracted={handleSmartFill} />
+          </div>
         </div>
+        {/* Progress bar */}
+        {filledCount > 0 && (
+          <div className="mt-2.5 flex items-center gap-3">
+            <div className="flex-1 h-1.5 rounded-full bg-white/[0.06] overflow-hidden">
+              <div
+                className="h-full rounded-full transition-all duration-500 ease-out"
+                style={{
+                  width: `${progressPercent}%`,
+                  background: progressPercent === 100
+                    ? "linear-gradient(90deg, #22c55e, #16a34a)"
+                    : "linear-gradient(90deg, #f97316, #fb923c)",
+                }}
+              />
+            </div>
+            <span className="text-[11px] tabular-nums text-slate-500 shrink-0">
+              {filledCount}/{totalRequired}
+            </span>
+          </div>
+        )}
+
+        {draftRestored && localStorage.getItem(draftKey) && (
+          <div className="mt-2 flex items-center justify-between rounded-lg bg-emerald-500/10 border border-emerald-500/15 px-3 py-1.5">
+            <span className="text-[11px] text-emerald-400">Draft restored from your last session</span>
+            <button
+              type="button"
+              onClick={() => {
+                clearDraft();
+                window.location.reload();
+              }}
+              className="text-[11px] text-slate-500 hover:text-white transition-colors"
+            >
+              Clear draft
+            </button>
+          </div>
+        )}
       </div>
 
       <div className="mt-6" />
 
       <div className="glass-card rounded-2xl p-6 sm:p-8">
-        <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
+        <form ref={formRef} onSubmit={handleSubmit} onChange={saveDraft} className="space-y-6">
           {fields.map((field, index) => {
             const prevSection = index > 0 ? fields[index - 1].section : undefined;
             const showSection = field.section && field.section !== prevSection;
