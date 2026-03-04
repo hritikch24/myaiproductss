@@ -45,6 +45,7 @@ export async function GET(
       ? JSON.parse(doc.form_data)
       : doc.form_data;
 
+  const format = _req.nextUrl.searchParams.get("format");
   let buffer: NodeJS.ArrayBufferView;
 
   if (doc.doc_type === "rental_agreement") {
@@ -57,6 +58,7 @@ export async function GET(
         firstParty: formData.landlord_name || "",
         secondParty: formData.tenant_name || "",
         purchasedBy: formData.landlord_name || "First Party",
+        blankHeader: format === "stamp-blank",
       }) as React.ReactElement<DocumentProps>
     );
   } else {

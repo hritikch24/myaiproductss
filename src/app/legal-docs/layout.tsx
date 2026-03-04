@@ -1,3 +1,5 @@
+import { FeedbackWidget } from "@/components/feedback-widget";
+
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="relative min-h-screen bg-[#030712] overflow-hidden">
@@ -10,6 +12,8 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       <div className="relative z-10">
         {children}
       </div>
+
+      <FeedbackWidget />
     </div>
   );
 }

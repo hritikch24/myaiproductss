@@ -2,7 +2,7 @@ import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import pool from "@/lib/db";
 import { Button } from "@/components/ui/button";
-import { Download, Plus, ChevronRight } from "lucide-react";
+import { Download, Plus, ChevronRight, FileText } from "lucide-react";
 import Link from "next/link";
 import { EditAndRegenerateButton } from "./edit-button";
 
@@ -106,6 +106,16 @@ export default async function DocumentPreviewPage({
             <Download className="h-3.5 w-3.5" />
             Download PDF
           </a>
+          {doc.doc_type === "rental_agreement" && (
+            <a
+              href={`/legal-docs/api/documents/${doc.id}/pdf?format=stamp-blank`}
+              download
+              className="inline-flex items-center gap-2 rounded-lg h-9 px-4 text-[13px] font-medium text-slate-300 ring-1 ring-white/[0.06] hover:bg-white/[0.04] transition-colors"
+            >
+              <FileText className="h-3.5 w-3.5" />
+              Download for Stamp Paper
+            </a>
+          )}
         </div>
       </div>
 

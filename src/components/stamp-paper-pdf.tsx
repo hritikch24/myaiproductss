@@ -151,6 +151,7 @@ interface StampPaperDocumentPdfProps {
   firstParty?: string;
   secondParty?: string;
   purchasedBy?: string;
+  blankHeader?: boolean;
 }
 
 export function StampPaperDocumentPdf({
@@ -161,6 +162,7 @@ export function StampPaperDocumentPdf({
   firstParty = "",
   secondParty = "",
   purchasedBy = "First Party",
+  blankHeader = false,
 }: StampPaperDocumentPdfProps) {
   const hasHindi = containsDevanagari(content);
   const paragraphs = content.split("\n");
@@ -181,38 +183,62 @@ export function StampPaperDocumentPdf({
         <View style={styles.outerBorder}>
           <View style={styles.innerBorder}>
             {/* Stamp Paper Header */}
-            <View style={styles.headerBox}>
-              <Text style={styles.headerTitle}>INDIA NON JUDICIAL</Text>
-              <Text style={styles.headerSubtitle}>e-Stamp Paper</Text>
-              <Text style={styles.headerState}>
-                Government of {state}
-              </Text>
+            {blankHeader ? (
+              <View
+                style={{
+                  height: 180,
+                  borderStyle: "dashed",
+                  borderWidth: 1,
+                  borderColor: "#cccccc",
+                  marginBottom: 12,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 10,
+                    color: "#999999",
+                    fontFamily: "Helvetica",
+                  }}
+                >
+                  Affix Stamp Paper Here
+                </Text>
+              </View>
+            ) : (
+              <View style={styles.headerBox}>
+                <Text style={styles.headerTitle}>INDIA NON JUDICIAL</Text>
+                <Text style={styles.headerSubtitle}>e-Stamp Paper</Text>
+                <Text style={styles.headerState}>
+                  Government of {state}
+                </Text>
 
-              <View style={styles.headerGrid}>
-                <View style={styles.headerGridCol}>
-                  <Text style={styles.headerLabel}>Certificate No.</Text>
-                  <Text style={styles.headerValue}>{certNo}</Text>
-                  <Text style={styles.headerLabel}>Stamp Duty Paid</Text>
-                  <Text style={styles.headerValue}>{stampDuty}</Text>
-                  <Text style={styles.headerLabel}>Purchased By</Text>
-                  <Text style={styles.headerValue}>
-                    {purchasedBy}
-                  </Text>
-                </View>
-                <View style={styles.headerGridCol}>
-                  <Text style={styles.headerLabel}>Issue Date</Text>
-                  <Text style={styles.headerValue}>{certDate}</Text>
-                  <Text style={styles.headerLabel}>First Party</Text>
-                  <Text style={styles.headerValue}>
-                    {firstParty || "—"}
-                  </Text>
-                  <Text style={styles.headerLabel}>Second Party</Text>
-                  <Text style={styles.headerValue}>
-                    {secondParty || "—"}
-                  </Text>
+                <View style={styles.headerGrid}>
+                  <View style={styles.headerGridCol}>
+                    <Text style={styles.headerLabel}>Certificate No.</Text>
+                    <Text style={styles.headerValue}>{certNo}</Text>
+                    <Text style={styles.headerLabel}>Stamp Duty Paid</Text>
+                    <Text style={styles.headerValue}>{stampDuty}</Text>
+                    <Text style={styles.headerLabel}>Purchased By</Text>
+                    <Text style={styles.headerValue}>
+                      {purchasedBy}
+                    </Text>
+                  </View>
+                  <View style={styles.headerGridCol}>
+                    <Text style={styles.headerLabel}>Issue Date</Text>
+                    <Text style={styles.headerValue}>{certDate}</Text>
+                    <Text style={styles.headerLabel}>First Party</Text>
+                    <Text style={styles.headerValue}>
+                      {firstParty || "—"}
+                    </Text>
+                    <Text style={styles.headerLabel}>Second Party</Text>
+                    <Text style={styles.headerValue}>
+                      {secondParty || "—"}
+                    </Text>
+                  </View>
                 </View>
               </View>
-            </View>
+            )}
 
             <View style={styles.divider} />
 

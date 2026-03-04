@@ -163,6 +163,10 @@ const faqs = [
     answer: "No, you do not legally need a lawyer to create a rental agreement in India. LegalDocs uses AI to generate lawyer-quality agreements based on your inputs, drafted as per the Transfer of Property Act, 1882. However, we recommend consulting a lawyer for complex situations like commercial leases or high-value properties.",
   },
   {
+    question: "Do I need to print on stamp paper?",
+    answer: "Rental agreements need stamp paper (varies by state, typically ₹100–₹500). NDAs and freelancer contracts don't legally require stamp paper. LegalDocs provides both a decorative e-Stamp PDF and a \"Print on Stamp Paper\" version with a blank header area so you can print directly on physical stamp paper.",
+  },
+  {
     question: "What languages are available?",
     answer: "We support 10 Indian languages: Hindi, English, Bengali, Tamil, Telugu, Marathi, Gujarati, Kannada, Malayalam, and Punjabi.",
   },
@@ -303,6 +307,10 @@ export default function LegalDocsPage() {
               <div className="flex items-center gap-2">
                 <Check className="h-4 w-4 text-green-500" />
                 10+ Languages
+              </div>
+              <div className="flex items-center gap-2">
+                <FileCheck className="h-4 w-4 text-green-500" />
+                e-Stamp Paper Format
               </div>
             </div>
 
@@ -622,7 +630,7 @@ export default function LegalDocsPage() {
               <ul className="mt-4 space-y-2 text-slate-400">
                 <li><Link href="/legal-docs/privacy" className="hover:text-orange-500">Privacy Policy</Link></li>
                 <li><Link href="/legal-docs/terms" className="hover:text-orange-500">Terms of Service</Link></li>
-                <li><Link href="mailto:support@kraftai.in" className="hover:text-orange-500">Contact Us</Link></li>
+                <li><Link href="mailto:hritik242000@gmail.com" className="hover:text-orange-500">Contact Us</Link></li>
               </ul>
             </div>
           </div>
