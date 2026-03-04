@@ -1,6 +1,7 @@
 import { DocumentForm, FormField } from "@/components/document-form";
 
 const fields: FormField[] = [
+  // ── Landlord Details ──
   {
     name: "landlord_name",
     label: "Landlord Name",
@@ -8,7 +9,39 @@ const fields: FormField[] = [
     placeholder: "Full legal name",
     helperText: "As it appears on government ID",
     maxLength: 100,
+    section: "Landlord Details",
   },
+  {
+    name: "landlord_address",
+    label: "Landlord Address",
+    type: "textarea",
+    placeholder: "Flat No., Building, Street, City, State, PIN",
+    helperText: "Permanent/correspondence address of the landlord",
+    maxLength: 500,
+    section: "Landlord Details",
+  },
+  {
+    name: "landlord_phone",
+    label: "Landlord Phone",
+    type: "text",
+    placeholder: "e.g. 9876543210",
+    pattern: "^[6-9]\\d{9}$",
+    patternMessage: "Enter a valid 10-digit Indian mobile number",
+    section: "Landlord Details",
+  },
+  {
+    name: "landlord_id",
+    label: "Landlord Aadhaar (last 4 digits)",
+    type: "text",
+    placeholder: "e.g. 1234",
+    pattern: "^\\d{4}$",
+    patternMessage: "Enter exactly 4 digits",
+    required: false,
+    helperText: "Optional — last 4 digits only for privacy",
+    section: "Landlord Details",
+  },
+
+  // ── Tenant Details ──
   {
     name: "tenant_name",
     label: "Tenant Name",
@@ -16,7 +49,39 @@ const fields: FormField[] = [
     placeholder: "Full legal name",
     helperText: "As it appears on government ID",
     maxLength: 100,
+    section: "Tenant Details",
   },
+  {
+    name: "tenant_address",
+    label: "Tenant Permanent Address",
+    type: "textarea",
+    placeholder: "Flat No., Building, Street, City, State, PIN",
+    helperText: "Permanent/previous address of the tenant",
+    maxLength: 500,
+    section: "Tenant Details",
+  },
+  {
+    name: "tenant_phone",
+    label: "Tenant Phone",
+    type: "text",
+    placeholder: "e.g. 9876543210",
+    pattern: "^[6-9]\\d{9}$",
+    patternMessage: "Enter a valid 10-digit Indian mobile number",
+    section: "Tenant Details",
+  },
+  {
+    name: "tenant_id",
+    label: "Tenant Aadhaar (last 4 digits)",
+    type: "text",
+    placeholder: "e.g. 5678",
+    pattern: "^\\d{4}$",
+    patternMessage: "Enter exactly 4 digits",
+    required: false,
+    helperText: "Optional — last 4 digits only for privacy",
+    section: "Tenant Details",
+  },
+
+  // ── Property Details ──
   {
     name: "property_address",
     label: "Property Address",
@@ -24,6 +89,7 @@ const fields: FormField[] = [
     placeholder: "Flat No., Building, Street, Locality",
     helperText: "Include flat/house number, building name, street, and locality",
     maxLength: 500,
+    section: "Property Details",
   },
   {
     name: "city",
@@ -31,6 +97,7 @@ const fields: FormField[] = [
     type: "text",
     placeholder: "e.g. Mumbai",
     maxLength: 50,
+    section: "Property Details",
   },
   {
     name: "state",
@@ -38,7 +105,59 @@ const fields: FormField[] = [
     type: "text",
     placeholder: "e.g. Maharashtra",
     maxLength: 50,
+    section: "Property Details",
   },
+  {
+    name: "property_type",
+    label: "Property Type",
+    type: "select",
+    options: [
+      { label: "Apartment", value: "Apartment" },
+      { label: "Independent House", value: "Independent House" },
+      { label: "Villa", value: "Villa" },
+      { label: "Commercial Space", value: "Commercial Space" },
+      { label: "PG / Shared Accommodation", value: "PG" },
+    ],
+    section: "Property Details",
+  },
+  {
+    name: "furnishing_status",
+    label: "Furnishing Status",
+    type: "select",
+    options: [
+      { label: "Fully Furnished", value: "Fully Furnished" },
+      { label: "Semi Furnished", value: "Semi Furnished" },
+      { label: "Unfurnished", value: "Unfurnished" },
+    ],
+    section: "Property Details",
+  },
+  {
+    name: "purpose",
+    label: "Purpose of Use",
+    type: "select",
+    options: [
+      { label: "Residential", value: "Residential" },
+      { label: "Commercial", value: "Commercial" },
+      { label: "Mixed Use", value: "Mixed Use" },
+    ],
+    section: "Property Details",
+  },
+  {
+    name: "parking",
+    label: "Parking",
+    type: "select",
+    required: false,
+    options: [
+      { label: "Not Applicable", value: "" },
+      { label: "Covered Parking", value: "Covered Parking" },
+      { label: "Open Parking", value: "Open Parking" },
+      { label: "Two-Wheeler Only", value: "Two-Wheeler Only" },
+      { label: "No Parking", value: "No Parking" },
+    ],
+    section: "Property Details",
+  },
+
+  // ── Financial Terms ──
   {
     name: "monthly_rent",
     label: "Monthly Rent",
@@ -48,6 +167,7 @@ const fields: FormField[] = [
     min: 500,
     max: 10000000,
     helperText: "Amount in Indian Rupees",
+    section: "Financial Terms",
   },
   {
     name: "security_deposit",
@@ -58,6 +178,41 @@ const fields: FormField[] = [
     min: 0,
     max: 50000000,
     helperText: "Typically 2-10 months of rent",
+    section: "Financial Terms",
+  },
+  {
+    name: "rent_due_date",
+    label: "Rent Due Date (day of month)",
+    type: "number",
+    placeholder: "e.g. 5",
+    min: 1,
+    max: 28,
+    helperText: "Day of each month when rent is due (1-28)",
+    section: "Financial Terms",
+  },
+  {
+    name: "maintenance_charges",
+    label: "Monthly Maintenance Charges",
+    type: "number",
+    placeholder: "e.g. 3000",
+    prefix: "₹",
+    min: 0,
+    max: 1000000,
+    required: false,
+    helperText: "Optional — society/building maintenance",
+    section: "Financial Terms",
+  },
+  {
+    name: "escalation_percentage",
+    label: "Annual Rent Escalation",
+    type: "number",
+    placeholder: "e.g. 5",
+    suffix: "%",
+    min: 0,
+    max: 25,
+    required: false,
+    helperText: "Optional — annual rent increase percentage",
+    section: "Financial Terms",
   },
   {
     name: "lease_start_date",
@@ -65,6 +220,7 @@ const fields: FormField[] = [
     type: "date",
     placeholder: "Select start date",
     minDate: "today",
+    section: "Financial Terms",
   },
   {
     name: "lease_duration_months",
@@ -75,7 +231,64 @@ const fields: FormField[] = [
     min: 1,
     max: 120,
     helperText: "11 months is standard (avoids mandatory registration)",
+    section: "Financial Terms",
   },
+  {
+    name: "notice_period_months",
+    label: "Notice Period",
+    type: "number",
+    placeholder: "e.g. 2",
+    suffix: "months",
+    min: 1,
+    max: 6,
+    helperText: "Notice required before vacating (typically 1-2 months)",
+    section: "Financial Terms",
+  },
+
+  // ── Other Terms ──
+  {
+    name: "pets_allowed",
+    label: "Pets Allowed",
+    type: "select",
+    required: false,
+    options: [
+      { label: "Not Specified", value: "" },
+      { label: "Yes", value: "Yes" },
+      { label: "No", value: "No" },
+      { label: "With Permission", value: "With Permission" },
+    ],
+    section: "Other Terms",
+  },
+  {
+    name: "witness_1_name",
+    label: "Witness 1 Name",
+    type: "text",
+    placeholder: "Full name of first witness",
+    required: false,
+    maxLength: 100,
+    section: "Other Terms",
+  },
+  {
+    name: "witness_2_name",
+    label: "Witness 2 Name",
+    type: "text",
+    placeholder: "Full name of second witness",
+    required: false,
+    maxLength: 100,
+    section: "Other Terms",
+  },
+  {
+    name: "additional_terms",
+    label: "Additional Terms & Conditions",
+    type: "textarea",
+    placeholder: "Any specific terms not covered above...",
+    required: false,
+    maxLength: 1000,
+    helperText: "Optional — will be included as additional clauses",
+    section: "Other Terms",
+  },
+
+  // ── Document Settings ──
   {
     name: "language",
     label: "Language",
@@ -93,6 +306,7 @@ const fields: FormField[] = [
       { label: "Punjabi (ਪੰਜਾਬੀ)", value: "punjabi" },
       { label: "Both (English + Hindi)", value: "both" },
     ],
+    section: "Document Settings",
   },
 ];
 

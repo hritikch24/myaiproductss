@@ -32,19 +32,31 @@ Generate a Rental/Lease Agreement valid under Indian law (Transfer of Property A
 
 Include these sections:
 1. Title and date
-2. Parties (Landlord and Tenant with full names)
-3. Property description and address
-4. Term of lease (start date, duration)
-5. Rent amount, due date, and payment method
-6. Security deposit amount and terms of refund
-7. Maintenance and repairs responsibilities
-8. Restrictions on use
-9. Termination and notice period (typically 1-2 months)
-10. Lock-in period clause
-11. Registration and stamp duty clause
-12. Dispute resolution (jurisdiction)
-13. General provisions
-14. Signature blocks for both parties and witnesses
+2. Parties — Landlord and Tenant with full names, addresses, phone numbers, and Aadhaar reference (last 4 digits if provided)
+3. Property description — full address, property type, furnishing status, and purpose of use
+4. Term of lease — start date, duration in months
+5. Rent — monthly amount, due date (specific day of month), payment method
+6. Security deposit — amount and terms of refund
+7. Maintenance charges — monthly amount if provided, who bears society charges
+8. Rent escalation — annual percentage increase if provided
+9. Parking — allocated parking details if provided
+10. Utilities and responsibilities — electricity, water, gas, internet
+11. Pets policy — as specified by the parties
+12. Maintenance and repairs responsibilities
+13. Restrictions on use
+14. Termination and notice period (use the notice period provided)
+15. Lock-in period clause
+16. Registration and stamp duty clause
+17. Dispute resolution (jurisdiction based on property city/state)
+18. General provisions
+19. Additional terms and conditions (if provided by user)
+20. Signature blocks for both parties
+21. Witness signature blocks (use witness names if provided)
+
+IMPORTANT:
+- Use exact values provided by the user. Do not invent or assume values not given.
+- If an optional field is not provided, skip or use a sensible default clause.
+- For financial amounts, show both numeric and words (e.g., "Rs. 25,000/- (Rupees Twenty-Five Thousand Only)").
 
 Use the following details provided by the user to fill in the agreement.
 `;

@@ -27,6 +27,7 @@ export interface FormField {
   suffix?: string;
   minDate?: string;
   maxDate?: string;
+  section?: string;
 }
 
 interface DocumentFormProps {
@@ -270,8 +271,20 @@ export function DocumentForm({
 
       <div className="glass-card rounded-2xl p-6 sm:p-8">
         <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
-          {fields.map((field) => (
+          {fields.map((field, index) => {
+            const prevSection = index > 0 ? fields[index - 1].section : undefined;
+            const showSection = field.section && field.section !== prevSection;
+
+            return (
             <div key={field.name}>
+              {showSection && (
+                <div className={index > 0 ? "pt-4" : ""}>
+                  <h3 className="text-xs font-semibold uppercase tracking-widest text-slate-500">
+                    {field.section}
+                  </h3>
+                  <div className="mt-2 mb-4 h-px bg-white/[0.06]" />
+                </div>
+              )}
               <label
                 htmlFor={field.name}
                 className="mb-2 block text-[13px] font-medium text-slate-300"
@@ -394,7 +407,8 @@ export function DocumentForm({
                 </p>
               )}
             </div>
-          ))}
+            );
+          })}
 
           {error && (
             <div className="rounded-xl bg-red-500/10 border border-red-500/20 px-4 py-3 text-sm text-red-400">
