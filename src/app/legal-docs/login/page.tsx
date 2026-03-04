@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { signIn } from "next-auth/react";
 import { Scale, Mail, Lock, ArrowRight, User } from "lucide-react";
 
 export default function LoginPage() {
@@ -22,7 +21,7 @@ export default function LoginPage() {
     if (isSignup) {
       // Register first
       try {
-        const res = await fetch("/legal-docs/api/auth/register", {
+        const res = await fetch("/api/auth/register", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, password, name }),
@@ -43,27 +42,35 @@ export default function LoginPage() {
       return;
     }
 
-    // Login
-    const result = await signIn("credentials", {
-      email,
-      password,
-      redirect: false,
-    });
+    // Login via API
+    try {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await res.json();
+      
+      if (!res.ok) {
+        setError(data.error || "Login failed");
+        setIsLoading(false);
+        return;
+      }
 
-    if (result?.error) {
-      setError("Invalid email or password");
-      setIsLoading(false);
-    } else {
+      // Login successful - redirect to dashboard
       window.location.href = "/legal-docs/dashboard";
+    } catch {
+      setError("Login failed. Try again.");
+      setIsLoading(false);
     }
   }
 
-  async function handleGoogleLogin() {
-    await signIn("google", { callbackUrl: "/legal-docs/dashboard" });
+  function handleGoogleLogin() {
+    window.location.href = "/api/auth/signin?google&callbackUrl=/legal-docs/dashboard";
   }
 
-  async function handleGoogleSignup() {
-    await signIn("google", { callbackUrl: "/legal-docs/dashboard" });
+  function handleGoogleSignup() {
+    window.location.href = "/api/auth/signin?google&callbackUrl=/legal-docs/dashboard";
   }
 
   return (

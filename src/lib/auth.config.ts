@@ -6,16 +6,24 @@ export default {
   providers: [
     Google,
     Credentials({
-      name: "credentials",
+      name: "Email / Password",
       credentials: {
-        email: { label: "Email", type: "email" },
+        email: { label: "Email", type: "email", placeholder: "you@example.com" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
           return null;
         }
-        return { id: "1", email: credentials.email as string, name: "User" };
+        // For demo: accept demo123 as password for any email
+        if (credentials.password === "demo123") {
+          return {
+            id: "demo",
+            email: credentials.email as string,
+            name: (credentials.email as string).split("@")[0],
+          };
+        }
+        return null;
       },
     }),
   ],
@@ -23,5 +31,5 @@ export default {
   pages: {
     signIn: "/legal-docs/login",
   },
-  basePath: "/legal-docs/api/auth",
+  trustHost: true,
 } satisfies NextAuthConfig;
