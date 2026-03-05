@@ -4,7 +4,7 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ArrowLeft, Loader2, AlertCircle, Sparkles, CreditCard } from "lucide-react";
+import { ArrowLeft, Loader2, AlertCircle, Sparkles, CreditCard, User, Home, IndianRupee, FileText, Settings, Briefcase, ShieldCheck, HandshakeIcon, type LucideIcon } from "lucide-react";
 import { DOC_PRICE_DISPLAY, PREMIUM_ENABLED } from "@/lib/pricing";
 import Link from "next/link";
 import { PaymentModal } from "./payment-modal";
@@ -38,6 +38,24 @@ interface DocumentFormProps {
   docType: string;
   fields: FormField[];
 }
+
+const SECTION_META: Record<string, { icon: LucideIcon; gradient: string }> = {
+  "Landlord Details": { icon: User, gradient: "from-blue-500 to-cyan-500" },
+  "Tenant Details": { icon: User, gradient: "from-violet-500 to-purple-500" },
+  "Property Details": { icon: Home, gradient: "from-emerald-500 to-teal-500" },
+  "Financial Terms": { icon: IndianRupee, gradient: "from-amber-500 to-orange-500" },
+  "Other Terms": { icon: FileText, gradient: "from-pink-500 to-rose-500" },
+  "Document Settings": { icon: Settings, gradient: "from-slate-400 to-slate-500" },
+  "Disclosing Party": { icon: ShieldCheck, gradient: "from-blue-500 to-indigo-500" },
+  "Receiving Party": { icon: User, gradient: "from-violet-500 to-purple-500" },
+  "Agreement Details": { icon: HandshakeIcon, gradient: "from-emerald-500 to-teal-500" },
+  "Client Details": { icon: Briefcase, gradient: "from-blue-500 to-cyan-500" },
+  "Freelancer Details": { icon: User, gradient: "from-violet-500 to-purple-500" },
+  "Project Scope": { icon: FileText, gradient: "from-emerald-500 to-teal-500" },
+  "Payment & Timeline": { icon: IndianRupee, gradient: "from-amber-500 to-orange-500" },
+};
+
+const DEFAULT_SECTION_META = { icon: FileText, gradient: "from-orange-500 to-amber-500" };
 
 function resolveDate(value?: string): Date | undefined {
   if (!value) return undefined;
@@ -76,7 +94,18 @@ export function DocumentForm({
 
   const draftKey = `draft_${docType}`;
 
-  // Auto-save draft on form change
+  // Group fields by section
+  const sections: { name: string; fields: FormField[] }[] = [];
+  for (const field of fields) {
+    const sectionName = field.section || "Details";
+    const lastSection = sections[sections.length - 1];
+    if (lastSection && lastSection.name === sectionName) {
+      lastSection.fields.push(field);
+    } else {
+      sections.push({ name: sectionName, fields: [field] });
+    }
+  }
+
   function saveDraft() {
     if (!formRef.current) return;
     const formData = new FormData(formRef.current);
@@ -151,7 +180,6 @@ export function DocumentForm({
     [fields]
   );
 
-  // Restore draft from localStorage on mount
   useEffect(() => {
     if (draftRestored || !formRef.current) return;
     try {
@@ -307,6 +335,135 @@ export function DocumentForm({
     }
   }
 
+  function renderField(field: FormField) {
+    return (
+      <div key={field.name}>
+        <label
+          htmlFor={field.name}
+          className="mb-2 block text-[13px] font-medium text-slate-300"
+        >
+          {field.label}
+          {field.required !== false && (
+            <span className="text-orange-500/70 ml-0.5">*</span>
+          )}
+        </label>
+
+        {field.type === "select" ? (
+          <select
+            id={field.name}
+            name={field.name}
+            required={field.required !== false}
+            onChange={() => handleFieldChange(field.name)}
+            className="h-11 w-full rounded-xl border border-white/[0.08] bg-white/[0.04] px-3.5 py-1 text-sm text-white shadow-xs outline-none hover:border-white/[0.12] focus-visible:border-orange-500/40 focus-visible:ring-orange-500/15 focus-visible:ring-[3px] transition-all"
+          >
+            {field.options?.map((opt) => (
+              <option
+                key={opt.value}
+                value={opt.value}
+                className="bg-slate-900"
+              >
+                {opt.label}
+              </option>
+            ))}
+          </select>
+        ) : field.type === "date" ? (
+          <DatePicker
+            name={field.name}
+            id={field.name}
+            required={field.required !== false}
+            placeholder={field.placeholder || "Pick a date"}
+            minDate={resolveDate(field.minDate)}
+            maxDate={resolveDate(field.maxDate)}
+            defaultDate={resolveDate(field.defaultDate)}
+          />
+        ) : field.type === "textarea" ? (
+          <div>
+            <textarea
+              id={field.name}
+              name={field.name}
+              placeholder={field.placeholder}
+              required={field.required !== false}
+              maxLength={field.maxLength}
+              rows={3}
+              onChange={(e) => {
+                setCharCounts((prev) => ({
+                  ...prev,
+                  [field.name]: e.target.value.length,
+                }));
+                handleFieldChange(field.name);
+              }}
+              className="w-full rounded-xl border border-white/[0.08] bg-white/[0.04] px-3.5 py-2.5 text-sm text-white shadow-xs outline-none hover:border-white/[0.12] focus-visible:border-orange-500/40 focus-visible:ring-orange-500/15 focus-visible:ring-[3px] placeholder:text-slate-600 resize-none transition-all"
+            />
+            {field.maxLength && (
+              <p className="mt-1.5 text-[11px] text-slate-600 text-right tabular-nums">
+                {charCounts[field.name] || 0} / {field.maxLength}
+              </p>
+            )}
+          </div>
+        ) : field.type === "number" && field.prefix ? (
+          <div>
+            <div className="relative">
+              <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-sm text-slate-500">
+                {field.prefix}
+              </span>
+              <Input
+                id={field.name}
+                name={field.name}
+                type="number"
+                placeholder={field.placeholder}
+                required={field.required !== false}
+                min={field.min}
+                max={field.max}
+                className="text-white pl-8 h-11 rounded-xl border-white/[0.08] bg-white/[0.04] hover:border-white/[0.12] focus-visible:border-orange-500/40 focus-visible:ring-orange-500/15"
+                onChange={(e) =>
+                  handleNumberInput(field, e.target.value)
+                }
+              />
+            </div>
+            {currencyDisplays[field.name] && (
+              <p className="mt-1.5 text-[11px] text-slate-500 tabular-nums">
+                ₹{currencyDisplays[field.name]}
+              </p>
+            )}
+          </div>
+        ) : (
+          <div className="relative">
+            <Input
+              id={field.name}
+              name={field.name}
+              type={field.type}
+              placeholder={field.placeholder}
+              required={field.required !== false}
+              maxLength={field.maxLength}
+              pattern={field.pattern}
+              title={field.patternMessage}
+              className="text-white h-11 rounded-xl border-white/[0.08] bg-white/[0.04] hover:border-white/[0.12] focus-visible:border-orange-500/40 focus-visible:ring-orange-500/15"
+              onChange={() => handleFieldChange(field.name)}
+            />
+            {field.suffix && (
+              <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[11px] text-slate-500">
+                {field.suffix}
+              </span>
+            )}
+          </div>
+        )}
+
+        {field.helperText && !fieldErrors[field.name] && (
+          <p className="mt-1.5 text-[11px] text-slate-600">
+            {field.helperText}
+          </p>
+        )}
+
+        {fieldErrors[field.name] && (
+          <p className="mt-1.5 text-[11px] text-red-400 flex items-center gap-1">
+            <AlertCircle className="h-3 w-3" />
+            {fieldErrors[field.name]}
+          </p>
+        )}
+      </div>
+    );
+  }
+
   return (
     <div>
       {/* Sticky header */}
@@ -367,171 +524,73 @@ export function DocumentForm({
 
       <div className="mt-6" />
 
-      <div className="glass-card rounded-2xl p-6 sm:p-8">
-        <form ref={formRef} onSubmit={handleSubmit} onChange={saveDraft} className="space-y-6">
-          {fields.map((field, index) => {
-            const prevSection = index > 0 ? fields[index - 1].section : undefined;
-            const showSection = field.section && field.section !== prevSection;
+      <form ref={formRef} onSubmit={handleSubmit} onChange={saveDraft}>
+        <div className="space-y-6">
+          {sections.map((section, sectionIdx) => {
+            const meta = SECTION_META[section.name] || DEFAULT_SECTION_META;
+            const SectionIcon = meta.icon;
 
             return (
-            <div key={field.name}>
-              {showSection && (
-                <div className={index > 0 ? "pt-4" : ""}>
-                  <h3 className="text-xs font-semibold uppercase tracking-widest text-slate-500">
-                    {field.section}
-                  </h3>
-                  <div className="mt-2 mb-4 h-px bg-white/[0.06]" />
-                </div>
-              )}
-              <label
-                htmlFor={field.name}
-                className="mb-2 block text-[13px] font-medium text-slate-300"
+              <div
+                key={section.name}
+                className="rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm overflow-hidden transition-all duration-300 hover:border-white/[0.1]"
               >
-                {field.label}
-                {field.required !== false && (
-                  <span className="text-orange-500/70 ml-0.5">*</span>
-                )}
-              </label>
-
-              {field.type === "select" ? (
-                <select
-                  id={field.name}
-                  name={field.name}
-                  required={field.required !== false}
-                  onChange={() => handleFieldChange(field.name)}
-                  className="h-10 w-full rounded-xl border border-white/[0.06] bg-white/[0.03] px-3.5 py-1 text-sm text-white shadow-xs outline-none focus-visible:border-orange-500/30 focus-visible:ring-orange-500/10 focus-visible:ring-[3px] transition-all"
-                >
-                  {field.options?.map((opt) => (
-                    <option
-                      key={opt.value}
-                      value={opt.value}
-                      className="bg-slate-900"
-                    >
-                      {opt.label}
-                    </option>
-                  ))}
-                </select>
-              ) : field.type === "date" ? (
-                <DatePicker
-                  name={field.name}
-                  id={field.name}
-                  required={field.required !== false}
-                  placeholder={field.placeholder || "Pick a date"}
-                  minDate={resolveDate(field.minDate)}
-                  maxDate={resolveDate(field.maxDate)}
-                  defaultDate={resolveDate(field.defaultDate)}
-                />
-              ) : field.type === "textarea" ? (
-                <div>
-                  <textarea
-                    id={field.name}
-                    name={field.name}
-                    placeholder={field.placeholder}
-                    required={field.required !== false}
-                    maxLength={field.maxLength}
-                    rows={3}
-                    onChange={(e) => {
-                      setCharCounts((prev) => ({
-                        ...prev,
-                        [field.name]: e.target.value.length,
-                      }));
-                      handleFieldChange(field.name);
-                    }}
-                    className="w-full rounded-xl border border-white/[0.06] bg-white/[0.03] px-3.5 py-2.5 text-sm text-white shadow-xs outline-none focus-visible:border-orange-500/30 focus-visible:ring-orange-500/10 focus-visible:ring-[3px] placeholder:text-slate-600 resize-none transition-all"
-                  />
-                  {field.maxLength && (
-                    <p className="mt-1.5 text-[11px] text-slate-600 text-right tabular-nums">
-                      {charCounts[field.name] || 0} / {field.maxLength}
-                    </p>
-                  )}
-                </div>
-              ) : field.type === "number" && field.prefix ? (
-                <div>
-                  <div className="relative">
-                    <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-sm text-slate-500">
-                      {field.prefix}
-                    </span>
-                    <Input
-                      id={field.name}
-                      name={field.name}
-                      type="number"
-                      placeholder={field.placeholder}
-                      required={field.required !== false}
-                      min={field.min}
-                      max={field.max}
-                      className="text-white pl-8 h-10 rounded-xl border-white/[0.06] bg-white/[0.03] focus-visible:border-orange-500/30 focus-visible:ring-orange-500/10"
-                      onChange={(e) =>
-                        handleNumberInput(field, e.target.value)
-                      }
-                    />
+                {/* Section header */}
+                <div className="flex items-center gap-3 px-6 pt-6 pb-4">
+                  <div className={`inline-flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br ${meta.gradient} shadow-lg`}>
+                    <SectionIcon className="h-4 w-4 text-white" />
                   </div>
-                  {currencyDisplays[field.name] && (
-                    <p className="mt-1.5 text-[11px] text-slate-500 tabular-nums">
-                      ₹{currencyDisplays[field.name]}
+                  <div>
+                    <h3 className="text-sm font-semibold text-white">{section.name}</h3>
+                    <p className="text-[11px] text-slate-500">
+                      {section.fields.filter(f => f.required !== false).length} required field{section.fields.filter(f => f.required !== false).length !== 1 ? "s" : ""}
                     </p>
-                  )}
+                  </div>
+                  <div className="ml-auto text-[11px] text-slate-600 tabular-nums">
+                    {sectionIdx + 1}/{sections.length}
+                  </div>
                 </div>
-              ) : (
-                <div className="relative">
-                  <Input
-                    id={field.name}
-                    name={field.name}
-                    type={field.type}
-                    placeholder={field.placeholder}
-                    required={field.required !== false}
-                    maxLength={field.maxLength}
-                    pattern={field.pattern}
-                    title={field.patternMessage}
-                    className="text-white h-10 rounded-xl border-white/[0.06] bg-white/[0.03] focus-visible:border-orange-500/30 focus-visible:ring-orange-500/10"
-                    onChange={() => handleFieldChange(field.name)}
-                  />
-                  {field.suffix && (
-                    <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[11px] text-slate-500">
-                      {field.suffix}
-                    </span>
-                  )}
+
+                <div className="h-px bg-white/[0.04] mx-6" />
+
+                {/* Section fields */}
+                <div className="px-6 py-5 space-y-5">
+                  {section.fields.map(renderField)}
                 </div>
-              )}
-
-              {field.helperText && !fieldErrors[field.name] && (
-                <p className="mt-1.5 text-[11px] text-slate-600">
-                  {field.helperText}
-                </p>
-              )}
-
-              {fieldErrors[field.name] && (
-                <p className="mt-1.5 text-[11px] text-red-400 flex items-center gap-1">
-                  <AlertCircle className="h-3 w-3" />
-                  {fieldErrors[field.name]}
-                </p>
-              )}
-            </div>
+              </div>
             );
           })}
+        </div>
 
+        {/* Submit area */}
+        <div className="mt-8 rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm p-6">
           {error && (
-            <div className="rounded-xl bg-red-500/10 border border-red-500/20 px-4 py-3 text-sm text-red-400">
+            <div className="rounded-xl bg-red-500/10 border border-red-500/20 px-4 py-3 text-sm text-red-400 mb-4">
               {error}
             </div>
           )}
 
-          <div className="space-y-3 pt-2">
+          <div className="space-y-3">
             <button
               type="submit"
               disabled={loading}
-              className="btn-gradient w-full flex items-center justify-center gap-2 rounded-xl h-11 text-sm font-medium text-white disabled:opacity-60 disabled:cursor-not-allowed"
+              className="group relative w-full flex items-center justify-center gap-2 rounded-xl h-12 text-sm font-semibold text-white overflow-hidden disabled:opacity-60 disabled:cursor-not-allowed transition-all hover:scale-[1.01] active:scale-[0.99]"
             >
-              {loading ? (
-                <>
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                  {loadingText}
-                </>
-              ) : (
-                <>
-                  <Sparkles className="h-4 w-4" />
-                  Generate Document
-                </>
-              )}
+              <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-orange-600 transition-all group-hover:from-orange-400 group-hover:to-orange-500" />
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity shadow-xl shadow-orange-500/25" />
+              <span className="relative flex items-center gap-2">
+                {loading ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    {loadingText}
+                  </>
+                ) : (
+                  <>
+                    <Sparkles className="h-4 w-4" />
+                    Generate Document
+                  </>
+                )}
+              </span>
             </button>
 
             {PREMIUM_ENABLED && (
@@ -541,7 +600,7 @@ export function DocumentForm({
                     <div className="w-full border-t border-white/[0.06]" />
                   </div>
                   <div className="relative flex justify-center text-[10px]">
-                    <span className="bg-[#0f172a]/80 px-3 text-slate-600 uppercase tracking-wider">or</span>
+                    <span className="bg-[#030712] px-3 text-slate-600 uppercase tracking-wider">or</span>
                   </div>
                 </div>
 
@@ -559,7 +618,7 @@ export function DocumentForm({
                     setPendingFormData(data);
                     setShowPayment(true);
                   }}
-                  className="w-full flex items-center justify-center gap-2 rounded-xl h-11 text-sm font-medium text-white border border-orange-500/30 bg-orange-500/5 hover:bg-orange-500/10 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
+                  className="w-full flex items-center justify-center gap-2 rounded-xl h-12 text-sm font-medium text-white border border-orange-500/30 bg-orange-500/5 hover:bg-orange-500/10 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
                 >
                   <CreditCard className="h-4 w-4 text-orange-400" />
                   Pay &#8377;{DOC_PRICE_DISPLAY[docType] || "99"} &amp; Generate
@@ -570,8 +629,8 @@ export function DocumentForm({
               </>
             )}
           </div>
-        </form>
-      </div>
+        </div>
+      </form>
 
       {showPayment && pendingFormData && (
         <PaymentModal
