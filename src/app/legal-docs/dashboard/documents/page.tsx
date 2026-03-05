@@ -28,7 +28,7 @@ export default async function DocumentsPage() {
     <div>
       <Link
         href="/legal-docs/dashboard"
-        className="mb-6 inline-flex items-center gap-1.5 text-[13px] text-slate-500 hover:text-white transition-colors"
+        className="mb-6 inline-flex items-center gap-1.5 text-[13px] text-slate-400 hover:text-slate-700 transition-colors"
       >
         <ArrowLeft className="h-3.5 w-3.5" />
         Back to Dashboard
@@ -36,27 +36,27 @@ export default async function DocumentsPage() {
 
       <div className="mb-8 flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-white">My Documents</h1>
-          <p className="mt-1 text-sm text-slate-500">
+          <h1 className="text-2xl font-bold tracking-tight text-slate-900">My Documents</h1>
+          <p className="mt-1 text-sm text-slate-400">
             {documents.length} document{documents.length !== 1 ? "s" : ""} generated
           </p>
         </div>
-        <Link href="/legal-docs/dashboard" className="btn-gradient inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-white">
+        <Link href="/legal-docs/dashboard" className="inline-flex items-center gap-2 rounded-lg bg-orange-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-orange-600 transition-colors">
           <Plus className="h-4 w-4" />
           New Document
         </Link>
       </div>
 
       {documents.length === 0 ? (
-        <div className="glass-card rounded-2xl flex flex-col items-center justify-center py-20">
-          <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-white/[0.03]">
-            <FileText className="h-7 w-7 text-slate-600" />
+        <div className="rounded-2xl bg-white border border-slate-200/80 flex flex-col items-center justify-center py-20">
+          <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-100">
+            <FileText className="h-7 w-7 text-slate-400" />
           </div>
-          <h3 className="text-base font-medium text-white mb-1">No documents yet</h3>
-          <p className="text-sm text-slate-500 mb-6">
+          <h3 className="text-base font-medium text-slate-900 mb-1">No documents yet</h3>
+          <p className="text-sm text-slate-400 mb-6">
             Generate your first legal document to see it here.
           </p>
-          <Link href="/legal-docs/dashboard" className="btn-gradient rounded-lg px-5 py-2.5 text-sm font-medium text-white">
+          <Link href="/legal-docs/dashboard" className="rounded-lg bg-orange-500 px-5 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-orange-600 transition-colors">
             Get Started
           </Link>
         </div>
@@ -65,17 +65,17 @@ export default async function DocumentsPage() {
           {documents.map((doc: { id: number; doc_type: string; status: string; created_at: string }) => (
             <div
               key={doc.id}
-              className="glass-card rounded-xl flex items-center justify-between p-4 sm:p-5"
+              className="rounded-xl bg-white border border-slate-200/80 flex items-center justify-between p-4 sm:p-5 hover:shadow-sm hover:border-slate-300 transition-all"
             >
               <div className="flex items-center gap-4">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-500/10">
-                  <FileText className="h-5 w-5 text-orange-400" />
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-50">
+                  <FileText className="h-5 w-5 text-orange-500" />
                 </div>
                 <div>
-                  <h3 className="text-sm font-medium text-white">
+                  <h3 className="text-sm font-medium text-slate-900">
                     {formatDocType(doc.doc_type)}
                   </h3>
-                  <p className="text-xs text-slate-500">
+                  <p className="text-xs text-slate-400">
                     {new Date(doc.created_at).toLocaleDateString("en-IN", {
                       day: "numeric",
                       month: "short",
@@ -86,15 +86,15 @@ export default async function DocumentsPage() {
               </div>
 
               <div className="flex items-center gap-2">
-                <div className="hidden sm:flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-2.5 py-1 ring-1 ring-emerald-500/20">
-                  <div className="status-dot bg-emerald-400" />
-                  <span className="text-[11px] font-medium text-emerald-400">Done</span>
+                <div className="hidden sm:flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-1 ring-1 ring-emerald-200">
+                  <div className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                  <span className="text-[11px] font-medium text-emerald-700">Done</span>
                 </div>
                 <Button
                   asChild
                   variant="ghost"
                   size="sm"
-                  className="h-8 px-2.5 text-slate-400 hover:text-white hover:bg-white/[0.04]"
+                  className="h-8 px-2.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100"
                 >
                   <Link href={`/legal-docs/dashboard/documents/${doc.id}`}>
                     <Eye className="h-3.5 w-3.5" />
@@ -105,7 +105,7 @@ export default async function DocumentsPage() {
                   asChild
                   variant="ghost"
                   size="sm"
-                  className="h-8 px-2.5 text-slate-400 hover:text-white hover:bg-white/[0.04]"
+                  className="h-8 px-2.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100"
                 >
                   <a href={`/legal-docs/api/documents/${doc.id}/pdf`} download>
                     <Download className="h-3.5 w-3.5" />

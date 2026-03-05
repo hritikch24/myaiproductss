@@ -54,25 +54,25 @@ export default async function DocumentPreviewPage({
   return (
     <div>
       {/* Breadcrumb */}
-      <div className="mb-8 flex items-center gap-1.5 text-[13px] text-slate-500">
-        <Link href="/legal-docs/dashboard" className="hover:text-white transition-colors">
+      <div className="mb-8 flex items-center gap-1.5 text-[13px] text-slate-400">
+        <Link href="/legal-docs/dashboard" className="hover:text-slate-700 transition-colors">
           Dashboard
         </Link>
         <ChevronRight className="h-3 w-3" />
-        <Link href="/legal-docs/dashboard/documents" className="hover:text-white transition-colors">
+        <Link href="/legal-docs/dashboard/documents" className="hover:text-slate-700 transition-colors">
           Documents
         </Link>
         <ChevronRight className="h-3 w-3" />
-        <span className="text-slate-300">{formatDocType(doc.doc_type)}</span>
+        <span className="text-slate-700">{formatDocType(doc.doc_type)}</span>
       </div>
 
       {/* Header */}
       <div className="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-white">
+          <h1 className="text-2xl font-bold tracking-tight text-slate-900">
             {formatDocType(doc.doc_type)}
           </h1>
-          <p className="mt-1 text-sm text-slate-500">
+          <p className="mt-1 text-sm text-slate-400">
             Generated on{" "}
             {new Date(doc.created_at).toLocaleDateString("en-IN", {
               day: "numeric",
@@ -91,7 +91,7 @@ export default async function DocumentPreviewPage({
           <Button
             asChild
             variant="ghost"
-            className="h-9 px-3 text-[13px] text-slate-400 hover:text-white hover:bg-white/[0.04] ring-1 ring-white/[0.06]"
+            className="h-9 px-3 text-[13px] text-slate-500 hover:text-slate-700 hover:bg-slate-100 ring-1 ring-slate-200"
           >
             <Link href={DOC_TYPE_ROUTES[doc.doc_type] || "/legal-docs/dashboard"}>
               <Plus className="h-3.5 w-3.5" />
@@ -101,7 +101,7 @@ export default async function DocumentPreviewPage({
           <a
             href={`/legal-docs/api/documents/${doc.id}/pdf`}
             download
-            className="btn-gradient inline-flex items-center gap-2 rounded-lg h-9 px-4 text-[13px] font-medium text-white"
+            className="inline-flex items-center gap-2 rounded-lg h-9 px-4 text-[13px] font-medium text-white bg-orange-500 shadow-sm hover:bg-orange-600 transition-colors"
           >
             <Download className="h-3.5 w-3.5" />
             Download PDF
@@ -110,7 +110,7 @@ export default async function DocumentPreviewPage({
             <a
               href={`/legal-docs/api/documents/${doc.id}/pdf?format=stamp-blank`}
               download
-              className="inline-flex items-center gap-2 rounded-lg h-9 px-4 text-[13px] font-medium text-slate-300 ring-1 ring-white/[0.06] hover:bg-white/[0.04] transition-colors"
+              className="inline-flex items-center gap-2 rounded-lg h-9 px-4 text-[13px] font-medium text-slate-600 ring-1 ring-slate-200 hover:bg-slate-50 transition-colors"
             >
               <FileText className="h-3.5 w-3.5" />
               Download for Stamp Paper
@@ -121,8 +121,8 @@ export default async function DocumentPreviewPage({
 
       {/* Form Data Summary */}
       {formData && Object.keys(formData).length > 0 && (
-        <div className="glass-card rounded-2xl mb-6 p-5">
-          <h3 className="mb-3 text-xs font-semibold text-slate-500 uppercase tracking-widest">
+        <div className="rounded-2xl bg-white border border-slate-200/80 shadow-sm mb-6 p-5">
+          <h3 className="mb-3 text-xs font-semibold text-slate-400 uppercase tracking-widest">
             Details Used
           </h3>
           <div className="grid gap-x-6 gap-y-2 sm:grid-cols-2 lg:grid-cols-3">
@@ -130,8 +130,8 @@ export default async function DocumentPreviewPage({
               .filter(([key]) => key !== "language")
               .map(([key, value]) => (
                 <div key={key} className="text-sm py-1">
-                  <span className="text-slate-500 text-xs">{formatFieldName(key)}</span>
-                  <p className="text-slate-200 text-[13px] truncate">{value as string}</p>
+                  <span className="text-slate-400 text-xs">{formatFieldName(key)}</span>
+                  <p className="text-slate-700 text-[13px] truncate">{value as string}</p>
                 </div>
               ))}
           </div>
@@ -139,8 +139,8 @@ export default async function DocumentPreviewPage({
       )}
 
       {/* Document Content */}
-      <div className="glass-card rounded-2xl p-6 sm:p-8">
-        <pre className="whitespace-pre-wrap font-sans text-sm leading-[1.8] text-slate-300">
+      <div className="rounded-2xl bg-white border border-slate-200/80 shadow-sm p-6 sm:p-8">
+        <pre className="whitespace-pre-wrap font-sans text-sm leading-[1.8] text-slate-700">
           {doc.generated_content}
         </pre>
       </div>

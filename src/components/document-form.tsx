@@ -39,23 +39,23 @@ interface DocumentFormProps {
   fields: FormField[];
 }
 
-const SECTION_META: Record<string, { icon: LucideIcon; gradient: string }> = {
-  "Landlord Details": { icon: User, gradient: "from-blue-500 to-cyan-500" },
-  "Tenant Details": { icon: User, gradient: "from-violet-500 to-purple-500" },
-  "Property Details": { icon: Home, gradient: "from-emerald-500 to-teal-500" },
-  "Financial Terms": { icon: IndianRupee, gradient: "from-amber-500 to-orange-500" },
-  "Other Terms": { icon: FileText, gradient: "from-pink-500 to-rose-500" },
-  "Document Settings": { icon: Settings, gradient: "from-slate-400 to-slate-500" },
-  "Disclosing Party": { icon: ShieldCheck, gradient: "from-blue-500 to-indigo-500" },
-  "Receiving Party": { icon: User, gradient: "from-violet-500 to-purple-500" },
-  "Agreement Details": { icon: HandshakeIcon, gradient: "from-emerald-500 to-teal-500" },
-  "Client Details": { icon: Briefcase, gradient: "from-blue-500 to-cyan-500" },
-  "Freelancer Details": { icon: User, gradient: "from-violet-500 to-purple-500" },
-  "Project Scope": { icon: FileText, gradient: "from-emerald-500 to-teal-500" },
-  "Payment & Timeline": { icon: IndianRupee, gradient: "from-amber-500 to-orange-500" },
+const SECTION_META: Record<string, { icon: LucideIcon; gradient: string; bg: string }> = {
+  "Landlord Details": { icon: User, gradient: "from-blue-500 to-cyan-500", bg: "bg-blue-50" },
+  "Tenant Details": { icon: User, gradient: "from-violet-500 to-purple-500", bg: "bg-violet-50" },
+  "Property Details": { icon: Home, gradient: "from-emerald-500 to-teal-500", bg: "bg-emerald-50" },
+  "Financial Terms": { icon: IndianRupee, gradient: "from-amber-500 to-orange-500", bg: "bg-amber-50" },
+  "Other Terms": { icon: FileText, gradient: "from-pink-500 to-rose-500", bg: "bg-pink-50" },
+  "Document Settings": { icon: Settings, gradient: "from-slate-500 to-slate-600", bg: "bg-slate-50" },
+  "Disclosing Party": { icon: ShieldCheck, gradient: "from-blue-500 to-indigo-500", bg: "bg-blue-50" },
+  "Receiving Party": { icon: User, gradient: "from-violet-500 to-purple-500", bg: "bg-violet-50" },
+  "Agreement Details": { icon: HandshakeIcon, gradient: "from-emerald-500 to-teal-500", bg: "bg-emerald-50" },
+  "Client Details": { icon: Briefcase, gradient: "from-blue-500 to-cyan-500", bg: "bg-blue-50" },
+  "Freelancer Details": { icon: User, gradient: "from-violet-500 to-purple-500", bg: "bg-violet-50" },
+  "Project Scope": { icon: FileText, gradient: "from-emerald-500 to-teal-500", bg: "bg-emerald-50" },
+  "Payment & Timeline": { icon: IndianRupee, gradient: "from-amber-500 to-orange-500", bg: "bg-amber-50" },
 };
 
-const DEFAULT_SECTION_META = { icon: FileText, gradient: "from-orange-500 to-amber-500" };
+const DEFAULT_SECTION_META = { icon: FileText, gradient: "from-orange-500 to-amber-500", bg: "bg-orange-50" };
 
 function resolveDate(value?: string): Date | undefined {
   if (!value) return undefined;
@@ -340,11 +340,11 @@ export function DocumentForm({
       <div key={field.name}>
         <label
           htmlFor={field.name}
-          className="mb-2 block text-[13px] font-medium text-slate-300"
+          className="mb-2 block text-[13px] font-medium text-slate-700"
         >
           {field.label}
           {field.required !== false && (
-            <span className="text-orange-500/70 ml-0.5">*</span>
+            <span className="text-red-400 ml-0.5">*</span>
           )}
         </label>
 
@@ -354,14 +354,10 @@ export function DocumentForm({
             name={field.name}
             required={field.required !== false}
             onChange={() => handleFieldChange(field.name)}
-            className="h-11 w-full rounded-xl border border-white/[0.08] bg-white/[0.04] px-3.5 py-1 text-sm text-white shadow-xs outline-none hover:border-white/[0.12] focus-visible:border-orange-500/40 focus-visible:ring-orange-500/15 focus-visible:ring-[3px] transition-all"
+            className="h-11 w-full rounded-xl border border-slate-200 bg-white px-3.5 py-1 text-sm text-slate-900 shadow-sm outline-none hover:border-slate-300 focus-visible:border-orange-400 focus-visible:ring-orange-100 focus-visible:ring-[3px] transition-all"
           >
             {field.options?.map((opt) => (
-              <option
-                key={opt.value}
-                value={opt.value}
-                className="bg-slate-900"
-              >
+              <option key={opt.value} value={opt.value}>
                 {opt.label}
               </option>
             ))}
@@ -392,10 +388,10 @@ export function DocumentForm({
                 }));
                 handleFieldChange(field.name);
               }}
-              className="w-full rounded-xl border border-white/[0.08] bg-white/[0.04] px-3.5 py-2.5 text-sm text-white shadow-xs outline-none hover:border-white/[0.12] focus-visible:border-orange-500/40 focus-visible:ring-orange-500/15 focus-visible:ring-[3px] placeholder:text-slate-600 resize-none transition-all"
+              className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-900 shadow-sm outline-none hover:border-slate-300 focus-visible:border-orange-400 focus-visible:ring-orange-100 focus-visible:ring-[3px] placeholder:text-slate-400 resize-none transition-all"
             />
             {field.maxLength && (
-              <p className="mt-1.5 text-[11px] text-slate-600 text-right tabular-nums">
+              <p className="mt-1.5 text-[11px] text-slate-400 text-right tabular-nums">
                 {charCounts[field.name] || 0} / {field.maxLength}
               </p>
             )}
@@ -403,7 +399,7 @@ export function DocumentForm({
         ) : field.type === "number" && field.prefix ? (
           <div>
             <div className="relative">
-              <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-sm text-slate-500">
+              <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-sm text-slate-400">
                 {field.prefix}
               </span>
               <Input
@@ -414,7 +410,7 @@ export function DocumentForm({
                 required={field.required !== false}
                 min={field.min}
                 max={field.max}
-                className="text-white pl-8 h-11 rounded-xl border-white/[0.08] bg-white/[0.04] hover:border-white/[0.12] focus-visible:border-orange-500/40 focus-visible:ring-orange-500/15"
+                className="text-slate-900 pl-8 h-11 rounded-xl border-slate-200 bg-white shadow-sm hover:border-slate-300 focus-visible:border-orange-400 focus-visible:ring-orange-100"
                 onChange={(e) =>
                   handleNumberInput(field, e.target.value)
                 }
@@ -437,11 +433,11 @@ export function DocumentForm({
               maxLength={field.maxLength}
               pattern={field.pattern}
               title={field.patternMessage}
-              className="text-white h-11 rounded-xl border-white/[0.08] bg-white/[0.04] hover:border-white/[0.12] focus-visible:border-orange-500/40 focus-visible:ring-orange-500/15"
+              className="text-slate-900 h-11 rounded-xl border-slate-200 bg-white shadow-sm hover:border-slate-300 focus-visible:border-orange-400 focus-visible:ring-orange-100"
               onChange={() => handleFieldChange(field.name)}
             />
             {field.suffix && (
-              <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[11px] text-slate-500">
+              <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[11px] text-slate-400">
                 {field.suffix}
               </span>
             )}
@@ -449,13 +445,13 @@ export function DocumentForm({
         )}
 
         {field.helperText && !fieldErrors[field.name] && (
-          <p className="mt-1.5 text-[11px] text-slate-600">
+          <p className="mt-1.5 text-[11px] text-slate-400">
             {field.helperText}
           </p>
         )}
 
         {fieldErrors[field.name] && (
-          <p className="mt-1.5 text-[11px] text-red-400 flex items-center gap-1">
+          <p className="mt-1.5 text-[11px] text-red-500 flex items-center gap-1">
             <AlertCircle className="h-3 w-3" />
             {fieldErrors[field.name]}
           </p>
@@ -467,10 +463,10 @@ export function DocumentForm({
   return (
     <div>
       {/* Sticky header */}
-      <div className="sticky top-0 z-30 -mx-6 px-6 pt-2 pb-4 bg-[#030712]/80 backdrop-blur-xl border-b border-white/[0.04]">
+      <div className="sticky top-[57px] z-30 -mx-6 px-6 pt-2 pb-4 bg-[#F8F9FB]/90 backdrop-blur-xl border-b border-slate-200/60">
         <Link
           href="/legal-docs/dashboard"
-          className="mb-3 inline-flex items-center gap-1.5 text-[13px] text-slate-500 hover:text-white transition-colors"
+          className="mb-3 inline-flex items-center gap-1.5 text-[13px] text-slate-400 hover:text-slate-700 transition-colors"
         >
           <ArrowLeft className="h-3.5 w-3.5" />
           Back to Dashboard
@@ -478,8 +474,8 @@ export function DocumentForm({
 
         <div className="flex items-start justify-between gap-4">
           <div>
-            <h1 className="text-xl font-bold tracking-tight text-white">{title}</h1>
-            <p className="text-xs text-orange-400/80">{titleHi}</p>
+            <h1 className="text-xl font-bold tracking-tight text-slate-900">{title}</h1>
+            <p className="text-xs text-orange-500/80">{titleHi}</p>
           </div>
           <div className="flex items-center gap-2">
             <SmartFill docType={docType} onFieldsExtracted={handleSmartFill} />
@@ -488,7 +484,7 @@ export function DocumentForm({
         {/* Progress bar */}
         {filledCount > 0 && (
           <div className="mt-2.5 flex items-center gap-3">
-            <div className="flex-1 h-1.5 rounded-full bg-white/[0.06] overflow-hidden">
+            <div className="flex-1 h-1.5 rounded-full bg-slate-200 overflow-hidden">
               <div
                 className="h-full rounded-full transition-all duration-500 ease-out"
                 style={{
@@ -499,22 +495,22 @@ export function DocumentForm({
                 }}
               />
             </div>
-            <span className="text-[11px] tabular-nums text-slate-500 shrink-0">
+            <span className="text-[11px] tabular-nums text-slate-400 shrink-0">
               {filledCount}/{totalRequired}
             </span>
           </div>
         )}
 
         {draftRestored && localStorage.getItem(draftKey) && (
-          <div className="mt-2 flex items-center justify-between rounded-lg bg-emerald-500/10 border border-emerald-500/15 px-3 py-1.5">
-            <span className="text-[11px] text-emerald-400">Draft restored from your last session</span>
+          <div className="mt-2 flex items-center justify-between rounded-lg bg-emerald-50 border border-emerald-200 px-3 py-1.5">
+            <span className="text-[11px] text-emerald-700">Draft restored from your last session</span>
             <button
               type="button"
               onClick={() => {
                 clearDraft();
                 window.location.reload();
               }}
-              className="text-[11px] text-slate-500 hover:text-white transition-colors"
+              className="text-[11px] text-slate-400 hover:text-slate-700 transition-colors"
             >
               Clear draft
             </button>
@@ -525,7 +521,7 @@ export function DocumentForm({
       <div className="mt-6" />
 
       <form ref={formRef} onSubmit={handleSubmit} onChange={saveDraft}>
-        <div className="space-y-6">
+        <div className="space-y-5">
           {sections.map((section, sectionIdx) => {
             const meta = SECTION_META[section.name] || DEFAULT_SECTION_META;
             const SectionIcon = meta.icon;
@@ -533,25 +529,25 @@ export function DocumentForm({
             return (
               <div
                 key={section.name}
-                className="rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm overflow-hidden transition-all duration-300 hover:border-white/[0.1]"
+                className="rounded-2xl bg-white border border-slate-200/80 shadow-sm overflow-hidden transition-all duration-200 hover:shadow-md"
               >
                 {/* Section header */}
-                <div className="flex items-center gap-3 px-6 pt-6 pb-4">
-                  <div className={`inline-flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br ${meta.gradient} shadow-lg`}>
+                <div className="flex items-center gap-3 px-6 pt-5 pb-4">
+                  <div className={`inline-flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br ${meta.gradient} shadow-md`}>
                     <SectionIcon className="h-4 w-4 text-white" />
                   </div>
                   <div>
-                    <h3 className="text-sm font-semibold text-white">{section.name}</h3>
-                    <p className="text-[11px] text-slate-500">
+                    <h3 className="text-sm font-semibold text-slate-900">{section.name}</h3>
+                    <p className="text-[11px] text-slate-400">
                       {section.fields.filter(f => f.required !== false).length} required field{section.fields.filter(f => f.required !== false).length !== 1 ? "s" : ""}
                     </p>
                   </div>
-                  <div className="ml-auto text-[11px] text-slate-600 tabular-nums">
+                  <div className="ml-auto text-[11px] text-slate-300 tabular-nums font-medium">
                     {sectionIdx + 1}/{sections.length}
                   </div>
                 </div>
 
-                <div className="h-px bg-white/[0.04] mx-6" />
+                <div className="h-px bg-slate-100 mx-6" />
 
                 {/* Section fields */}
                 <div className="px-6 py-5 space-y-5">
@@ -563,9 +559,9 @@ export function DocumentForm({
         </div>
 
         {/* Submit area */}
-        <div className="mt-8 rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm p-6">
+        <div className="mt-6 rounded-2xl bg-white border border-slate-200/80 shadow-sm p-6">
           {error && (
-            <div className="rounded-xl bg-red-500/10 border border-red-500/20 px-4 py-3 text-sm text-red-400 mb-4">
+            <div className="rounded-xl bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-600 mb-4">
               {error}
             </div>
           )}
@@ -574,10 +570,9 @@ export function DocumentForm({
             <button
               type="submit"
               disabled={loading}
-              className="group relative w-full flex items-center justify-center gap-2 rounded-xl h-12 text-sm font-semibold text-white overflow-hidden disabled:opacity-60 disabled:cursor-not-allowed transition-all hover:scale-[1.01] active:scale-[0.99]"
+              className="group relative w-full flex items-center justify-center gap-2 rounded-xl h-12 text-sm font-semibold text-white overflow-hidden disabled:opacity-60 disabled:cursor-not-allowed transition-all hover:shadow-lg hover:shadow-orange-500/20 active:scale-[0.99]"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-orange-600 transition-all group-hover:from-orange-400 group-hover:to-orange-500" />
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity shadow-xl shadow-orange-500/25" />
               <span className="relative flex items-center gap-2">
                 {loading ? (
                   <>
@@ -597,10 +592,10 @@ export function DocumentForm({
               <>
                 <div className="relative">
                   <div className="absolute inset-0 flex items-center">
-                    <div className="w-full border-t border-white/[0.06]" />
+                    <div className="w-full border-t border-slate-200" />
                   </div>
                   <div className="relative flex justify-center text-[10px]">
-                    <span className="bg-[#030712] px-3 text-slate-600 uppercase tracking-wider">or</span>
+                    <span className="bg-white px-3 text-slate-400 uppercase tracking-wider">or</span>
                   </div>
                 </div>
 
@@ -618,12 +613,12 @@ export function DocumentForm({
                     setPendingFormData(data);
                     setShowPayment(true);
                   }}
-                  className="w-full flex items-center justify-center gap-2 rounded-xl h-12 text-sm font-medium text-white border border-orange-500/30 bg-orange-500/5 hover:bg-orange-500/10 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
+                  className="w-full flex items-center justify-center gap-2 rounded-xl h-12 text-sm font-medium text-orange-600 border border-orange-200 bg-orange-50 hover:bg-orange-100 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
                 >
-                  <CreditCard className="h-4 w-4 text-orange-400" />
+                  <CreditCard className="h-4 w-4" />
                   Pay &#8377;{DOC_PRICE_DISPLAY[docType] || "99"} &amp; Generate
                 </button>
-                <p className="text-center text-[10px] text-slate-600">
+                <p className="text-center text-[10px] text-slate-400">
                   2 free documents available &middot; Premium includes PDF download
                 </p>
               </>
