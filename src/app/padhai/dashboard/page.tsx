@@ -1,72 +1,63 @@
-import { redirect } from "next/navigation";
-import { auth } from "@/lib/auth";
-import pool from "@/lib/db";
-import { BookOpen, Target, Flame, Calendar, ChevronRight, Upload, FileQuestion, Brain } from "lucide-react";
+"use client";
+
+import { useState, useEffect } from "react";
+import { BookOpen, Target, Flame, ChevronRight, Upload, FileQuestion, Brain, Clock, TrendingUp, CheckCircle } from "lucide-react";
 import Link from "next/link";
 
-export default async function PadhaiDashboard() {
-  const session = await auth();
-  
-  if (!session?.user?.email) {
-    redirect("/padhai/login");
+export default function PadhaiDashboard() {
+  const [loading, setLoading] = useState(true);
+  const [student, setStudent] = useState<any>(null);
+  const [progress, setProgress] = useState<any>(null);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  async function fetchData() {
+    try {
+      const [studentRes, progressRes] = await Promise.all([
+        fetch("/api/padhai/student"),
+        fetch("/api/padhai/progress").catch(() => ({ json: () => null }))
+      ]);
+
+      const studentData = await studentRes.json();
+      if (!studentData.student) {
+        window.location.href = "/padhai/onboarding";
+        return;
+      }
+      setStudent(studentData.student);
+
+      const progressData = await progressRes.json();
+      if (progressData) setProgress(progressData);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
   }
 
-  // Get student data
-  const studentResult = await pool.query(
-    "SELECT * FROM padhai_students WHERE email = $1",
-    [session.user.email]
-  );
-
-  const student = studentResult.rows[0];
-
-  if (!student) {
-    redirect("/padhai/onboarding");
-  }
-
-  // Get current week's goals
-  const today = new Date();
-  const startOfWeek = new Date(today);
-  startOfWeek.setDate(today.getDate() - today.getDay() + 1); // Monday
-  const endOfWeek = new Date(startOfWeek);
-  endOfWeek.setDate(startOfWeek.getDate() + 6); // Sunday
-
-  const goalsResult = await pool.query(
-    `SELECT * FROM padhai_weekly_goals 
-     WHERE student_id = $1 
-     AND week_start_date = $2`,
-    [student.id, startOfWeek.toISOString().split('T')[0]]
-  );
-
-  const weeklyGoal = goalsResult.rows[0];
-
-  // Get tasks for this week
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let tasks: any[] = [];
-  if (weeklyGoal) {
-    const tasksResult = await pool.query(
-      "SELECT * FROM padhai_goal_tasks WHERE weekly_goal_id = $1",
-      [weeklyGoal.id]
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#030712] flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-emerald-500"></div>
+      </div>
     );
-    tasks = tasksResult.rows;
   }
 
-  const completedTasks = tasks.filter(t => t.status === 'done').length;
-  const totalTasks = tasks.length;
-  const progress = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+  if (!student) return null;
 
-  // Motivational messages
+  const today = new Date();
   const messages = [
     "Every step forward counts. Keep going! 🚀",
     "Consistency is key. You're doing great! 💪",
     "Small progress is still progress. 🌱",
-    "Your future self will thank you for today! ⭐",
+    "Your future self will thank you! ⭐",
     "Learning is a journey. Enjoy every bit! 📚",
   ];
   const dailyMessage = messages[today.getDay() % messages.length];
 
   return (
     <div className="min-h-screen bg-[#030712]">
-      {/* Header */}
       <header className="border-b border-slate-800 bg-slate-900/50 backdrop-blur-xl sticky top-0 z-10">
         <div className="mx-auto max-w-4xl px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -93,30 +84,15 @@ export default async function PadhaiDashboard() {
                 <span className="text-sm">Current Streak</span>
               </div>
               <div className="text-3xl font-bold text-white">
-                {student.streak_count} <span className="text-lg font-normal text-slate-400">days</span>
+                {student.streak_count || 0} <span className="text-lg font-normal text-slate-400">days</span>
               </div>
             </div>
             <div className="text-right">
               <div className="text-sm text-slate-400">Best Streak</div>
-              <div className="text-xl font-semibold text-white">{student.longest_streak} days</div>
+              <div className="text-xl font-semibold text-white">{student.longest_streak || 0} days</div>
             </div>
           </div>
           <p className="mt-3 text-sm text-emerald-400">{dailyMessage}</p>
-        </div>
-
-        {/* Weekly Progress */}
-        <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-5">
-          <div className="flex items-center justify-between mb-3">
-            <h2 className="text-lg font-semibold text-white">This Week</h2>
-            <span className="text-sm text-slate-400">{completedTasks}/{totalTasks} tasks</span>
-          </div>
-          <div className="h-3 bg-slate-800 rounded-full overflow-hidden">
-            <div 
-              className="h-full bg-gradient-to-r from-emerald-500 to-teal-500 transition-all duration-500"
-              style={{ width: `${progress}%` }}
-            />
-          </div>
-          <p className="mt-2 text-sm text-slate-400">{progress}% complete</p>
         </div>
 
         {/* Quick Actions */}
@@ -152,83 +128,83 @@ export default async function PadhaiDashboard() {
           </Link>
         </div>
 
-        {/* Today's Tasks */}
-        <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-5">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-white">Today&apos;s Tasks</h2>
-            <Link href="/padhai/goals" className="text-sm text-emerald-400 hover:underline">
-              View all
-            </Link>
-          </div>
-          
-          {tasks.length === 0 ? (
-            <div className="text-center py-8">
-              <p className="text-slate-400 mb-4">No tasks set for this week yet</p>
-              <Link
-                href="/padhai/goals"
-                className="inline-flex items-center gap-2 rounded-lg bg-emerald-500 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-600"
-              >
-                Set Weekly Goals
-                <ChevronRight className="h-4 w-4" />
-              </Link>
+        {/* Syllabus Progress */}
+        {progress && (
+          <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-5">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-semibold text-white flex items-center gap-2">
+                <TrendingUp className="h-5 w-5 text-emerald-500" />
+                Syllabus Progress
+              </h2>
+              <span className="text-sm text-slate-400">{progress.progressPercent || 0}% complete</span>
             </div>
-          ) : (
-            <div className="space-y-2">
-              {tasks.slice(0, 5).map((task) => (
-                <div
-                  key={task.id}
-                  className="flex items-center gap-3 rounded-lg border border-slate-800 bg-slate-800/30 p-3"
-                >
-                  <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
-                    task.status === 'done' 
-                      ? 'border-emerald-500 bg-emerald-500' 
-                      : 'border-slate-600'
-                  }`}>
-                    {task.status === 'done' && (
-                      <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                      </svg>
-                    )}
-                  </div>
-                  <span className={`text-sm ${
-                    task.status === 'done' ? 'text-slate-500 line-through' : 'text-white'
-                  }`}>
-                    {task.task_description || task.chapter_id}
-                  </span>
-                  {task.quiz_taken && (
-                    <span className={`ml-auto text-xs px-2 py-1 rounded ${
-                      task.quiz_score >= 70 ? 'bg-green-500/20 text-green-400' :
-                      task.quiz_score >= 40 ? 'bg-yellow-500/20 text-yellow-400' :
-                      'bg-red-500/20 text-red-400'
-                    }`}>
-                      {task.quiz_score}%
-                    </span>
-                  )}
+            
+            <div className="h-3 bg-slate-800 rounded-full overflow-hidden mb-4">
+              <div 
+                className="h-full bg-gradient-to-r from-emerald-500 to-teal-500 transition-all duration-500"
+                style={{ width: `${progress.progressPercent || 0}%` }}
+              />
+            </div>
+
+            <div className="grid grid-cols-2 gap-4 mb-4">
+              <div className="text-center p-3 rounded-lg bg-slate-800/50">
+                <div className="text-2xl font-bold text-white">{progress.completedChapters || 0}</div>
+                <div className="text-xs text-slate-400">Chapters Done</div>
+              </div>
+              <div className="text-center p-3 rounded-lg bg-slate-800/50">
+                <div className="text-2xl font-bold text-white">{progress.remainingHours || 0}</div>
+                <div className="text-xs text-slate-400">Hours Left</div>
+              </div>
+            </div>
+
+            {progress.estimatedWeeksLeft > 0 && (
+              <div className="flex items-center gap-2 text-sm text-slate-400 bg-slate-800/30 p-3 rounded-lg">
+                <Clock className="h-4 w-4 text-blue-400" />
+                <span>At your pace, ~{progress.estimatedWeeksLeft} weeks to complete syllabus</span>
+              </div>
+            )}
+
+            <div className="mt-4 space-y-2">
+              {progress.subjectProgress && Object.entries(progress.subjectProgress).map(([subject, data]: [string, any]) => (
+                <div key={subject} className="flex items-center justify-between text-sm">
+                  <span className="text-slate-300">{subject}</span>
+                  <span className="text-slate-400">{data.completed}/{data.total} chapters</span>
                 </div>
               ))}
             </div>
-          )}
-        </div>
 
-        {/* Student Info */}
-        <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-5">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <Target className="h-5 w-5 text-emerald-400" />
-              <div>
-                <div className="text-sm text-slate-400">Target</div>
-                <div className="font-medium text-white">
-                  Class {student.class} • {student.exam_target}
-                </div>
-              </div>
-            </div>
             <Link
               href="/padhai/syllabus"
-              className="text-sm text-emerald-400 hover:underline"
+              className="mt-4 flex items-center justify-center gap-2 text-emerald-400 hover:underline text-sm"
             >
-              My Syllabus
+              View Full Syllabus <ChevronRight className="h-4 w-4" />
             </Link>
           </div>
+        )}
+
+        {/* Quick Links */}
+        <div className="grid grid-cols-2 gap-4">
+          <Link
+            href="/padhai/goals"
+            className="flex items-center justify-between p-4 rounded-xl border border-slate-800 bg-slate-900/50 hover:bg-slate-800/50 transition-colors"
+          >
+            <div>
+              <div className="font-medium text-white">Weekly Goals</div>
+              <div className="text-xs text-slate-400">Plan your week</div>
+            </div>
+            <ChevronRight className="h-5 w-5 text-slate-500" />
+          </Link>
+
+          <Link
+            href="/padhai/parent"
+            className="flex items-center justify-between p-4 rounded-xl border border-slate-800 bg-slate-900/50 hover:bg-slate-800/50 transition-colors"
+          >
+            <div>
+              <div className="font-medium text-white">Parent Reports</div>
+              <div className="text-xs text-slate-400">Keep them updated</div>
+            </div>
+            <ChevronRight className="h-5 w-5 text-slate-500" />
+          </Link>
         </div>
       </main>
     </div>
