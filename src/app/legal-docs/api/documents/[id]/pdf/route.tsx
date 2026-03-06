@@ -54,7 +54,6 @@ export async function GET(
         title,
         content,
         state: formData.state || "Maharashtra",
-        stampDuty: "₹ 500",
         firstParty: formData.landlord_name || "",
         secondParty: formData.tenant_name || "",
         purchasedBy: formData.landlord_name || "First Party",

@@ -33,6 +33,17 @@ function containsDevanagari(text: string): boolean {
   return /[\u0900-\u097F]/.test(text);
 }
 
+// Detect if a line is a heading/section title
+function isHeading(line: string): boolean {
+  const trimmed = line.trim();
+  if (!trimmed) return false;
+  if (/^(Section|SECTION|Article|ARTICLE|Clause|CLAUSE)\s/i.test(trimmed)) return true;
+  if (/^\d+[\.\)]\s/.test(trimmed)) return true;
+  if (trimmed === trimmed.toUpperCase() && trimmed.length > 5 && /[A-Z]/.test(trimmed)) return true;
+  if (/^[A-Z].*:$/.test(trimmed) && trimmed.length < 80) return true;
+  return false;
+}
+
 const GREEN_DARK = "#2d6a2d";
 const GREEN_MED = "#4a8c4a";
 const GREEN_LIGHT = "#f0f7f0";
@@ -40,6 +51,7 @@ const GREEN_LIGHT = "#f0f7f0";
 const styles = StyleSheet.create({
   page: {
     padding: 20,
+    paddingBottom: 50,
     fontSize: 10,
     fontFamily: "Helvetica",
     lineHeight: 1.6,
@@ -48,6 +60,7 @@ const styles = StyleSheet.create({
   },
   pageHindi: {
     padding: 20,
+    paddingBottom: 50,
     fontSize: 10,
     fontFamily: "NotoSansDevanagari",
     lineHeight: 1.8,
@@ -82,7 +95,15 @@ const styles = StyleSheet.create({
     fontFamily: "Helvetica-Bold",
     textAlign: "center",
     color: GREEN_DARK,
+    marginBottom: 4,
+  },
+  sampleBadge: {
+    fontSize: 8,
+    textAlign: "center",
+    color: "#cc0000",
+    fontFamily: "Helvetica-Bold",
     marginBottom: 6,
+    padding: 2,
   },
   headerState: {
     fontSize: 10,
@@ -127,18 +148,32 @@ const styles = StyleSheet.create({
     marginBottom: 14,
     color: "#000000",
   },
+  heading: {
+    fontSize: 10,
+    fontFamily: "Helvetica-Bold",
+    color: "#000000",
+    marginTop: 4,
+  },
   content: {
     fontSize: 10,
-    whiteSpace: "pre-wrap",
     color: "#000000",
   },
   footer: {
-    marginTop: 12,
-    paddingTop: 6,
-    borderTop: `1pt solid ${GREEN_MED}`,
+    position: "absolute",
+    bottom: 25,
+    left: 30,
+    right: 30,
     fontSize: 7,
     color: "#666666",
     textAlign: "center",
+    fontFamily: "Helvetica",
+  },
+  pageNumber: {
+    position: "absolute",
+    bottom: 15,
+    right: 30,
+    fontSize: 7,
+    color: "#999999",
     fontFamily: "Helvetica",
   },
 });
@@ -147,7 +182,6 @@ interface StampPaperDocumentPdfProps {
   title: string;
   content: string;
   state?: string;
-  stampDuty?: string;
   firstParty?: string;
   secondParty?: string;
   purchasedBy?: string;
@@ -158,16 +192,14 @@ export function StampPaperDocumentPdf({
   title,
   content,
   state = "Maharashtra",
-  stampDuty = "₹ 500",
   firstParty = "",
   secondParty = "",
   purchasedBy = "First Party",
   blankHeader = false,
 }: StampPaperDocumentPdfProps) {
   const hasHindi = containsDevanagari(content);
-  const paragraphs = content.split("\n");
+  const lines = content.split("\n");
 
-  const certNo = `IN-${state.slice(0, 2).toUpperCase()}${Math.floor(10000000 + Math.random() * 90000000)}`;
   const certDate = new Date().toLocaleDateString("en-IN", {
     day: "2-digit",
     month: "short",
@@ -179,6 +211,7 @@ export function StampPaperDocumentPdf({
       <Page
         size="A4"
         style={hasHindi ? styles.pageHindi : styles.page}
+        wrap
       >
         <View style={styles.outerBorder}>
           <View style={styles.innerBorder}>
@@ -209,23 +242,24 @@ export function StampPaperDocumentPdf({
               <View style={styles.headerBox}>
                 <Text style={styles.headerTitle}>INDIA NON JUDICIAL</Text>
                 <Text style={styles.headerSubtitle}>e-Stamp Paper</Text>
+                <Text style={styles.sampleBadge}>
+                  SAMPLE FORMAT — NOT A VALID e-STAMP CERTIFICATE
+                </Text>
                 <Text style={styles.headerState}>
                   Government of {state}
                 </Text>
 
                 <View style={styles.headerGrid}>
                   <View style={styles.headerGridCol}>
-                    <Text style={styles.headerLabel}>Certificate No.</Text>
-                    <Text style={styles.headerValue}>{certNo}</Text>
-                    <Text style={styles.headerLabel}>Stamp Duty Paid</Text>
-                    <Text style={styles.headerValue}>{stampDuty}</Text>
+                    <Text style={styles.headerLabel}>Stamp Duty</Text>
+                    <Text style={styles.headerValue}>As applicable in your state</Text>
                     <Text style={styles.headerLabel}>Purchased By</Text>
                     <Text style={styles.headerValue}>
                       {purchasedBy}
                     </Text>
                   </View>
                   <View style={styles.headerGridCol}>
-                    <Text style={styles.headerLabel}>Issue Date</Text>
+                    <Text style={styles.headerLabel}>Date</Text>
                     <Text style={styles.headerValue}>{certDate}</Text>
                     <Text style={styles.headerLabel}>First Party</Text>
                     <Text style={styles.headerValue}>
@@ -247,20 +281,36 @@ export function StampPaperDocumentPdf({
               {title}
             </Text>
             <View>
-              {paragraphs.map((para, i) => (
-                <Text key={i} style={styles.content}>
-                  {para}
-                </Text>
-              ))}
+              {lines.map((line, i) => {
+                if (isHeading(line)) {
+                  return (
+                    <Text
+                      key={i}
+                      style={styles.heading}
+                      minPresenceAhead={30}
+                    >
+                      {line}
+                    </Text>
+                  );
+                }
+                return (
+                  <Text key={i} style={styles.content}>
+                    {line}
+                  </Text>
+                );
+              })}
             </View>
-
-            {/* Footer */}
-            <Text style={styles.footer}>
-              This is a computer-generated e-Stamp Paper for reference purposes.
-              Generated by KanoonSimplified — Consult a lawyer for legal advice.
-            </Text>
           </View>
         </View>
+
+        <Text style={styles.footer} fixed>
+          SAMPLE FORMAT — Purchase actual e-Stamp Paper from your state&apos;s authorized vendor. Generated by LegalDocs.
+        </Text>
+        <Text
+          style={styles.pageNumber}
+          render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`}
+          fixed
+        />
       </Page>
     </Document>
   );
