@@ -3,6 +3,7 @@ import { auth } from "@/lib/auth";
 import pool from "@/lib/db";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { PROMPTS, buildUserMessage, DocType } from "@/lib/prompts";
+import { PREMIUM_ENABLED } from "@/lib/pricing";
 
 const VALID_DOC_TYPES: DocType[] = [
   "rental_agreement",
@@ -66,7 +67,7 @@ export async function POST(req: NextRequest) {
   );
   const freeDocsFromIp = ipRows[0]?.count ?? 0;
 
-  if (freeDocsUsed >= FREE_LIMIT_PER_USER || freeDocsFromIp >= FREE_LIMIT_PER_IP) {
+  if (PREMIUM_ENABLED && (freeDocsUsed >= FREE_LIMIT_PER_USER || freeDocsFromIp >= FREE_LIMIT_PER_IP)) {
     return NextResponse.json(
       { error: "Free document limit reached", requiresPayment: true },
       { status: 402 }

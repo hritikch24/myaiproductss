@@ -48,7 +48,7 @@ export function DatePicker({
           id={id}
           type="button"
           variant="outline"
-          className="w-full justify-start text-left font-normal h-10 rounded-xl border-white/[0.06] bg-white/[0.03] text-slate-500 hover:bg-white/[0.05] hover:text-slate-400"
+          className="w-full justify-start text-left font-normal h-11 rounded-xl border-slate-200 bg-white text-slate-400 shadow-sm hover:bg-slate-50 hover:text-slate-500"
           suppressHydrationWarning
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
@@ -73,16 +73,16 @@ export function DatePicker({
             type="button"
             variant="outline"
             className={cn(
-              "w-full justify-start text-left font-normal h-10 rounded-xl border-white/[0.06] bg-white/[0.03] hover:bg-white/[0.05]",
-              date ? "text-white" : "text-slate-500"
+              "w-full justify-start text-left font-normal h-11 rounded-xl border-slate-200 bg-white shadow-sm hover:bg-slate-50",
+              date ? "text-slate-900" : "text-slate-400"
             )}
           >
-            <CalendarIcon className="mr-2 h-4 w-4 text-slate-500" />
+            <CalendarIcon className="mr-2 h-4 w-4 text-slate-400" />
             {date ? format(date, "dd MMMM yyyy") : <span>{placeholder}</span>}
           </Button>
         </PopoverTrigger>
         <PopoverContent
-          className="w-auto p-0 border-white/[0.08] bg-[#0f172a] shadow-2xl shadow-black/40"
+          className="w-auto p-0 border-slate-200 bg-white shadow-xl"
           align="start"
         >
           <Calendar
