@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import pool from "@/lib/db";
-import ReactPDF, { type DocumentProps } from "@react-pdf/renderer";
+import { renderToBuffer, type DocumentProps } from "@react-pdf/renderer";
 import { DocumentPdf } from "@/components/document-pdf";
 import { StampPaperDocumentPdf } from "@/components/stamp-paper-pdf";
 import React from "react";
@@ -49,7 +49,7 @@ export async function GET(
   let buffer: NodeJS.ArrayBufferView;
 
   if (doc.doc_type === "rental_agreement") {
-    buffer = await ReactPDF.renderToBuffer(
+    buffer = await renderToBuffer(
       React.createElement(StampPaperDocumentPdf, {
         title,
         content,
@@ -62,7 +62,7 @@ export async function GET(
       }) as React.ReactElement<DocumentProps>
     );
   } else {
-    buffer = await ReactPDF.renderToBuffer(
+    buffer = await renderToBuffer(
       React.createElement(DocumentPdf, {
         title,
         content,
