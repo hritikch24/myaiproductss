@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
 import pool from "@/lib/db";
-import { BookOpen, Target, Flame, Calendar, ChevronRight, Upload, FileQuestion } from "lucide-react";
+import { BookOpen, Target, Flame, Calendar, ChevronRight, Upload, FileQuestion, Brain } from "lucide-react";
 import Link from "next/link";
 
 export default async function PadhaiDashboard() {
@@ -120,28 +120,35 @@ export default async function PadhaiDashboard() {
         </div>
 
         {/* Quick Actions */}
+        <div className="grid grid-cols-3 gap-4">
+          <Link
+            href="/padhai/timer"
+            className="flex flex-col items-center gap-2 rounded-xl border border-slate-800 bg-slate-900/50 p-4 text-center transition-all hover:border-orange-500/30 hover:bg-slate-800/50"
+          >
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-orange-500/10">
+              <Brain className="h-5 w-5 text-orange-400" />
+            </div>
+            <span className="font-medium text-white text-sm">Timer</span>
+          </Link>
 
-        {/* Quick<div className="grid grid-cols-2 gap-4">
           <Link
             href="/padhai/photo"
-            className="flex flex-col items-center gap-2 rounded-xl border border-slate-800 bg-slate-900/50 p-5 text-center transition-all hover:border-emerald-500/30 hover:bg-slate-800/50"
+            className="flex flex-col items-center gap-2 rounded-xl border border-slate-800 bg-slate-900/50 p-4 text-center transition-all hover:border-emerald-500/30 hover:bg-slate-800/50"
           >
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-emerald-500/10">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-500/10">
               <Upload className="h-5 w-5 text-emerald-400" />
             </div>
-            <span className="font-medium text-white">Upload Study Photo</span>
-            <span className="text-xs text-slate-500">Add to your streak</span>
+            <span className="font-medium text-white text-sm">Photo</span>
           </Link>
 
           <Link
             href="/padhai/quiz"
-            className="flex flex-col items-center gap-2 rounded-xl border border-slate-800 bg-slate-900/50 p-5 text-center transition-all hover:border-emerald-500/30 hover:bg-slate-800/50"
+            className="flex flex-col items-center gap-2 rounded-xl border border-slate-800 bg-slate-900/50 p-4 text-center transition-all hover:border-purple-500/30 hover:bg-slate-800/50"
           >
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-emerald-500/10">
-              <FileQuestion className="h-5 w-5 text-emerald-400" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-purple-500/10">
+              <FileQuestion className="h-5 w-5 text-purple-400" />
             </div>
-            <span className="font-medium text-white">Take a Quiz</span>
-            <span className="text-xs text-slate-500">Verify your knowledge</span>
+            <span className="font-medium text-white text-sm">Quiz</span>
           </Link>
         </div>
 
