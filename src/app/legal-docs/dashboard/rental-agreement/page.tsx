@@ -25,8 +25,8 @@ const fields: FormField[] = [
     label: "Landlord Phone",
     type: "text",
     placeholder: "e.g. 9876543210",
-    pattern: "^[6-9]\\d{9}$",
-    patternMessage: "Enter a valid 10-digit Indian mobile number",
+    pattern: "^0?[6-9]\\d{9}$",
+    patternMessage: "Enter a valid Indian mobile number (with or without leading 0)",
     section: "Landlord Details",
   },
   {
@@ -65,8 +65,8 @@ const fields: FormField[] = [
     label: "Tenant Phone",
     type: "text",
     placeholder: "e.g. 9876543210",
-    pattern: "^[6-9]\\d{9}$",
-    patternMessage: "Enter a valid 10-digit Indian mobile number",
+    pattern: "^0?[6-9]\\d{9}$",
+    patternMessage: "Enter a valid Indian mobile number (with or without leading 0)",
     section: "Tenant Details",
   },
   {
