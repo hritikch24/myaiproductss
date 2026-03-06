@@ -1,7 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  outputFileTracingIncludes: {
+    "/legal-docs/api/documents/\\[id\\]/pdf": ["./public/fonts/**/*"],
+  },
 };
 
 export default nextConfig;
