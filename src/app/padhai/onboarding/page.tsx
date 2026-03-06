@@ -1,15 +1,47 @@
 "use client";
 
-import { useState } from "react";
-import { BookOpen, ArrowRight, User } from "lucide-react";
+import { useState, useEffect } from "react";
+import { BookOpen, ArrowRight, User, Loader2 } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function PadhaiOnboarding() {
+  const router = useRouter();
   const [step, setStep] = useState(1);
   const [selectedClass, setSelectedClass] = useState("");
   const [selectedExam, setSelectedExam] = useState("");
   const [name, setName] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [existingUser, setExistingUser] = useState(false);
+
+  useEffect(() => {
+    checkExistingStudent();
+  }, []);
+
+  async function checkExistingStudent() {
+    try {
+      const res = await fetch("/api/padhai/student");
+      if (res.ok) {
+        const data = await res.json();
+        if (data.student) {
+          router.push("/padhai/dashboard");
+          return;
+        }
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-[#030712] flex items-center justify-center">
+        <Loader2 className="h-8 w-8 text-emerald-500 animate-spin" />
+      </div>
+    );
+  }
 
   const examTargets = [
     { id: "JEE", label: "JEE (Engineering)", subjects: "Physics, Chemistry, Mathematics" },

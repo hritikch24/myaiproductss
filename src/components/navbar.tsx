@@ -1,5 +1,5 @@
 import { auth, signOut } from "@/lib/auth";
-import { Scale, LogOut, FileText, LayoutDashboard, Home } from "lucide-react";
+import { Scale, LogOut, FileText, LayoutDashboard, Home, BookOpen } from "lucide-react";
 import Link from "next/link";
 
 export async function Navbar() {
@@ -17,6 +17,14 @@ export async function Navbar() {
               Legal<span className="text-orange-500">Docs</span>
               <span className="ml-1.5 text-[10px] font-normal text-slate-400 hidden sm:inline align-super">by KraftAI</span>
             </span>
+          </Link>
+
+          <Link
+            href="/padhai"
+            className="flex items-center gap-2 rounded-lg px-3 py-1.5 text-[13px] text-emerald-600 bg-emerald-50 hover:bg-emerald-100 transition-colors font-medium"
+          >
+            <BookOpen className="h-3.5 w-3.5" />
+            Padhai
           </Link>
 
           {session?.user && (

@@ -16,7 +16,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Photo URL required" }, { status: 400 });
     }
 
-    // Get student
     const studentResult = await pool.query(
       "SELECT id FROM padhai_students WHERE email = $1",
       [session.user.email]
@@ -28,7 +27,6 @@ export async function POST(req: NextRequest) {
 
     const studentId = studentResult.rows[0].id;
 
-    // Store photo
     const autoDeleteAt = new Date();
     autoDeleteAt.setDate(autoDeleteAt.getDate() + 7);
 
@@ -38,7 +36,6 @@ export async function POST(req: NextRequest) {
       [studentId, photoUrl, autoDeleteAt]
     );
 
-    // Update streak
     const today = new Date().toISOString().split('T')[0];
     
     const student = await pool.query(
@@ -89,9 +86,8 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    // Get student
     const studentResult = await pool.query(
-      "SELECT id FROM padhai_students WHERE email = $1",
+      "SELECT id, streak_count FROM padhai_students WHERE email = $1",
       [session.user.email]
     );
 
@@ -100,19 +96,23 @@ export async function GET(req: NextRequest) {
     }
 
     const studentId = studentResult.rows[0].id;
+    const streak = studentResult.rows[0].streak_count || 0;
 
-    // Get recent photos
-    const photosResult = await pool.query(
+    const today = new Date().toISOString().split('T')[0];
+
+    const photoResult = await pool.query(
       `SELECT * FROM padhai_study_photos 
-       WHERE student_id = $1 
-       ORDER BY uploaded_at DESC 
-       LIMIT 7`,
-      [studentId]
+       WHERE student_id = $1 AND DATE(uploaded_at::timestamptz AT TIME ZONE 'Asia/Kolkata') = $2
+       LIMIT 1`,
+      [studentId, today]
     );
 
-    return NextResponse.json({ photos: photosResult.rows });
+    return NextResponse.json({ 
+      uploadedToday: photoResult.rows.length > 0,
+      streak
+    });
   } catch (error) {
-    console.error("Get photos error:", error);
-    return NextResponse.json({ error: "Failed to get photos" }, { status: 500 });
+    console.error("Get status error:", error);
+    return NextResponse.json({ error: "Failed to get status" }, { status: 500 });
   }
 }
