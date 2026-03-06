@@ -29,6 +29,7 @@ export async function GET(req: NextRequest) {
     );
 
     // Group chapters by subject
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const chaptersBySubject: Record<string, any[]> = {};
     for (const chapter of chaptersResult.rows) {
       if (!chaptersBySubject[chapter.subject_name]) {

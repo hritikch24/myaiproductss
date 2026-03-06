@@ -35,7 +35,8 @@ export async function GET(req: NextRequest) {
       [studentId, startOfWeek.toISOString().split('T')[0]]
     );
 
-    let weeklyGoal = goalsResult.rows[0];
+    const weeklyGoal = goalsResult.rows[0];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let tasks: any[] = [];
 
     if (weeklyGoal) {

@@ -28,6 +28,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
+  manifest: "/padhai/manifest.json",
 };
 
 export default function RootLayout({

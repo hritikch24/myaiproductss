@@ -32,6 +32,7 @@ Do NOT include lengthy numerical problems.`;
     const questions = JSON.parse(jsonMatch[0]);
     
     // Add chapterId to each question
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return questions.map((q: any) => ({
       ...q,
       chapterId,

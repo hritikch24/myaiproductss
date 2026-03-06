@@ -40,6 +40,7 @@ export default async function PadhaiDashboard() {
   const weeklyGoal = goalsResult.rows[0];
 
   // Get tasks for this week
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let tasks: any[] = [];
   if (weeklyGoal) {
     const tasksResult = await pool.query(

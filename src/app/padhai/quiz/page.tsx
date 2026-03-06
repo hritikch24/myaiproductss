@@ -28,6 +28,7 @@ function QuizContent() {
   const [answers, setAnswers] = useState<(string | null)[]>([]);
   const [timeLeft, setTimeLeft] = useState(10);
   const [submitted, setSubmitted] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [result, setResult] = useState<any>(null);
 
   useEffect(() => {

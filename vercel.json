@@ -1,0 +1,8 @@
+{
+  "crons": [
+    {
+      "path": "/api/padhai/reports",
+      "schedule": "30 13 * * 0"
+    }
+  ]
+}

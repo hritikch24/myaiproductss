@@ -43,6 +43,7 @@ export async function POST(req: NextRequest) {
 
     // Calculate score
     let correctCount = 0;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const updatedQuestions = questions.map((q: any, index: number) => {
       const studentAnswer = answers[index];
       const isCorrect = studentAnswer === q.correct_answer;
