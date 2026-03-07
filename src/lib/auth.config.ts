@@ -50,7 +50,7 @@ export default {
   ],
   session: { strategy: "jwt" },
   pages: {
-    signIn: "/legal-docs/login",
+    signIn: "/padhai/login",
   },
   trustHost: true,
 } satisfies NextAuthConfig;

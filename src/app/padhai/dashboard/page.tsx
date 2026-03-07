@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { BookOpen, Target, Flame, ChevronRight, Upload, FileQuestion, Brain, Clock, TrendingUp, CheckCircle } from "lucide-react";
+import { BookOpen, Target, Flame, ChevronRight, Upload, FileQuestion, Brain, Clock, TrendingUp, CheckCircle, User } from "lucide-react";
 import Link from "next/link";
 
 export default function PadhaiDashboard() {
@@ -69,7 +69,12 @@ export default function PadhaiDashboard() {
             </span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-sm text-slate-400">Hi, {student.name}</span>
+            <Link href="/padhai/profile" className="flex items-center gap-2 text-sm text-slate-400 hover:text-white">
+              <span>Hi, {student.name}</span>
+              <div className="h-8 w-8 rounded-full bg-emerald-500/20 flex items-center justify-center">
+                <User className="h-4 w-4 text-emerald-400" />
+              </div>
+            </Link>
           </div>
         </div>
       </header>
