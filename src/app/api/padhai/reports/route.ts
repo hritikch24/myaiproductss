@@ -2,6 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import pool from "@/lib/padhai-db";
 import { generateParentReport } from "@/lib/padhai/reports";
 
+export async function GET() {
+  return NextResponse.json({ error: "Method not allowed. Use POST." }, { status: 405 });
+}
+
 export async function POST(req: NextRequest) {
   try {
     const resendApiKey = process.env.RESEND_API_KEY;

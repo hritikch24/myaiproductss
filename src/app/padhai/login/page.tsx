@@ -13,11 +13,38 @@ export default function PadhaiLoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [fieldErrors, setFieldErrors] = useState<{ email?: string; password?: string; name?: string }>({});
+
+  function validateForm() {
+    const errors: { email?: string; password?: string; name?: string } = {};
+    
+    if (!email.trim()) {
+      errors.email = "Email is required";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      errors.email = "Please enter a valid email";
+    }
+    
+    if (!password) {
+      errors.password = "Password is required";
+    } else if (isSignUp && password.length < 6) {
+      errors.password = "Password must be at least 6 characters";
+    }
+    
+    if (isSignUp && !name.trim()) {
+      errors.name = "Name is required";
+    }
+    
+    setFieldErrors(errors);
+    return Object.keys(errors).length === 0;
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setLoading(true);
     setError("");
+    
+    if (!validateForm()) return;
+    
+    setLoading(true);
 
     try {
       if (isSignUp) {
@@ -32,6 +59,7 @@ export default function PadhaiLoginPage() {
           setLoading(false);
           return;
         }
+        // Auto sign in after registration
         const signInRes = await signIn("credentials", {
           email,
           password,
@@ -39,7 +67,8 @@ export default function PadhaiLoginPage() {
           redirect: false,
         });
         if (signInRes?.error) {
-          setError("Account created! Try logging in.");
+          setError("Account created! Please sign in.");
+          setIsSignUp(false);
         }
       } else {
         const res = await signIn("credentials", {
@@ -104,12 +133,15 @@ export default function PadhaiLoginPage() {
                   <input
                     type="text"
                     value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    onChange={(e) => { setName(e.target.value); setFieldErrors(prev => ({ ...prev, name: undefined })); }}
                     placeholder="Enter your name"
-                    required={isSignUp}
-                    className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-slate-700 bg-slate-800/50 text-white placeholder:text-slate-500 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-all"
+                    autoComplete="name"
+                    className={`w-full pl-10 pr-4 py-2.5 rounded-lg border bg-slate-800/50 text-white placeholder:text-slate-500 outline-none transition-all ${
+                      fieldErrors.name ? "border-red-500" : "border-slate-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+                    }`}
                   />
                 </div>
+                {fieldErrors.name && <p className="text-red-400 text-xs mt-1">{fieldErrors.name}</p>}
               </div>
             )}
 
@@ -120,12 +152,15 @@ export default function PadhaiLoginPage() {
                 <input
                   type="email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => { setEmail(e.target.value); setFieldErrors(prev => ({ ...prev, email: undefined })); }}
                   placeholder="you@example.com"
-                  required
-                  className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-slate-700 bg-slate-800/50 text-white placeholder:text-slate-500 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-all"
+                  autoComplete="email"
+                  className={`w-full pl-10 pr-4 py-2.5 rounded-lg border bg-slate-800/50 text-white placeholder:text-slate-500 outline-none transition-all ${
+                    fieldErrors.email ? "border-red-500" : "border-slate-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+                  }`}
                 />
               </div>
+              {fieldErrors.email && <p className="text-red-400 text-xs mt-1">{fieldErrors.email}</p>}
             </div>
 
             <div>
@@ -135,11 +170,12 @@ export default function PadhaiLoginPage() {
                 <input
                   type={showPassword ? "text" : "password"}
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => { setPassword(e.target.value); setFieldErrors(prev => ({ ...prev, password: undefined })); }}
                   placeholder="••••••••"
-                  required
-                  minLength={6}
-                  className="w-full pl-10 pr-12 py-2.5 rounded-lg border border-slate-700 bg-slate-800/50 text-white placeholder:text-slate-500 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-all"
+                  autoComplete={isSignUp ? "new-password" : "current-password"}
+                  className={`w-full pl-10 pr-12 py-2.5 rounded-lg border bg-slate-800/50 text-white placeholder:text-slate-500 outline-none transition-all ${
+                    fieldErrors.password ? "border-red-500" : "border-slate-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+                  }`}
                 />
                 <button
                   type="button"
@@ -149,6 +185,7 @@ export default function PadhaiLoginPage() {
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
               </div>
+              {fieldErrors.password && <p className="text-red-400 text-xs mt-1">{fieldErrors.password}</p>}
             </div>
 
             <button
@@ -193,14 +230,14 @@ export default function PadhaiLoginPage() {
             {isSignUp ? (
               <p>
                 Already have an account?{" "}
-                <button onClick={() => { setIsSignUp(false); setError(""); }} className="text-emerald-400 hover:underline">
+                <button onClick={() => { setIsSignUp(false); setError(""); setFieldErrors({}); setPassword(""); }} className="text-emerald-400 hover:underline">
                   Sign in
                 </button>
               </p>
             ) : (
               <p>
                 Don&apos;t have an account?{" "}
-                <button onClick={() => { setIsSignUp(true); setError(""); }} className="text-emerald-400 hover:underline">
+                <button onClick={() => { setIsSignUp(true); setError(""); setFieldErrors({}); setPassword(""); }} className="text-emerald-400 hover:underline">
                   Sign up
                 </button>
               </p>

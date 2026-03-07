@@ -2,6 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import pool from "@/lib/padhai-db";
 import { auth } from "@/lib/auth";
 
+export async function GET() {
+  return NextResponse.json({ error: "Method not allowed. Use PATCH." }, { status: 405 });
+}
+
 export async function PATCH(req: NextRequest) {
   try {
     const session = await auth();
