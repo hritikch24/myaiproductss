@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
     const hashedPassword = await hash(password, 12);
 
     const result = await pool.query(
-      `INSERT INTO users (name, email, password_hash, created_at, updated_at)
+      `INSERT INTO users (name, email, password, created_at, updated_at)
        VALUES ($1, $2, $3, NOW(), NOW())
        RETURNING id, name, email`,
       [name, email.toLowerCase(), hashedPassword]

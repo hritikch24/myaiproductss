@@ -6,7 +6,7 @@ import bcrypt from "bcryptjs";
 
 async function getUserFromDb(email: string, password: string) {
   const { rows } = await pool.query(
-    "SELECT id, email, name, image, password_hash FROM users WHERE email = $1",
+    "SELECT id, email, name, image, password FROM users WHERE email = $1",
     [email.toLowerCase().trim()]
   );
 
@@ -14,9 +14,9 @@ async function getUserFromDb(email: string, password: string) {
 
   const user = rows[0];
 
-  if (!user.password_hash) return null;
+  if (!user.password) return null;
 
-  const isValid = await bcrypt.compare(password, user.password_hash);
+  const isValid = await bcrypt.compare(password, user.password);
   if (!isValid) return null;
 
   return {
