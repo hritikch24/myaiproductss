@@ -37,6 +37,11 @@ function QuizContent() {
     }
   }, [chapterId]);
 
+  // Show chapter selection if no chapterId provided
+  if (!chapterId) {
+    return <ChapterSelect />;
+  }
+
   useEffect(() => {
     if (loading || submitted || timeLeft <= 0) return;
 
@@ -297,6 +302,80 @@ function QuizContent() {
             {currentIndex === questions.length - 1 ? "Submit Quiz" : "Next Question"}
           </button>
         </div>
+      </main>
+    </div>
+  );
+}
+
+function ChapterSelect() {
+  const router = useRouter();
+  const [subjects, setSubjects] = useState<Record<string, { id: string; name: string }[]>>({});
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchChapters() {
+      try {
+        const res = await fetch("/api/padhai/chapters");
+        const data = await res.json();
+        setSubjects(data.subjects || {});
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchChapters();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#030712] flex items-center justify-center">
+        <Loader2 className="h-8 w-8 text-emerald-500 animate-spin" />
+      </div>
+    );
+  }
+
+  const allChapters = Object.entries(subjects).flatMap(([subject, chapters]) =>
+    chapters.map((ch: any) => ({ ...ch, subject }))
+  );
+
+  return (
+    <div className="min-h-screen bg-[#030712]">
+      <header className="border-b border-slate-800 bg-slate-900/50 backdrop-blur-xl">
+        <div className="mx-auto max-w-2xl px-4 py-4 flex items-center gap-2">
+          <button onClick={() => router.push("/padhai/dashboard")} className="text-slate-400 hover:text-white">
+            <ChevronLeft className="h-5 w-5" />
+          </button>
+          <FileQuestion className="h-5 w-5 text-emerald-500" />
+          <span className="text-white font-medium">Select Chapter for Quiz</span>
+        </div>
+      </header>
+      <main className="mx-auto max-w-2xl px-4 py-8">
+        <p className="text-slate-400 mb-6">Choose a chapter to start your quick quiz:</p>
+        <div className="space-y-6">
+          {Object.entries(subjects).map(([subjectName, chapters]) => (
+            <div key={subjectName}>
+              <h3 className="text-lg font-semibold text-white mb-3">{subjectName}</h3>
+              <div className="space-y-2">
+                {chapters.slice(0, 5).map((chapter: any) => (
+                  <button
+                    key={chapter.id}
+                    onClick={() => router.push(`/padhai/quiz?chapterId=${chapter.id}&chapterName=${encodeURIComponent(chapter.name)}`)}
+                    className="w-full flex items-center gap-3 p-3 rounded-lg border border-slate-800 bg-slate-900/30 hover:border-emerald-500 text-left transition-all"
+                  >
+                    <FileQuestion className="h-5 w-5 text-emerald-500" />
+                    <span className="text-white">{chapter.name}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+        {allChapters.length > 15 && (
+          <p className="text-slate-500 text-sm mt-4 text-center">
+            Showing first 15 chapters. More chapters available in your syllabus.
+          </p>
+        )}
       </main>
     </div>
   );
