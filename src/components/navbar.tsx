@@ -21,7 +21,8 @@ export async function Navbar() {
 
           <Link
             href="/padhai"
-            className="flex items-center gap-2 rounded-lg px-3 py-1.5 text-[13px] text-emerald-600 bg-emerald-50 hover:bg-emerald-100 transition-colors font-medium"
+            className="flex items-center gap-2 rounded-lg px-3 py-1.5 text-[13px] text-emerald-600 bg-emerald-50 hover:bg-emerald-100 transition-colors font-medium z-50 relative cursor-pointer"
+            style={{ position: 'relative', zIndex: 50 }}
           >
             <BookOpen className="h-3.5 w-3.5" />
             Padhai

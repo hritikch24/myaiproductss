@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import pool from "@/lib/db";
+import pool from "@/lib/padhai-db";
 import { auth } from "@/lib/auth";
 import { generateQuizQuestions } from "@/lib/padhai/gemini";
 

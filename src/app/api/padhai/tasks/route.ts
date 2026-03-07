@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import pool from "@/lib/db";
+import pool from "@/lib/padhai-db";
 import { auth } from "@/lib/auth";
 
 export async function PATCH(req: NextRequest) {

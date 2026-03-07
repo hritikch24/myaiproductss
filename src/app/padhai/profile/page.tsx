@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { ChevronLeft, User, Mail, BookOpen, Target, Flame, Calendar, Award, Settings, LogOut } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { ChevronLeft, User, Mail, BookOpen, Target, Flame, Calendar, Award, Settings, LogOut, Camera, X, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -10,10 +10,27 @@ export default function ProfilePage() {
   const [loading, setLoading] = useState(true);
   const [student, setStudent] = useState<any>(null);
   const [user, setUser] = useState<any>(null);
+  const [uploading, setUploading] = useState(false);
+  const [showCamera, setShowCamera] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     fetchData();
   }, []);
+
+  useEffect(() => {
+    if (showCamera && videoRef.current) {
+      startCamera();
+    }
+    return () => {
+      if (videoRef.current?.srcObject) {
+        const stream = videoRef.current.srcObject as MediaStream;
+        stream.getTracks().forEach(track => track.stop());
+      }
+    };
+  }, [showCamera]);
 
   async function fetchData() {
     try {
@@ -34,10 +51,113 @@ export default function ProfilePage() {
     }
   }
 
+  async function startCamera() {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ 
+        video: { facingMode: "user" } 
+      });
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+      }
+    } catch (err) {
+      console.error("Camera error:", err);
+    }
+  }
+
+  function capturePhoto() {
+    if (videoRef.current && canvasRef.current) {
+      const canvas = canvasRef.current;
+      const video = videoRef.current;
+      canvas.width = 200;
+      canvas.height = 200;
+      const ctx = canvas.getContext("2d");
+      if (ctx) {
+        ctx.beginPath();
+        ctx.arc(100, 100, 100, 0, Math.PI * 2);
+        ctx.clip();
+        ctx.drawImage(video, 0, 0, 200, 200);
+        const dataUrl = canvas.toDataURL("image/jpeg", 0.7);
+        uploadProfileImage(dataUrl);
+        stopCamera();
+      }
+    }
+  }
+
+  function stopCamera() {
+    if (videoRef.current?.srcObject) {
+      const stream = videoRef.current.srcObject as MediaStream;
+      stream.getTracks().forEach(track => track.stop());
+      videoRef.current.srcObject = null;
+    }
+    setShowCamera(false);
+  }
+
+  function handleFileSelect(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        uploadProfileImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  async function uploadProfileImage(base64Image: string) {
+    setUploading(true);
+    try {
+      const res = await fetch("/api/padhai/profile/image", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ image: base64Image }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setStudent((prev: any) => ({ ...prev, profile_image: base64Image }));
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setUploading(false);
+    }
+  }
+
   if (loading) {
     return (
       <div className="min-h-screen bg-[#030712] flex items-center justify-center">
         <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-emerald-500"></div>
+      </div>
+    );
+  }
+
+  if (showCamera) {
+    return (
+      <div className="min-h-screen bg-[#030712]">
+        <header className="border-b border-slate-800 bg-slate-900/50 backdrop-blur-xl sticky top-0 z-10">
+          <div className="mx-auto max-w-4xl px-4 py-4 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <button onClick={stopCamera} className="text-slate-400 hover:text-white">
+                <X className="h-5 w-5" />
+              </button>
+              <span className="text-lg font-bold text-white">Take Photo</span>
+            </div>
+          </div>
+        </header>
+        <main className="mx-auto max-w-md px-4 py-8">
+          <div className="relative rounded-xl overflow-hidden bg-black">
+            <video ref={videoRef} autoPlay playsInline className="w-full" />
+          </div>
+          <canvas ref={canvasRef} className="hidden" />
+          <div className="flex justify-center mt-6">
+            <button
+              onClick={capturePhoto}
+              disabled={uploading}
+              className="flex items-center justify-center gap-2 rounded-full bg-emerald-500 w-16 h-16 text-white hover:bg-emerald-600"
+            >
+              {uploading ? <Loader2 className="h-6 w-6 animate-spin" /> : <Camera className="h-6 w-6" />}
+            </button>
+          </div>
+        </main>
       </div>
     );
   }
@@ -59,16 +179,46 @@ export default function ProfilePage() {
       </header>
 
       <main className="mx-auto max-w-md px-4 py-6 space-y-6">
-        {/* Profile Card */}
+        {/* Profile Card with Image */}
         <div className="rounded-xl border border-slate-800 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 p-6">
-          <div className="flex items-center gap-4 mb-4">
-            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-400 text-2xl font-bold">
-              {student?.name?.charAt(0)?.toUpperCase() || "U"}
+          <div className="flex flex-col items-center">
+            <div className="relative mb-4">
+              {student?.profile_image ? (
+                <img 
+                  src={student.profile_image} 
+                  alt="Profile" 
+                  className="w-24 h-24 rounded-full object-cover border-4 border-emerald-500/30"
+                />
+              ) : (
+                <div className="w-24 h-24 rounded-full bg-emerald-500/20 border-4 border-emerald-500/30 flex items-center justify-center text-emerald-400 text-4xl font-bold">
+                  {student?.name?.charAt(0)?.toUpperCase() || "U"}
+                </div>
+              )}
+              <button
+                onClick={() => setShowCamera(true)}
+                className="absolute bottom-0 right-0 p-2 rounded-full bg-emerald-500 text-white hover:bg-emerald-600 transition-colors"
+              >
+                <Camera className="h-4 w-4" />
+              </button>
             </div>
-            <div>
-              <h2 className="text-xl font-bold text-white">{student?.name || "Student"}</h2>
-              <p className="text-sm text-slate-400">{student?.class}th Grade • {student?.exam_target}</p>
-            </div>
+            <h2 className="text-xl font-bold text-white">{student?.name || "Student"}</h2>
+            <p className="text-sm text-slate-400">{student?.class}th Grade • {student?.exam_target}</p>
+            
+            <input
+              type="file"
+              ref={fileInputRef}
+              onChange={handleFileSelect}
+              accept="image/*"
+              capture="user"
+              className="hidden"
+            />
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              disabled={uploading}
+              className="mt-3 text-xs text-emerald-400 hover:underline"
+            >
+              {uploading ? "Uploading..." : "Change Photo"}
+            </button>
           </div>
         </div>
 

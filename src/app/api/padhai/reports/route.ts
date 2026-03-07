@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import pool from "@/lib/db";
+import pool from "@/lib/padhai-db";
 import { generateParentReport } from "@/lib/padhai/reports";
 
 export async function POST(req: NextRequest) {
