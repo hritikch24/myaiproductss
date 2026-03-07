@@ -119,7 +119,18 @@ export default function MySyllabusPage() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-4xl px-4 py-6">
+      {/* Floating Done Button */}
+      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-10">
+        <Link
+          href="/padhai/dashboard"
+          className="flex items-center gap-2 px-6 py-3 bg-emerald-500 hover:bg-emerald-600 text-white font-medium rounded-full shadow-lg shadow-emerald-500/25 transition-all hover:scale-105"
+        >
+          <Check className="h-5 w-5" />
+          Done
+        </Link>
+      </div>
+
+      <main className="mx-auto max-w-4xl px-4 py-6 pb-24">
         {/* Progress Card */}
         <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-5 mb-6">
           <div className="flex items-center justify-between mb-3">

@@ -273,6 +273,17 @@ export default function WeeklyGoalsPage() {
           </button>
         )}
       </main>
+
+      {/* Floating Done Button */}
+      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-10">
+        <Link
+          href="/padhai/dashboard"
+          className="flex items-center gap-2 px-6 py-3 bg-emerald-500 hover:bg-emerald-600 text-white font-medium rounded-full shadow-lg shadow-emerald-500/25 transition-all hover:scale-105"
+        >
+          <Check className="h-5 w-5" />
+          Done
+        </Link>
+      </div>
     </div>
   );
 }
