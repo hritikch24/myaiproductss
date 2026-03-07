@@ -1,5 +1,5 @@
 import NextAuth from "next-auth";
-import pool from "./db";
+import pool from "./padhai-db";
 import authConfig from "./auth.config";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({

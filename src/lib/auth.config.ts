@@ -1,7 +1,7 @@
 import Google from "next-auth/providers/google";
 import Credentials from "next-auth/providers/credentials";
 import type { NextAuthConfig } from "next-auth";
-import pool from "./db";
+import pool from "./padhai-db";
 import bcrypt from "bcryptjs";
 
 async function getUserFromDb(email: string, password: string) {
