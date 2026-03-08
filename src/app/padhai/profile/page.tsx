@@ -122,6 +122,22 @@ export default function ProfilePage() {
     }
   }
 
+  async function updateStudent(updates: Record<string, string>) {
+    try {
+      const res = await fetch("/api/padhai/student", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updates),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setStudent((prev: any) => ({ ...prev, ...data.student }));
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   if (loading) {
     return (
       <div className="min-h-screen bg-[#030712] flex items-center justify-center">
@@ -237,25 +253,58 @@ export default function ProfilePage() {
 
             <div className="flex items-center gap-3">
               <BookOpen className="h-5 w-5 text-slate-500" />
-              <div>
+              <div className="flex-1">
                 <div className="text-xs text-slate-500">Class</div>
-                <div className="text-white">Class {student?.class}</div>
+                <div className="flex items-center gap-2">
+                  <select
+                    value={student?.class || ""}
+                    onChange={(e) => updateStudent({ class: e.target.value })}
+                    className="bg-transparent text-white border-none outline-none cursor-pointer"
+                  >
+                    <option value="6" className="bg-slate-800">Class 6</option>
+                    <option value="7" className="bg-slate-800">Class 7</option>
+                    <option value="8" className="bg-slate-800">Class 8</option>
+                    <option value="9" className="bg-slate-800">Class 9</option>
+                    <option value="10" className="bg-slate-800">Class 10</option>
+                    <option value="11" className="bg-slate-800">Class 11</option>
+                    <option value="12" className="bg-slate-800">Class 12</option>
+                  </select>
+                </div>
               </div>
             </div>
 
             <div className="flex items-center gap-3">
               <Target className="h-5 w-5 text-slate-500" />
-              <div>
+              <div className="flex-1">
+                <div className="text-xs text-slate-500">Board</div>
+                <select
+                  value={student?.board || "CBSE"}
+                  onChange={(e) => updateStudent({ board: e.target.value })}
+                  className="bg-transparent text-white border-none outline-none cursor-pointer"
+                >
+                  <option value="CBSE" className="bg-slate-800">CBSE</option>
+                  <option value="ICSE" className="bg-slate-800">ICSE</option>
+                  <option value="STATE" className="bg-slate-800">State Board</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <Target className="h-5 w-5 text-slate-500" />
+              <div className="flex-1">
                 <div className="text-xs text-slate-500">Target Exam</div>
-                <div className="text-white">
-                  {student?.exam_target === "JEE" && "JEE (Engineering)"}
-                  {student?.exam_target === "NEET" && "NEET (Medical)"}
-                  {student?.exam_target === "BOARDS_ONLY" && "Board Exams"}
-                </div>
+                <select
+                  value={student?.exam_target || ""}
+                  onChange={(e) => updateStudent({ exam_target: e.target.value })}
+                  className="bg-transparent text-white border-none outline-none cursor-pointer"
+                >
+                  <option value="JEE" className="bg-slate-800">JEE (Engineering)</option>
+                  <option value="NEET" className="bg-slate-800">NEET (Medical)</option>
+                  <option value="BOARDS_ONLY" className="bg-slate-800">Board Exams Only</option>
+                </select>
               </div>
             </div>
           </div>
-        </div>
 
         {/* Stats */}
         <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-5">

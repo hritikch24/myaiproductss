@@ -18,6 +18,7 @@ export default function MySyllabusPage() {
   const [saving, setSaving] = useState(false);
   const [examTarget, setExamTarget] = useState("");
   const [studentClass, setStudentClass] = useState("");
+  const [board, setBoard] = useState("CBSE");
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -34,10 +35,11 @@ export default function MySyllabusPage() {
 
         setExamTarget(studentData.student.exam_target);
         setStudentClass(studentData.student.class);
+        setBoard(studentData.student.board || "CBSE");
         setCompletedChapters(studentData.student.completed_chapters || []);
 
         // Get chapters
-        const chaptersRes = await fetch(`/api/padhai/chapters?class=${studentData.student.class}&exam=${studentData.student.exam_target}`);
+        const chaptersRes = await fetch(`/api/padhai/chapters?class=${studentData.student.class}&exam=${studentData.student.exam_target}&board=${studentData.student.board || 'CBSE'}`);
         if (!chaptersRes.ok) {
           throw new Error("Failed to load chapters");
         }
@@ -144,7 +146,7 @@ export default function MySyllabusPage() {
             />
           </div>
           <p className="mt-2 text-sm text-slate-400">
-            Class {studentClass} • {examTarget} • Tap chapters to mark as completed
+            Class {studentClass} • {board} Board • {examTarget} • Tap chapters to mark as completed
           </p>
         </div>
 

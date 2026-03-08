@@ -13,6 +13,7 @@ export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const studentClass = searchParams.get("class");
     const examTarget = searchParams.get("exam");
+    const board = searchParams.get("board") || "CBSE";
 
     if (!studentClass || !examTarget) {
       return NextResponse.json({ error: "Missing parameters" }, { status: 400 });
@@ -23,9 +24,9 @@ export async function GET(req: NextRequest) {
       `SELECT c.id, c.name, c.chapter_order, c.estimated_hours, s.name as subject_name 
        FROM padhai_chapters c
        JOIN padhai_subjects s ON c.subject_id = s.id
-       WHERE c.class = $1 AND c.exam_type IN ('BOTH', $2)
+       WHERE c.class = $1 AND c.exam_type IN ('BOTH', $2) AND (c.board = 'BOTH' OR c.board = $3)
        ORDER BY s.name, c.chapter_order`,
-      [studentClass, examTarget]
+      [studentClass, examTarget, board]
     );
 
     // Group chapters by subject

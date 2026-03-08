@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { BookOpen, Target, Flame, ChevronRight, Upload, FileQuestion, Brain, Clock, TrendingUp, CheckCircle, User } from "lucide-react";
+import { BookOpen, Target, Flame, ChevronRight, Upload, FileQuestion, Brain, Clock, TrendingUp, CheckCircle, User, Info } from "lucide-react";
 import Link from "next/link";
 
 export default function PadhaiDashboard() {
@@ -158,7 +158,18 @@ export default function PadhaiDashboard() {
               </div>
               <div className="text-center p-3 rounded-lg bg-slate-800/50">
                 <div className="text-2xl font-bold text-white">{progress.remainingHours || 0}</div>
-                <div className="text-xs text-slate-400">Hours Left</div>
+                <div className="text-xs text-slate-400 flex items-center justify-center gap-1">
+                  Hours Left
+                  <span className="group relative inline-block">
+                    <Info className="h-3 w-3 text-slate-500 cursor-help" />
+                    <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 bg-slate-800 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
+                      Total study hours needed to complete remaining chapters
+                      <svg className="absolute top-full left-1/2 -translate-x-1/2 -mt-1" width="8" height="5" viewBox="0 0 8 5">
+                        <path d="M0 0L4 4L8 0" fill="currentColor" className="text-slate-800"/>
+                      </svg>
+                    </span>
+                  </span>
+                </div>
               </div>
             </div>
 
