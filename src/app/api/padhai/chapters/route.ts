@@ -17,21 +17,25 @@ export async function GET(req: NextRequest) {
 
     // If no parameters provided, fetch from student's record
     if (!studentClass || !examTarget) {
-      const studentResult = await pool.query(
-        "SELECT class, exam_target, board FROM padhai_students WHERE LOWER(email) = LOWER($1)",
-        [session.user.email]
-      );
-      
-      if (studentResult.rows.length === 0) {
-        // Use default values if no student record
+      try {
+        const studentResult = await pool.query(
+          "SELECT class, exam_target, board FROM padhai_students WHERE LOWER(email) = LOWER($1)",
+          [session.user.email]
+        );
+        
+        if (studentResult.rows.length > 0) {
+          const student = studentResult.rows[0];
+          studentClass = studentClass || String(student.class || "11");
+          examTarget = examTarget || student.exam_target || "JEE";
+          board = student.board || board || "CBSE";
+        } else {
+          studentClass = studentClass || "11";
+          examTarget = examTarget || "JEE";
+        }
+      } catch (dbError) {
+        // If board column doesn't exist, use defaults
         studentClass = studentClass || "11";
         examTarget = examTarget || "JEE";
-        board = board || "CBSE";
-      } else {
-        const student = studentResult.rows[0];
-        studentClass = studentClass || String(student.class || "11");
-        examTarget = examTarget || student.exam_target || "JEE";
-        board = student.board || board || "CBSE";
       }
     }
 
