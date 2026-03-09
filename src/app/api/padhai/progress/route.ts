@@ -25,9 +25,9 @@ export async function GET(req: NextRequest) {
       `SELECT c.id, c.name, c.estimated_hours, c.class, s.name as subject_name 
        FROM padhai_chapters c
        JOIN padhai_subjects s ON c.subject_id = s.id
-       WHERE c.exam_type IN ('BOTH', $1)
+       WHERE c.class = $1 AND c.exam_type IN ('BOTH', $2)
        ORDER BY s.name, c.chapter_order`,
-      [student.exam_target]
+      [String(student.class), student.exam_target]
     );
 
     const completed = student.completed_chapters || [];

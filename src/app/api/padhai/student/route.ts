@@ -49,6 +49,20 @@ export async function PATCH(req: NextRequest) {
 
     const updates = await req.json();
     
+    // Get current student to check if class changed
+    const currentResult = await pool.query(
+      "SELECT class, completed_chapters FROM padhai_students WHERE email = $1",
+      [session.user.email]
+    );
+    
+    const currentStudent = currentResult.rows[0];
+    let resetChapters = false;
+    
+    // If class changed, we'll reset completed chapters
+    if (updates.class && String(updates.class) !== String(currentStudent.class)) {
+      resetChapters = true;
+    }
+    
     // Build update query dynamically
     const allowedFields = ['name', 'class', 'exam_target', 'board', 'subjects'];
     const updateFields: string[] = [];
@@ -65,6 +79,13 @@ export async function PATCH(req: NextRequest) {
 
     if (updateFields.length === 0) {
       return NextResponse.json({ error: "No valid fields to update" }, { status: 400 });
+    }
+
+    // If class changed, reset completed_chapters
+    if (resetChapters) {
+      updateFields.push(`completed_chapters = $${paramIndex}`);
+      updateValues.push(JSON.stringify([]));
+      paramIndex++;
     }
 
     updateValues.push(session.user.email);
