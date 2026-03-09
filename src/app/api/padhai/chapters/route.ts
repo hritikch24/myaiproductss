@@ -19,24 +19,27 @@ export async function GET(req: NextRequest) {
     if (!studentClass || !examTarget) {
       console.log("Auto-detecting class/exam for:", session.user.email);
       const studentResult = await pool.query(
-        "SELECT class, exam_target, board FROM padhai_students WHERE email = $1",
+        "SELECT class, exam_target, board FROM padhai_students WHERE LOWER(email) = LOWER($1)",
         [session.user.email]
       );
       
       if (studentResult.rows.length === 0) {
-        console.log("Student not found for email:", session.user.email);
-        return NextResponse.json({ error: "Student profile not found. Please complete onboarding." }, { status: 404 });
+        console.log("Student not found, using defaults for:", session.user.email);
+        // Use default values if no student record
+        studentClass = studentClass || "11";
+        examTarget = examTarget || "JEE";
+        board = board || "CBSE";
+      } else {
+        const student = studentResult.rows[0];
+        console.log("Student record:", student);
+        studentClass = studentClass || String(student.class || "11");
+        examTarget = examTarget || student.exam_target || "JEE";
+        board = student.board || board || "CBSE";
       }
       
-      const student = studentResult.rows[0];
-      console.log("Student record:", student);
-      studentClass = studentClass || String(student.class);
-      examTarget = examTarget || student.exam_target;
-      board = student.board || "CBSE";
-      
       if (!studentClass || !examTarget) {
-        console.log("Missing class/exam in student record:", { studentClass, examTarget });
-        return NextResponse.json({ error: "Please set your class and exam target in Profile." }, { status: 400 });
+        studentClass = "11";
+        examTarget = "JEE";
       }
     }
 
