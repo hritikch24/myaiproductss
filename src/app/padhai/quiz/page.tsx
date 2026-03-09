@@ -318,7 +318,6 @@ function ChapterSelect() {
       try {
         const res = await fetch("/api/padhai/chapters", { credentials: "include" });
         const data = await res.json();
-        console.log("Chapters API response:", data);
         if (data.subjects && Object.keys(data.subjects).length > 0) {
           setSubjects(data.subjects);
         } else if (data.error) {
@@ -327,7 +326,6 @@ function ChapterSelect() {
           setError("No chapters found. Please check your profile settings.");
         }
       } catch (err) {
-        console.error("Failed to fetch chapters:", err);
         setError("Failed to load chapters");
       } finally {
         setLoading(false);

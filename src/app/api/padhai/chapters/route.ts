@@ -17,29 +17,21 @@ export async function GET(req: NextRequest) {
 
     // If no parameters provided, fetch from student's record
     if (!studentClass || !examTarget) {
-      console.log("Auto-detecting class/exam for:", session.user.email);
       const studentResult = await pool.query(
         "SELECT class, exam_target, board FROM padhai_students WHERE LOWER(email) = LOWER($1)",
         [session.user.email]
       );
       
       if (studentResult.rows.length === 0) {
-        console.log("Student not found, using defaults for:", session.user.email);
         // Use default values if no student record
         studentClass = studentClass || "11";
         examTarget = examTarget || "JEE";
         board = board || "CBSE";
       } else {
         const student = studentResult.rows[0];
-        console.log("Student record:", student);
         studentClass = studentClass || String(student.class || "11");
         examTarget = examTarget || student.exam_target || "JEE";
         board = student.board || board || "CBSE";
-      }
-      
-      if (!studentClass || !examTarget) {
-        studentClass = "11";
-        examTarget = "JEE";
       }
     }
 
