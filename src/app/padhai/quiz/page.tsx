@@ -311,17 +311,24 @@ function ChapterSelect() {
   const router = useRouter();
   const [subjects, setSubjects] = useState<Record<string, { id: string; name: string }[]>>({});
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     async function fetchChapters() {
       try {
         const res = await fetch("/api/padhai/chapters", { credentials: "include" });
         const data = await res.json();
-        if (data.subjects) {
+        console.log("Chapters API response:", data);
+        if (data.subjects && Object.keys(data.subjects).length > 0) {
           setSubjects(data.subjects);
+        } else if (data.error) {
+          setError(data.error);
+        } else {
+          setError("No chapters found. Please check your profile settings.");
         }
       } catch (err) {
-        console.error(err);
+        console.error("Failed to fetch chapters:", err);
+        setError("Failed to load chapters");
       } finally {
         setLoading(false);
       }
@@ -333,6 +340,21 @@ function ChapterSelect() {
     return (
       <div className="min-h-screen bg-[#030712] flex items-center justify-center">
         <Loader2 className="h-8 w-8 text-emerald-500 animate-spin" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-[#030712] flex flex-col items-center justify-center p-4">
+        <FileQuestion className="h-12 w-12 text-red-500 mb-4" />
+        <p className="text-red-400 text-center mb-4">{error}</p>
+        <button
+          onClick={() => router.push("/padhai/profile")}
+          className="text-emerald-400 hover:underline"
+        >
+          Go to Profile
+        </button>
       </div>
     );
   }
