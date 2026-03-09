@@ -315,9 +315,11 @@ function ChapterSelect() {
   useEffect(() => {
     async function fetchChapters() {
       try {
-        const res = await fetch("/api/padhai/chapters");
+        const res = await fetch("/api/padhai/chapters", { credentials: "include" });
         const data = await res.json();
-        setSubjects(data.subjects || {});
+        if (data.subjects) {
+          setSubjects(data.subjects);
+        }
       } catch (err) {
         console.error(err);
       } finally {
