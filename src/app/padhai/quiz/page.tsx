@@ -295,12 +295,21 @@ function QuizContent() {
           >
             Previous
           </button>
-          <button
-            onClick={() => handleNextQuestion()}
-            className="flex-1 py-3 rounded-lg bg-emerald-500 text-white font-medium hover:bg-emerald-600"
-          >
-            {currentIndex === questions.length - 1 ? "Submit Quiz" : "Next Question"}
-          </button>
+          {currentIndex === questions.length - 1 ? (
+            <button
+              onClick={() => submitQuiz()}
+              className="flex-1 py-3 rounded-lg bg-emerald-500 text-white font-medium hover:bg-emerald-600"
+            >
+              Submit & Review
+            </button>
+          ) : (
+            <button
+              onClick={() => handleNextQuestion()}
+              className="flex-1 py-3 rounded-lg bg-emerald-500 text-white font-medium hover:bg-emerald-600"
+            >
+              Next Question
+            </button>
+          )}
         </div>
       </main>
     </div>
