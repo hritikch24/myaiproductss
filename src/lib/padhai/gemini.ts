@@ -2,6 +2,24 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
 
+async function withRetry<T>(fn: () => Promise<T>, maxRetries = 3): Promise<T> {
+  for (let i = 0; i < maxRetries; i++) {
+    try {
+      return await fn();
+    } catch (error: unknown) {
+      const err = error as { status?: number };
+      if (err.status === 429 && i < maxRetries - 1) {
+        const delay = Math.pow(2, i) * 1000;
+        console.log(`Rate limited, retrying in ${delay}ms...`);
+        await new Promise(resolve => setTimeout(resolve, delay));
+        continue;
+      }
+      throw error;
+    }
+  }
+  throw new Error("Max retries exceeded");
+}
+
 export async function generateQuizQuestions(
   chapterName: string,
   chapterId: string,
@@ -9,30 +27,25 @@ export async function generateQuizQuestions(
   examTarget: string,
   numQuestions: number = 5
 ) {
-  // Use v1 API with gemini-2.0-flash
   const model = genAI.getGenerativeModel({ 
     model: "gemini-2.0-flash",
     generationConfig: {
       temperature: 0.7,
       topP: 0.9,
       topK: 40,
-      maxOutputTokens: 2048,
+      maxOutputTokens: 4096,
     }
   }, { apiVersion: "v1" });
 
-  const prompt = `Generate ${numQuestions} MCQ questions for a Class ${studentClass} ${examTarget} student on the chapter "${chapterName}". 
-These are rapid-fire recall questions — test memorization and basic understanding, NOT complex problem-solving.
-Each question should be answerable in 5-10 seconds by a student who has genuinely studied.
-Return JSON format only (no other text):
-[{"question": "...", "options": ["A", "B", "C", "D"], "correct_answer": "A", "difficulty": "easy"}]
-Mix: 60% easy (direct recall), 40% medium (one-step thinking).
-Do NOT include lengthy numerical problems.`;
+  const prompt = `Generate exactly ${numQuestions} MCQ questions for Class ${studentClass} ${examTarget} on chapter "${chapterName}". 
+Return ONLY a JSON array, no other text.
+Format: [{"question": "...", "options": ["A", "B", "C", "D"], "correct_answer": "A", "difficulty": "easy"}]
+Keep questions short - rapid recall only. 60% easy, 40% medium.`;
 
   try {
-    const result = await model.generateContent(prompt);
+    const result = await withRetry(() => model.generateContent(prompt));
     const response = result.response.text();
     
-    // Parse the JSON response
     const jsonMatch = response.match(/\[[\s\S]*\]/);
     if (!jsonMatch) {
       throw new Error("Invalid response format");
@@ -40,10 +53,8 @@ Do NOT include lengthy numerical problems.`;
     
     const questions = JSON.parse(jsonMatch[0]);
     
-    // Add chapterId to each question
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return questions.map((q: any) => ({
-      ...q,
+    return questions.slice(0, numQuestions).map((q: unknown) => ({
+      ...q as object,
       chapterId,
       studentAnswer: null,
       timeTakenMs: null,
