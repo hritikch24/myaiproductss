@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Target, ChevronLeft, Check, Loader2, Plus, X, Sparkles } from "lucide-react";
+import { Target, ChevronLeft, Check, Loader2, Sparkles, ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 interface Task {
@@ -29,7 +29,6 @@ export default function WeeklyGoalsPage() {
   const [weekStart, setWeekStart] = useState("");
   const [weekEnd, setWeekEnd] = useState("");
   const [hasExistingGoal, setHasExistingGoal] = useState(false);
-  const [showSuggestions, setShowSuggestions] = useState(false);
 
   useEffect(() => {
     fetchGoals();
@@ -81,7 +80,6 @@ export default function WeeklyGoalsPage() {
   async function toggleTask(taskId: string, currentStatus: string) {
     const newStatus = currentStatus === 'done' ? 'pending' : 'done';
     
-    // Update UI immediately
     setTasks(tasks.map(t => 
       t.id === taskId ? { ...t, status: newStatus } : t
     ));
@@ -119,7 +117,6 @@ export default function WeeklyGoalsPage() {
 
   return (
     <div className="min-h-screen bg-[#030712]">
-      {/* Header */}
       <header className="border-b border-slate-800 bg-slate-900/50 backdrop-blur-xl sticky top-0 z-10">
         <div className="mx-auto max-w-4xl px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -135,34 +132,53 @@ export default function WeeklyGoalsPage() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-4xl px-4 py-6 space-y-6">
-        {/* Week Info */}
-        <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-4">
-          <p className="text-sm text-slate-400">
-            Week of <span className="text-white font-medium">{weekStart}</span> to <span className="text-white font-medium">{weekEnd}</span>
-          </p>
+      <main className="mx-auto max-w-4xl px-4 py-6 space-y-6 pb-24">
+        {/* Week Banner */}
+        <div className="rounded-xl border border-slate-800 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 p-5">
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center">
+              <Target className="h-6 w-6 text-emerald-400" />
+            </div>
+            <div>
+              <h2 className="text-lg font-semibold text-white">
+                {hasExistingGoal ? "This Week's Goals" : "Set Your Weekly Goals"}
+              </h2>
+              <p className="text-sm text-slate-400">
+                {weekStart} — {weekEnd}
+              </p>
+            </div>
+          </div>
         </div>
 
-        {/* Current Progress (if goals exist) */}
+        {/* Progress (if goals exist) */}
         {hasExistingGoal && tasks.length > 0 && (
           <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-5">
             <div className="flex items-center justify-between mb-3">
-              <h2 className="text-lg font-semibold text-white">This Week&apos;s Progress</h2>
-              <span className="text-sm text-slate-400">{completedCount}/{totalCount} tasks</span>
+              <span className="text-sm text-slate-400">Your Progress</span>
+              <span className="text-sm font-medium text-white">{completedCount} of {totalCount} completed</span>
             </div>
-            <div className="h-3 bg-slate-800 rounded-full overflow-hidden">
+            <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
               <div 
                 className="h-full bg-gradient-to-r from-emerald-500 to-teal-500 transition-all duration-500"
                 style={{ width: `${progress}%` }}
               />
             </div>
+            {progress === 100 && (
+              <p className="mt-3 text-sm text-emerald-400 flex items-center gap-2">
+                <Sparkles className="h-4 w-4" />
+                Amazing work! You've completed all your goals this week!
+              </p>
+            )}
           </div>
         )}
 
         {/* Current Tasks */}
         {hasExistingGoal && tasks.length > 0 && (
           <div className="space-y-3">
-            <h2 className="text-lg font-semibold text-white">Your Tasks</h2>
+            <div className="flex items-center justify-between">
+              <h3 className="text-md font-semibold text-white">Your Tasks</h3>
+              <span className="text-xs text-slate-500">Tap to mark complete</span>
+            </div>
             {tasks.map((task) => (
               <button
                 key={task.id}
@@ -173,22 +189,22 @@ export default function WeeklyGoalsPage() {
                     : "border-slate-800 bg-slate-900/30 hover:border-slate-700"
                 }`}
               >
-                <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
+                <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
                   task.status === 'done'
                     ? "border-emerald-500 bg-emerald-500"
                     : "border-slate-600"
                 }`}>
                   {task.status === 'done' && <Check className="h-4 w-4 text-white" />}
                 </div>
-                <div className="flex-1">
-                  <span className={`text-sm ${
+                <div className="flex-1 min-w-0">
+                  <span className={`text-sm block truncate ${
                     task.status === 'done' ? "text-slate-400 line-through" : "text-white"
                   }`}>
                     {task.chapter_name || task.task_description}
                   </span>
                 </div>
                 {task.quiz_taken && task.quiz_score !== null && (
-                  <span className={`text-xs px-2 py-1 rounded ${
+                  <span className={`text-xs px-2 py-1 rounded flex-shrink-0 ${
                     task.quiz_score >= 70 ? 'bg-green-500/20 text-green-400' :
                     task.quiz_score >= 40 ? 'bg-yellow-500/20 text-yellow-400' :
                     'bg-red-500/20 text-red-400'
@@ -201,84 +217,79 @@ export default function WeeklyGoalsPage() {
           </div>
         )}
 
-        {/* Set Goals / Add More */}
-        {!hasExistingGoal || showSuggestions ? (
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <h2 className="text-lg font-semibold text-white">
-                {hasExistingGoal ? "Add More Tasks" : "Set Your Weekly Goals"}
-              </h2>
-              {suggestedChapters.length > 0 && (
-                <button
-                  onClick={() => setShowSuggestions(!showSuggestions)}
-                  className="flex items-center gap-2 text-sm text-emerald-400 hover:underline"
-                >
-                  <Sparkles className="h-4 w-4" />
-                  AI Suggestions
-                </button>
-              )}
-            </div>
-
-            {showSuggestions && suggestedChapters.length > 0 && (
-              <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/5 p-4">
-                <p className="text-sm text-emerald-400 mb-3">
-                  Suggested chapters based on your syllabus progress:
-                </p>
-                <div className="space-y-2">
-                  {suggestedChapters.slice(0, 8).map((chapter) => (
-                    <button
-                      key={chapter.id}
-                      onClick={() => toggleChapterSelection(chapter.id)}
-                      className={`w-full flex items-center gap-3 p-3 rounded-lg border text-left transition-all ${
-                        selectedChapters.includes(chapter.id)
-                          ? "border-emerald-500 bg-emerald-500/10"
-                          : "border-slate-800 bg-slate-900/30 hover:border-slate-700"
-                      }`}
-                    >
-                      <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
-                        selectedChapters.includes(chapter.id)
-                          ? "border-emerald-500 bg-emerald-500"
-                          : "border-slate-600"
-                      }`}>
-                        {selectedChapters.includes(chapter.id) && <Check className="h-3 w-3 text-white" />}
-                      </div>
-                      <div>
-                        <span className="text-sm text-white">{chapter.name}</span>
-                        <span className="text-xs text-slate-500 ml-2">({chapter.subject_name})</span>
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {selectedChapters.length > 0 && (
-              <button
-                onClick={saveGoals}
-                disabled={saving}
-                className="w-full flex items-center justify-center gap-2 rounded-lg bg-emerald-500 px-4 py-3 text-sm font-medium text-white hover:bg-emerald-600 disabled:opacity-50"
-              >
-                {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Check className="h-4 w-4" />}
-                Save {selectedChapters.length} Tasks
-              </button>
-            )}
+        {/* Add Goals Section */}
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <h3 className="text-md font-semibold text-white">
+              {hasExistingGoal ? "Add More Goals" : "Choose What to Study This Week"}
+            </h3>
           </div>
-        ) : (
-          <button
-            onClick={() => setShowSuggestions(true)}
-            className="w-full flex items-center justify-center gap-2 rounded-lg border border-dashed border-slate-700 p-4 text-sm text-slate-400 hover:border-slate-600 hover:text-white transition-all"
-          >
-            <Plus className="h-4 w-4" />
-            Add More Tasks
-          </button>
-        )}
+
+          {suggestedChapters.length > 0 ? (
+            <div className="rounded-xl border border-slate-800 bg-slate-900/30 p-4">
+              <div className="flex items-center gap-2 mb-4">
+                <Sparkles className="h-4 w-4 text-amber-400" />
+                <span className="text-sm text-slate-300">AI Recommendations based on your syllabus</span>
+              </div>
+              <div className="space-y-2">
+                {suggestedChapters.slice(0, 8).map((chapter) => (
+                  <button
+                    key={chapter.id}
+                    onClick={() => toggleChapterSelection(chapter.id)}
+                    className={`w-full flex items-center gap-3 p-3 rounded-lg border text-left transition-all ${
+                      selectedChapters.includes(chapter.id)
+                        ? "border-emerald-500 bg-emerald-500/10"
+                        : "border-slate-800 bg-slate-900/30 hover:border-slate-700"
+                    }`}
+                  >
+                    <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
+                      selectedChapters.includes(chapter.id)
+                        ? "border-emerald-500 bg-emerald-500"
+                        : "border-slate-600"
+                    }`}>
+                      {selectedChapters.includes(chapter.id) && <Check className="h-3 w-3 text-white" />}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <span className="text-sm text-white block truncate">{chapter.name}</span>
+                      <span className="text-xs text-slate-500">{chapter.subject_name}</span>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div className="rounded-xl border border-slate-800 bg-slate-900/30 p-6 text-center">
+              <p className="text-slate-400">No chapter suggestions available. Complete your syllabus setup first.</p>
+              <Link href="/padhai/syllabus" className="text-emerald-400 text-sm hover:underline mt-2 inline-block">
+                View Syllabus →
+              </Link>
+            </div>
+          )}
+
+          {selectedChapters.length > 0 && (
+            <button
+              onClick={saveGoals}
+              disabled={saving}
+              className="w-full flex items-center justify-center gap-2 rounded-lg bg-emerald-500 px-4 py-3 text-sm font-medium text-white hover:bg-emerald-600 disabled:opacity-50"
+            >
+              {saving ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <>
+                  Add {selectedChapters.length} Goal{selectedChapters.length > 1 ? 's' : ''}
+                  <ArrowRight className="h-4 w-4" />
+                </>
+              )}
+            </button>
+          )}
+        </div>
       </main>
 
       {/* Floating Done Button */}
       <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-10">
         <Link
           href="/padhai/dashboard"
-          className="flex items-center gap-2 px-6 py-3 bg-emerald-500 hover:bg-emerald-600 text-white font-medium rounded-full shadow-lg shadow-emerald-500/25 transition-all hover:scale-105"
+          className="flex items-center gap-2 px-6 py-3 bg-slate-700 hover:bg-slate-600 text-white font-medium rounded-full shadow-lg transition-all hover:scale-105"
         >
           <Check className="h-5 w-5" />
           Done

@@ -17,7 +17,7 @@ test.describe('Padhai App Real-time Testing', () => {
 
     // Step 1: Navigate directly to login page
     console.log('=== Step 1: Login Page ===');
-    await page.goto('https://kraftai.in/padhai/login');
+    await page.goto('http://localhost:3000/padhai/login');
     await page.waitForLoadState('networkidle');
     await takeScreenshot('01-login-page');
     
@@ -69,7 +69,7 @@ test.describe('Padhai App Real-time Testing', () => {
     
     // Step 4: Try login with created credentials
     console.log('\n=== Step 4: Login ===');
-    await page.goto('https://kraftai.in/padhai/login');
+    await page.goto('http://localhost:3000/padhai/login');
     await page.waitForLoadState('networkidle');
     
     const loginEmail = page.locator('input[type="email"]').first();
@@ -131,7 +131,7 @@ test.describe('Padhai App Real-time Testing', () => {
 
     // Step 6: Dashboard
     console.log('\n=== Step 6: Dashboard ===');
-    await page.goto('https://kraftai.in/padhai/dashboard');
+    await page.goto('http://localhost:3000/padhai/dashboard');
     await page.waitForLoadState('networkidle');
     await takeScreenshot('11-dashboard');
     console.log(`Dashboard URL: ${page.url()}`);

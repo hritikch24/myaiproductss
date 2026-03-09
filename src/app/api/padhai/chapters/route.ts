@@ -11,12 +11,25 @@ export async function GET(req: NextRequest) {
     }
 
     const { searchParams } = new URL(req.url);
-    const studentClass = searchParams.get("class");
-    const examTarget = searchParams.get("exam");
-    const board = searchParams.get("board") || "CBSE";
+    let studentClass = searchParams.get("class");
+    let examTarget = searchParams.get("exam");
+    let board = searchParams.get("board") || "CBSE";
 
+    // If no parameters provided, fetch from student's record
     if (!studentClass || !examTarget) {
-      return NextResponse.json({ error: "Missing parameters" }, { status: 400 });
+      const studentResult = await pool.query(
+        "SELECT class, exam_target, board FROM padhai_students WHERE email = $1",
+        [session.user.email]
+      );
+      
+      if (studentResult.rows.length === 0) {
+        return NextResponse.json({ error: "Student not found" }, { status: 404 });
+      }
+      
+      const student = studentResult.rows[0];
+      studentClass = studentClass || String(student.class);
+      examTarget = examTarget || student.exam_target;
+      board = student.board || "CBSE";
     }
 
     // Get chapters grouped by subject
