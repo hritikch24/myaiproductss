@@ -17,19 +17,27 @@ export async function GET(req: NextRequest) {
 
     // If no parameters provided, fetch from student's record
     if (!studentClass || !examTarget) {
+      console.log("Auto-detecting class/exam for:", session.user.email);
       const studentResult = await pool.query(
         "SELECT class, exam_target, board FROM padhai_students WHERE email = $1",
         [session.user.email]
       );
       
       if (studentResult.rows.length === 0) {
-        return NextResponse.json({ error: "Student not found" }, { status: 404 });
+        console.log("Student not found for email:", session.user.email);
+        return NextResponse.json({ error: "Student profile not found. Please complete onboarding." }, { status: 404 });
       }
       
       const student = studentResult.rows[0];
+      console.log("Student record:", student);
       studentClass = studentClass || String(student.class);
       examTarget = examTarget || student.exam_target;
       board = student.board || "CBSE";
+      
+      if (!studentClass || !examTarget) {
+        console.log("Missing class/exam in student record:", { studentClass, examTarget });
+        return NextResponse.json({ error: "Please set your class and exam target in Profile." }, { status: 400 });
+      }
     }
 
     // Get chapters grouped by subject
