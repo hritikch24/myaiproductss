@@ -305,6 +305,7 @@ export default function ProfilePage() {
               </div>
             </div>
           </div>
+        </div>
 
         {/* Stats */}
         <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-5">
