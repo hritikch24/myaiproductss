@@ -43,13 +43,12 @@ export async function POST(req: NextRequest) {
 
     const chapterName = chapterResult.rows[0].name;
 
-    // Generate only 2 questions initially to avoid rate limits
     const questions = await generateQuizQuestions(
       chapterName,
       chapterId,
       student.class,
       student.exam_target,
-      2
+      5
     );
 
     const quizResult = await pool.query(
