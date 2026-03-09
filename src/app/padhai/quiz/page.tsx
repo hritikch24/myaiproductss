@@ -30,6 +30,36 @@ function QuizContent() {
   const [submitted, setSubmitted] = useState(false);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [result, setResult] = useState<any>(null);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [hasMoreQuestions, setHasMoreQuestions] = useState(true);
+
+  async function loadMoreQuestions() {
+    if (loadingMore || !hasMoreQuestions) return;
+    setLoadingMore(true);
+    try {
+      const res = await fetch("/api/padhai/quiz", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          quizId, 
+          chapterId, 
+          action: "generateMore" 
+        }),
+      });
+      const data = await res.json();
+      if (data.questions && data.questions.length > 0) {
+        setQuestions(prev => [...prev, ...data.questions]);
+        setAnswers(prev => [...prev, ...new Array(data.questions.length).fill(null)]);
+        setHasMoreQuestions(data.totalQuestions < 10);
+      } else {
+        setHasMoreQuestions(false);
+      }
+    } catch (err) {
+      console.error("Failed to load more questions:", err);
+    } finally {
+      setLoadingMore(false);
+    }
+  }
 
   useEffect(() => {
     if (chapterId) {
@@ -311,6 +341,21 @@ function QuizContent() {
             </button>
           )}
         </div>
+
+        {hasMoreQuestions && !submitted && (
+          <button
+            onClick={loadMoreQuestions}
+            disabled={loadingMore}
+            className="w-full mt-3 py-2 text-sm text-slate-400 hover:text-white flex items-center justify-center gap-2"
+          >
+            {loadingMore ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <>+
+                Get More Questions</>
+            )}
+          </button>
+        )}
       </main>
     </div>
   );

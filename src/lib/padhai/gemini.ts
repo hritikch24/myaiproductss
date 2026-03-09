@@ -27,20 +27,19 @@ export async function generateQuizQuestions(
   examTarget: string,
   numQuestions: number = 5
 ) {
+  // Use smallest flash model for minimal tokens
   const model = genAI.getGenerativeModel({ 
-    model: "gemini-2.0-flash",
+    model: "gemini-1.5-flash-8b",
     generationConfig: {
       temperature: 0.7,
       topP: 0.9,
-      topK: 40,
-      maxOutputTokens: 4096,
+      maxOutputTokens: 2048,
     }
   }, { apiVersion: "v1" });
 
-  const prompt = `Generate exactly ${numQuestions} MCQ questions for Class ${studentClass} ${examTarget} on chapter "${chapterName}". 
-Return ONLY a JSON array, no other text.
-Format: [{"question": "...", "options": ["A", "B", "C", "D"], "correct_answer": "A", "difficulty": "easy"}]
-Keep questions short - rapid recall only. 60% easy, 40% medium.`;
+  const prompt = `Generate exactly ${numQuestions} very short MCQ questions for Class ${studentClass} ${examTarget} on "${chapterName}". 
+JSON only: [{"question": "Q?", "options": ["A","B","C","D"], "correct_answer": "A", "difficulty": "easy"}]
+Keep questions under 10 words. Direct recall only.`;
 
   try {
     const result = await withRetry(() => model.generateContent(prompt));
@@ -63,4 +62,15 @@ Keep questions short - rapid recall only. 60% easy, 40% medium.`;
     console.error("Quiz generation error:", error);
     throw error;
   }
+}
+
+export async function generateMoreQuestions(
+  chapterName: string,
+  chapterId: string,
+  studentClass: string,
+  examTarget: string,
+  numQuestions: number = 3
+) {
+  // Generate fewer questions for background request
+  return generateQuizQuestions(chapterName, chapterId, studentClass, examTarget, numQuestions);
 }
