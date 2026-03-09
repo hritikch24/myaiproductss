@@ -9,7 +9,16 @@ export async function generateQuizQuestions(
   examTarget: string,
   numQuestions: number = 5
 ) {
-  const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-8b" });
+  // Use v1 API with gemini-2.0-flash
+  const model = genAI.getGenerativeModel({ 
+    model: "gemini-2.0-flash",
+    generationConfig: {
+      temperature: 0.7,
+      topP: 0.9,
+      topK: 40,
+      maxOutputTokens: 2048,
+    }
+  }, { apiVersion: "v1" });
 
   const prompt = `Generate ${numQuestions} MCQ questions for a Class ${studentClass} ${examTarget} student on the chapter "${chapterName}". 
 These are rapid-fire recall questions — test memorization and basic understanding, NOT complex problem-solving.

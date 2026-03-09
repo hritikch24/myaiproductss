@@ -13,7 +13,15 @@ export async function generateParentReport(
   strongAreas: string[],
   language: string = "hinglish"
 ) {
-  const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+  const model = genAI.getGenerativeModel({ 
+    model: "gemini-2.0-flash",
+    generationConfig: {
+      temperature: 0.7,
+      topP: 0.9,
+      topK: 40,
+      maxOutputTokens: 2048,
+    }
+  }, { apiVersion: "v1" });
 
   const languageInstructions = {
     english: "Write in English",
