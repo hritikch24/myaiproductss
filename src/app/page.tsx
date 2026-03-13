@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Scale, Gamepad2, Bot, ArrowRight, BookOpen } from "lucide-react";
+import { Scale, Gamepad2, Bot, ArrowRight, BookOpen, Briefcase, Cpu } from "lucide-react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -38,6 +38,17 @@ export const metadata: Metadata = {
 };
 
 const products = [
+  {
+    name: "Enterprise",
+    description: "Terraform, Kubernetes & AI infrastructure. Ex-Meta engineers building systems at massive scale.",
+    href: "/enterprise",
+    icon: Briefcase,
+    color: "text-blue-400",
+    bgColor: "bg-blue-500/10",
+    borderColor: "border-blue-500/30",
+    status: "New",
+    badge: "from-blue-500 to-purple-500",
+  },
   {
     name: "Padhai",
     description: "Study tracker for Class 11, 12, JEE & NEET students. Set goals, verify with quizzes, keep parents updated.",
@@ -121,19 +132,22 @@ export default function Home() {
               href={product.href}
               className="group relative overflow-hidden rounded-xl border border-slate-800 bg-slate-900/50 p-6 transition-all hover:border-slate-700"
             >
-              <div className={`mb-4 inline-flex rounded-lg p-3 ${product.bgColor}`}>
+              {product.badge && (
+                <div className={`absolute -right-8 -top-8 w-24 h-24 bg-gradient-to-br ${product.badge} opacity-20 rotate-45 group-hover:scale-150 transition-transform duration-500`} />
+              )}
+              <div className={`relative z-10 mb-4 inline-flex rounded-lg p-3 ${product.bgColor}`}>
                 <product.icon className={`h-6 w-6 ${product.color}`} />
               </div>
-              <div className="flex items-center justify-between">
+              <div className="relative z-10 flex items-center justify-between">
                 <h3 className="text-lg font-semibold text-white">{product.name}</h3>
                 <span className={`text-xs font-medium ${
-                  product.status === "Live" ? "text-green-400" : "text-slate-500"
+                  product.status === "Live" ? "text-green-400" : product.status === "New" ? "text-blue-400" : "text-slate-500"
                 }`}>
                   {product.status}
                 </span>
               </div>
-              <p className="mt-2 text-sm text-slate-400">{product.description}</p>
-              <div className="mt-4 flex items-center text-sm font-medium text-indigo-400 opacity-0 transition-opacity group-hover:opacity-100">
+              <p className="relative z-10 mt-2 text-sm text-slate-400">{product.description}</p>
+              <div className="relative z-10 mt-4 flex items-center text-sm font-medium text-indigo-400 opacity-0 transition-opacity group-hover:opacity-100">
                 Explore <ArrowRight className="ml-1 h-4 w-4" />
               </div>
             </Link>
