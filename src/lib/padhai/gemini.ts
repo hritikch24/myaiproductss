@@ -2,16 +2,21 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
 
+function isRetryableError(error: unknown): boolean {
+  const err = error as { status?: number; message?: string; code?: number };
+  if (err.status === 429 || err.status === 503 || err.code === 429 || err.code === 503) return true;
+  const msg = String(err.message || error || "").toLowerCase();
+  return msg.includes("resource_exhausted") || msg.includes("rate limit") || msg.includes("429") || msg.includes("503") || msg.includes("overloaded");
+}
+
 async function withRetry<T>(fn: () => Promise<T>, maxRetries = 3): Promise<T> {
   for (let i = 0; i < maxRetries; i++) {
     try {
       return await fn();
     } catch (error: unknown) {
-      const err = error as { status?: number };
-      const isRetryable = err.status === 429 || err.status === 503;
-      if (isRetryable && i < maxRetries - 1) {
-        const delay = Math.pow(2, i) * 1500; // 1.5s, 3s, 6s
-        console.log(`Gemini ${err.status}, retrying in ${delay}ms (attempt ${i + 2}/${maxRetries})...`);
+      if (isRetryableError(error) && i < maxRetries - 1) {
+        const delay = Math.pow(2, i) * 2000; // 2s, 4s, 8s
+        console.log(`Gemini rate limited, retrying in ${delay}ms (attempt ${i + 2}/${maxRetries})...`);
         await new Promise(resolve => setTimeout(resolve, delay));
         continue;
       }

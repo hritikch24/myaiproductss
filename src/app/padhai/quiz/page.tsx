@@ -2,7 +2,7 @@
 
 import { Suspense, useState, useEffect, useCallback } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { FileQuestion, ChevronLeft, Loader2, Check, X, Trophy, ArrowLeft } from "lucide-react";
+import { FileQuestion, ChevronLeft, Loader2, Check, X, ArrowLeft } from "lucide-react";
 
 interface Question {
   question: string;
@@ -32,6 +32,107 @@ function QuizContent() {
   const [result, setResult] = useState<any>(null);
   const [loadingMore, setLoadingMore] = useState(false);
   const [hasMoreQuestions, setHasMoreQuestions] = useState(true);
+  const [error, setError] = useState("");
+
+  const startQuiz = useCallback(async () => {
+    setLoading(true);
+    setError("");
+    try {
+      const res = await fetch("/api/padhai/quiz", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ chapterId, taskId }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok && data.questions && data.questions.length > 0) {
+        setQuizId(data.quizId);
+        setQuestions(data.questions);
+        setAnswers(new Array(data.questions.length).fill(null));
+      } else {
+        setError(data.error || "Failed to generate quiz. Please try again.");
+      }
+    } catch (err) {
+      console.error(err);
+      setError("Failed to start quiz. Please check your connection.");
+    } finally {
+      setLoading(false);
+    }
+  }, [chapterId, taskId]);
+
+  useEffect(() => {
+    if (chapterId) {
+      startQuiz();
+    } else {
+      setLoading(false);
+    }
+  }, [chapterId, startQuiz]);
+
+  const submitQuiz = useCallback(async () => {
+    setSubmitted(true);
+
+    try {
+      const res = await fetch("/api/padhai/quiz/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ quizId, answers }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.error || "Failed to submit quiz");
+        setSubmitted(false);
+        return;
+      }
+
+      setResult(data);
+
+      // Update task if there's a taskId
+      if (taskId) {
+        await fetch("/api/padhai/tasks", {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            taskId,
+            status: 'done',
+            quizScore: data.score,
+            quizTaken: true
+          }),
+        });
+      }
+    } catch (err) {
+      console.error(err);
+      setError("Failed to submit quiz. Please try again.");
+      setSubmitted(false);
+    }
+  }, [quizId, answers, taskId]);
+
+  const handleNextQuestion = useCallback(() => {
+    if (currentIndex < questions.length - 1) {
+      setCurrentIndex(prev => prev + 1);
+      setTimeLeft(10);
+    } else {
+      submitQuiz();
+    }
+  }, [currentIndex, questions.length, submitQuiz]);
+
+  useEffect(() => {
+    if (loading || submitted || questions.length === 0) return;
+
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          handleNextQuestion();
+          return 10;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [loading, submitted, currentIndex, handleNextQuestion, questions.length]);
 
   async function loadMoreQuestions() {
     if (loadingMore || !hasMoreQuestions) return;
@@ -40,14 +141,14 @@ function QuizContent() {
       const res = await fetch("/api/padhai/quiz", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ 
-          quizId, 
-          chapterId, 
-          action: "generateMore" 
+        body: JSON.stringify({
+          quizId,
+          chapterId,
+          action: "generateMore"
         }),
       });
       const data = await res.json();
-      if (data.questions && data.questions.length > 0) {
+      if (res.ok && data.questions && data.questions.length > 0) {
         setQuestions(prev => [...prev, ...data.questions]);
         setAnswers(prev => [...prev, ...new Array(data.questions.length).fill(null)]);
         setHasMoreQuestions(data.totalQuestions < 10);
@@ -61,105 +162,15 @@ function QuizContent() {
     }
   }
 
-  useEffect(() => {
-    if (chapterId) {
-      startQuiz();
-    }
-  }, [chapterId]);
-
-  // Show chapter selection if no chapterId provided
-  if (!chapterId) {
-    return <ChapterSelect />;
-  }
-
-  useEffect(() => {
-    if (loading || submitted || timeLeft <= 0) return;
-
-    const timer = setInterval(() => {
-      setTimeLeft((prev) => {
-        if (prev <= 1) {
-          handleNextQuestion(true);
-          return 10;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, [loading, submitted, currentIndex, timeLeft]);
-
-  async function startQuiz() {
-    setLoading(true);
-    try {
-      const res = await fetch("/api/padhai/quiz", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ chapterId, taskId }),
-      });
-      
-      const data = await res.json();
-      
-      if (data.questions) {
-        setQuizId(data.quizId);
-        setQuestions(data.questions);
-        setAnswers(new Array(data.questions.length).fill(null));
-      } else {
-        alert(data.error || "Failed to generate quiz");
-        router.push("/padhai/dashboard");
-      }
-    } catch (err) {
-      console.error(err);
-      alert("Failed to start quiz");
-      router.push("/padhai/dashboard");
-    } finally {
-      setLoading(false);
-    }
-  }
-
   function handleAnswer(answer: string) {
     const newAnswers = [...answers];
     newAnswers[currentIndex] = answer;
     setAnswers(newAnswers);
   }
 
-  const handleNextQuestion = useCallback((autoSubmit = false) => {
-    if (currentIndex < questions.length - 1) {
-      setCurrentIndex(currentIndex + 1);
-      setTimeLeft(10);
-    } else {
-      submitQuiz();
-    }
-  }, [currentIndex, questions.length]);
-
-  async function submitQuiz() {
-    setSubmitted(true);
-    
-    try {
-      const res = await fetch("/api/padhai/quiz/submit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ quizId, answers }),
-      });
-      
-      const data = await res.json();
-      setResult(data);
-
-      // Update task if there's a taskId
-      if (taskId) {
-        await fetch("/api/padhai/tasks", {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ 
-            taskId, 
-            status: 'done', 
-            quizScore: data.score,
-            quizTaken: true 
-          }),
-        });
-      }
-    } catch (err) {
-      console.error(err);
-    }
+  // Show chapter selection if no chapterId provided
+  if (!chapterId) {
+    return <ChapterSelect />;
   }
 
   if (loading) {
@@ -173,9 +184,32 @@ function QuizContent() {
     );
   }
 
+  if (error) {
+    return (
+      <div className="min-h-screen bg-[#030712] flex flex-col items-center justify-center p-4">
+        <FileQuestion className="h-12 w-12 text-red-500 mb-4" />
+        <p className="text-red-400 text-center mb-4">{error}</p>
+        <div className="flex gap-3">
+          <button
+            onClick={() => startQuiz()}
+            className="px-4 py-2 rounded-lg bg-emerald-500 text-white hover:bg-emerald-600"
+          >
+            Try Again
+          </button>
+          <button
+            onClick={() => router.push("/padhai/dashboard")}
+            className="px-4 py-2 rounded-lg border border-slate-700 text-slate-400 hover:border-slate-600"
+          >
+            Back to Dashboard
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   if (submitted && result) {
     const scoreColor = result.score >= 70 ? "text-green-400" : result.score >= 40 ? "text-yellow-400" : "text-red-400";
-    
+
     return (
       <div className="min-h-screen bg-[#030712]">
         <header className="border-b border-slate-800 bg-slate-900/50 backdrop-blur-xl">
@@ -190,7 +224,7 @@ function QuizContent() {
         <main className="mx-auto max-w-2xl px-4 py-8">
           <div className="text-center mb-8">
             <div className={`text-6xl font-bold ${scoreColor} mb-2`}>
-              {result.score}%
+              {Math.round(result.score)}%
             </div>
             <p className="text-slate-400">
               {result.correctCount} out of {result.totalQuestions} correct
@@ -200,17 +234,17 @@ function QuizContent() {
               result.verificationStatus === 'partial' ? 'bg-yellow-500/20 text-yellow-400' :
               'bg-red-500/20 text-red-400'
             }`}>
-              {result.verificationStatus === 'genuine' ? '✓ Well studied!' :
-               result.verificationStatus === 'partial' ? '⚠ Keep practicing' :
-               '📚 Need more revision'}
+              {result.verificationStatus === 'genuine' ? 'Well studied!' :
+               result.verificationStatus === 'partial' ? 'Keep practicing' :
+               'Need more revision'}
             </div>
           </div>
 
           <div className="space-y-4">
             {result.questions.map((q: Question, index: number) => (
               <div key={index} className={`p-4 rounded-lg border ${
-                q.studentAnswer === q.correct_answer 
-                  ? "border-green-500/30 bg-green-500/5" 
+                q.studentAnswer === q.correct_answer
+                  ? "border-green-500/30 bg-green-500/5"
                   : "border-red-500/30 bg-red-500/5"
               }`}>
                 <div className="flex items-start gap-3">
@@ -246,6 +280,21 @@ function QuizContent() {
     );
   }
 
+  if (questions.length === 0) {
+    return (
+      <div className="min-h-screen bg-[#030712] flex flex-col items-center justify-center p-4">
+        <FileQuestion className="h-12 w-12 text-slate-500 mb-4" />
+        <p className="text-slate-400 text-center mb-4">No questions available for this chapter yet.</p>
+        <button
+          onClick={() => router.push("/padhai/dashboard")}
+          className="px-4 py-2 rounded-lg bg-emerald-500 text-white hover:bg-emerald-600"
+        >
+          Back to Dashboard
+        </button>
+      </div>
+    );
+  }
+
   const currentQuestion = questions[currentIndex];
 
   return (
@@ -273,7 +322,7 @@ function QuizContent() {
       </header>
 
       <div className="h-1 bg-slate-800">
-        <div 
+        <div
           className="h-full bg-emerald-500 transition-all duration-300"
           style={{ width: `${((currentIndex + 1) / questions.length) * 100}%` }}
         />
@@ -289,7 +338,7 @@ function QuizContent() {
             {currentQuestion.options.map((option, index) => {
               const optionLetter = String.fromCharCode(65 + index);
               const isSelected = answers[currentIndex] === optionLetter;
-              
+
               return (
                 <button
                   key={index}
@@ -300,8 +349,8 @@ function QuizContent() {
                       : "border-slate-800 bg-slate-900/30 hover:border-slate-700"
                   }`}
                 >
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center text{
-                    isSelected ? "bg-emerald-500 text-white" : "-sm font-medium $bg-slate-800 text-slate-400"
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
+                    isSelected ? "bg-emerald-500 text-white" : "bg-slate-800 text-slate-400"
                   }`}>
                     {optionLetter}
                   </div>
@@ -351,8 +400,7 @@ function QuizContent() {
             {loadingMore ? (
               <Loader2 className="h-4 w-4 animate-spin" />
             ) : (
-              <>+
-                Get More Questions</>
+              "Get More Questions"
             )}
           </button>
         )}
@@ -379,7 +427,7 @@ function ChapterSelect() {
         } else {
           setError("No chapters found. Please check your profile settings.");
         }
-      } catch (err) {
+      } catch {
         setError("Failed to load chapters");
       } finally {
         setLoading(false);
@@ -411,10 +459,6 @@ function ChapterSelect() {
     );
   }
 
-  const allChapters = Object.entries(subjects).flatMap(([subject, chapters]) =>
-    chapters.map((ch: any) => ({ ...ch, subject }))
-  );
-
   return (
     <div className="min-h-screen bg-[#030712]">
       <header className="border-b border-slate-800 bg-slate-900/50 backdrop-blur-xl">
@@ -433,7 +477,7 @@ function ChapterSelect() {
             <div key={subjectName}>
               <h3 className="text-lg font-semibold text-white mb-3">{subjectName}</h3>
               <div className="space-y-2">
-                {chapters.slice(0, 5).map((chapter: any) => (
+                {chapters.slice(0, 5).map((chapter) => (
                   <button
                     key={chapter.id}
                     onClick={() => router.push(`/padhai/quiz?chapterId=${chapter.id}&chapterName=${encodeURIComponent(chapter.name)}`)}
@@ -447,11 +491,6 @@ function ChapterSelect() {
             </div>
           ))}
         </div>
-        {allChapters.length > 15 && (
-          <p className="text-slate-500 text-sm mt-4 text-center">
-            Showing first 15 chapters. More chapters available in your syllabus.
-          </p>
-        )}
       </main>
     </div>
   );
