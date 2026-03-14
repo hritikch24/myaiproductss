@@ -6,4 +6,4 @@ CREATE TABLE IF NOT EXISTS feedback (
   user_id BIGINT REFERENCES users(id),
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
-CREATE INDEX idx_feedback_created ON feedback(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_feedback_created ON feedback(created_at DESC);

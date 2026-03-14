@@ -1,7 +1,7 @@
 -- Pre-generated question bank to avoid Gemini rate limits
 CREATE TABLE IF NOT EXISTS padhai_question_bank (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  chapter_id BIGINT REFERENCES padhai_chapters(id) ON DELETE CASCADE,
+  chapter_id UUID REFERENCES padhai_chapters(id) ON DELETE CASCADE,
   question TEXT NOT NULL,
   options JSONB NOT NULL, -- ["A) ...", "B) ...", "C) ...", "D) ..."]
   correct_answer TEXT NOT NULL, -- "A", "B", "C", or "D"

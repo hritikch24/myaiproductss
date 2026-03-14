@@ -1,4 +1,4 @@
-CREATE TABLE payments (
+CREATE TABLE IF NOT EXISTS payments (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   user_id BIGINT NOT NULL REFERENCES users(id),
   razorpay_order_id TEXT NOT NULL UNIQUE,
@@ -12,5 +12,5 @@ CREATE TABLE payments (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE INDEX idx_payments_user_id ON payments(user_id);
-CREATE INDEX idx_payments_order_id ON payments(razorpay_order_id);
+CREATE INDEX IF NOT EXISTS idx_payments_user_id ON payments(user_id);
+CREATE INDEX IF NOT EXISTS idx_payments_order_id ON payments(razorpay_order_id);

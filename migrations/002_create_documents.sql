@@ -1,4 +1,4 @@
-CREATE TABLE documents (
+CREATE TABLE IF NOT EXISTS documents (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   user_id BIGINT NOT NULL REFERENCES users(id),
   doc_type TEXT NOT NULL,
@@ -8,4 +8,4 @@ CREATE TABLE documents (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE INDEX idx_documents_user_id ON documents(user_id);
+CREATE INDEX IF NOT EXISTS idx_documents_user_id ON documents(user_id);
