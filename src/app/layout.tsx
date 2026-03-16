@@ -31,14 +31,17 @@ export const metadata: Metadata = {
     "custom software",
   ],
   icons: {
-    icon: [{ url: "/icon.svg" }, new URL("https://kraftai.in/icon.svg")],
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", rel: "icon", type: "image/x-icon" }
+    ],
     shortcut: "/icon.svg",
     apple: "/icon.svg",
   },
+  manifest: "/manifest.json",
   alternates: {
     canonical: "/",
   },
-  manifest: "/padhai/manifest.json",
 };
 
 export default function RootLayout({
