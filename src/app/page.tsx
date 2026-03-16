@@ -10,12 +10,12 @@ export const metadata: Metadata = {
 
 export default function Home() {
   const services = [
-    { icon: Globe, title: "Websites", desc: "From landing pages to full web platforms" },
-    { icon: Store, title: "Online Stores", desc: "E-commerce stores with payments & inventory" },
-    { icon: Smartphone, title: "Mobile Apps", desc: "iOS & Android apps for your business" },
-    { icon: Building2, title: "Business Apps", desc: "Custom software for your processes" },
-    { icon: Palette, title: "UI/UX Design", desc: "Futuristic designs that captivate" },
-    { icon: Wand2, title: "AI Solutions", desc: "Smart features powered by AI" },
+    { icon: Globe, title: "Websites", desc: "From landing pages to full web platforms", href: "/services/websites" },
+    { icon: Store, title: "Online Stores", desc: "E-commerce stores with payments & inventory", href: "/services/stores" },
+    { icon: Smartphone, title: "Mobile Apps", desc: "iOS & Android apps for your business", href: "/services/mobile-apps" },
+    { icon: Building2, title: "Business Apps", desc: "Custom software for your processes", href: "/services/business-apps" },
+    { icon: Palette, title: "UI/UX Design", desc: "Futuristic designs that captivate", href: "/services/design" },
+    { icon: Wand2, title: "AI Solutions", desc: "Smart features powered by AI", href: "/services/ai-solutions" },
   ];
 
   const process = [
@@ -140,8 +140,9 @@ export default function Home() {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {services.map((service, idx) => (
-              <div
+              <Link
                 key={idx}
+                href={service.href}
                 className="group relative p-8 rounded-3xl bg-white/5 border border-white/10 hover:border-purple-500/50 transition-all duration-500 hover:-translate-y-2 overflow-hidden"
               >
                 {/* Glow effect */}
@@ -162,7 +163,7 @@ export default function Home() {
 
                 {/* Corner accent */}
                 <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-purple-500/20 to-transparent rounded-bl-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
-              </div>
+              </Link>
             ))}
           </div>
         </div>

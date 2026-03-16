@@ -15,16 +15,25 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://kraftai.in"),
-  title: "KraftAI — AI-Powered Products for India",
+  title: {
+    default: "KraftAI — From Idea to Reality | Custom Software Development",
+    template: "%s | KraftAI",
+  },
   description:
-    "A collection of AI-powered products designed to simplify your life. From legal documents to gaming, we're building the future of intelligent tools.",
+    "Think it. Tell us. We build & deploy. Custom websites, apps, stores - everything from idea to ready-made product. Free consultation. Trusted delivery.",
   keywords: [
-    "AI products",
-    "legal documents",
-    "AI games",
-    "chatbot",
-    "India",
+    "software development",
+    "custom website",
+    "web app",
+    "mobile app",
+    "e-commerce",
+    "store builder",
+    "custom software",
   ],
+  icons: {
+    icon: "/icon.svg",
+    apple: "/icon.svg",
+  },
   alternates: {
     canonical: "/",
   },
