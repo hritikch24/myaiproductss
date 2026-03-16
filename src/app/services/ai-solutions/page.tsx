@@ -1,10 +1,12 @@
 import Link from "next/link";
-import { Brain, Bot, Sparkles, ChevronRight, ChevronLeft, Hexagon, Cpu, Rocket, MessageCircle, Mail, Mic, MessageSquare, Image, TrendingUp, Shield, Globe } from "lucide-react";
+import { ArrowLeft, Brain, Bot, Sparkles, ChevronRight, ChevronLeft, Hexagon, Cpu, Rocket, MessageCircle, Mail, Mic, MessageSquare, Image, TrendingUp, Shield, Globe } from "lucide-react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "AI Solutions | KraftAI",
-  description: "Smart AI-powered features for your products. Chatbots, automation, voice & more.",
+  title: "AI Development Company India | Artificial Intelligence Solutions",
+  description: "Professional AI development services in India. Chatbot development, machine learning, computer vision, voice AI. Integrate smart AI features into your products. Free consultation.",
+  keywords: ["AI development company India", "artificial intelligence services", "machine learning development", "chatbot development India", "AI solutions business", "computer vision development", "voice AI"],
+  metadataBase: new URL("https://kraftai.in"),
 };
 
 const themes = [

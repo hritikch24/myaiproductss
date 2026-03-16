@@ -3,8 +3,10 @@ import { ArrowLeft, Palette, Figma, PenTool, Type, Image, Sparkles, Layers, Zap,
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "UI/UX Design | KraftAI",
-  description: "Futuristic 2050+ UI/UX designs. Stunning interfaces for websites, apps, and products.",
+  title: "UI UX Design Services India | Professional Web & App Design",
+  description: "Get professional UI/UX design services in India. Futuristic website design, mobile app interfaces, brand identity. Stunning 2050+ designs that convert. Free consultation.",
+  keywords: ["UI UX design services India", "web design company", "app UI design", "graphic design services", "brand identity design", "Figma design", "professional designer India"],
+  metadataBase: new URL("https://kraftai.in"),
 };
 
 const themes = [

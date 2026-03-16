@@ -5,8 +5,9 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/legal-docs/dashboard/documents", "/api/", "/legal-docs/api/"],
+      disallow: ["/api/", "/legal-docs/dashboard/", "/padhai/dashboard/"],
     },
     sitemap: "https://kraftai.in/sitemap.xml",
+    host: "https://kraftai.in",
   };
 }

@@ -3,8 +3,10 @@ import { ArrowLeft, Building2, Briefcase, Users, BarChart3, FileText, Settings, 
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Business Apps | KraftAI",
-  description: "Custom business software built for your processes. ERP, CRM, HR tools - all 2050+ design.",
+  title: "Custom Business Software Development India | ERP CRM Solutions",
+  description: "Professional business software development services in India. Custom ERP, CRM, HR systems, inventory management & automation. Streamline your business processes. Free consultation.",
+  keywords: ["business software development India", "custom ERP system", "CRM development India", "HR software", "inventory management system", "business automation", "enterprise software"],
+  metadataBase: new URL("https://kraftai.in"),
 };
 
 const themes = [

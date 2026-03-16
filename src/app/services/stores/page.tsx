@@ -3,8 +3,10 @@ import { ArrowLeft, Store, ShoppingBag, CreditCard, Package, Users, BarChart3, C
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Online Stores | KraftAI",
-  description: "Futuristic e-commerce stores with 2050+ design. Payments, inventory, everything ready.",
+  title: "E-Commerce Website Development India | Online Store Builder",
+  description: "Build professional e-commerce websites and online stores in India. Secure payments, inventory management, shipping integration. Start selling online today. Free consultation available.",
+  keywords: ["e-commerce development India", "online store builder", "e-commerce website", "shopping cart development", "payment gateway integration", "online selling India", "start e-commerce business"],
+  metadataBase: new URL("https://kraftai.in"),
 };
 
 const themes = [

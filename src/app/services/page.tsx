@@ -3,9 +3,10 @@ import { ArrowRight, CheckCircle, Clock, Shield, Zap, Code, Rocket, MessageCircl
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Custom Software Development | Get Your Dream App Built",
-  description: "I build custom websites and apps as per your requirements. On-time delivery, fair pricing, free consultation. Tell me your idea - I'll build, deploy and deliver ready-made software.",
-  keywords: ["software development", "custom website", "web app development", "mobile app", "free consultation"],
+  title: "Software Development Services India | Custom Websites, Apps & More",
+  description: "Professional software development services in India. Custom websites, e-commerce stores, mobile apps, business software & AI solutions. Free consultation. On-time delivery. Fair pricing.",
+  keywords: ["software development services India", "custom website development", "web development company", "mobile app development India", "e-commerce development", "business software", "freelance developer India", "startup app development"],
+  metadataBase: new URL("https://kraftai.in"),
 };
 
 export default function ServicesPage() {

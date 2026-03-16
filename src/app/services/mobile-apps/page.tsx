@@ -3,8 +3,10 @@ import { ArrowLeft, Smartphone, Tablet, Watch, Box, Zap, Globe, ChevronRight, He
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Mobile Apps | KraftAI",
-  description: "Futuristic mobile apps for iOS and Android with 2050+ design. Cross-platform, fast, beautiful.",
+  title: "Mobile App Development Company India | iOS Android Apps",
+  description: "Professional mobile app development services in India. iOS and Android apps with futuristic design. From concept to App Store deployment. Free consultation. Trusted app developers.",
+  keywords: ["mobile app development India", "iOS app development", "Android app development", "mobile app developer India", "app development company", "cross-platform app", "build mobile app"],
+  metadataBase: new URL("https://kraftai.in"),
 };
 
 const themes = [

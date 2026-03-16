@@ -1,10 +1,13 @@
 import Link from "next/link";
+import Script from "next/script";
 import { ArrowLeft, Globe, Palette, Zap, Shield, Rocket, ChevronRight, Hexagon, Cpu, Sparkles, Layers, Box, Eye, Monitor, Smartphone, Watch } from "lucide-react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Custom Websites | KraftAI",
-  description: "Futuristic websites built with cutting-edge technology. From landing pages to full web platforms with 2050+ design aesthetics.",
+  title: "Custom Website Development Services India | Professional Web Design",
+  description: "Get professional custom website development services in India. Responsive websites, landing pages, web platforms with futuristic 2050+ design. Free consultation. Trusted by startups and businesses.",
+  keywords: ["website development services India", "custom website design", "responsive website", "landing page design", "web development company India", "professional web designer", "freelance web developer"],
+  metadataBase: new URL("https://kraftai.in"),
 };
 
 const themes = [
