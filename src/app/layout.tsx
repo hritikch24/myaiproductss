@@ -31,7 +31,8 @@ export const metadata: Metadata = {
     "custom software",
   ],
   icons: {
-    icon: "/icon.svg",
+    icon: [{ url: "/icon.svg" }, new URL("https://kraftai.in/icon.svg")],
+    shortcut: "/icon.svg",
     apple: "/icon.svg",
   },
   alternates: {
