@@ -115,10 +115,10 @@ export default function MobileAppsPage() {
                     </li>
                   ))}
                 </ul>
-                <button className="w-full py-3 rounded-xl bg-white/5 border border-white/10 hover:bg-cyan-600/20 hover:border-cyan-500/50 transition-all flex items-center justify-center gap-2">
+                <Link href={`/services/mobile-apps/${theme.id}`}>
                   <span>Preview Theme</span>
                   <ChevronRight className="w-4 h-4" />
-                </button>
+                </Link>
               </div>
 
               <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-cyan-500/20 to-transparent rounded-bl-3xl" />
