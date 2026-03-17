@@ -1,8 +1,9 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeft, Save, MessageCircle, User, Phone, MapPin, Calendar, DollarSign, Hash } from 'lucide-react';
+import { ArrowLeft, Save, MessageCircle, User, Phone, MapPin, Calendar, DollarSign, Hash, CheckCircle, Loader2 } from 'lucide-react';
 
 const indianStates = [
   "Bihar", "Uttar Pradesh", "Madhya Pradesh", "Rajasthan", "Maharashtra",
@@ -11,6 +12,11 @@ const indianStates = [
 ];
 
 export default function AddMemberPage() {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState('');
+  
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -26,9 +32,33 @@ export default function AddMemberPage() {
     aadhar: '',
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    alert('Member added successfully!');
+    setLoading(true);
+    setError('');
+
+    try {
+      const res = await fetch('/world-gym/api/members', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || 'Failed to add member');
+      }
+
+      setSuccess(true);
+      setTimeout(() => {
+        router.push('/world-gym/members');
+      }, 1500);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -44,6 +74,18 @@ export default function AddMemberPage() {
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
+        {success && (
+          <div className="flex items-center gap-3 p-4 bg-green-500/20 border border-green-500/30 rounded-xl">
+            <CheckCircle className="w-6 h-6 text-green-400" />
+            <p className="text-green-400 font-medium">Member added successfully! Redirecting...</p>
+          </div>
+        )}
+
+        {error && (
+          <div className="flex items-center gap-3 p-4 bg-red-500/20 border border-red-500/30 rounded-xl">
+            <p className="text-red-400 font-medium">{error}</p>
+          </div>
+        )}
         <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6">
           <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
             <User className="w-5 h-5 text-orange-400" />
@@ -218,10 +260,20 @@ export default function AddMemberPage() {
         <div className="flex gap-4">
           <button 
             type="submit"
-            className="flex-1 flex items-center justify-center gap-2 py-3 bg-orange-500 hover:bg-orange-600 rounded-lg text-white font-medium transition-colors"
+            disabled={loading || success}
+            className="flex-1 flex items-center justify-center gap-2 py-3 bg-orange-500 hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg text-white font-medium transition-colors"
           >
-            <Save className="w-5 h-5" />
-            Save Member
+            {loading ? (
+              <>
+                <Loader2 className="w-5 h-5 animate-spin" />
+                Saving...
+              </>
+            ) : (
+              <>
+                <Save className="w-5 h-5" />
+                Save Member
+              </>
+            )}
           </button>
           
           {formData.phone && (

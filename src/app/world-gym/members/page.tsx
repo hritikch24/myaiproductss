@@ -1,15 +1,24 @@
 import Link from "next/link";
-import { Search, Filter, MoreVertical, MessageCircle, Phone, Edit, Trash2, ArrowLeft } from "lucide-react";
+import { Search, Filter, MoreVertical, MessageCircle, Phone, Edit, Trash2, ArrowLeft, RefreshCw } from "lucide-react";
 
-const members = [
-  { id: 1, name: "Rajesh Kumar", phone: "9876543210", village: "Bhawarpur", tehsil: "Madhubani", district: "Madhubani", state: "Bihar", pincode: "847211", fee: 500, status: "pending", joined: "15 Jan 2024" },
-  { id: 2, name: "Suresh Patel", phone: "9876543211", village: "Darbhanga", tehsil: "Darbhanga", district: "Darbhanga", state: "Bihar", pincode: "846004", fee: 500, status: "pending", joined: "10 Feb 2024" },
-  { id: 3, name: "Amit Singh", phone: "9876543212", village: "Kanti", tehsil: "Muzaffarpur", district: "Muzaffarpur", state: "Bihar", pincode: "843108", fee: 800, status: "paid", joined: "20 Jan 2024" },
-  { id: 4, name: "Vikram Yadav", phone: "9876543213", village: "Samastipur", tehsil: "Samastipur", district: "Samastipur", state: "Bihar", pincode: "848101", fee: 500, status: "paid", joined: "14 Mar 2024" },
-  { id: 5, name: "Deepak Sharma", phone: "9876543214", village: "Hajipur", tehsil: "Vaishali", district: "Vaishali", state: "Bihar", pincode: "844101", fee: 600, status: "paid", joined: "5 Feb 2024" },
-];
+async function getMembers() {
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+    const res = await fetch(`${baseUrl}/world-gym/api/members`, { 
+      cache: 'no-store',
+      next: { revalidate: 0 }
+    });
+    const data = await res.json();
+    return data.members || [];
+  } catch (error) {
+    console.error("Error fetching members:", error);
+    return [];
+  }
+}
 
-export default function MembersPage() {
+export default async function MembersPage() {
+  const members = await getMembers();
+
   return (
     <div className="max-w-6xl mx-auto px-4 py-6">
       <div className="flex items-center justify-between mb-6">
@@ -51,78 +60,101 @@ export default function MembersPage() {
           </div>
         </div>
 
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-black/30">
-              <tr>
-                <th className="px-4 py-3 text-left text-xs font-medium text-slate-400 uppercase">Member</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-slate-400 uppercase hidden md:table-cell">Location</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-slate-400 uppercase">Fee</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-slate-400 uppercase">Status</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-slate-400 uppercase">Joined</th>
-                <th className="px-4 py-3 text-right text-xs font-medium text-slate-400 uppercase">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-white/5">
-              {members.map((member) => (
-                <tr key={member.id} className="hover:bg-white/5 transition-colors">
-                  <td className="px-4 py-3">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center text-white font-bold">
-                        {member.name.charAt(0)}
-                      </div>
-                      <div>
-                        <p className="font-medium text-white">{member.name}</p>
-                        <p className="text-sm text-slate-400">{member.phone}</p>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-4 py-3 hidden md:table-cell">
-                    <p className="text-sm text-white">{member.village}, {member.district}</p>
-                    <p className="text-xs text-slate-500">{member.state}</p>
-                  </td>
-                  <td className="px-4 py-3">
-                    <p className="font-medium text-white">₹{member.fee}</p>
-                    <p className="text-xs text-slate-500">/month</p>
-                  </td>
-                  <td className="px-4 py-3">
-                    <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${
-                      member.status === 'paid' 
-                        ? 'bg-green-500/20 text-green-400' 
-                        : 'bg-red-500/20 text-red-400'
-                    }`}>
-                      {member.status === 'paid' ? 'Paid' : 'Pending'}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3">
-                    <p className="text-sm text-white">{member.joined}</p>
-                  </td>
-                  <td className="px-4 py-3">
-                    <div className="flex items-center justify-end gap-2">
-                      <a 
-                        href={`https://wa.me/91${member.phone}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-2 bg-green-500/20 hover:bg-green-500/30 rounded-lg transition-colors"
-                        title="WhatsApp"
-                      >
-                        <MessageCircle className="w-4 h-4 text-green-400" />
-                      </a>
-                      <a 
-                        href={`tel:+91${member.phone}`}
-                        className="p-2 bg-blue-500/20 hover:bg-blue-500/30 rounded-lg transition-colors"
-                        title="Call"
-                      >
-                        <Phone className="w-4 h-4 text-blue-400" />
-                      </a>
-                    </div>
-                  </td>
+        {members.length > 0 ? (
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead className="bg-black/30">
+                <tr>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-slate-400 uppercase">Member</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-slate-400 uppercase hidden md:table-cell">Location</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-slate-400 uppercase">Fee</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-slate-400 uppercase">Status</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-slate-400 uppercase">Joined</th>
+                  <th className="px-4 py-3 text-right text-xs font-medium text-slate-400 uppercase">Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody className="divide-y divide-white/5">
+                {members.map((member: any) => (
+                  <tr key={member.id} className="hover:bg-white/5 transition-colors">
+                    <td className="px-4 py-3">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center text-white font-bold">
+                          {member.name?.charAt(0) || '?'}
+                        </div>
+                        <div>
+                          <p className="font-medium text-white">{member.name}</p>
+                          <p className="text-sm text-slate-400">{member.phone}</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-4 py-3 hidden md:table-cell">
+                      <p className="text-sm text-white">{member.village || '-'}, {member.district || '-'}</p>
+                      <p className="text-xs text-slate-500">{member.state || 'Bihar'}</p>
+                    </td>
+                    <td className="px-4 py-3">
+                      <p className="font-medium text-white">₹{member.fee || 500}</p>
+                      <p className="text-xs text-slate-500">/month</p>
+                    </td>
+                    <td className="px-4 py-3">
+                      <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${
+                        member.status === 'active' 
+                          ? 'bg-green-500/20 text-green-400' 
+                          : 'bg-red-500/20 text-red-400'
+                      }`}>
+                        {member.status === 'active' ? 'Active' : 'Inactive'}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3">
+                      <p className="text-sm text-white">
+                        {member.join_date ? new Date(member.join_date).toLocaleDateString('en-IN') : '-'}
+                      </p>
+                    </td>
+                    <td className="px-4 py-3">
+                      <div className="flex items-center justify-end gap-2">
+                        <a 
+                          href={`https://wa.me/91${member.phone}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-2 bg-green-500/20 hover:bg-green-500/30 rounded-lg transition-colors"
+                          title="WhatsApp"
+                        >
+                          <MessageCircle className="w-4 h-4 text-green-400" />
+                        </a>
+                        <a 
+                          href={`tel:+91${member.phone}`}
+                          className="p-2 bg-blue-500/20 hover:bg-blue-500/30 rounded-lg transition-colors"
+                          title="Call"
+                        >
+                          <Phone className="w-4 h-4 text-blue-400" />
+                        </a>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <div className="text-center py-12">
+            <p className="text-slate-400 mb-4">No members found</p>
+            <Link 
+              href="/world-gym/members/add"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-orange-500 hover:bg-orange-600 rounded-lg text-white text-sm font-medium transition-colors"
+            >
+              <Plus className="w-4 h-4" />
+              Add First Member
+            </Link>
+          </div>
+        )}
       </div>
     </div>
+  );
+}
+
+function Plus(props: any) {
+  return (
+    <svg {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <path d="M12 5v14M5 12h14" />
+    </svg>
   );
 }
