@@ -25,8 +25,8 @@ export default function AddMemberPage() {
     alternatePhone: '',
     village: '',
     tehsil: '',
-    district: '',
-    state: 'Bihar',
+    district: 'Bulandshahr',
+    state: 'Uttar Pradesh',
     pincode: '',
     fee: '500',
     joinDate: new Date().toISOString().split('T')[0],
@@ -175,28 +175,17 @@ export default function AddMemberPage() {
             </div>
 
             <div>
-              <label className="block text-sm text-slate-400 mb-1">District *</label>
-              <input 
-                type="text"
-                required
-                value={formData.district}
-                onChange={(e) => setFormData({...formData, district: e.target.value})}
-                placeholder="e.g., Madhubani"
-                className="w-full px-4 py-2.5 bg-black/30 border border-white/10 rounded-lg text-white placeholder:text-slate-500 focus:outline-none focus:border-orange-500"
-              />
+              <label className="block text-sm text-slate-400 mb-1">District</label>
+              <div className="px-4 py-2.5 bg-orange-500/20 border border-orange-500/30 rounded-lg text-orange-400 font-medium">
+                Bulandshahr ✓
+              </div>
             </div>
 
             <div>
-              <label className="block text-sm text-slate-400 mb-1">State *</label>
-              <select 
-                value={formData.state}
-                onChange={(e) => setFormData({...formData, state: e.target.value})}
-                className="w-full px-4 py-2.5 bg-black/30 border border-white/10 rounded-lg text-white focus:outline-none focus:border-orange-500"
-              >
-                {indianStates.map(state => (
-                  <option key={state} value={state}>{state}</option>
-                ))}
-              </select>
+              <label className="block text-sm text-slate-400 mb-1">State</label>
+              <div className="px-4 py-2.5 bg-orange-500/20 border border-orange-500/30 rounded-lg text-orange-400 font-medium">
+                Uttar Pradesh ✓
+              </div>
             </div>
 
             <div>
