@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Dumbbell, Users, DollarSign, Calendar, ArrowRight, Plus, MessageCircle, UserCheck, Clock, TrendingUp, Home, Receipt, UserPlus } from "lucide-react";
+import { Dumbbell, Plus, MessageCircle } from "lucide-react";
+import { ReactNode } from "react";
 
 export default function WorldGymLayout({
   children,
@@ -17,17 +18,17 @@ export default function WorldGymLayout({
               </div>
               <div>
                 <span className="font-bold text-white text-lg">World Gym</span>
-                <p className="text-[10px] text-orange-400">Member Management</p>
+                <p className="text-[10px] text-orange-400">Management</p>
               </div>
             </Link>
             
             <div className="flex items-center gap-2">
               <Link 
                 href="/world-gym/members/add"
-                className="flex items-center gap-2 px-4 py-2 bg-orange-500 hover:bg-orange-600 rounded-lg text-white text-sm font-medium transition-colors"
+                className="hidden sm:flex items-center gap-2 px-4 py-2 bg-orange-500 hover:bg-orange-600 rounded-lg text-white text-sm font-medium transition-colors"
               >
                 <Plus className="w-4 h-4" />
-                <span className="hidden sm:inline">Add Member</span>
+                Add Member
               </Link>
               <a 
                 href="https://wa.me/918859820935"

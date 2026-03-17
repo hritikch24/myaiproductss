@@ -1,20 +1,70 @@
-import Link from "next/link";
-import { ArrowLeft, DollarSign, Search, Filter, MessageCircle, CheckCircle, XCircle, Calendar, TrendingUp, Download } from "lucide-react";
+'use client';
 
-const feeRecords = [
-  { id: 1, name: "Rajesh Kumar", phone: "9876543210", amount: 500, status: "pending", dueDate: "10 Mar 2026", lastPaid: "10 Feb 2026" },
-  { id: 2, name: "Suresh Patel", phone: "9876543211", amount: 500, status: "pending", dueDate: "8 Mar 2026", lastPaid: "8 Feb 2026" },
-  { id: 3, name: "Amit Singh", phone: "9876543212", amount: 800, status: "paid", dueDate: "20 Mar 2026", lastPaid: "20 Feb 2026" },
-  { id: 4, name: "Vikram Yadav", phone: "9876543213", amount: 500, status: "paid", dueDate: "15 Mar 2026", lastPaid: "15 Feb 2026" },
-  { id: 5, name: "Deepak Sharma", phone: "9876543214", amount: 600, status: "paid", dueDate: "5 Mar 2026", lastPaid: "5 Feb 2026" },
-  { id: 6, name: "Ravi Kumar", phone: "9876543215", amount: 500, status: "pending", dueDate: "12 Mar 2026", lastPaid: "12 Jan 2026" },
-];
+export const dynamic = 'force-dynamic';
+
+import Link from "next/link";
+import { useState, useEffect } from "react";
+import { ArrowLeft, DollarSign, Search, MessageCircle, CheckCircle, XCircle, TrendingUp, Download, Loader2, RefreshCw } from "lucide-react";
 
 export default function FeesPage() {
-  const pendingFees = feeRecords.filter(f => f.status === "pending");
-  const paidFees = feeRecords.filter(f => f.status === "paid");
-  const totalPending = pendingFees.reduce((sum, f) => sum + f.amount, 0);
-  const totalCollected = paidFees.reduce((sum, f) => sum + f.amount, 0);
+  const [fees, setFees] = useState<any[]>([]);
+  const [members, setMembers] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState("");
+
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const baseUrl = window.location.origin;
+      const [feesRes, membersRes] = await Promise.all([
+        fetch('/world-gym/api/fees'),
+        fetch('/world-gym/api/members')
+      ]);
+      const feesData = await feesRes.json();
+      const membersData = await membersRes.json();
+      setFees(feesData.fees || []);
+      setMembers(membersData.members || []);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const currentMonth = new Date().getMonth() + 1;
+  const currentYear = new Date().getFullYear();
+  
+  const thisMonthFees = fees.filter((f: any) => {
+    const feeMonth = parseInt(f.month) === currentMonth;
+    const feeYear = f.year === currentYear;
+    return feeYear;
+  });
+  
+  const pendingFees = thisMonthFees.filter((f: any) => f.status === "pending");
+  const paidFees = thisMonthFees.filter((f: any) => f.status === "paid");
+  const totalPending = pendingFees.reduce((sum, f: any) => sum + (f.amount || 0), 0);
+  const totalCollected = paidFees.reduce((sum, f: any) => sum + (f.amount || 0), 0);
+
+  const filteredFees = fees.filter((f: any) => {
+    const member = members.find((m: any) => m.id === f.member_id);
+    const name = member?.name || '';
+    const phone = member?.phone || '';
+    return name.toLowerCase().includes(search.toLowerCase()) || 
+           phone.includes(search);
+  });
+
+  const getMemberName = (memberId: number) => {
+    const member = members.find((m: any) => m.id === memberId);
+    return member?.name || 'Unknown';
+  };
+
+  const getMemberPhone = (memberId: number) => {
+    const member = members.find((m: any) => m.id === memberId);
+    return member?.phone || '';
+  };
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-6">
@@ -29,14 +79,17 @@ export default function FeesPage() {
           </div>
         </div>
         
-        <button className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 border border-white/10 rounded-lg text-white text-sm transition-colors">
-          <Download className="w-4 h-4" />
-          Export
+        <button 
+          onClick={fetchData}
+          className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 border border-white/10 rounded-lg text-white text-sm transition-colors"
+        >
+          <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
+          Refresh
         </button>
       </div>
 
       <div className="grid md:grid-cols-3 gap-4 mb-6">
-        <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-5">
+        <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-5">
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 rounded-xl bg-red-500/20 flex items-center justify-center">
               <XCircle className="w-6 h-6 text-red-400" />
@@ -48,7 +101,7 @@ export default function FeesPage() {
           </div>
         </div>
         
-        <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-5">
+        <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-5">
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 rounded-xl bg-green-500/20 flex items-center justify-center">
               <CheckCircle className="w-6 h-6 text-green-400" />
@@ -60,7 +113,7 @@ export default function FeesPage() {
           </div>
         </div>
 
-        <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-5">
+        <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-5">
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 rounded-xl bg-orange-500/20 flex items-center justify-center">
               <TrendingUp className="w-6 h-6 text-orange-400" />
@@ -75,101 +128,102 @@ export default function FeesPage() {
 
       <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl overflow-hidden">
         <div className="p-4 border-b border-white/10">
-          <div className="flex flex-col sm:flex-row gap-3">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-              <input 
-                type="text"
-                placeholder="Search by name or phone..."
-                className="w-full pl-10 pr-4 py-2.5 bg-black/30 border border-white/10 rounded-lg text-white placeholder:text-slate-500 focus:outline-none focus:border-orange-500"
-              />
-            </div>
-            <select className="px-4 py-2.5 bg-black/30 border border-white/10 rounded-lg text-white focus:outline-none focus:border-orange-500">
-              <option value="">All Members</option>
-              <option value="pending">Pending Only</option>
-              <option value="paid">Paid Only</option>
-            </select>
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+            <input 
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search by name or phone..."
+              className="w-full pl-10 pr-4 py-2.5 bg-black/30 border border-white/10 rounded-lg text-white placeholder:text-slate-500 focus:outline-none focus:border-orange-500"
+            />
           </div>
         </div>
 
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-black/30">
-              <tr>
-                <th className="px-4 py-3 text-left text-xs font-medium text-slate-400 uppercase">Member</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-slate-400 uppercase">Amount</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-slate-400 uppercase">Status</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-slate-400 uppercase">Due Date</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-slate-400 uppercase">Last Paid</th>
-                <th className="px-4 py-3 text-right text-xs font-medium text-slate-400 uppercase">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-white/5">
-              {feeRecords.map((record) => (
-                <tr key={record.id} className="hover:bg-white/5 transition-colors">
-                  <td className="px-4 py-3">
-                    <div>
-                      <p className="font-medium text-white">{record.name}</p>
-                      <p className="text-sm text-slate-400">{record.phone}</p>
-                    </div>
-                  </td>
-                  <td className="px-4 py-3">
-                    <p className="font-bold text-white">₹{record.amount}</p>
-                  </td>
-                  <td className="px-4 py-3">
-                    <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium ${
-                      record.status === 'paid' 
-                        ? 'bg-green-500/20 text-green-400' 
-                        : 'bg-red-500/20 text-red-400'
-                    }`}>
-                      {record.status === 'paid' ? (
-                        <><CheckCircle className="w-3 h-3" /> Paid</>
-                      ) : (
-                        <><XCircle className="w-3 h-3" /> Pending</>
-                      )}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3">
-                    <p className="text-sm text-white">{record.dueDate}</p>
-                  </td>
-                  <td className="px-4 py-3">
-                    <p className="text-sm text-slate-400">{record.lastPaid}</p>
-                  </td>
-                  <td className="px-4 py-3">
-                    <div className="flex items-center justify-end gap-2">
-                      {record.status === 'pending' ? (
-                        <>
-                          <button className="px-3 py-1.5 bg-green-500 hover:bg-green-600 rounded-lg text-white text-xs font-medium transition-colors">
-                            Mark Paid
-                          </button>
+        {loading ? (
+          <div className="flex items-center justify-center py-12">
+            <Loader2 className="w-8 h-8 animate-spin text-orange-500" />
+          </div>
+        ) : filteredFees.length > 0 ? (
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead className="bg-black/30">
+                <tr>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-slate-400 uppercase">Member</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-slate-400 uppercase">Amount</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-slate-400 uppercase">Status</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-slate-400 uppercase">Month</th>
+                  <th className="px-4 py-3 text-right text-xs font-medium text-slate-400 uppercase">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/5">
+                {filteredFees.map((fee: any, idx: number) => (
+                  <tr key={idx} className="hover:bg-white/5 transition-colors">
+                    <td className="px-4 py-3">
+                      <div>
+                        <p className="font-medium text-white">{getMemberName(fee.member_id)}</p>
+                        <p className="text-sm text-slate-400">{getMemberPhone(fee.member_id)}</p>
+                      </div>
+                    </td>
+                    <td className="px-4 py-3">
+                      <p className="font-bold text-white">₹{fee.amount}</p>
+                    </td>
+                    <td className="px-4 py-3">
+                      <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium ${
+                        fee.status === 'paid' 
+                          ? 'bg-green-500/20 text-green-400' 
+                          : 'bg-red-500/20 text-red-400'
+                      }`}>
+                        {fee.status === 'paid' ? (
+                          <><CheckCircle className="w-3 h-3" /> Paid</>
+                        ) : (
+                          <><XCircle className="w-3 h-3" /> Pending</>
+                        )}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3">
+                      <p className="text-sm text-white">{fee.month}/{fee.year}</p>
+                    </td>
+                    <td className="px-4 py-3">
+                      <div className="flex items-center justify-end gap-2">
+                        {fee.status === 'pending' ? (
+                          <>
+                            <button className="px-3 py-1.5 bg-green-500 hover:bg-green-600 rounded-lg text-white text-xs font-medium transition-colors">
+                              Mark Paid
+                            </button>
+                            <a 
+                              href={`https://wa.me/91${getMemberPhone(fee.member_id)}?text=Hello ${getMemberName(fee.member_id)}, This is a reminder that your gym fee of ₹${fee.amount} is due. Please pay soon.`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="p-1.5 bg-green-500/20 hover:bg-green-500/30 rounded-lg transition-colors"
+                              title="Send Reminder"
+                            >
+                              <MessageCircle className="w-4 h-4 text-green-400" />
+                            </a>
+                          </>
+                        ) : (
                           <a 
-                            href={`https://wa.me/91${record.phone}?text=Hello ${record.name}, This is a reminder that your gym fee of ₹${record.amount} is due. Please pay soon.`}
+                            href={`https://wa.me/91${getMemberPhone(fee.member_id)}?text=Hello ${getMemberName(fee.member_id)}, Thank you for paying your gym fee of ₹${fee.amount}. Receipt: #${fee.id}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="p-1.5 bg-green-500/20 hover:bg-green-500/30 rounded-lg transition-colors"
-                            title="Send Reminder"
+                            className="p-1.5 bg-blue-500/20 hover:bg-blue-500/30 rounded-lg transition-colors"
+                            title="Send Receipt"
                           >
-                            <MessageCircle className="w-4 h-4 text-green-400" />
+                            <MessageCircle className="w-4 h-4 text-blue-400" />
                           </a>
-                        </>
-                      ) : (
-                        <a 
-                          href={`https://wa.me/91${record.phone}?text=Hello ${record.name}, Thank you for paying your gym fee of ₹${record.amount}. Receipt: #${record.id}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="p-1.5 bg-blue-500/20 hover:bg-blue-500/30 rounded-lg transition-colors"
-                          title="Send Receipt"
-                        >
-                          <MessageCircle className="w-4 h-4 text-blue-400" />
-                        </a>
-                      )}
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+                        )}
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <div className="text-center py-12">
+            <p className="text-slate-400">No fee records found</p>
+          </div>
+        )}
       </div>
     </div>
   );

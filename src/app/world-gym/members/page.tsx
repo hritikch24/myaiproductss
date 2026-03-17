@@ -1,23 +1,39 @@
+'use client';
+
+export const dynamic = 'force-dynamic';
+
 import Link from "next/link";
-import { Search, Filter, MoreVertical, MessageCircle, Phone, Edit, Trash2, ArrowLeft, RefreshCw } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Search, MessageCircle, Phone, ArrowLeft, Loader2, RefreshCw, Plus } from "lucide-react";
 
-async function getMembers() {
-  try {
-    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
-    const res = await fetch(`${baseUrl}/world-gym/api/members`, { 
-      cache: 'no-store',
-      next: { revalidate: 0 }
-    });
-    const data = await res.json();
-    return data.members || [];
-  } catch (error) {
-    console.error("Error fetching members:", error);
-    return [];
-  }
-}
+export default function MembersPage() {
+  const [members, setMembers] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState("");
+  const [statusFilter, setStatusFilter] = useState("");
 
-export default async function MembersPage() {
-  const members = await getMembers();
+  const fetchMembers = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch('/world-gym/api/members');
+      const data = await res.json();
+      setMembers(data.members || []);
+    } catch (error) {
+      console.error("Error fetching members:", error);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchMembers();
+  }, []);
+
+  const filteredMembers = members.filter((member: any) => {
+    const matchesSearch = member.name?.toLowerCase().includes(search.toLowerCase()) || 
+                         member.phone?.includes(search);
+    const matchesStatus = !statusFilter || member.status === statusFilter;
+    return matchesSearch && matchesStatus;
+  });
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-6">
@@ -32,12 +48,21 @@ export default async function MembersPage() {
           </div>
         </div>
         
-        <Link 
-          href="/world-gym/members/add"
-          className="flex items-center gap-2 px-4 py-2 bg-orange-500 hover:bg-orange-600 rounded-lg text-white text-sm font-medium transition-colors"
-        >
-          + Add Member
-        </Link>
+        <div className="flex items-center gap-2">
+          <button 
+            onClick={fetchMembers}
+            className="flex items-center gap-2 px-3 py-2 bg-white/10 hover:bg-white/20 border border-white/10 rounded-lg text-white text-sm transition-colors"
+          >
+            <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
+          </button>
+          <Link 
+            href="/world-gym/members/add"
+            className="flex items-center gap-2 px-4 py-2 bg-orange-500 hover:bg-orange-600 rounded-lg text-white text-sm font-medium transition-colors"
+          >
+            <Plus className="w-4 h-4" />
+            Add Member
+          </Link>
+        </div>
       </div>
 
       <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl overflow-hidden">
@@ -47,20 +72,29 @@ export default async function MembersPage() {
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
               <input 
                 type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search by name or phone..."
                 className="w-full pl-10 pr-4 py-2.5 bg-black/30 border border-white/10 rounded-lg text-white placeholder:text-slate-500 focus:outline-none focus:border-orange-500"
               />
             </div>
-            <select className="px-4 py-2.5 bg-black/30 border border-white/10 rounded-lg text-white focus:outline-none focus:border-orange-500">
+            <select 
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              className="px-4 py-2.5 bg-black/30 border border-white/10 rounded-lg text-white focus:outline-none focus:border-orange-500"
+            >
               <option value="">All Status</option>
               <option value="active">Active</option>
-              <option value="pending">Pending</option>
-              <option value="expired">Expired</option>
+              <option value="inactive">Inactive</option>
             </select>
           </div>
         </div>
 
-        {members.length > 0 ? (
+        {loading ? (
+          <div className="flex items-center justify-center py-12">
+            <Loader2 className="w-8 h-8 animate-spin text-orange-500" />
+          </div>
+        ) : filteredMembers.length > 0 ? (
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead className="bg-black/30">
@@ -74,7 +108,7 @@ export default async function MembersPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5">
-                {members.map((member: any) => (
+                {filteredMembers.map((member: any) => (
                   <tr key={member.id} className="hover:bg-white/5 transition-colors">
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-3">
@@ -148,13 +182,5 @@ export default async function MembersPage() {
         )}
       </div>
     </div>
-  );
-}
-
-function Plus(props: any) {
-  return (
-    <svg {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-      <path d="M12 5v14M5 12h14" />
-    </svg>
   );
 }
