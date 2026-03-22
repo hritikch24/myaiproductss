@@ -18,19 +18,25 @@ interface BillItemInput {
 }
 
 function BarcodeScanner({ onScan, onClose }: { onScan: (barcode: string) => void; onClose: () => void }) {
-  const [debug, setDebug] = useState('Starting scanner...')
+  const [debug, setDebug] = useState('Initializing...')
+  const scannerContainerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    console.log('BarcodeScanner mounted')
     let mounted = true
 
     const initScanner = async () => {
+      await new Promise(resolve => setTimeout(resolve, 100))
+      
+      if (!scannerContainerRef.current || !mounted) {
+        setDebug('Container not ready, retrying...')
+        await new Promise(resolve => setTimeout(resolve, 200))
+      }
+
+      if (!mounted) return
+
       try {
         setDebug('Loading library...')
-        console.log('About to import html5-qrcode')
-        
         const { Html5QrcodeScanner } = await import('html5-qrcode')
-        console.log('Html5QrcodeScanner imported', Html5QrcodeScanner)
         
         setDebug('Creating scanner...')
         const scanner = new Html5QrcodeScanner(
@@ -38,23 +44,18 @@ function BarcodeScanner({ onScan, onClose }: { onScan: (barcode: string) => void
           { fps: 10, qrbox: { width: 250, height: 150 } },
           false
         )
-        console.log('Scanner created', scanner)
 
         setDebug('Rendering...')
         scanner.render(
           (decodedText: string) => {
-            console.log('Scanned:', decodedText)
             onScan(decodedText)
             onClose()
           },
-          (error: any) => {
-            console.log('Scan error:', error)
-          }
+          () => {}
         )
 
-        setDebug('Ready!')
+        setDebug('Ready! Point camera at barcode')
       } catch (err: any) {
-        console.error('Error:', err)
         setDebug('Error: ' + err.message)
       }
     }
@@ -75,12 +76,9 @@ function BarcodeScanner({ onScan, onClose }: { onScan: (barcode: string) => void
         </button>
       </div>
 
-      <div className="flex-1 flex items-center justify-center bg-gray-900">
-        <div className="text-center">
-          <Camera className="w-16 h-16 text-blue-400 mx-auto mb-4" />
-          <p className="text-white mb-2">Scanner initializing...</p>
-          <p className="text-gray-400 text-sm">{debug || 'Please wait...'}</p>
-        </div>
+      <div className="flex-1 flex flex-col items-center justify-center bg-gray-900 p-4">
+        <div id="barcode-reader" ref={scannerContainerRef} className="w-full max-w-md"></div>
+        <p className="text-gray-400 text-sm mt-4">{debug}</p>
       </div>
 
       <div className="p-4 text-center text-white text-sm bg-gray-900">
