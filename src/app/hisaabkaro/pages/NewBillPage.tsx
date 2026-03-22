@@ -1,14 +1,17 @@
-import { useState, useEffect } from 'react'
-import { Trash2, Plus, Minus, Check, Send, Receipt } from 'lucide-react'
+import { useState, useEffect, useRef } from 'react'
+import { Trash2, Plus, Minus, Check, Send, Receipt, ScanBarcode } from 'lucide-react'
 import { Card, CardContent } from '../components/card'
 import { Button } from '../components/button'
 import { Input } from '../components/input'
 import { Label } from '../components/label'
-import { db, formatCurrency, generateBillText, addOrUpdateItem, getOrCreateCustomer, addBill, type BillItem } from '../lib/db'
+import { db, formatCurrency, generateBillText, addOrUpdateItem, getOrCreateCustomer, addBill, getItemByBarcode, type BillItem } from '../lib/db'
 
 interface BillItemInput {
   id: string
   name: string
+  barcode: string
+  hsnCode: string
+  gstRate: number
   qty: number
   price: number
   total: number
@@ -23,14 +26,20 @@ export function NewBillPage({ shopName, translations }: NewBillPageProps) {
   const [customerName, setCustomerName] = useState('')
   const [customerPhone, setCustomerPhone] = useState('')
   const [items, setItems] = useState<BillItemInput[]>([
-    { id: '1', name: '', qty: 1, price: 0, total: 0 }
+    { id: '1', name: '', barcode: '', hsnCode: '', gstRate: 0, qty: 1, price: 0, total: 0 }
   ])
   const [discount, setDiscount] = useState(0)
+  const [cgst, setCgst] = useState(0)
+  const [sgst, setSgst] = useState(0)
+  const [igst, setIgst] = useState(0)
+  const [gstRate, setGstRate] = useState(18)
   const [showSuccess, setShowSuccess] = useState(false)
-  const [savedCustomers, setSavedCustomers] = useState<{ id: number; name: string }[]>([])
-  const [savedItems, setSavedItems] = useState<{ id: number; name: string; lastPrice: number }[]>([])
+  const [savedCustomers, setSavedCustomers] = useState<{ id: number; name: string; phone?: string }[]>([])
+  const [savedItems, setSavedItems] = useState<{ id: number; name: string; barcode?: string; hsnCode?: string; gstRate: number; lastPrice: number }[]>([])
   const [showCustomerDropdown, setShowCustomerDropdown] = useState(false)
   const [showItemDropdowns, setShowItemDropdowns] = useState<Record<string, boolean>>({})
+  const [scanningForItem, setScanningForItem] = useState<string | null>(null)
+  const barcodeInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     loadSavedData()
@@ -38,14 +47,18 @@ export function NewBillPage({ shopName, translations }: NewBillPageProps) {
 
   const loadSavedData = async () => {
     const customers = await db.customers.toArray()
-    setSavedCustomers(customers.map(c => ({ id: c.id!, name: c.name })))
+    setSavedCustomers(customers.map(c => ({ id: c.id!, name: c.name, phone: c.phone })))
     
     const items = await db.items.orderBy('usageCount').reverse().limit(20).toArray()
-    setSavedItems(items.map(i => ({ id: i.id!, name: i.name, lastPrice: i.lastPrice })))
+    setSavedItems(items.map(i => ({ id: i.id!, name: i.name, barcode: i.barcode, hsnCode: i.hsnCode, gstRate: i.gstRate, lastPrice: i.lastPrice })))
   }
 
   const subtotal = items.reduce((sum, item) => sum + item.total, 0)
-  const grandTotal = Math.max(0, subtotal - discount)
+  const taxableAmount = Math.max(0, subtotal - discount)
+  const cgstAmount = (taxableAmount * cgst) / 100
+  const sgstAmount = (taxableAmount * sgst) / 100
+  const igstAmount = (taxableAmount * igst) / 100
+  const grandTotal = taxableAmount + cgstAmount + sgstAmount + igstAmount
 
   const updateItem = (id: string, field: keyof BillItemInput, value: string | number) => {
     setItems(prev => prev.map(item => {
@@ -63,6 +76,9 @@ export function NewBillPage({ shopName, translations }: NewBillPageProps) {
     setItems(prev => [...prev, { 
       id: Date.now().toString(), 
       name: '', 
+      barcode: '',
+      hsnCode: '',
+      gstRate: 0,
       qty: 1, 
       price: 0, 
       total: 0 
@@ -73,6 +89,24 @@ export function NewBillPage({ shopName, translations }: NewBillPageProps) {
     if (items.length > 1) {
       setItems(prev => prev.filter(item => item.id !== id))
     }
+  }
+
+  const handleBarcodeScan = async (itemId: string, barcode: string) => {
+    updateItem(itemId, 'barcode', barcode)
+    if (barcode.length > 3) {
+      const item = await getItemByBarcode(barcode)
+      if (item) {
+        updateItem(itemId, 'name', item.name)
+        updateItem(itemId, 'price', item.lastPrice)
+        updateItem(itemId, 'hsnCode', item.hsnCode || '')
+        updateItem(itemId, 'gstRate', item.gstRate || 0)
+      }
+    }
+  }
+
+  const startBarcodeScan = (itemId: string) => {
+    setScanningForItem(itemId)
+    setTimeout(() => barcodeInputRef.current?.focus(), 100)
   }
 
   const handleSave = async (status: 'paid' | 'udhar') => {
@@ -87,7 +121,7 @@ export function NewBillPage({ shopName, translations }: NewBillPageProps) {
     }
 
     for (const item of validItems) {
-      await addOrUpdateItem(item.name.trim(), item.price)
+      await addOrUpdateItem(item.name.trim(), item.price, item.barcode, item.hsnCode, item.gstRate)
     }
 
     const billItems: BillItem[] = validItems.map(i => ({
@@ -104,6 +138,9 @@ export function NewBillPage({ shopName, translations }: NewBillPageProps) {
       items: billItems,
       subtotal,
       discount,
+      cgst: cgstAmount,
+      sgst: sgstAmount,
+      igst: igstAmount,
       grandTotal,
       status,
       amountPaid: status === 'paid' ? grandTotal : 0,
@@ -128,10 +165,27 @@ export function NewBillPage({ shopName, translations }: NewBillPageProps) {
       total: i.total
     }))
 
-    const text = generateBillText(shopName, billItems, grandTotal, new Date())
+    let text = `📋 *${shopName} - Bill*\n`
+    text += `Date: ${new Date().toLocaleDateString('en-IN')}\n`
+    text += `─────────────────────\n`
+    
+    billItems.forEach(item => {
+      text += `${item.name} x${item.qty} = ₹${item.total}\n`
+    })
+    
+    text += `─────────────────────\n`
+    text += `Subtotal: ₹${subtotal}\n`
+    if (discount > 0) text += `Discount: -₹${discount}\n`
+    if (cgstAmount > 0) text += `CGST: ₹${cgstAmount.toFixed(2)}\n`
+    if (sgstAmount > 0) text += `SGST: ₹${sgstAmount.toFixed(2)}\n`
+    if (igstAmount > 0) text += `IGST: ₹${igstAmount.toFixed(2)}\n`
+    text += `─────────────────────\n`
+    text += `*Total: ₹${grandTotal.toFixed(2)}*\n\n`
+    text += `Thank you! 🙏`
+    
     const url = customerPhone 
-      ? `https://wa.me/${customerPhone}?text=${text}`
-      : `https://wa.me/?text=${text}`
+      ? `https://wa.me/${customerPhone}?text=${encodeURIComponent(text)}`
+      : `https://wa.me/?text=${encodeURIComponent(text)}`
     
     window.open(url, '_blank')
   }
@@ -139,18 +193,19 @@ export function NewBillPage({ shopName, translations }: NewBillPageProps) {
   const resetForm = () => {
     setCustomerName('')
     setCustomerPhone('')
-    setItems([{ id: '1', name: '', qty: 1, price: 0, total: 0 }])
+    setItems([{ id: '1', name: '', barcode: '', hsnCode: '', gstRate: 0, qty: 1, price: 0, total: 0 }])
     setDiscount(0)
+    setCgst(0)
+    setSgst(0)
+    setIgst(0)
   }
 
   const handleCustomerSelect = (name: string) => {
     setCustomerName(name)
     setShowCustomerDropdown(false)
     const customer = savedCustomers.find(c => c.name === name)
-    if (customer) {
-      db.customers.get(customer.id).then(c => {
-        if (c?.phone) setCustomerPhone(c.phone)
-      })
+    if (customer?.phone) {
+      setCustomerPhone(customer.phone)
     }
   }
 
@@ -159,6 +214,9 @@ export function NewBillPage({ shopName, translations }: NewBillPageProps) {
     if (item) {
       updateItem(itemId, 'name', item.name)
       updateItem(itemId, 'price', item.lastPrice)
+      updateItem(itemId, 'barcode', item.barcode || '')
+      updateItem(itemId, 'hsnCode', item.hsnCode || '')
+      updateItem(itemId, 'gstRate', item.gstRate || 0)
     }
     setShowItemDropdowns(prev => ({ ...prev, [itemId]: false }))
   }
@@ -178,7 +236,7 @@ export function NewBillPage({ shopName, translations }: NewBillPageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-40">
+    <div className="min-h-screen bg-gray-50 pb-48">
       {/* Header */}
       <div className="bg-blue-600 text-white px-4 py-4">
         <h1 className="text-xl font-semibold">{translations.newBill}</h1>
@@ -199,7 +257,7 @@ export function NewBillPage({ shopName, translations }: NewBillPageProps) {
                     setShowCustomerDropdown(true)
                   }}
                   onFocus={() => setShowCustomerDropdown(true)}
-                  onBlur={() => setTimeout(() => setShowCustomerDropdown(false), 200)}
+                  onBlur={() => { setTimeout(() => setShowCustomerDropdown(false), 200) }}
                   className="h-12"
                 />
                 {showCustomerDropdown && savedCustomers.length > 0 && customerName && (
@@ -270,6 +328,15 @@ export function NewBillPage({ shopName, translations }: NewBillPageProps) {
                         </div>
                       )}
                     </div>
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      onClick={() => startBarcodeScan(item.id)}
+                      className="h-11 w-11"
+                      title="Scan Barcode"
+                    >
+                      <ScanBarcode className="w-5 h-5" />
+                    </Button>
                     {items.length > 1 && (
                       <Button
                         variant="ghost"
@@ -281,6 +348,22 @@ export function NewBillPage({ shopName, translations }: NewBillPageProps) {
                       </Button>
                     )}
                   </div>
+                  
+                  {scanningForItem === item.id && (
+                    <Input
+                      ref={barcodeInputRef}
+                      placeholder="Scan or enter barcode..."
+                      onBlur={() => setScanningForItem(null)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                          handleBarcodeScan(item.id, (e.target as HTMLInputElement).value)
+                          setScanningForItem(null)
+                        }
+                      }}
+                      className="mb-2 h-10"
+                      autoFocus
+                    />
+                  )}
                   
                   <div className="flex items-center gap-2">
                     <div className="flex items-center gap-1">
@@ -345,11 +428,11 @@ export function NewBillPage({ shopName, translations }: NewBillPageProps) {
         <div className="max-w-lg mx-auto space-y-3">
           <div className="flex justify-between text-gray-600">
             <span>{translations.subtotal}</span>
-            <span className="font-medium">{formatCurrency(subtotal)}</span>
+            <span className="font-medium">₹{subtotal.toFixed(2)}</span>
           </div>
           
           <div className="flex items-center gap-2">
-            <span className="text-gray-600">{translations.discount}</span>
+            <span className="text-gray-600 w-20">{translations.discount}</span>
             <Input
               type="number"
               value={discount || ''}
@@ -358,10 +441,46 @@ export function NewBillPage({ shopName, translations }: NewBillPageProps) {
               placeholder="0"
             />
           </div>
+
+          <div className="flex items-center gap-2">
+            <span className="text-gray-600 w-20">GST %</span>
+            <Input
+              type="number"
+              value={gstRate || ''}
+              onChange={(e) => {
+                const rate = parseInt(e.target.value) || 0
+                setGstRate(rate)
+                setCgst(rate / 2)
+                setSgst(rate / 2)
+                setIgst(rate)
+              }}
+              className="h-9 flex-1"
+              placeholder="18"
+            />
+          </div>
+
+          {(cgstAmount > 0 || sgstAmount > 0) && (
+            <div className="flex justify-between text-sm text-gray-600">
+              <span>CGST @ {cgst}%</span>
+              <span>₹{cgstAmount.toFixed(2)}</span>
+            </div>
+          )}
+          {(cgstAmount > 0 || sgstAmount > 0) && (
+            <div className="flex justify-between text-sm text-gray-600">
+              <span>SGST @ {sgst}%</span>
+              <span>₹{sgstAmount.toFixed(2)}</span>
+            </div>
+          )}
+          {igstAmount > 0 && (
+            <div className="flex justify-between text-sm text-gray-600">
+              <span>IGST @ {igst}%</span>
+              <span>₹{igstAmount.toFixed(2)}</span>
+            </div>
+          )}
           
           <div className="flex justify-between text-xl font-bold text-gray-800 pt-2 border-t">
             <span>{translations.grandTotal}</span>
-            <span className="text-blue-600">{formatCurrency(grandTotal)}</span>
+            <span className="text-blue-600">₹{grandTotal.toFixed(2)}</span>
           </div>
           
           <div className="flex gap-2 pt-2">

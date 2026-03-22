@@ -12,6 +12,9 @@ export interface Customer {
 export interface Item {
   id?: number
   name: string
+  barcode?: string
+  hsnCode?: string
+  gstRate: number
   lastPrice: number
   usageCount: number
 }
@@ -31,6 +34,9 @@ export interface Bill {
   items: BillItem[]
   subtotal: number
   discount: number
+  cgst: number
+  sgst: number
+  igst: number
   grandTotal: number
   status: 'paid' | 'udhar' | 'partial'
   amountPaid: number
@@ -176,21 +182,31 @@ export async function collectPayment(
   }
 }
 
-export async function addOrUpdateItem(name: string, price: number): Promise<void> {
+export async function addOrUpdateItem(name: string, price: number, barcode?: string, hsnCode?: string, gstRate: number = 0): Promise<void> {
   const existing = await db.items.where('name').equals(name).first()
   
   if (existing) {
     await db.items.update(existing.id!, {
       lastPrice: price,
+      barcode: barcode || existing.barcode,
+      hsnCode: hsnCode || existing.hsnCode,
+      gstRate: gstRate || existing.gstRate,
       usageCount: existing.usageCount + 1
     })
   } else {
     await db.items.add({
       name,
+      barcode,
+      hsnCode,
+      gstRate: gstRate || 0,
       lastPrice: price,
       usageCount: 1
     })
   }
+}
+
+export async function getItemByBarcode(barcode: string): Promise<Item | undefined> {
+  return db.items.where('barcode').equals(barcode).first()
 }
 
 export async function getCustomersWithUdhar(): Promise<Customer[]> {
