@@ -1,11 +1,29 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { signIn } from "next-auth/react";
-import { BookOpen, Mail, Lock, ArrowRight, User, Eye, EyeOff } from "lucide-react";
+import { BookOpen, Mail, Lock, ArrowRight, User, Eye, EyeOff, Loader2 } from "lucide-react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
 export default function PadhaiLoginPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-[#030712] flex items-center justify-center">
+          <Loader2 className="h-8 w-8 text-emerald-500 animate-spin" />
+        </div>
+      }
+    >
+      <LoginContent />
+    </Suspense>
+  );
+}
+
+function LoginContent() {
+  const searchParams = useSearchParams();
+  const role = searchParams.get("role"); // preserve role from landing page
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
@@ -15,25 +33,30 @@ export default function PadhaiLoginPage() {
   const [error, setError] = useState("");
   const [fieldErrors, setFieldErrors] = useState<{ email?: string; password?: string; name?: string }>({});
 
+  // Where to go after login — preserve role param
+  const redirectUrl = role
+    ? `/padhai/onboarding?role=${role}`
+    : "/padhai/onboarding";
+
   function validateForm() {
     const errors: { email?: string; password?: string; name?: string } = {};
-    
+
     if (!email.trim()) {
       errors.email = "Email is required";
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       errors.email = "Please enter a valid email";
     }
-    
+
     if (!password) {
       errors.password = "Password is required";
     } else if (isSignUp && password.length < 6) {
       errors.password = "Password must be at least 6 characters";
     }
-    
+
     if (isSignUp && !name.trim()) {
       errors.name = "Name is required";
     }
-    
+
     setFieldErrors(errors);
     return Object.keys(errors).length === 0;
   }
@@ -41,9 +64,9 @@ export default function PadhaiLoginPage() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError("");
-    
+
     if (!validateForm()) return;
-    
+
     setLoading(true);
 
     try {
@@ -63,33 +86,36 @@ export default function PadhaiLoginPage() {
         const signInRes = await signIn("credentials", {
           email,
           password,
-          callbackUrl: "/padhai/onboarding",
           redirect: false,
         });
         if (signInRes?.error) {
           setError("Account created! Please sign in.");
           setIsSignUp(false);
+          setLoading(false);
+          return;
         }
+        window.location.href = redirectUrl;
       } else {
         const res = await signIn("credentials", {
           email,
           password,
-          callbackUrl: "/padhai/onboarding",
           redirect: false,
         });
         if (res?.error) {
           setError("Invalid email or password");
+          setLoading(false);
+          return;
         }
+        window.location.href = redirectUrl;
       }
-    } catch (err) {
+    } catch {
       setError("Something went wrong");
-    } finally {
       setLoading(false);
     }
   }
 
   async function handleGoogleLogin() {
-    await signIn("google", { callbackUrl: "/padhai/onboarding" });
+    await signIn("google", { callbackUrl: redirectUrl });
   }
 
   return (
@@ -110,12 +136,26 @@ export default function PadhaiLoginPage() {
           </Link>
         </div>
 
+        {/* Role indicator */}
+        {role === "parent" && (
+          <div className="mb-4 text-center">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-purple-500/10 border border-purple-500/20 px-3 py-1 text-xs text-purple-400">
+              Parent Account
+            </span>
+          </div>
+        )}
+
         <div className="rounded-2xl border border-slate-800 bg-slate-900/60 backdrop-blur-xl p-6 sm:p-8 shadow-2xl">
           <h1 className="text-xl font-semibold text-white mb-2">
             {isSignUp ? "Create Account" : "Welcome back"}
           </h1>
           <p className="mb-6 text-sm text-slate-400">
-            {isSignUp ? "Start your study journey with Padhai" : "Sign in to continue your progress"}
+            {isSignUp
+              ? role === "parent"
+                ? "Create an account to track your child's progress"
+                : "Start your study journey with Padhai"
+              : "Sign in to continue your progress"
+            }
           </p>
 
           {error && (
@@ -246,7 +286,7 @@ export default function PadhaiLoginPage() {
         </div>
 
         <p className="mt-6 text-center text-xs text-slate-500">
-          <Link href="/padhai" className="hover:text-slate-400">← Back to Padhai</Link>
+          <Link href="/padhai" className="hover:text-slate-400">&larr; Back to Padhai</Link>
         </p>
       </div>
     </div>

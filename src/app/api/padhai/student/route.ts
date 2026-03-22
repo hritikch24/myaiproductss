@@ -16,18 +16,36 @@ export async function GET(req: NextRequest) {
     );
 
     if (result.rows.length === 0) {
-      return NextResponse.json({ student: null });
+      return NextResponse.json({
+        student: null,
+        userName: session.user.name || null,
+      });
     }
 
     const student = result.rows[0];
-    
-    // Get parent info if exists
+
+    if (student.role === 'parent') {
+      // For parent users, fetch their own name from padhai_parents
+      // and the linked child's student_id
+      const parentInfo = await pool.query(
+        "SELECT name, student_id FROM padhai_parents WHERE parent_user_id = $1",
+        [session.user.id || session.user.email]
+      );
+      return NextResponse.json({
+        student: {
+          ...student,
+          parent: parentInfo.rows[0] ? { name: parentInfo.rows[0].name } : null,
+        }
+      });
+    }
+
+    // For student users, get parent info if linked
     const parentResult = await pool.query(
       "SELECT * FROM padhai_parents WHERE student_id = $1",
       [student.id]
     );
 
-    return NextResponse.json({ 
+    return NextResponse.json({
       student: {
         ...student,
         parent: parentResult.rows[0] || null,
@@ -64,7 +82,7 @@ export async function PATCH(req: NextRequest) {
     }
     
     // Build update query dynamically
-    const allowedFields = ['name', 'class', 'exam_target', 'board', 'subjects'];
+    const allowedFields = ['name', 'class', 'exam_target', 'board', 'subjects', 'role'];
     const updateFields: string[] = [];
     const updateValues: any[] = [];
     let paramIndex = 1;

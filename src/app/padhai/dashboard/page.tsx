@@ -1,13 +1,33 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { BookOpen, Target, Flame, ChevronRight, Upload, FileQuestion, Brain, Clock, TrendingUp, CheckCircle, User, Info } from "lucide-react";
+import {
+  BookOpen,
+  Target,
+  Flame,
+  ChevronRight,
+  Upload,
+  FileQuestion,
+  Brain,
+  Clock,
+  TrendingUp,
+  CheckCircle,
+  User,
+  Info,
+  Users,
+  BarChart3,
+  Heart,
+  Copy,
+  Share2,
+  KeyRound,
+} from "lucide-react";
 import Link from "next/link";
 
 export default function PadhaiDashboard() {
   const [loading, setLoading] = useState(true);
   const [student, setStudent] = useState<any>(null);
   const [progress, setProgress] = useState<any>(null);
+  const [codeCopied, setCodeCopied] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -17,7 +37,7 @@ export default function PadhaiDashboard() {
     try {
       const [studentRes, progressRes] = await Promise.all([
         fetch("/api/padhai/student"),
-        fetch("/api/padhai/progress").catch(() => ({ json: () => null }))
+        fetch("/api/padhai/progress").catch(() => ({ json: () => null })),
       ]);
 
       const studentData = await studentRes.json();
@@ -46,14 +66,24 @@ export default function PadhaiDashboard() {
 
   if (!student) return null;
 
+  const isParent = student.role === "parent";
+
   const today = new Date();
-  const messages = [
-    "Every step forward counts. Keep going! 🚀",
-    "Consistency is key. You're doing great! 💪",
-    "Small progress is still progress. 🌱",
-    "Your future self will thank you! ⭐",
-    "Learning is a journey. Enjoy every bit! 📚",
+  const studentMessages = [
+    "Every step forward counts. Keep going!",
+    "Consistency is key. You're doing great!",
+    "Small progress is still progress.",
+    "Your future self will thank you!",
+    "Learning is a journey. Enjoy every bit!",
   ];
+  const parentMessages = [
+    "Your support means everything to your child.",
+    "Consistency matters more than perfection.",
+    "Ask 'What was interesting today?' instead of 'How much did you study?'",
+    "Celebrating small wins builds lasting motivation.",
+    "Your child is making progress, one step at a time.",
+  ];
+  const messages = isParent ? parentMessages : studentMessages;
   const dailyMessage = messages[today.getDay() % messages.length];
 
   return (
@@ -69,10 +99,23 @@ export default function PadhaiDashboard() {
             </span>
           </div>
           <div className="flex items-center gap-2">
-            <Link href="/padhai/profile" className="flex items-center gap-2 text-sm text-slate-400 hover:text-white">
-              <span>Hi, {student.name}</span>
+            <Link
+              href="/padhai/profile"
+              className="flex items-center gap-2 text-sm text-slate-400 hover:text-white"
+            >
+              <span>
+                {isParent ? (
+                  <>{student.parent?.name || "Parent"}</>
+                ) : (
+                  <>Hi, {student.name}</>
+                )}
+              </span>
               <div className="h-8 w-8 rounded-full bg-emerald-500/20 flex items-center justify-center">
-                <User className="h-4 w-4 text-emerald-400" />
+                {isParent ? (
+                  <Users className="h-4 w-4 text-emerald-400" />
+                ) : (
+                  <User className="h-4 w-4 text-emerald-400" />
+                )}
               </div>
             </Link>
           </div>
@@ -80,58 +123,161 @@ export default function PadhaiDashboard() {
       </header>
 
       <main className="mx-auto max-w-4xl px-4 py-6 space-y-6">
+        {/* Role banner for parents */}
+        {isParent && (
+          <div className="rounded-xl border border-purple-500/20 bg-purple-500/5 p-4 flex items-start gap-3">
+            <Heart className="h-5 w-5 text-purple-400 mt-0.5 shrink-0" />
+            <div>
+              <p className="text-sm font-medium text-white">
+                Tracking {student.name}&apos;s progress
+              </p>
+              <p className="text-xs text-slate-400 mt-0.5">
+                Class {student.class} &middot;{" "}
+                {student.exam_target === "BOARDS_ONLY"
+                  ? "Board Exams"
+                  : student.exam_target}
+              </p>
+            </div>
+          </div>
+        )}
+
         {/* Streak Card */}
         <div className="rounded-xl border border-slate-800 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 p-5">
           <div className="flex items-center justify-between">
             <div>
               <div className="flex items-center gap-2 text-slate-400 mb-1">
                 <Flame className="h-4 w-4 text-orange-500" />
-                <span className="text-sm">Current Streak</span>
+                <span className="text-sm">
+                  {isParent ? `${student.name}'s Streak` : "Current Streak"}
+                </span>
               </div>
               <div className="text-3xl font-bold text-white">
-                {student.streak_count || 0} <span className="text-lg font-normal text-slate-400">days</span>
+                {student.streak_count || 0}{" "}
+                <span className="text-lg font-normal text-slate-400">days</span>
               </div>
             </div>
             <div className="text-right">
               <div className="text-sm text-slate-400">Best Streak</div>
-              <div className="text-xl font-semibold text-white">{student.longest_streak || 0} days</div>
+              <div className="text-xl font-semibold text-white">
+                {student.longest_streak || 0} days
+              </div>
             </div>
           </div>
           <p className="mt-3 text-sm text-emerald-400">{dailyMessage}</p>
         </div>
 
+        {/* Invite Code Card — students only */}
+        {!isParent && student.invite_code && (
+          <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-purple-500/10">
+                  <KeyRound className="h-4 w-4 text-purple-400" />
+                </div>
+                <div>
+                  <p className="text-xs text-slate-400">
+                    Your Parent Invite Code
+                  </p>
+                  <p className="text-lg font-mono font-bold text-white tracking-widest">
+                    {student.invite_code}
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText(student.invite_code);
+                  setCodeCopied(true);
+                  setTimeout(() => setCodeCopied(false), 2000);
+                }}
+                className="flex items-center gap-1.5 rounded-lg bg-slate-800 px-3 py-2 text-xs text-slate-300 hover:bg-slate-700 transition-colors"
+              >
+                {codeCopied ? (
+                  <>
+                    <CheckCircle className="h-3.5 w-3.5 text-emerald-400" />
+                    Copied
+                  </>
+                ) : (
+                  <>
+                    <Copy className="h-3.5 w-3.5" />
+                    Copy
+                  </>
+                )}
+              </button>
+            </div>
+            <p className="text-xs text-slate-500 mt-2">
+              Share this code with your parent so they can track your progress
+            </p>
+          </div>
+        )}
+
         {/* Quick Actions */}
-        <div className="grid grid-cols-3 gap-4">
-          <Link
-            href="/padhai/timer"
-            className="flex flex-col items-center gap-2 rounded-xl border border-slate-800 bg-slate-900/50 p-4 text-center transition-all hover:border-orange-500/30 hover:bg-slate-800/50"
-          >
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-orange-500/10">
-              <Brain className="h-5 w-5 text-orange-400" />
-            </div>
-            <span className="font-medium text-white text-sm">Timer</span>
-          </Link>
+        {isParent ? (
+          // Parent quick actions
+          <div className="grid grid-cols-2 gap-4">
+            <Link
+              href="/padhai/parent"
+              className="flex flex-col items-center gap-2 rounded-xl border border-slate-800 bg-slate-900/50 p-4 text-center transition-all hover:border-purple-500/30 hover:bg-slate-800/50"
+            >
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-purple-500/10">
+                <Users className="h-5 w-5 text-purple-400" />
+              </div>
+              <span className="font-medium text-white text-sm">
+                Report Settings
+              </span>
+              <span className="text-xs text-slate-500">
+                Language, email, WhatsApp
+              </span>
+            </Link>
 
-          <Link
-            href="/padhai/photo"
-            className="flex flex-col items-center gap-2 rounded-xl border border-slate-800 bg-slate-900/50 p-4 text-center transition-all hover:border-emerald-500/30 hover:bg-slate-800/50"
-          >
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-500/10">
-              <Upload className="h-5 w-5 text-emerald-400" />
-            </div>
-            <span className="font-medium text-white text-sm">Photo</span>
-          </Link>
+            <Link
+              href="/padhai/syllabus"
+              className="flex flex-col items-center gap-2 rounded-xl border border-slate-800 bg-slate-900/50 p-4 text-center transition-all hover:border-emerald-500/30 hover:bg-slate-800/50"
+            >
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-500/10">
+                <BookOpen className="h-5 w-5 text-emerald-400" />
+              </div>
+              <span className="font-medium text-white text-sm">
+                View Syllabus
+              </span>
+              <span className="text-xs text-slate-500">
+                Track chapter completion
+              </span>
+            </Link>
+          </div>
+        ) : (
+          // Student quick actions
+          <div className="grid grid-cols-3 gap-4">
+            <Link
+              href="/padhai/timer"
+              className="flex flex-col items-center gap-2 rounded-xl border border-slate-800 bg-slate-900/50 p-4 text-center transition-all hover:border-orange-500/30 hover:bg-slate-800/50"
+            >
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-orange-500/10">
+                <Brain className="h-5 w-5 text-orange-400" />
+              </div>
+              <span className="font-medium text-white text-sm">Timer</span>
+            </Link>
 
-          <Link
-            href="/padhai/quiz"
-            className="flex flex-col items-center gap-2 rounded-xl border border-slate-800 bg-slate-900/50 p-4 text-center transition-all hover:border-purple-500/30 hover:bg-slate-800/50"
-          >
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-purple-500/10">
-              <FileQuestion className="h-5 w-5 text-purple-400" />
-            </div>
-            <span className="font-medium text-white text-sm">Quiz</span>
-          </Link>
-        </div>
+            <Link
+              href="/padhai/photo"
+              className="flex flex-col items-center gap-2 rounded-xl border border-slate-800 bg-slate-900/50 p-4 text-center transition-all hover:border-emerald-500/30 hover:bg-slate-800/50"
+            >
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-500/10">
+                <Upload className="h-5 w-5 text-emerald-400" />
+              </div>
+              <span className="font-medium text-white text-sm">Photo</span>
+            </Link>
+
+            <Link
+              href="/padhai/quiz"
+              className="flex flex-col items-center gap-2 rounded-xl border border-slate-800 bg-slate-900/50 p-4 text-center transition-all hover:border-purple-500/30 hover:bg-slate-800/50"
+            >
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-purple-500/10">
+                <FileQuestion className="h-5 w-5 text-purple-400" />
+              </div>
+              <span className="font-medium text-white text-sm">Quiz</span>
+            </Link>
+          </div>
+        )}
 
         {/* Syllabus Progress */}
         {progress && (
@@ -141,11 +287,13 @@ export default function PadhaiDashboard() {
                 <TrendingUp className="h-5 w-5 text-emerald-500" />
                 Syllabus Progress
               </h2>
-              <span className="text-sm text-slate-400">{progress.progressPercent || 0}% complete</span>
+              <span className="text-sm text-slate-400">
+                {progress.progressPercent || 0}% complete
+              </span>
             </div>
-            
+
             <div className="h-3 bg-slate-800 rounded-full overflow-hidden mb-4">
-              <div 
+              <div
                 className="h-full bg-gradient-to-r from-emerald-500 to-teal-500 transition-all duration-500"
                 style={{ width: `${progress.progressPercent || 0}%` }}
               />
@@ -153,20 +301,21 @@ export default function PadhaiDashboard() {
 
             <div className="grid grid-cols-2 gap-4 mb-4">
               <div className="text-center p-3 rounded-lg bg-slate-800/50">
-                <div className="text-2xl font-bold text-white">{progress.completedChapters || 0}</div>
+                <div className="text-2xl font-bold text-white">
+                  {progress.completedChapters || 0}
+                </div>
                 <div className="text-xs text-slate-400">Chapters Done</div>
               </div>
               <div className="text-center p-3 rounded-lg bg-slate-800/50">
-                <div className="text-2xl font-bold text-white">{progress.remainingHours || 0}</div>
+                <div className="text-2xl font-bold text-white">
+                  {progress.remainingHours || 0}
+                </div>
                 <div className="text-xs text-slate-400 flex items-center justify-center gap-1">
                   Hours Left
                   <span className="group relative inline-block">
                     <Info className="h-3 w-3 text-slate-500 cursor-help" />
                     <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 bg-slate-800 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
                       Total study hours needed to complete remaining chapters
-                      <svg className="absolute top-full left-1/2 -translate-x-1/2 -mt-1" width="8" height="5" viewBox="0 0 8 5">
-                        <path d="M0 0L4 4L8 0" fill="currentColor" className="text-slate-800"/>
-                      </svg>
                     </span>
                   </span>
                 </div>
@@ -176,17 +325,30 @@ export default function PadhaiDashboard() {
             {progress.estimatedWeeksLeft > 0 && (
               <div className="flex items-center gap-2 text-sm text-slate-400 bg-slate-800/30 p-3 rounded-lg">
                 <Clock className="h-4 w-4 text-blue-400" />
-                <span>At your pace, ~{progress.estimatedWeeksLeft} weeks to complete syllabus</span>
+                <span>
+                  {isParent
+                    ? `At current pace, ~${progress.estimatedWeeksLeft} weeks to complete syllabus`
+                    : `At your pace, ~${progress.estimatedWeeksLeft} weeks to complete syllabus`
+                  }
+                </span>
               </div>
             )}
 
             <div className="mt-4 space-y-2">
-              {progress.subjectProgress && Object.entries(progress.subjectProgress).map(([subject, data]: [string, any]) => (
-                <div key={subject} className="flex items-center justify-between text-sm">
-                  <span className="text-slate-300">{subject}</span>
-                  <span className="text-slate-400">{data.completed}/{data.total} chapters</span>
-                </div>
-              ))}
+              {progress.subjectProgress &&
+                Object.entries(progress.subjectProgress).map(
+                  ([subject, data]: [string, any]) => (
+                    <div
+                      key={subject}
+                      className="flex items-center justify-between text-sm"
+                    >
+                      <span className="text-slate-300">{subject}</span>
+                      <span className="text-slate-400">
+                        {data.completed}/{data.total} chapters
+                      </span>
+                    </div>
+                  )
+                )}
             </div>
 
             <Link
@@ -206,7 +368,9 @@ export default function PadhaiDashboard() {
           >
             <div>
               <div className="font-medium text-white">Weekly Goals</div>
-              <div className="text-xs text-slate-400">Plan your week</div>
+              <div className="text-xs text-slate-400">
+                {isParent ? "View this week's plan" : "Plan your week"}
+              </div>
             </div>
             <ChevronRight className="h-5 w-5 text-slate-500" />
           </Link>
@@ -216,8 +380,12 @@ export default function PadhaiDashboard() {
             className="flex items-center justify-between p-4 rounded-xl border border-slate-800 bg-slate-900/50 hover:bg-slate-800/50 transition-colors"
           >
             <div>
-              <div className="font-medium text-white">Parent Reports</div>
-              <div className="text-xs text-slate-400">Keep them updated</div>
+              <div className="font-medium text-white">
+                {isParent ? "Report Settings" : "Parent Reports"}
+              </div>
+              <div className="text-xs text-slate-400">
+                {isParent ? "Update preferences" : "Keep them updated"}
+              </div>
             </div>
             <ChevronRight className="h-5 w-5 text-slate-500" />
           </Link>

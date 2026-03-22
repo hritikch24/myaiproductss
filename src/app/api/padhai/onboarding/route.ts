@@ -2,10 +2,24 @@ import { NextRequest, NextResponse } from "next/server";
 import pool from "@/lib/padhai-db";
 import { auth } from "@/lib/auth";
 
+async function generateUniqueInviteCode(): Promise<string> {
+  let code: string;
+  let exists = true;
+  while (exists) {
+    code = Math.floor(1000000000 + Math.random() * 9000000000).toString();
+    const check = await pool.query(
+      "SELECT id FROM padhai_students WHERE invite_code = $1",
+      [code]
+    );
+    exists = check.rows.length > 0;
+  }
+  return code!;
+}
+
 export async function POST(req: NextRequest) {
   try {
     const session = await auth();
-    
+
     if (!session?.user?.email) {
       return NextResponse.json(
         { error: "Please sign in first" },
@@ -32,30 +46,51 @@ export async function POST(req: NextRequest) {
       subjects = ["Physics", "Chemistry", "Mathematics", "Biology"];
     }
 
+    // Ensure columns exist (safe migration)
+    await pool.query(`
+      DO $$
+      BEGIN
+        IF NOT EXISTS (
+          SELECT 1 FROM information_schema.columns
+          WHERE table_name = 'padhai_students' AND column_name = 'role'
+        ) THEN
+          ALTER TABLE padhai_students ADD COLUMN role TEXT DEFAULT 'student';
+        END IF;
+        IF NOT EXISTS (
+          SELECT 1 FROM information_schema.columns
+          WHERE table_name = 'padhai_students' AND column_name = 'invite_code'
+        ) THEN
+          ALTER TABLE padhai_students ADD COLUMN invite_code VARCHAR(10) UNIQUE;
+        END IF;
+      END $$;
+    `);
+
     // Check if student already exists
     const existing = await pool.query(
-      "SELECT id FROM padhai_students WHERE email = $1",
+      "SELECT id, invite_code FROM padhai_students WHERE email = $1",
       [session.user.email]
     );
 
+    let inviteCode: string;
+
     if (existing.rows.length > 0) {
-      // Update existing student
+      inviteCode = existing.rows[0].invite_code || (await generateUniqueInviteCode());
       await pool.query(
-        `UPDATE padhai_students 
-         SET name = $1, class = $2, exam_target = $3, subjects = $4
-         WHERE email = $5`,
-        [name, studentClass, examTarget, JSON.stringify(subjects), session.user.email]
+        `UPDATE padhai_students
+         SET name = $1, class = $2, exam_target = $3, subjects = $4, role = 'student', invite_code = $5
+         WHERE email = $6`,
+        [name, studentClass, examTarget, JSON.stringify(subjects), inviteCode, session.user.email]
       );
     } else {
-      // Create new student
+      inviteCode = await generateUniqueInviteCode();
       await pool.query(
-        `INSERT INTO padhai_students (user_id, name, email, class, exam_target, subjects)
-         VALUES ($1, $2, $3, $4, $5, $6)`,
-        [session.user.id, name, session.user.email, studentClass, examTarget, JSON.stringify(subjects)]
+        `INSERT INTO padhai_students (user_id, name, email, class, exam_target, subjects, role, invite_code)
+         VALUES ($1, $2, $3, $4, $5, $6, 'student', $7)`,
+        [session.user.id, name, session.user.email, studentClass, examTarget, JSON.stringify(subjects), inviteCode]
       );
     }
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, inviteCode });
   } catch (error) {
     console.error("Onboarding error:", error);
     return NextResponse.json(

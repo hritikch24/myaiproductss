@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { ChevronLeft, User, Mail, BookOpen, Target, Flame, Calendar, Award, Settings, LogOut, Camera, X, Loader2 } from "lucide-react";
+import { ChevronLeft, User, Mail, BookOpen, Target, Flame, Calendar, Award, Settings, LogOut, Camera, X, Loader2, KeyRound, Copy, CheckCircle, Users } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { signOut } from "next-auth/react";
 
 export default function ProfilePage() {
   const router = useRouter();
@@ -12,6 +13,7 @@ export default function ProfilePage() {
   const [user, setUser] = useState<any>(null);
   const [uploading, setUploading] = useState(false);
   const [showCamera, setShowCamera] = useState(false);
+  const [codeCopied, setCodeCopied] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -217,8 +219,14 @@ export default function ProfilePage() {
                 <Camera className="h-4 w-4" />
               </button>
             </div>
-            <h2 className="text-xl font-bold text-white">{student?.name || "Student"}</h2>
-            <p className="text-sm text-slate-400">{student?.class}th Grade • {student?.exam_target}</p>
+            <h2 className="text-xl font-bold text-white">
+              {student?.role === 'parent' ? (student?.parent?.name || "Parent") : (student?.name || "Student")}
+            </h2>
+            <p className="text-sm text-slate-400">
+              {student?.role === 'parent'
+                ? `Parent • Tracking ${student?.name}`
+                : `${student?.class}th Grade • ${student?.exam_target}`}
+            </p>
             
             <input
               type="file"
@@ -346,6 +354,38 @@ export default function ProfilePage() {
           </div>
         </div>
 
+        {/* Invite Code — students only */}
+        {student?.role !== 'parent' && student?.invite_code && (
+          <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-5">
+            <h3 className="text-sm font-medium text-slate-400 mb-4">Parent Invite Code</h3>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <KeyRound className="h-5 w-5 text-purple-400" />
+                <span className="text-xl font-mono font-bold text-white tracking-widest">
+                  {student.invite_code}
+                </span>
+              </div>
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText(student.invite_code);
+                  setCodeCopied(true);
+                  setTimeout(() => setCodeCopied(false), 2000);
+                }}
+                className="flex items-center gap-1.5 rounded-lg bg-slate-800 px-3 py-2 text-xs text-slate-300 hover:bg-slate-700 transition-colors"
+              >
+                {codeCopied ? (
+                  <><CheckCircle className="h-3.5 w-3.5 text-emerald-400" /> Copied</>
+                ) : (
+                  <><Copy className="h-3.5 w-3.5" /> Copy</>
+                )}
+              </button>
+            </div>
+            <p className="text-xs text-slate-500 mt-2">
+              Share this code with your parent so they can track your progress
+            </p>
+          </div>
+        )}
+
         {/* Actions */}
         <div className="space-y-3">
           <Link
@@ -361,9 +401,7 @@ export default function ProfilePage() {
 
           <button
             onClick={() => {
-              fetch("/api/auth/signout", { method: "POST" }).then(() => {
-                window.location.href = "/padhai/login";
-              });
+              signOut({ callbackUrl: "/padhai/login" });
             }}
             className="w-full flex items-center justify-between p-4 rounded-xl border border-red-500/30 bg-red-500/10 hover:bg-red-500/20 transition-colors"
           >

@@ -1,15 +1,26 @@
-import { Metadata } from "next";
+import { Metadata, Viewport } from "next";
+import Script from "next/script";
 
 export const metadata: Metadata = {
   title: {
     default: "Padhai — Student Study Tracker",
     template: "%s | Padhai",
   },
-  description: "No-pressure study tracker for Class 11, 12, JEE & NEET students. Set weekly goals, verify with quick quizzes, and keep your parents updated.",
-  keywords: ["study tracker", "JEE preparation", "NEET preparation", "Class 11 12 study", "student accountability"],
+  description:
+    "No-pressure study tracker for Class 11, 12, JEE & NEET students. Set weekly goals, verify with quick quizzes, and keep your parents updated.",
+  keywords: [
+    "study tracker",
+    "JEE preparation",
+    "NEET preparation",
+    "Class 11 12 study",
+    "student accountability",
+    "parent updates",
+    "weekly study goals",
+  ],
   openGraph: {
-    title: "Padhai — Student Study Tracker",
-    description: "No-pressure study tracker for Class 11, 12, JEE & NEET students.",
+    title: "Padhai — Track Your Studies, Keep Your Parents Informed",
+    description:
+      "No-pressure study tracker for Class 11, 12, JEE & NEET students. Coaching laga di, fees bhar di — ab padhai bhi track karo.",
     url: "https://kraftai.in/padhai",
     siteName: "Padhai",
     locale: "en_IN",
@@ -19,6 +30,22 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  manifest: "/padhai/manifest.json",
+  icons: {
+    icon: [
+      { url: "/padhai/icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/padhai/icon-512.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: "/padhai/icon-192.png",
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#030712",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 export default function PadhaiLayout({
@@ -26,5 +53,21 @@ export default function PadhaiLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return (
+    <>
+      {children}
+      <Script
+        id="padhai-sw"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            if ('serviceWorker' in navigator) {
+              navigator.serviceWorker.register('/padhai/sw.js', { scope: '/padhai/' })
+                .catch(function() {});
+            }
+          `,
+        }}
+      />
+    </>
+  );
 }
