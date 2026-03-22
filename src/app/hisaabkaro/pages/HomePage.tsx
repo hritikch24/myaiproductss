@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { TrendingUp, TrendingDown, Receipt, DollarSign, ArrowRight } from 'lucide-react'
-import { Card, CardContent } from '../components/ui/card'
-import { Button } from '../components/ui/button'
+import { Card, CardContent } from '../components/card'
+import { Button } from '../components/button'
 import { formatCurrency, formatTime, getLast7Days } from '../lib/utils'
 import { getTodayStats, getWeeklySales, getRecentTransactions } from '../lib/db'
 

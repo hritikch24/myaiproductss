@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { Save, Download, Share2, Info, Check } from 'lucide-react'
-import { Card, CardContent } from '../components/ui/card'
-import { Button } from '../components/ui/button'
-import { Input } from '../components/ui/input'
-import { Label } from '../components/ui/label'
+import { Card, CardContent } from '../components/card'
+import { Button } from '../components/button'
+import { Input } from '../components/input'
+import { Label } from '../components/label'
 import { exportDataAsCSV, type Settings } from '../lib/db'
 
 interface SettingsPageProps {
