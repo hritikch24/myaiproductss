@@ -20,7 +20,7 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  // Protect padhai app routes (except landing, login, onboarding)
+  // Protect padhai app routes (except landing, login, onboarding, track)
   const padhaiProtected =
     pathname.startsWith("/padhai/dashboard") ||
     pathname.startsWith("/padhai/goals") ||

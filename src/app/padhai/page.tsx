@@ -598,13 +598,13 @@ export default function PadhaiLanding() {
             <p className="text-sm text-slate-500 mb-5">
               {userType === "student"
                 ? "Track your goals, ace quizzes, build study streaks."
-                : "Get weekly reports on your child's study progress."}
+                : "Enter your child's invite code to see their progress. No login needed."}
             </p>
             <Link
-              href={`/padhai/onboarding?role=${userType}`}
+              href={userType === "parent" ? "/padhai/track" : "/padhai/onboarding?role=student"}
               className="group inline-flex rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 px-8 py-4 text-base font-semibold text-white transition-all hover:shadow-[0_0_40px_rgba(16,185,129,0.3)] active:scale-95"
             >
-              Get Started Free
+              {userType === "parent" ? "Track My Child" : "Get Started Free"}
               <ArrowRight className="ml-2 inline h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Link>
           </div>
