@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
-import pool from "@/lib/db";
+import pool from "@/lib/postgres-db";
 import { renderToBuffer, type DocumentProps } from "@react-pdf/renderer";
 import { DocumentPdf } from "@/components/document-pdf";
 import { StampPaperDocumentPdf } from "@/components/stamp-paper-pdf";

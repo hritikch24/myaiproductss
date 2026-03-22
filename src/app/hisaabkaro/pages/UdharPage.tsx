@@ -25,7 +25,7 @@ export function UdharPage({ shopName, translations }: UdharPageProps) {
 
   const loadCustomers = useCallback(async () => {
     const allCustomers = await Promise.all([
-      import('@/lib/db').then(m => m.getCustomersWithUdhar())
+      import('../lib/db').then(m => m.getCustomersWithUdhar())
     ])
     let data = allCustomers[0]
     

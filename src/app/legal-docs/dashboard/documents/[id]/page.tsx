@@ -1,6 +1,6 @@
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import pool from "@/lib/db";
+import pool from "@/lib/postgres-db";
 import { Button } from "@/components/ui/button";
 import { Download, Plus, ChevronRight, FileText } from "lucide-react";
 import Link from "next/link";

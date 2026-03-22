@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
-import pool from "@/lib/db";
+import pool from "@/lib/postgres-db";
 import crypto from "crypto";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { PROMPTS, buildUserMessage, DocType } from "@/lib/prompts";
