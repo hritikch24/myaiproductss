@@ -29,8 +29,8 @@ export function NewBillPage({ shopName, translations }: NewBillPageProps) {
     { id: '1', name: '', barcode: '', hsnCode: '', gstRate: 0, qty: 1, price: 0, total: 0 }
   ])
   const [discount, setDiscount] = useState(0)
-  const [cgst, setCgst] = useState(0)
-  const [sgst, setSgst] = useState(0)
+  const [cgst, setCgst] = useState(9)
+  const [sgst, setSgst] = useState(9)
   const [igst, setIgst] = useState(0)
   const [gstRate, setGstRate] = useState(18)
   const [showSuccess, setShowSuccess] = useState(false)
