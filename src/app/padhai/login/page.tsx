@@ -1,29 +1,15 @@
 "use client";
 
-import { useState, Suspense } from "react";
+import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { BookOpen, Mail, Lock, ArrowRight, User, Eye, EyeOff, Loader2 } from "lucide-react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
 
 export default function PadhaiLoginPage() {
-  return (
-    <Suspense
-      fallback={
-        <div className="min-h-screen bg-[#030712] flex items-center justify-center">
-          <Loader2 className="h-8 w-8 text-emerald-500 animate-spin" />
-        </div>
-      }
-    >
-      <LoginContent />
-    </Suspense>
-  );
+  return <LoginContent />;
 }
 
 function LoginContent() {
-  const searchParams = useSearchParams();
-  const role = searchParams.get("role"); // preserve role from landing page
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
@@ -33,10 +19,7 @@ function LoginContent() {
   const [error, setError] = useState("");
   const [fieldErrors, setFieldErrors] = useState<{ email?: string; password?: string; name?: string }>({});
 
-  // Where to go after login — preserve role param
-  const redirectUrl = role
-    ? `/padhai/onboarding?role=${role}`
-    : "/padhai/onboarding";
+  const redirectUrl = "/padhai/onboarding";
 
   function validateForm() {
     const errors: { email?: string; password?: string; name?: string } = {};
@@ -136,26 +119,14 @@ function LoginContent() {
           </Link>
         </div>
 
-        {/* Role indicator */}
-        {role === "parent" && (
-          <div className="mb-4 text-center">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-purple-500/10 border border-purple-500/20 px-3 py-1 text-xs text-purple-400">
-              Parent Account
-            </span>
-          </div>
-        )}
-
         <div className="rounded-2xl border border-slate-800 bg-slate-900/60 backdrop-blur-xl p-6 sm:p-8 shadow-2xl">
           <h1 className="text-xl font-semibold text-white mb-2">
             {isSignUp ? "Create Account" : "Welcome back"}
           </h1>
           <p className="mb-6 text-sm text-slate-400">
             {isSignUp
-              ? role === "parent"
-                ? "Create an account to track your child's progress"
-                : "Start your study journey with Padhai"
-              : "Sign in to continue your progress"
-            }
+              ? "Start your study journey with Padhai"
+              : "Sign in to continue your progress"}
           </p>
 
           {error && (
