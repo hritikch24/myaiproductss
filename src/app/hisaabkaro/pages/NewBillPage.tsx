@@ -159,6 +159,7 @@ export default function NewBillPage({ shopName, translations }: { shopName: stri
 
   const handleBarcodeScan = async (barcode: string) => {
     setShowScanner(false)
+    
     if (barcode.length > 3) {
       const item = await getItemByBarcode(barcode)
       if (item) {
@@ -172,11 +173,11 @@ export default function NewBillPage({ shopName, translations }: { shopName: stri
           price: item.lastPrice,
           total: item.lastPrice
         })
+        alert(`Added: ${item.name} - ₹${item.lastPrice}`)
       } else {
-        // New item - add with barcode
         addItemToBill({
           id: Date.now().toString(),
-          name: '',
+          name: 'New Item',
           barcode: barcode,
           hsnCode: '',
           gstRate: 0,
@@ -184,6 +185,7 @@ export default function NewBillPage({ shopName, translations }: { shopName: stri
           price: 0,
           total: 0
         })
+        alert(`New barcode scanned: ${barcode}\nPlease enter item details`)
       }
     }
   }
