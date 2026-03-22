@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { useAppStore, useTranslation } from './store/useAppStore'
 import { BottomNav } from './components/BottomNav'
 import { HomePage } from './pages/HomePage'
-import { NewBillPage } from './pages/NewBillPage'
+import NewBillPage from './pages/NewBillPage'
 import { UdharPage } from './pages/UdharPage'
 import { SettingsPage } from './pages/SettingsPage'
 
