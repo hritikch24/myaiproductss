@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react'
 import { Trash2, Plus, Minus, Check, Send, Receipt } from 'lucide-react'
-import { Card, CardContent } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { db, formatCurrency, generateBillText, addOrUpdateItem, getOrCreateCustomer, addBill, type BillItem } from '@/lib/db'
+import { Card, CardContent } from '../components/ui/card'
+import { Button } from '../components/ui/button'
+import { Input } from '../components/ui/input'
+import { Label } from '../components/ui/label'
+import { db, formatCurrency, generateBillText, addOrUpdateItem, getOrCreateCustomer, addBill, type BillItem } from '../lib/db'
 
 interface BillItemInput {
   id: string
@@ -367,27 +367,24 @@ export function NewBillPage({ shopName, translations }: NewBillPageProps) {
           <div className="flex gap-2 pt-2">
             <Button
               size="lg"
-              variant="success"
               onClick={() => handleSave('paid')}
-              className="flex-1"
+              className="flex-1 bg-green-600 hover:bg-green-700"
             >
               <Check className="w-5 h-5" />
               {translations.cashReceived}
             </Button>
             <Button
               size="lg"
-              variant="warning"
               onClick={() => handleSave('udhar')}
-              className="flex-1"
+              className="flex-1 bg-orange-500 hover:bg-orange-600"
             >
               <Receipt className="w-5 h-5" />
               {translations.udharBtn}
             </Button>
             <Button
               size="lg"
-              variant="whatsapp"
               onClick={handleShareWhatsApp}
-              className="flex-1"
+              className="flex-1 bg-[#25D366] hover:bg-[#1da851]"
             >
               <Send className="w-5 h-5" />
             </Button>

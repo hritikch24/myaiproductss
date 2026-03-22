@@ -1,9 +1,9 @@
 import { useState, useEffect, useCallback } from 'react'
 import { TrendingUp, TrendingDown, Receipt, DollarSign, ArrowRight } from 'lucide-react'
-import { Card, CardContent } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { formatCurrency, formatTime, getLast7Days } from '@/lib/utils'
-import { getTodayStats, getWeeklySales, getRecentTransactions } from '@/lib/db'
+import { Card, CardContent } from '../components/ui/card'
+import { Button } from '../components/ui/button'
+import { formatCurrency, formatTime, getLast7Days } from '../lib/utils'
+import { getTodayStats, getWeeklySales, getRecentTransactions } from '../lib/db'
 
 interface HomePageProps {
   shopName: string
@@ -120,8 +120,7 @@ export function HomePage({ shopName, translations, onNavigate }: HomePageProps) 
           </Button>
           <Button 
             size="lg" 
-            variant="warning"
-            className="flex-1"
+            className="flex-1 bg-orange-500 hover:bg-orange-600"
             onClick={() => onNavigate('udhar')}
           >
             <DollarSign className="w-5 h-5" />

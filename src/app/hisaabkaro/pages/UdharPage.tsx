@@ -1,12 +1,12 @@
 import { useState, useEffect, useCallback } from 'react'
 import { Search, Bell, DollarSign, Send, ChevronRight } from 'lucide-react'
-import { Card, CardContent } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog'
-import { formatCurrency, formatDate, generateUdharReminderText, getCustomerBills, collectPayment, type Customer, type Bill } from '@/lib/db'
-import { cn } from '@/lib/utils'
+import { Card, CardContent } from '../components/ui/card'
+import { Button } from '../components/ui/button'
+import { Input } from '../components/ui/input'
+import { Label } from '../components/ui/label'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '../components/ui/dialog'
+import { formatCurrency, formatDate, generateUdharReminderText, getCustomerBills, collectPayment, type Customer, type Bill } from '../lib/db'
+import { cn } from '../lib/utils'
 
 interface UdharPageProps {
   shopName: string
@@ -186,19 +186,17 @@ export function UdharPage({ shopName, translations }: UdharPageProps) {
                   
                   <div className="flex gap-2">
                     <Button
-                      variant="whatsapp"
                       size="sm"
                       onClick={() => handleRemind(customer)}
-                      className="flex-1"
+                      className="flex-1 bg-[#25D366] hover:bg-[#1da851]"
                     >
                       <Send className="w-4 h-4" />
                       {translations.remind}
                     </Button>
                     <Button
-                      variant="success"
                       size="sm"
                       onClick={() => handleCollect(customer)}
-                      className="flex-1"
+                      className="flex-1 bg-green-600 hover:bg-green-700"
                     >
                       <DollarSign className="w-4 h-4" />
                       {translations.collect}
@@ -290,7 +288,7 @@ export function UdharPage({ shopName, translations }: UdharPageProps) {
             <Button variant="outline" onClick={() => setShowCollectModal(false)}>
               {translations.cancel}
             </Button>
-            <Button variant="success" onClick={handleSaveCollect}>
+            <Button className="bg-green-600 hover:bg-green-700" onClick={handleSaveCollect}>
               {translations.save}
             </Button>
           </DialogFooter>

@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { initializeSettings, updateSettings, type Settings } from '@/lib/db'
+import { initializeSettings, updateSettings, type Settings } from '../lib/db'
 
 interface AppState {
   settings: Settings | null

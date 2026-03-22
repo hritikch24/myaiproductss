@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { Save, Download, Share2, Info, Check } from 'lucide-react'
-import { Card, CardContent } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { exportDataAsCSV, type Settings } from '@/lib/db'
+import { Card, CardContent } from '../components/ui/card'
+import { Button } from '../components/ui/button'
+import { Input } from '../components/ui/input'
+import { Label } from '../components/ui/label'
+import { exportDataAsCSV, type Settings } from '../lib/db'
 
 interface SettingsPageProps {
   settings: Settings | null
