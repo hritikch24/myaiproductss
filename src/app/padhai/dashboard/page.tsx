@@ -66,7 +66,7 @@ export default function PadhaiDashboard() {
 
   if (!student) return null;
 
-  const isParent = student.role === "parent";
+  const isParent = student?.role === "parent";
 
   const today = new Date();
   const studentMessages = [
@@ -204,9 +204,27 @@ export default function PadhaiDashboard() {
                 )}
               </button>
             </div>
-            <p className="text-xs text-slate-500 mt-2">
-              Share this code with your parent so they can track your progress
-            </p>
+            <div className="flex items-center gap-2 mt-2">
+              <p className="text-xs text-slate-500 flex-1">
+                Share this with your parent to track your progress at kraftai.in/padhai/track
+              </p>
+              <button
+                onClick={() => {
+                  const msg = `Track my study progress on Padhai!\n\nMy invite code: ${student.invite_code}\n\nGo to: https://kraftai.in/padhai/track`;
+                  if (navigator.share) {
+                    navigator.share({ title: "Padhai Invite Code", text: msg }).catch(() => {});
+                  } else {
+                    navigator.clipboard.writeText(msg);
+                    setCodeCopied(true);
+                    setTimeout(() => setCodeCopied(false), 2000);
+                  }
+                }}
+                className="shrink-0 flex items-center gap-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 px-3 py-1.5 text-xs text-emerald-400 hover:bg-emerald-500/20 transition-colors"
+              >
+                <Share2 className="h-3.5 w-3.5" />
+                Share
+              </button>
+            </div>
           </div>
         )}
 
@@ -380,12 +398,8 @@ export default function PadhaiDashboard() {
             className="flex items-center justify-between p-4 rounded-xl border border-slate-800 bg-slate-900/50 hover:bg-slate-800/50 transition-colors"
           >
             <div>
-              <div className="font-medium text-white">
-                {isParent ? "Report Settings" : "Parent Reports"}
-              </div>
-              <div className="text-xs text-slate-400">
-                {isParent ? "Update preferences" : "Keep them updated"}
-              </div>
+              <div className="font-medium text-white">Parent Reports</div>
+              <div className="text-xs text-slate-400">Keep them updated</div>
             </div>
             <ChevronRight className="h-5 w-5 text-slate-500" />
           </Link>

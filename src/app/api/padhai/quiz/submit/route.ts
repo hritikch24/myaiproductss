@@ -55,7 +55,7 @@ export async function POST(req: NextRequest) {
       };
     });
 
-    const score = (correctCount / questions.length) * 100;
+    const score = questions.length > 0 ? (correctCount / questions.length) * 100 : 0;
     
     // Determine verification status
     let verificationStatus: 'genuine' | 'partial' | 'suspicious';

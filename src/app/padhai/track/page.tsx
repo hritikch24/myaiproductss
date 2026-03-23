@@ -154,7 +154,8 @@ export default function TrackPage() {
   // Build activity heatmap for last 30 days
   const activityMap = new Map<string, number>();
   for (const a of activity) {
-    activityMap.set(a.day?.split("T")[0], a.count);
+    const dayKey = a.day ? String(a.day).split("T")[0] : null;
+    if (dayKey) activityMap.set(dayKey, a.count);
   }
 
   const last30Days: { date: string; count: number; label: string }[] = [];
@@ -471,9 +472,9 @@ function WeekView({
                 </span>
                 <span
                   className={`font-mono font-bold ${
-                    q.score / q.total >= 0.7
+                    q.total > 0 && q.score / q.total >= 0.7
                       ? "text-emerald-400"
-                      : q.score / q.total >= 0.4
+                      : q.total > 0 && q.score / q.total >= 0.4
                       ? "text-amber-400"
                       : "text-red-400"
                   }`}

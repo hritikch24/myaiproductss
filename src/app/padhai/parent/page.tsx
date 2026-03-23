@@ -86,7 +86,7 @@ export default function ParentSettingsPage() {
             </Link>
             <div className="flex items-center gap-2">
               <Users className="h-5 w-5 text-emerald-500" />
-              <span className="text-lg font-bold text-white">Parent Settings</span>
+              <span className="text-lg font-bold text-white">Parent Reports</span>
             </div>
           </div>
         </div>
@@ -95,11 +95,11 @@ export default function ParentSettingsPage() {
       <main className="mx-auto max-w-md px-4 py-8">
         <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-6">
           <h2 className="text-lg font-semibold text-white mb-2">
-            Connect with your parent
+            Keep your parent updated
           </h2>
           <p className="text-sm text-slate-400 mb-6">
-            Add your parent&apos;s email to receive weekly progress reports. 
-            Reports are calm, encouraging, and focused on progress - not pressure.
+            Add your parent&apos;s details so they receive a weekly progress report every Sunday.
+            Reports are calm, encouraging, and focused on progress — not pressure.
           </p>
 
           <div className="space-y-4">
@@ -195,7 +195,7 @@ export default function ParentSettingsPage() {
             Sample Report Preview
           </h3>
           <div className="p-4 rounded-lg bg-slate-800/50 text-sm text-slate-300">
-            <p className="mb-2">📚 <strong>Weekly Update for {parentName || "[Parent Name]"}</strong></p>
+            <p className="mb-2">📚 <strong>Weekly Update</strong></p>
             <p className="mb-2">This week: Completed 5/7 tasks. Streak: 12 days 🔥</p>
             <p className="mb-2">📖 <strong>Subjects:</strong> Physics, Chemistry</p>
             <p className="mb-2">💡 <strong>Tip:</strong> Try asking &quot;What was interesting today?&quot; instead of &quot;How much did you study?&quot;</p>

@@ -86,10 +86,16 @@ export default function MySyllabusPage() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-[#030712] flex flex-col items-center justify-center p-4">
-        <p className="text-red-400 mb-4">{error}</p>
-        <Link href="/padhai/dashboard" className="text-emerald-400 hover:underline">
-          Go back to dashboard
+      <div className="min-h-screen bg-[#030712] flex flex-col items-center justify-center p-4 gap-4">
+        <p className="text-red-400">{error}</p>
+        <button
+          onClick={() => { setError(""); setLoading(true); window.location.reload(); }}
+          className="text-sm text-emerald-400 hover:underline"
+        >
+          Try Again
+        </button>
+        <Link href="/padhai/dashboard" className="text-xs text-slate-500 hover:underline">
+          Back to dashboard
         </Link>
       </div>
     );

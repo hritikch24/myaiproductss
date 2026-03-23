@@ -322,7 +322,6 @@ export default function PhotoUploadPage() {
               ref={fileInputRef}
               onChange={handleFileSelect}
               accept="image/*"
-              capture="environment"
               className="hidden"
             />
             <button

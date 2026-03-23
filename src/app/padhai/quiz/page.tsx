@@ -425,7 +425,7 @@ function ChapterSelect() {
         } else if (data.error) {
           setError(data.error);
         } else {
-          setError("No chapters found. Please check your profile settings.");
+          setError("No chapters found. Complete your profile to load your syllabus.");
         }
       } catch {
         setError("Failed to load chapters");

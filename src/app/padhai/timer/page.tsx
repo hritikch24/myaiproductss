@@ -16,7 +16,7 @@ const MOTIVATIONAL_MESSAGES = [
   "Focus on one topic at a time. You've got this!",
   "Every minute of focused study counts.",
   "Small steps lead to big achievements.",
-  "Your future for this self will thank you effort.",
+  "Your future self will thank you for this effort.",
   "Consistency beats intensity. Keep showing up!",
 ];
 

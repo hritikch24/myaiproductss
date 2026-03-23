@@ -29,6 +29,7 @@ export default function WeeklyGoalsPage() {
   const [weekStart, setWeekStart] = useState("");
   const [weekEnd, setWeekEnd] = useState("");
   const [hasExistingGoal, setHasExistingGoal] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     fetchGoals();
@@ -48,6 +49,7 @@ export default function WeeklyGoalsPage() {
       setWeekEnd(data.weekEnd);
     } catch (err) {
       console.error(err);
+      setError("Could not load goals. Pull down to retry.");
     } finally {
       setLoading(false);
     }
@@ -133,6 +135,15 @@ export default function WeeklyGoalsPage() {
       </header>
 
       <main className="mx-auto max-w-4xl px-4 py-6 space-y-6 pb-24">
+        {error && (
+          <div className="rounded-xl border border-red-500/20 bg-red-500/10 p-4 text-center">
+            <p className="text-sm text-red-400">{error}</p>
+            <button onClick={() => { setError(""); setLoading(true); fetchGoals(); }} className="mt-2 text-xs text-emerald-400 hover:underline">
+              Try Again
+            </button>
+          </div>
+        )}
+
         {/* Week Banner */}
         <div className="rounded-xl border border-slate-800 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 p-5">
           <div className="flex items-center gap-3">

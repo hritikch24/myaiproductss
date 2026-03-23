@@ -601,7 +601,7 @@ export default function PadhaiLanding() {
                 : "Enter your child's invite code to see their progress. No login needed."}
             </p>
             <Link
-              href={userType === "parent" ? "/padhai/track" : "/padhai/onboarding?role=student"}
+              href={userType === "parent" ? "/padhai/track" : "/padhai/onboarding"}
               className="group inline-flex rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 px-8 py-4 text-base font-semibold text-white transition-all hover:shadow-[0_0_40px_rgba(16,185,129,0.3)] active:scale-95"
             >
               {userType === "parent" ? "Track My Child" : "Get Started Free"}
