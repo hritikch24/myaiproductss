@@ -20,6 +20,7 @@ import {
   Image as ImageIcon,
 } from "lucide-react";
 import Link from "next/link";
+import ChatWidget from "@/components/padhai/chat-widget";
 
 type Tab = "week" | "month" | "overall";
 
@@ -338,6 +339,8 @@ export default function TrackPage() {
           </div>
         )}
       </main>
+
+      <ChatWidget inviteCode={code} />
     </div>
   );
 }
