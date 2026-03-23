@@ -4,6 +4,51 @@ import { auth } from "@/lib/auth";
 
 const GROQ_API_KEY = process.env.GROQ_API_KEY || "";
 
+// --- Rate limiting (in-memory, per-process) ---
+const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000; // 1 hour
+const MAX_MESSAGES_PER_HOUR = 30; // 30 messages per hour per user/code
+const MAX_MESSAGES_PER_DAY = 100; // 100 messages per day per user/code
+const DAY_MS = 24 * 60 * 60 * 1000;
+
+interface RateEntry {
+  timestamps: number[];
+}
+
+const rateLimitMap = new Map<string, RateEntry>();
+
+// Clean old entries every 10 minutes
+setInterval(() => {
+  const cutoff = Date.now() - DAY_MS;
+  for (const [key, entry] of rateLimitMap) {
+    entry.timestamps = entry.timestamps.filter((t) => t > cutoff);
+    if (entry.timestamps.length === 0) rateLimitMap.delete(key);
+  }
+}, 10 * 60 * 1000);
+
+function checkRateLimit(key: string): { allowed: boolean; retryAfterSec?: number } {
+  const now = Date.now();
+  const entry = rateLimitMap.get(key) || { timestamps: [] };
+
+  // Clean timestamps older than 24h
+  entry.timestamps = entry.timestamps.filter((t) => t > now - DAY_MS);
+
+  const hourTimestamps = entry.timestamps.filter((t) => t > now - RATE_LIMIT_WINDOW_MS);
+
+  if (entry.timestamps.length >= MAX_MESSAGES_PER_DAY) {
+    const oldest = entry.timestamps[0];
+    return { allowed: false, retryAfterSec: Math.ceil((oldest + DAY_MS - now) / 1000) };
+  }
+
+  if (hourTimestamps.length >= MAX_MESSAGES_PER_HOUR) {
+    const oldest = hourTimestamps[0];
+    return { allowed: false, retryAfterSec: Math.ceil((oldest + RATE_LIMIT_WINDOW_MS - now) / 1000) };
+  }
+
+  entry.timestamps.push(now);
+  rateLimitMap.set(key, entry);
+  return { allowed: true };
+}
+
 interface ChatMessage {
   role: "user" | "assistant";
   content: string;
@@ -128,6 +173,15 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Messages required" }, { status: 400 });
     }
 
+    // Validate message length
+    const lastMsg = messages[messages.length - 1];
+    if (lastMsg?.content && lastMsg.content.length > 500) {
+      return NextResponse.json(
+        { error: "Message too long. Keep it under 500 characters." },
+        { status: 400 }
+      );
+    }
+
     // Determine student — either via auth session or invite code
     let studentId: string | null = null;
     let isParent = false;
@@ -160,6 +214,16 @@ export async function POST(req: NextRequest) {
 
     if (!studentId) {
       return NextResponse.json({ error: "Student not found" }, { status: 404 });
+    }
+
+    // Rate limit check
+    const rateLimitKey = inviteCode ? `invite:${inviteCode.trim()}` : `student:${studentId}`;
+    const rateCheck = checkRateLimit(rateLimitKey);
+    if (!rateCheck.allowed) {
+      return NextResponse.json(
+        { error: `You've reached the message limit. Try again in ${Math.ceil((rateCheck.retryAfterSec || 60) / 60)} minutes.` },
+        { status: 429 }
+      );
     }
 
     // Fetch student context
