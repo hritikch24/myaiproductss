@@ -22,7 +22,6 @@ import {
   KeyRound,
 } from "lucide-react";
 import Link from "next/link";
-import ChatWidget from "@/components/padhai/chat-widget";
 
 export default function PadhaiDashboard() {
   const [loading, setLoading] = useState(true);
@@ -407,7 +406,6 @@ export default function PadhaiDashboard() {
         </div>
       </main>
 
-      <ChatWidget />
     </div>
   );
 }

@@ -34,7 +34,18 @@ export default function ChatWidget({ inviteCode }: ChatWidgetProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const isParent = !!inviteCode;
+  // Auto-detect invite code from props or sessionStorage (for track page)
+  const [resolvedCode, setResolvedCode] = useState(inviteCode || "");
+  useEffect(() => {
+    if (!inviteCode) {
+      try {
+        const stored = sessionStorage.getItem("padhai_invite_code");
+        if (stored) setResolvedCode(stored);
+      } catch {}
+    }
+  }, [inviteCode]);
+
+  const isParent = !!resolvedCode;
   const suggestions = isParent ? SUGGESTIONS_PARENT : SUGGESTIONS_STUDENT;
 
   useEffect(() => {
@@ -64,7 +75,7 @@ export default function ChatWidget({ inviteCode }: ChatWidgetProps) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           messages: newMessages,
-          ...(inviteCode ? { inviteCode } : {}),
+          ...(resolvedCode ? { inviteCode: resolvedCode } : {}),
         }),
       });
 

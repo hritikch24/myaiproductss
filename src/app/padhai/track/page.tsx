@@ -20,7 +20,6 @@ import {
   Image as ImageIcon,
 } from "lucide-react";
 import Link from "next/link";
-import ChatWidget from "@/components/padhai/chat-widget";
 
 type Tab = "week" | "month" | "overall";
 
@@ -57,6 +56,8 @@ export default function TrackPage() {
       }
 
       setData(result);
+      // Store invite code so chat widget can access it
+      try { sessionStorage.setItem("padhai_invite_code", code.trim()); } catch {}
     } catch {
       setError("Network error. Please try again.");
     } finally {
@@ -340,7 +341,6 @@ export default function TrackPage() {
         )}
       </main>
 
-      <ChatWidget inviteCode={code} />
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import { Metadata, Viewport } from "next";
 import Script from "next/script";
+import ChatWrapper from "@/components/padhai/chat-wrapper";
 
 export const metadata: Metadata = {
   title: {
@@ -56,6 +57,7 @@ export default function PadhaiLayout({
   return (
     <>
       {children}
+      <ChatWrapper />
       <Script
         id="padhai-sw"
         strategy="afterInteractive"
