@@ -216,11 +216,10 @@ export default function AddMemberPage() {
                 onChange={(e) => setFormData({...formData, fee: e.target.value})}
                 className="w-full px-4 py-2.5 bg-black/30 border border-white/10 rounded-lg text-white focus:outline-none focus:border-orange-500"
               >
-                <option value="300">₹300 - Basic</option>
-                <option value="400">₹400 - Standard</option>
-                <option value="500">₹500 - Premium</option>
-                <option value="600">₹600 - VIP</option>
-                <option value="800">₹800 - Annual</option>
+                <option value="500">₹500</option>
+                <option value="700">₹700</option>
+                <option value="800">₹800</option>
+                <option value="1000">₹1000</option>
               </select>
             </div>
 
