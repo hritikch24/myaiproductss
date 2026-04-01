@@ -1,8 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
 import pool from "@/lib/gym-db";
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
+    const { searchParams } = new URL(req.url);
+    const id = searchParams.get('id');
+    
+    if (id) {
+      const result = await pool.query('SELECT * FROM gym_members WHERE id = $1', [id]);
+      if (result.rows.length === 0) {
+        return NextResponse.json({ error: "Member not found" }, { status: 404 });
+      }
+      return NextResponse.json({ member: result.rows[0] });
+    }
+    
     const result = await pool.query(`
       SELECT * FROM gym_members 
       ORDER BY created_at DESC
@@ -55,29 +66,36 @@ export async function PATCH(req: NextRequest) {
     
     const result = await pool.query(
       `UPDATE gym_members 
-       SET name = $1, phone = $2, alternate_phone = $3, village = $4, tehsil = $5, district = $6, state = $7, pincode = $8, aadhar = $9, fee = $10, reference = $11, status = $12, updated_at = CURRENT_TIMESTAMP
-       WHERE id = $13
+       SET name = $1, phone = $2, alternate_phone = $3, village = $4, tehsil = $5, district = $6, state = $7, pincode = $8, aadhar = $9, fee = $10, join_date = $11, reference = $12, status = $13, updated_at = CURRENT_TIMESTAMP
+       WHERE id = $14
        RETURNING *`,
       [
         data.name,
         data.phone,
-        data.alternatePhone,
-        data.village,
-        data.tehsil,
-        data.district,
-        data.state,
-        data.pincode,
-        data.aadhar,
-        data.fee,
-        data.reference,
-        data.status,
+        data.alternatePhone || null,
+        data.village || null,
+        data.tehsil || null,
+        data.district || null,
+        data.state || null,
+        data.pincode || null,
+        data.aadhar || null,
+        data.fee || null,
+        data.joinDate || null,
+        data.reference || null,
+        data.status || 'active',
         data.id
       ]
     );
 
+    if (result.rows.length === 0) {
+      return NextResponse.json({ error: "Member not found" }, { status: 404 });
+    }
     return NextResponse.json({ member: result.rows[0] });
-  } catch (error) {
+  } catch (error: any) {
     console.error("Update member error:", error);
+    if (error.code === '23505') {
+      return NextResponse.json({ error: "Phone number already exists" }, { status: 400 });
+    }
     return NextResponse.json({ error: "Failed to update member" }, { status: 500 });
   }
 }

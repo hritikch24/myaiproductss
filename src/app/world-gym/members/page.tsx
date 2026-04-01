@@ -4,7 +4,7 @@ export const dynamic = 'force-dynamic';
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { Search, MessageCircle, Phone, ArrowLeft, Loader2, RefreshCw, Plus } from "lucide-react";
+import { Search, MessageCircle, Phone, ArrowLeft, Loader2, RefreshCw, Plus, Pencil } from "lucide-react";
 
 export default function MembersPage() {
   const [members, setMembers] = useState<any[]>([]);
@@ -145,6 +145,13 @@ export default function MembersPage() {
                     </td>
                     <td className="px-4 py-3">
                       <div className="flex items-center justify-end gap-2">
+                        <Link
+                          href={`/world-gym/members/${member.id}`}
+                          className="p-2 bg-orange-500/20 hover:bg-orange-500/30 rounded-lg transition-colors"
+                          title="Edit"
+                        >
+                          <Pencil className="w-4 h-4 text-orange-400" />
+                        </Link>
                         <a 
                           href={`https://wa.me/91${member.phone}`}
                           target="_blank"
