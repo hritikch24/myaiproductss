@@ -2,7 +2,7 @@
   "name": "World Gym",
   "short_name": "WorldGym",
   "description": "World Gym Member Management",
-  "start_url": "/world-gym",
+  "start_url": "https://kraftai.in/world-gym",
   "display": "standalone",
   "background_color": "#0f172a",
   "theme_color": "#f97316",
