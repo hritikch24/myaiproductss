@@ -35,6 +35,7 @@ export default function EditMemberPage() {
     pincode: '',
     fee: '500',
     joinDate: new Date().toISOString().split('T')[0],
+    lastFeePaid: '',
     reference: '',
     aadhar: '',
     status: 'active',
@@ -63,6 +64,7 @@ export default function EditMemberPage() {
           pincode: member.pincode || '',
           fee: String(member.fee || 500),
           joinDate: member.join_date ? new Date(member.join_date).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
+          lastFeePaid: member.last_fee_paid ? new Date(member.last_fee_paid).toISOString().split('T')[0] : '',
           reference: member.reference || '',
           aadhar: member.aadhar || '',
           status: member.status || 'active',
@@ -86,7 +88,10 @@ export default function EditMemberPage() {
       const res = await fetch('/world-gym/api/members', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          lastFeePaid: formData.lastFeePaid || null
+        }),
       });
 
       const data = await res.json();
@@ -306,6 +311,16 @@ export default function EditMemberPage() {
                 <option value="active">Active</option>
                 <option value="inactive">Inactive</option>
               </select>
+            </div>
+
+            <div>
+              <label className="block text-sm text-slate-400 mb-1">Last Fee Paid</label>
+              <input 
+                type="date"
+                value={formData.lastFeePaid}
+                onChange={(e) => setFormData({...formData, lastFeePaid: e.target.value})}
+                className="w-full px-4 py-2.5 bg-black/30 border border-white/10 rounded-lg text-white focus:outline-none focus:border-orange-500"
+              />
             </div>
 
             <div className="md:col-span-2">

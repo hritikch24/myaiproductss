@@ -4,7 +4,7 @@ export const dynamic = 'force-dynamic';
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { Search, MessageCircle, Phone, ArrowLeft, Loader2, RefreshCw, Plus, Pencil } from "lucide-react";
+import { Search, MessageCircle, Phone, ArrowLeft, Loader2, RefreshCw, Plus, Pencil, Clock } from "lucide-react";
 
 export default function MembersPage() {
   const [members, setMembers] = useState<any[]>([]);
@@ -103,6 +103,7 @@ export default function MembersPage() {
                   <th className="px-4 py-3 text-left text-xs font-medium text-slate-400 uppercase hidden md:table-cell">Location</th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-slate-400 uppercase">Fee</th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-slate-400 uppercase">Status</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-slate-400 uppercase">Last Paid</th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-slate-400 uppercase">Joined</th>
                   <th className="px-4 py-3 text-right text-xs font-medium text-slate-400 uppercase">Actions</th>
                 </tr>
@@ -137,6 +138,11 @@ export default function MembersPage() {
                       }`}>
                         {member.status === 'active' ? 'Active' : 'Inactive'}
                       </span>
+                    </td>
+                    <td className="px-4 py-3">
+                      <p className="text-sm text-white">
+                        {member.last_fee_paid ? new Date(member.last_fee_paid).toLocaleDateString('en-IN') : 'Never'}
+                      </p>
                     </td>
                     <td className="px-4 py-3">
                       <p className="text-sm text-white">

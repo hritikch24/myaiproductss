@@ -17,6 +17,7 @@ export async function GET() {
         aadhar VARCHAR(20),
         fee INTEGER DEFAULT 500,
         join_date DATE DEFAULT CURRENT_DATE,
+        last_fee_paid DATE,
         reference VARCHAR(255),
         status VARCHAR(20) DEFAULT 'active',
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -36,6 +37,15 @@ export async function GET() {
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
     `);
+
+    const columnExists = await pool.query(`
+      SELECT column_name FROM information_schema.columns 
+      WHERE table_name = 'gym_members' AND column_name = 'last_fee_paid'
+    `);
+    
+    if (columnExists.rows.length === 0) {
+      await pool.query(`ALTER TABLE gym_members ADD COLUMN last_fee_paid DATE`);
+    }
 
     return NextResponse.json({ success: true, message: "Gym tables created!" });
   } catch (error) {

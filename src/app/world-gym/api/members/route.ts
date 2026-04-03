@@ -64,10 +64,28 @@ export async function PATCH(req: NextRequest) {
   try {
     const data = await req.json();
     
+    if (data.action === 'payFee') {
+      const result = await pool.query(
+        `UPDATE gym_members 
+         SET last_fee_paid = $1, updated_at = CURRENT_TIMESTAMP
+         WHERE id = $2
+         RETURNING *`,
+        [
+          data.lastFeePaid || new Date().toISOString().split('T')[0],
+          data.id
+        ]
+      );
+
+      if (result.rows.length === 0) {
+        return NextResponse.json({ error: "Member not found" }, { status: 404 });
+      }
+      return NextResponse.json({ member: result.rows[0] });
+    }
+    
     const result = await pool.query(
       `UPDATE gym_members 
-       SET name = $1, phone = $2, alternate_phone = $3, village = $4, tehsil = $5, district = $6, state = $7, pincode = $8, aadhar = $9, fee = $10, join_date = $11, reference = $12, status = $13, updated_at = CURRENT_TIMESTAMP
-       WHERE id = $14
+       SET name = $1, phone = $2, alternate_phone = $3, village = $4, tehsil = $5, district = $6, state = $7, pincode = $8, aadhar = $9, fee = $10, join_date = $11, last_fee_paid = $12, reference = $13, status = $14, updated_at = CURRENT_TIMESTAMP
+       WHERE id = $15
        RETURNING *`,
       [
         data.name,
@@ -81,6 +99,7 @@ export async function PATCH(req: NextRequest) {
         data.aadhar || null,
         data.fee || null,
         data.joinDate || null,
+        data.lastFeePaid || null,
         data.reference || null,
         data.status || 'active',
         data.id

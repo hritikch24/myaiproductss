@@ -4,26 +4,21 @@ export const dynamic = 'force-dynamic';
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { ArrowLeft, DollarSign, Search, MessageCircle, CheckCircle, XCircle, TrendingUp, Download, Loader2, RefreshCw } from "lucide-react";
+import { ArrowLeft, DollarSign, Search, MessageCircle, CheckCircle, XCircle, TrendingUp, Loader2, RefreshCw, Clock } from "lucide-react";
 
 export default function FeesPage() {
-  const [fees, setFees] = useState<any[]>([]);
   const [members, setMembers] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
+  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
 
   const fetchData = async () => {
     setLoading(true);
     try {
-      const baseUrl = window.location.origin;
-      const [feesRes, membersRes] = await Promise.all([
-        fetch('/world-gym/api/fees'),
-        fetch('/world-gym/api/members')
-      ]);
-      const feesData = await feesRes.json();
-      const membersData = await membersRes.json();
-      setFees(feesData.fees || []);
-      setMembers(membersData.members || []);
+      const res = await fetch('/world-gym/api/members');
+      const data = await res.json();
+      setMembers(data.members || []);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -34,36 +29,47 @@ export default function FeesPage() {
     fetchData();
   }, []);
 
-  const currentMonth = new Date().getMonth() + 1;
-  const currentYear = new Date().getFullYear();
+  const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   
-  const thisMonthFees = fees.filter((f: any) => {
-    const feeMonth = parseInt(f.month) === currentMonth;
-    const feeYear = f.year === currentYear;
-    return feeYear;
-  });
-  
-  const pendingFees = thisMonthFees.filter((f: any) => f.status === "pending");
-  const paidFees = thisMonthFees.filter((f: any) => f.status === "paid");
-  const totalPending = pendingFees.reduce((sum, f: any) => sum + (f.amount || 0), 0);
-  const totalCollected = paidFees.reduce((sum, f: any) => sum + (f.amount || 0), 0);
-
-  const filteredFees = fees.filter((f: any) => {
-    const member = members.find((m: any) => m.id === f.member_id);
-    const name = member?.name || '';
-    const phone = member?.phone || '';
-    return name.toLowerCase().includes(search.toLowerCase()) || 
-           phone.includes(search);
-  });
-
-  const getMemberName = (memberId: number) => {
-    const member = members.find((m: any) => m.id === memberId);
-    return member?.name || 'Unknown';
+  const isFeePending = (member: any) => {
+    if (!member.last_fee_paid) return true;
+    const lastPaid = new Date(member.last_fee_paid);
+    const current = new Date(selectedYear, selectedMonth - 1);
+    return lastPaid < current;
   };
 
-  const getMemberPhone = (memberId: number) => {
-    const member = members.find((m: any) => m.id === memberId);
-    return member?.phone || '';
+  const getLastPaidText = (member: any) => {
+    if (!member.last_fee_paid) return "Never";
+    const lastPaid = new Date(member.last_fee_paid);
+    return lastPaid.toLocaleDateString('en-IN');
+  };
+
+  const pendingMembers = members.filter(m => m.status === 'active' && isFeePending(m));
+  const paidMembers = members.filter(m => m.status === 'active' && !isFeePending(m));
+  const totalPending = pendingMembers.reduce((sum, m) => sum + (m.fee || 500), 0);
+  const totalCollected = paidMembers.reduce((sum, m) => sum + (m.fee || 500), 0);
+
+  const filteredMembers = members.filter((m: any) => {
+    const name = m.name?.toLowerCase() || '';
+    const phone = m.phone || '';
+    return name.toLowerCase().includes(search.toLowerCase()) || phone.includes(search);
+  });
+
+  const handleMarkPaid = async (member: any) => {
+    try {
+      await fetch('/world-gym/api/members', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'payFee',
+          id: member.id,
+          lastFeePaid: new Date().toISOString().split('T')[0]
+        })
+      });
+      fetchData();
+    } catch (error) {
+      console.error("Error marking fee as paid:", error);
+    }
   };
 
   return (
@@ -79,13 +85,32 @@ export default function FeesPage() {
           </div>
         </div>
         
-        <button 
-          onClick={fetchData}
-          className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 border border-white/10 rounded-lg text-white text-sm transition-colors"
-        >
-          <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
-          Refresh
-        </button>
+        <div className="flex items-center gap-2">
+          <select 
+            value={selectedMonth}
+            onChange={(e) => setSelectedMonth(parseInt(e.target.value))}
+            className="px-3 py-2 bg-black/30 border border-white/10 rounded-lg text-white text-sm focus:outline-none focus:border-orange-500"
+          >
+            {monthNames.map((m, i) => (
+              <option key={i} value={i + 1}>{m}</option>
+            ))}
+          </select>
+          <select 
+            value={selectedYear}
+            onChange={(e) => setSelectedYear(parseInt(e.target.value))}
+            className="px-3 py-2 bg-black/30 border border-white/10 rounded-lg text-white text-sm focus:outline-none focus:border-orange-500"
+          >
+            <option value={2025}>2025</option>
+            <option value={2026}>2026</option>
+            <option value={2027}>2027</option>
+          </select>
+          <button 
+            onClick={fetchData}
+            className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 border border-white/10 rounded-lg text-white text-sm transition-colors"
+          >
+            <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
+          </button>
+        </div>
       </div>
 
       <div className="grid md:grid-cols-3 gap-4 mb-6">
@@ -96,7 +121,7 @@ export default function FeesPage() {
             </div>
             <div>
               <p className="text-2xl font-bold text-white">₹{totalPending}</p>
-              <p className="text-sm text-slate-400">Pending ({pendingFees.length})</p>
+              <p className="text-sm text-slate-400">Pending ({pendingMembers.length})</p>
             </div>
           </div>
         </div>
@@ -108,7 +133,7 @@ export default function FeesPage() {
             </div>
             <div>
               <p className="text-2xl font-bold text-white">₹{totalCollected}</p>
-              <p className="text-sm text-slate-400">Collected ({paidFees.length})</p>
+              <p className="text-sm text-slate-400">Paid ({paidMembers.length})</p>
             </div>
           </div>
         </div>
@@ -144,84 +169,93 @@ export default function FeesPage() {
           <div className="flex items-center justify-center py-12">
             <Loader2 className="w-8 h-8 animate-spin text-orange-500" />
           </div>
-        ) : filteredFees.length > 0 ? (
+        ) : filteredMembers.length > 0 ? (
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead className="bg-black/30">
                 <tr>
                   <th className="px-4 py-3 text-left text-xs font-medium text-slate-400 uppercase">Member</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-slate-400 uppercase">Amount</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-slate-400 uppercase">Status</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-slate-400 uppercase">Month</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-slate-400 uppercase">Fee</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-slate-400 uppercase">Last Paid</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-slate-400 uppercase">{monthNames[selectedMonth -1]} Status</th>
                   <th className="px-4 py-3 text-right text-xs font-medium text-slate-400 uppercase">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5">
-                {filteredFees.map((fee: any, idx: number) => (
-                  <tr key={idx} className="hover:bg-white/5 transition-colors">
-                    <td className="px-4 py-3">
-                      <div>
-                        <p className="font-medium text-white">{getMemberName(fee.member_id)}</p>
-                        <p className="text-sm text-slate-400">{getMemberPhone(fee.member_id)}</p>
-                      </div>
-                    </td>
-                    <td className="px-4 py-3">
-                      <p className="font-bold text-white">₹{fee.amount}</p>
-                    </td>
-                    <td className="px-4 py-3">
-                      <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium ${
-                        fee.status === 'paid' 
-                          ? 'bg-green-500/20 text-green-400' 
-                          : 'bg-red-500/20 text-red-400'
-                      }`}>
-                        {fee.status === 'paid' ? (
-                          <><CheckCircle className="w-3 h-3" /> Paid</>
-                        ) : (
-                          <><XCircle className="w-3 h-3" /> Pending</>
-                        )}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3">
-                      <p className="text-sm text-white">{fee.month}/{fee.year}</p>
-                    </td>
-                    <td className="px-4 py-3">
-                      <div className="flex items-center justify-end gap-2">
-                        {fee.status === 'pending' ? (
-                          <>
-                            <button className="px-3 py-1.5 bg-green-500 hover:bg-green-600 rounded-lg text-white text-xs font-medium transition-colors">
-                              Mark Paid
-                            </button>
+                {filteredMembers.filter((m: any) => m.status === 'active').map((member: any) => {
+                  const pending = isFeePending(member);
+                  return (
+                    <tr key={member.id} className="hover:bg-white/5 transition-colors">
+                      <td className="px-4 py-3">
+                        <div>
+                          <p className="font-medium text-white">{member.name}</p>
+                          <p className="text-sm text-slate-400">{member.phone}</p>
+                        </div>
+                      </td>
+                      <td className="px-4 py-3">
+                        <p className="font-bold text-white">₹{member.fee || 500}</p>
+                      </td>
+                      <td className="px-4 py-3">
+                        <div className="flex items-center gap-2">
+                          <Clock className="w-4 h-4 text-slate-500" />
+                          <p className="text-sm text-white">{getLastPaidText(member)}</p>
+                        </div>
+                      </td>
+                      <td className="px-4 py-3">
+                        <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium ${
+                          pending 
+                            ? 'bg-red-500/20 text-red-400' 
+                            : 'bg-green-500/20 text-green-400'
+                        }`}>
+                          {pending ? (
+                            <><XCircle className="w-3 h-3" /> Pending</>
+                          ) : (
+                            <><CheckCircle className="w-3 h-3" /> Paid</>
+                          )}
+                        </span>
+                      </td>
+                      <td className="px-4 py-3">
+                        <div className="flex items-center justify-end gap-2">
+                          {pending ? (
+                            <>
+                              <button 
+                                onClick={() => handleMarkPaid(member)}
+                                className="px-3 py-1.5 bg-green-500 hover:bg-green-600 rounded-lg text-white text-xs font-medium transition-colors"
+                              >
+                                Mark Paid
+                              </button>
+                              <a 
+                                href={`https://wa.me/91${member.phone}?text=Hello ${member.name}, This is a reminder that your gym fee of ₹${member.fee || 500} for ${monthNames[selectedMonth - 1]} is due. Please pay soon.`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="p-1.5 bg-green-500/20 hover:bg-green-500/30 rounded-lg transition-colors"
+                                title="Send Reminder"
+                              >
+                                <MessageCircle className="w-4 h-4 text-green-400" />
+                              </a>
+                            </>
+                          ) : (
                             <a 
-                              href={`https://wa.me/91${getMemberPhone(fee.member_id)}?text=Hello ${getMemberName(fee.member_id)}, This is a reminder that your gym fee of ₹${fee.amount} is due. Please pay soon.`}
+                              href={`https://wa.me/91${member.phone}?text=Hello ${member.name}, Thank you for paying your gym fee of ₹${member.fee || 500} for ${monthNames[selectedMonth - 1]}.`}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="p-1.5 bg-green-500/20 hover:bg-green-500/30 rounded-lg transition-colors"
-                              title="Send Reminder"
+                              className="p-1.5 bg-blue-500/20 hover:bg-blue-500/30 rounded-lg transition-colors"
+                              title="Send Receipt"
                             >
-                              <MessageCircle className="w-4 h-4 text-green-400" />
+                              <MessageCircle className="w-4 h-4 text-blue-400" />
                             </a>
-                          </>
-                        ) : (
-                          <a 
-                            href={`https://wa.me/91${getMemberPhone(fee.member_id)}?text=Hello ${getMemberName(fee.member_id)}, Thank you for paying your gym fee of ₹${fee.amount}. Receipt: #${fee.id}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="p-1.5 bg-blue-500/20 hover:bg-blue-500/30 rounded-lg transition-colors"
-                            title="Send Receipt"
-                          >
-                            <MessageCircle className="w-4 h-4 text-blue-400" />
-                          </a>
-                        )}
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
         ) : (
           <div className="text-center py-12">
-            <p className="text-slate-400">No fee records found</p>
+            <p className="text-slate-400">No members found</p>
           </div>
         )}
       </div>
