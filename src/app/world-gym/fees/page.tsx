@@ -57,7 +57,7 @@ export default function FeesPage() {
 
   const handleMarkPaid = async (member: any) => {
     try {
-      await fetch('/world-gym/api/members', {
+      const res = await fetch('/world-gym/api/members', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -66,7 +66,14 @@ export default function FeesPage() {
           lastFeePaid: new Date().toISOString().split('T')[0]
         })
       });
-      fetchData();
+      
+      if (res.ok) {
+        setMembers(members.map(m => 
+          m.id === member.id 
+            ? { ...m, last_fee_paid: new Date().toISOString().split('T')[0] }
+            : m
+        ));
+      }
     } catch (error) {
       console.error("Error marking fee as paid:", error);
     }
