@@ -15,6 +15,8 @@ import {
   Menu,
   X,
   Sparkles,
+  Mic,
+  MicOff,
 } from "lucide-react";
 
 interface Agent {
@@ -140,9 +142,69 @@ export default function AgentChatPage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [relatedAgents, setRelatedAgents] = useState<Agent[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isListening, setIsListening] = useState(false);
+  const [speechSupported, setSpeechSupported] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const sessionId = useRef("");
+  const recognitionRef = useRef<SpeechRecognition | null>(null);
+
+  useEffect(() => {
+    // Check for Web Speech API support
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (SpeechRecognition) {
+      setSpeechSupported(true);
+      const recognition = new SpeechRecognition();
+      recognition.continuous = true;
+      recognition.interimResults = true;
+      recognition.lang = "en-IN";
+
+      let finalTranscript = "";
+
+      recognition.onresult = (event: SpeechRecognitionEvent) => {
+        let interim = "";
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          const transcript = event.results[i][0].transcript;
+          if (event.results[i].isFinal) {
+            finalTranscript += transcript + " ";
+          } else {
+            interim += transcript;
+          }
+        }
+        setInput(finalTranscript + interim);
+      };
+
+      recognition.onerror = (event) => {
+        console.error("Speech recognition error:", event.error);
+        if (event.error !== "no-speech") {
+          setIsListening(false);
+        }
+      };
+
+      recognition.onend = () => {
+        setIsListening(false);
+        finalTranscript = "";
+      };
+
+      recognitionRef.current = recognition;
+    }
+
+    return () => {
+      recognitionRef.current?.abort();
+    };
+  }, []);
+
+  function toggleListening() {
+    if (!recognitionRef.current) return;
+
+    if (isListening) {
+      recognitionRef.current.stop();
+      setIsListening(false);
+    } else {
+      setIsListening(true);
+      recognitionRef.current.start();
+    }
+  }
 
   useEffect(() => {
     sessionId.current = getSessionId(slug);
@@ -473,8 +535,28 @@ export default function AgentChatPage() {
                 disabled={isStreaming}
               />
             </div>
+            {speechSupported && (
+              <button
+                onClick={toggleListening}
+                disabled={isStreaming}
+                className={`px-3 py-3 rounded-2xl transition-all flex items-center justify-center disabled:opacity-40 disabled:cursor-not-allowed ${
+                  isListening
+                    ? "bg-red-500 text-white animate-pulse shadow-lg shadow-red-500/30"
+                    : "bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white border border-white/10"
+                }`}
+                title={isListening ? "Stop listening" : "Voice input"}
+              >
+                {isListening ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
+              </button>
+            )}
             <button
-              onClick={handleSend}
+              onClick={() => {
+                if (isListening) {
+                  recognitionRef.current?.stop();
+                  setIsListening(false);
+                }
+                handleSend();
+              }}
               disabled={!input.trim() || isStreaming}
               className="px-4 py-3 bg-orange-500 hover:bg-orange-600 disabled:bg-white/5 disabled:text-gray-600 text-white rounded-2xl transition-all flex items-center gap-2 font-medium text-sm disabled:cursor-not-allowed"
             >
