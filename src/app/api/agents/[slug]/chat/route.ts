@@ -1,5 +1,6 @@
 import { NextRequest } from "next/server";
 import { getAgentBySlug, getMessages, saveMessage } from "@/lib/agents-db";
+import { needsWebSearch, webSearch, formatSearchContext } from "@/lib/web-search";
 
 // POST /api/agents/[slug]/chat — streaming chat with agent
 export async function POST(
@@ -48,6 +49,22 @@ SAFETY GUIDELINES:
 - Be respectful and inclusive in all responses.
 - Do not generate content that is hateful, discriminatory, or sexually explicit.`;
 
+    // RAG-lite: Search the web for real-time context if the query needs it
+    let systemPromptWithContext = safetyWrapper;
+    if (needsWebSearch(message)) {
+      try {
+        const searchQuery = `${agent.category} ${message}`;
+        const searchResults = await webSearch(searchQuery);
+        const searchContext = formatSearchContext(searchResults, message);
+        if (searchContext) {
+          systemPromptWithContext = safetyWrapper + searchContext;
+          console.log(`[RAG] Web search for "${message.slice(0, 50)}..." returned ${searchResults.length} results`);
+        }
+      } catch (err) {
+        console.error("[RAG] Web search failed, continuing without:", err);
+      }
+    }
+
     const apiKey = process.env.GROQ_API_KEY || process.env.OPENAI_API_KEY || process.env.GEMINI_API_KEY;
 
     if (!apiKey) {
@@ -65,11 +82,11 @@ SAFETY GUIDELINES:
     // Try Groq (OpenAI-compatible), then OpenAI, then Gemini
     try {
       if (process.env.GROQ_API_KEY) {
-        return await streamOpenAI(agent, messages, safetyWrapper, sessionId, "https://api.groq.com/openai/v1/chat/completions", process.env.GROQ_API_KEY, process.env.GROQ_MODEL || "llama-3.3-70b-versatile");
+        return await streamOpenAI(agent, messages, systemPromptWithContext, sessionId, "https://api.groq.com/openai/v1/chat/completions", process.env.GROQ_API_KEY, process.env.GROQ_MODEL || "llama-3.3-70b-versatile");
       } else if (process.env.OPENAI_API_KEY) {
-        return await streamOpenAI(agent, messages, safetyWrapper, sessionId, "https://api.openai.com/v1/chat/completions", process.env.OPENAI_API_KEY, process.env.OPENAI_MODEL || "gpt-4o-mini");
+        return await streamOpenAI(agent, messages, systemPromptWithContext, sessionId, "https://api.openai.com/v1/chat/completions", process.env.OPENAI_API_KEY, process.env.OPENAI_MODEL || "gpt-4o-mini");
       } else {
-        return await streamGemini(agent, messages, safetyWrapper, sessionId, message);
+        return await streamGemini(agent, messages, systemPromptWithContext, sessionId, message);
       }
     } catch (aiError) {
       console.error("AI API error, falling back to demo:", aiError);
