@@ -1,5 +1,5 @@
 // RAG-lite: Web search for real-time context injection
-// Uses DuckDuckGo HTML search (no API key needed) + optional Google Custom Search
+// Multiple search providers for reliability
 
 interface SearchResult {
   title: string;
@@ -19,85 +19,77 @@ function decodeHtmlEntities(text: string): string {
     .trim();
 }
 
-// Determine if a query needs real-time web data
-export function needsWebSearch(message: string): boolean {
-  const lowerMsg = message.toLowerCase();
-
-  // Time-sensitive keywords
-  const realtimeKeywords = [
-    "latest",
-    "recent",
-    "today",
-    "yesterday",
-    "this week",
-    "this month",
-    "this year",
-    "2024",
-    "2025",
-    "2026",
-    "current",
-    "now",
-    "update",
-    "news",
-    "score",
-    "result",
-    "price",
-    "stock",
-    "market",
-    "weather",
-    "election",
-    "budget",
-    "policy",
-    "announced",
-    "launched",
-    "released",
-    "new scheme",
-    "new rule",
-    "amendment",
-    "notification",
-    "circular",
-    "deadline",
-    "last date",
-    "upcoming",
-    "schedule",
-    "fixture",
-    "standing",
-    "ranking",
-    "ipl",
-    "world cup",
-    "olympics",
-    "trending",
-    "viral",
-    "breaking",
-  ];
-
-  if (realtimeKeywords.some((kw) => lowerMsg.includes(kw))) {
-    return true;
-  }
-
-  // Questions about specific events, people in current context
-  const questionPatterns = [
-    /who (is|was|won|lost|scored|leads?)/i,
-    /what (happened|is happening|are the|is the latest)/i,
-    /when (is|was|will|does)/i,
-    /how much (does|is|are|did)/i,
-    /is .+ (open|closed|available|eligible|live)/i,
-  ];
-
-  return questionPatterns.some((pattern) => pattern.test(message));
+function stripHtml(html: string): string {
+  return decodeHtmlEntities(html.replace(/<[^>]*>/g, ""));
 }
 
-// Search using DuckDuckGo Lite (no API key needed, reliable HTML parsing)
-async function searchDuckDuckGo(query: string): Promise<SearchResult[]> {
+// Always search — the LLM benefits from real-time context
+export function needsWebSearch(_message: string): boolean {
+  return true;
+}
+
+// Provider 1: DuckDuckGo Lite
+async function searchDuckDuckGoLite(query: string): Promise<SearchResult[]> {
   try {
     const url = `https://lite.duckduckgo.com/lite/?q=${encodeURIComponent(query)}`;
     const response = await fetch(url, {
       headers: {
-        "User-Agent":
-          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-        Accept: "text/html",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
+        Accept: "text/html,application/xhtml+xml",
+        "Accept-Language": "en-US,en;q=0.9",
       },
-      signal: AbortSignal.timeout(5000),
+      signal: AbortSignal.timeout(4000),
+    });
+
+    if (!response.ok) return [];
+
+    const html = await response.text();
+    const results: SearchResult[] = [];
+    const rows = html.split("<tr>");
+    let currentTitle = "";
+    let currentUrl = "";
+
+    for (const row of rows) {
+      const linkMatch = row.match(/uddg=(https?%3A%2F%2F[^&"]+)[^>]*>([\s\S]*?)<\/a>/);
+      if (linkMatch) {
+        currentUrl = decodeURIComponent(linkMatch[1]);
+        currentTitle = stripHtml(linkMatch[2]);
+        continue;
+      }
+
+      if (currentTitle) {
+        const snippetMatch = row.match(/<td[^>]*>([\s\S]{20,}?)<\/td>/);
+        if (snippetMatch) {
+          const snippet = stripHtml(snippetMatch[1]);
+          if (snippet.length > 20 && !snippet.startsWith("http")) {
+            results.push({ title: currentTitle, snippet, url: currentUrl });
+            currentTitle = "";
+            currentUrl = "";
+          }
+        }
+      }
+      if (results.length >= 5) break;
+    }
+
+    return results;
+  } catch (error) {
+    console.error("[Search] DuckDuckGo Lite failed:", error);
+    return [];
+  }
+}
+
+// Provider 2: DuckDuckGo HTML (fallback)
+async function searchDuckDuckGoHtml(query: string): Promise<SearchResult[]> {
+  try {
+    const url = `https://html.duckduckgo.com/html/?q=${encodeURIComponent(query)}`;
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36",
+      },
+      body: `q=${encodeURIComponent(query)}`,
+      signal: AbortSignal.timeout(4000),
     });
 
     if (!response.ok) return [];
@@ -105,104 +97,38 @@ async function searchDuckDuckGo(query: string): Promise<SearchResult[]> {
     const html = await response.text();
     const results: SearchResult[] = [];
 
-    // DuckDuckGo Lite uses <td> elements in a table
-    // Pattern: link row → snippet row → URL row (repeating)
-    // Links contain uddg= parameter with the actual URL
-    const linkMatches = [
-      ...html.matchAll(
-        /uddg=(https?%3A%2F%2F[^&"]+)[^>]*>([\s\S]*?)<\/a>/g
-      ),
-    ];
-    const snippetMatches = [
-      ...html.matchAll(
-        /class="result-snippet">([\s\S]*?)<\/td>/g
-      ),
-    ];
+    // Try multiple selectors
+    const blocks = html.split(/class="result[_ ]?/);
+    for (let i = 1; i < Math.min(blocks.length, 8); i++) {
+      const block = blocks[i];
+      const titleMatch = block.match(/href="[^"]*uddg=([^&"]+)[^"]*"[^>]*>([\s\S]*?)<\/a>/);
+      const snippetMatch = block.match(/snippet[^>]*>([\s\S]*?)<\//);
 
-    // If result-snippet class doesn't exist, try parsing <td> blocks
-    if (snippetMatches.length === 0) {
-      // Parse the table structure: each result has 4 <td> rows
-      const rows = html.split("<tr>");
-      let currentTitle = "";
-      let currentUrl = "";
-
-      for (const row of rows) {
-        // Link row: contains uddg= URL and title text
-        const linkMatch = row.match(
-          /uddg=(https?%3A%2F%2F[^&"]+)[^>]*>([\s\S]*?)<\/a>/
-        );
-        if (linkMatch) {
-          currentUrl = decodeURIComponent(linkMatch[1]);
-          currentTitle = decodeHtmlEntities(
-            linkMatch[2].replace(/<[^>]*>/g, "")
-          );
-          continue;
-        }
-
-        // Snippet row: plain text in a <td> after a title was found
-        if (currentTitle) {
-          const snippetMatch = row.match(
-            /<td[^>]*>([\s\S]{20,}?)<\/td>/
-          );
-          if (snippetMatch) {
-            const snippet = decodeHtmlEntities(
-              snippetMatch[1].replace(/<[^>]*>/g, "")
-            );
-            if (snippet.length > 20 && !snippet.startsWith("http")) {
-              results.push({
-                title: currentTitle,
-                snippet,
-                url: currentUrl,
-              });
-              currentTitle = "";
-              currentUrl = "";
-            }
-          }
-        }
-
-        if (results.length >= 5) break;
+      if (titleMatch && snippetMatch) {
+        results.push({
+          title: stripHtml(titleMatch[2]),
+          snippet: stripHtml(snippetMatch[1]),
+          url: decodeURIComponent(titleMatch[1]),
+        });
       }
-    } else {
-      // Use result-snippet class if available
-      for (
-        let i = 0;
-        i < Math.min(linkMatches.length, snippetMatches.length, 5);
-        i++
-      ) {
-        const resultUrl = decodeURIComponent(linkMatches[i][1]);
-        const title = decodeHtmlEntities(
-          linkMatches[i][2].replace(/<[^>]*>/g, "")
-        );
-        const snippet = decodeHtmlEntities(
-          snippetMatches[i][1].replace(/<[^>]*>/g, "")
-        );
-
-        if (title && snippet) {
-          results.push({ title, snippet, url: resultUrl });
-        }
-      }
+      if (results.length >= 5) break;
     }
-
     return results;
   } catch (error) {
-    console.error("DuckDuckGo search error:", error);
+    console.error("[Search] DuckDuckGo HTML failed:", error);
     return [];
   }
 }
 
-// Search using Google Custom Search API (if configured)
+// Provider 3: Google Custom Search (if API key configured)
 async function searchGoogle(query: string): Promise<SearchResult[]> {
   const apiKey = process.env.GOOGLE_SEARCH_API_KEY;
   const cx = process.env.GOOGLE_SEARCH_CX;
-
   if (!apiKey || !cx) return [];
 
   try {
     const url = `https://www.googleapis.com/customsearch/v1?key=${apiKey}&cx=${cx}&q=${encodeURIComponent(query)}&num=5`;
-    const response = await fetch(url, {
-      signal: AbortSignal.timeout(5000),
-    });
-
+    const response = await fetch(url, { signal: AbortSignal.timeout(4000) });
     if (!response.ok) return [];
 
     const data = await response.json();
@@ -214,36 +140,76 @@ async function searchGoogle(query: string): Promise<SearchResult[]> {
       })
     );
   } catch (error) {
-    console.error("Google search error:", error);
+    console.error("[Search] Google failed:", error);
     return [];
   }
 }
 
-// Main search function — tries Google first (if configured), falls back to DuckDuckGo
+// Provider 4: Brave Search API (if configured)
+async function searchBrave(query: string): Promise<SearchResult[]> {
+  const apiKey = process.env.BRAVE_SEARCH_API_KEY;
+  if (!apiKey) return [];
+
+  try {
+    const url = `https://api.search.brave.com/res/v1/web/search?q=${encodeURIComponent(query)}&count=5`;
+    const response = await fetch(url, {
+      headers: { "X-Subscription-Token": apiKey, Accept: "application/json" },
+      signal: AbortSignal.timeout(4000),
+    });
+    if (!response.ok) return [];
+
+    const data = await response.json();
+    return (data.web?.results || []).slice(0, 5).map(
+      (item: { title: string; description: string; url: string }) => ({
+        title: item.title,
+        snippet: item.description,
+        url: item.url,
+      })
+    );
+  } catch (error) {
+    console.error("[Search] Brave failed:", error);
+    return [];
+  }
+}
+
+// Main search — tries all providers with fallback chain
 export async function webSearch(query: string): Promise<SearchResult[]> {
-  // Try Google Custom Search first
+  // Priority: Google API > Brave API > DuckDuckGo Lite > DuckDuckGo HTML
   if (process.env.GOOGLE_SEARCH_API_KEY) {
-    const googleResults = await searchGoogle(query);
-    if (googleResults.length > 0) return googleResults;
+    const results = await searchGoogle(query);
+    if (results.length > 0) return results;
   }
 
-  // Fall back to DuckDuckGo
-  return searchDuckDuckGo(query);
+  if (process.env.BRAVE_SEARCH_API_KEY) {
+    const results = await searchBrave(query);
+    if (results.length > 0) return results;
+  }
+
+  // Try both DuckDuckGo methods in parallel, use whichever returns first
+  const [liteResults, htmlResults] = await Promise.allSettled([
+    searchDuckDuckGoLite(query),
+    searchDuckDuckGoHtml(query),
+  ]);
+
+  const lite = liteResults.status === "fulfilled" ? liteResults.value : [];
+  const html = htmlResults.status === "fulfilled" ? htmlResults.value : [];
+
+  return lite.length > 0 ? lite : html;
 }
 
 // Format search results into context for the LLM
-export function formatSearchContext(
-  results: SearchResult[],
-  query: string
-): string {
+export function formatSearchContext(results: SearchResult[], query: string): string {
   if (results.length === 0) return "";
 
+  const today = new Date().toLocaleDateString("en-IN", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+
   const formattedResults = results
-    .map(
-      (r, i) =>
-        `[${i + 1}] ${r.title}\n${r.snippet}\nSource: ${r.url}`
-    )
+    .map((r, i) => `[${i + 1}] ${r.title}\n${r.snippet}\nSource: ${r.url}`)
     .join("\n\n");
 
-  return `\n\nWEB SEARCH RESULTS (for query: "${query}"):\nThe following are recent web search results. Use this information to provide up-to-date, accurate answers. Cite sources when relevant.\n\n${formattedResults}\n\nIMPORTANT: Use the above search results to ground your response in current facts. If the search results contradict your training data, prefer the search results as they are more recent. If the search results don't cover the user's question, use your training knowledge but mention that the information may not be the most current.`;
+  return `\n\nREAL-TIME WEB SEARCH RESULTS (searched on: ${today}, query: "${query}"):\n${formattedResults}\n\nINSTRUCTIONS FOR USING SEARCH RESULTS:\n- Use the above search results to provide up-to-date, accurate answers.\n- Prefer search results over your training data for current events, prices, scores, policies, and dates.\n- Cite sources naturally (e.g., "According to [source]...").\n- If search results are insufficient, supplement with your knowledge but note it may not be current.`;
 }

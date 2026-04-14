@@ -17,6 +17,11 @@ import {
   Sparkles,
   Mic,
   MicOff,
+  Paperclip,
+  FileText,
+  Image as ImageIcon,
+  File,
+  XCircle,
 } from "lucide-react";
 
 interface Agent {
@@ -30,12 +35,20 @@ interface Agent {
   personality_tone: string;
 }
 
+interface Attachment {
+  name: string;
+  type: string; // 'image' | 'pdf' | 'text' | 'csv' | 'other'
+  content: string; // base64 for images, extracted text for others
+  size: number;
+}
+
 interface Message {
   id?: number;
   role: "user" | "assistant";
   content: string;
   created_at?: string;
   streaming?: boolean;
+  attachments?: Attachment[];
 }
 
 function generateSessionId() {
@@ -68,6 +81,86 @@ function renderContent(text: string) {
     .replace(/\n/g, "<br/>");
 }
 
+function getAttachmentIcon(type: string) {
+  switch (type) {
+    case "image": return <ImageIcon className="w-4 h-4" />;
+    case "pdf": return <FileText className="w-4 h-4" />;
+    case "csv": return <FileText className="w-4 h-4" />;
+    case "text": return <FileText className="w-4 h-4" />;
+    default: return <File className="w-4 h-4" />;
+  }
+}
+
+function formatFileSize(bytes: number): string {
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+}
+
+async function readFileAsAttachment(file: globalThis.File): Promise<Attachment> {
+  const ext = file.name.split(".").pop()?.toLowerCase() || "";
+  const isImage = file.type.startsWith("image/");
+  const isPdf = ext === "pdf" || file.type === "application/pdf";
+  const isCsv = ext === "csv";
+  const isText = file.type.startsWith("text/") || ["txt", "md", "json", "js", "ts", "py", "html", "css", "xml", "yaml", "yml", "log", "env", "sh", "sql"].includes(ext);
+
+  if (isImage) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve({
+        name: file.name,
+        type: "image",
+        content: reader.result as string,
+        size: file.size,
+      });
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  if (isText || isCsv) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve({
+        name: file.name,
+        type: isCsv ? "csv" : "text",
+        content: reader.result as string,
+        size: file.size,
+      });
+      reader.onerror = reject;
+      reader.readAsText(file);
+    });
+  }
+
+  if (isPdf) {
+    // For PDFs, read as base64 and let the backend know it's a PDF
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve({
+        name: file.name,
+        type: "pdf",
+        content: reader.result as string,
+        size: file.size,
+      });
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  // Other files — try reading as text
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve({
+      name: file.name,
+      type: "other",
+      content: reader.result as string,
+      size: file.size,
+    });
+    reader.onerror = reject;
+    reader.readAsText(file);
+  });
+}
+
 function MessageBubble({ message, agentIcon }: { message: Message; agentIcon: string }) {
   const [copied, setCopied] = useState(false);
   const isUser = message.role === "user";
@@ -90,6 +183,18 @@ function MessageBubble({ message, agentIcon }: { message: Message; agentIcon: st
         {isUser ? <User className="w-4 h-4 text-orange-400" /> : <span>{agentIcon}</span>}
       </div>
       <div className={`max-w-[85%] sm:max-w-[75%] ${isUser ? "text-right" : ""}`}>
+        {/* Attachment previews */}
+        {isUser && message.attachments && message.attachments.length > 0 && (
+          <div className={`flex flex-wrap gap-2 mb-2 ${isUser ? "justify-end" : "justify-start"}`}>
+            {message.attachments.map((att, i) => (
+              <div key={i} className="inline-flex items-center gap-2 px-3 py-1.5 bg-orange-500/10 border border-orange-500/20 rounded-xl text-xs text-orange-300">
+                {getAttachmentIcon(att.type)}
+                <span className="truncate max-w-[120px]">{att.name}</span>
+                <span className="text-orange-400/50">{formatFileSize(att.size)}</span>
+              </div>
+            ))}
+          </div>
+        )}
         <div
           className={`inline-block rounded-2xl px-4 py-3 text-sm leading-relaxed ${
             isUser
@@ -144,8 +249,11 @@ export default function AgentChatPage() {
   const [loading, setLoading] = useState(true);
   const [isListening, setIsListening] = useState(false);
   const [speechSupported, setSpeechSupported] = useState(false);
+  const [attachments, setAttachments] = useState<Attachment[]>([]);
+  const [attachmentLoading, setAttachmentLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const sessionId = useRef("");
   const recognitionRef = useRef<SpeechRecognition | null>(null);
 
@@ -245,22 +353,64 @@ export default function AgentChatPage() {
     }
   }
 
+  async function handleFileSelect(e: React.ChangeEvent<HTMLInputElement>) {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+
+    setAttachmentLoading(true);
+    try {
+      const newAttachments: Attachment[] = [];
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        if (file.size > 10 * 1024 * 1024) {
+          alert(`File "${file.name}" is too large (max 10MB)`);
+          continue;
+        }
+        const attachment = await readFileAsAttachment(file);
+        newAttachments.push(attachment);
+      }
+      setAttachments((prev) => [...prev, ...newAttachments]);
+    } catch (err) {
+      console.error("Failed to read file:", err);
+    } finally {
+      setAttachmentLoading(false);
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    }
+  }
+
+  function removeAttachment(index: number) {
+    setAttachments((prev) => prev.filter((_, i) => i !== index));
+  }
+
   const handleSend = useCallback(async () => {
     const trimmed = input.trim();
-    if (!trimmed || isStreaming || !agent) return;
+    if ((!trimmed && attachments.length === 0) || isStreaming || !agent) return;
 
-    const userMessage: Message = { role: "user", content: trimmed };
+    const currentAttachments = [...attachments];
+    const userMessage: Message = { role: "user", content: trimmed || "(attached files)", attachments: currentAttachments.length > 0 ? currentAttachments : undefined };
     const assistantMessage: Message = { role: "assistant", content: "", streaming: true };
 
     setMessages((prev) => [...prev, userMessage, assistantMessage]);
     setInput("");
+    setAttachments([]);
     setIsStreaming(true);
+
+    // Build attachment context for the API
+    const attachmentData = currentAttachments.length > 0 ? currentAttachments.map((att) => ({
+      name: att.name,
+      type: att.type,
+      content: att.type === "image" ? "[Image attached]" : att.content.slice(0, 15000),
+    })) : undefined;
 
     try {
       const res = await fetch(`/api/agents/${slug}/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: trimmed, sessionId: sessionId.current }),
+        body: JSON.stringify({
+          message: trimmed || "Please analyze the attached file(s).",
+          sessionId: sessionId.current,
+          attachments: attachmentData,
+        }),
       });
 
       if (!res.ok) {
@@ -340,7 +490,7 @@ export default function AgentChatPage() {
       setIsStreaming(false);
       inputRef.current?.focus();
     }
-  }, [input, isStreaming, agent, slug]);
+  }, [input, isStreaming, agent, slug, attachments]);
 
   function handleNewChat() {
     const newSession = generateSessionId();
@@ -521,7 +671,50 @@ export default function AgentChatPage() {
 
         {/* Input Area */}
         <div className="border-t border-white/5 bg-[#030712]/90 backdrop-blur-xl p-4">
+          {/* Attachment previews */}
+          {attachments.length > 0 && (
+            <div className="max-w-3xl mx-auto mb-2 flex flex-wrap gap-2">
+              {attachments.map((att, i) => (
+                <div
+                  key={i}
+                  className="inline-flex items-center gap-2 px-3 py-1.5 bg-white/5 border border-white/10 rounded-xl text-xs text-gray-300 group"
+                >
+                  {getAttachmentIcon(att.type)}
+                  <span className="truncate max-w-[150px]">{att.name}</span>
+                  <span className="text-gray-500">{formatFileSize(att.size)}</span>
+                  <button
+                    onClick={() => removeAttachment(i)}
+                    className="text-gray-500 hover:text-red-400 transition-colors"
+                  >
+                    <XCircle className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
           <div className="max-w-3xl mx-auto flex gap-3">
+            {/* Hidden file input */}
+            <input
+              ref={fileInputRef}
+              type="file"
+              multiple
+              accept="image/*,.pdf,.txt,.md,.json,.csv,.js,.ts,.py,.html,.css,.xml,.yaml,.yml,.log,.sql,.sh"
+              onChange={handleFileSelect}
+              className="hidden"
+            />
+            {/* Attach button */}
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              disabled={isStreaming || attachmentLoading}
+              className="px-3 py-3 rounded-2xl transition-all flex items-center justify-center disabled:opacity-40 disabled:cursor-not-allowed bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white border border-white/10"
+              title="Attach files"
+            >
+              {attachmentLoading ? (
+                <Loader2 className="w-5 h-5 animate-spin" />
+              ) : (
+                <Paperclip className="w-5 h-5" />
+              )}
+            </button>
             <div className="flex-1 relative">
               <textarea
                 ref={inputRef}
@@ -557,7 +750,7 @@ export default function AgentChatPage() {
                 }
                 handleSend();
               }}
-              disabled={!input.trim() || isStreaming}
+              disabled={(!input.trim() && attachments.length === 0) || isStreaming}
               className="px-4 py-3 bg-orange-500 hover:bg-orange-600 disabled:bg-white/5 disabled:text-gray-600 text-white rounded-2xl transition-all flex items-center gap-2 font-medium text-sm disabled:cursor-not-allowed"
             >
               {isStreaming ? (

@@ -9,13 +9,27 @@ export async function POST(
 ) {
   try {
     const { slug } = await params;
-    const { message, sessionId } = await request.json();
+    const { message, sessionId, attachments } = await request.json();
 
     if (!message || !sessionId) {
       return new Response(
         JSON.stringify({ error: "Missing message or sessionId" }),
         { status: 400, headers: { "Content-Type": "application/json" } }
       );
+    }
+
+    // Build enhanced message with attachment context
+    let enhancedMessage = message;
+    if (attachments && Array.isArray(attachments) && attachments.length > 0) {
+      const attachmentContext = attachments
+        .map((att: { name: string; type: string; content: string }) => {
+          if (att.type === "image") {
+            return `[Attached image: ${att.name}]`;
+          }
+          return `\n--- Attached file: ${att.name} ---\n${att.content}\n--- End of ${att.name} ---`;
+        })
+        .join("\n");
+      enhancedMessage = `${message}\n\n${attachmentContext}`;
     }
 
     const agent = await getAgentBySlug(slug);
@@ -26,16 +40,16 @@ export async function POST(
       );
     }
 
-    // Save user message
+    // Save user message (original, without attachment content bloat)
     await saveMessage(agent.id, sessionId, "user", message);
 
     // Get conversation history (last 20 messages for context)
     const history = await getMessages(agent.id, sessionId, 20);
 
-    // Build messages array for the AI
-    const messages = history.map((msg) => ({
+    // Build messages array for the AI — replace the last user message with enhanced version
+    const messages = history.map((msg, idx) => ({
       role: msg.role as "user" | "assistant",
-      content: msg.content,
+      content: idx === history.length - 1 && msg.role === "user" ? enhancedMessage : msg.content,
     }));
 
     // Safety guardrail system prompt wrapper
