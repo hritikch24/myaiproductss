@@ -10,14 +10,112 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://kraftai.in"),
 };
 
+// Multi-language content
+const translations = {
+  en: {
+    nav_init: "Initialize",
+    hero_badge: "NEURAL YEAR 2050 · QUANTUM READY",
+    hero_title1: "You Think.",
+    hero_title2: "We Build.",
+    hero_title3: "You Own.",
+    hero_sub: "Neural upload your vision. Quantum build your dreams. Deploy globally. Full ownership.",
+    cta_whatsapp: "Start a Conversation",
+    cta_email: "Send an Email",
+    cta_whatsapp_msg: "Hi! I want to build a website/app for my business. Can you help?",
+    services_title1: "Build",
+    services_title2: "Anything",
+    services_desc: "From neural concepts to deployed quantum solutions. Infinite possibilities.",
+    process_title1: "From",
+    process_title2: "Thought",
+    process_title3: "→",
+    process_title4: "Reality",
+    cta_section_title: "Initialize Project",
+    cta_section_desc: "Tell us your idea. We'll build your reality.",
+    service_msgs: {
+      websites: "Mujhe ek professional website banani hai apne business ke liye. Can we discuss?",
+      stores: "Main apna online store launch karna chahta hoon. Help kare?",
+      mobile_apps: "I want to build a mobile app for my business idea",
+      business_apps: "Mujhe ek custom business tool banani hai - help kar sakte ho?",
+      design: "I need amazing UI/UX design for my app/website",
+      ai_solutions: "Mujhe AI powers chahiye mere business mein"
+    }
+  },
+  hi: {
+    nav_init: "शुरू करें",
+    hero_badge: "तंत्रिका वर्ष 2050 · क्वांटम तैयार",
+    hero_title1: "आप सोचें।",
+    hero_title2: "हम बनाएं।",
+    hero_title3: "आप के पास रहे।",
+    hero_sub: "अपनी सोच को साझा करें। हम आपके सपने को हकीकत में बदल देंगे। पूरी स्वामित्व के साथ।",
+    cta_whatsapp: "बातचीत शुरू करें",
+    cta_email: "ईमेल भेजें",
+    cta_whatsapp_msg: "नमस्ते! मुझे अपने बिजनेस के लिए एक वेबसाइट/ऐप बनानी है। क्या आप मदद कर सकते हो?",
+    services_title1: "कुछ भी",
+    services_title2: "बनाओ",
+    services_desc: "सपनों से लेकर तैनाती तक। अनंत संभावनाएं।",
+    process_title1: "विचार",
+    process_title2: "से",
+    process_title3: "→",
+    process_title4: "वास्तविकता",
+    cta_section_title: "अपना प्रोजेक्ट शुरू करें",
+    cta_section_desc: "अपनी आईडिया बताएं। हम आपकी वास्तविकता बनाएंगे।",
+    service_msgs: {
+      websites: "मुझे अपने बिजनेस के लिए एक प्रोफेशनल वेबसाइट चाहिए। बना सकते हो?",
+      stores: "मैं अपना ऑनलाइन स्टोर शुरू करना चाहता हूं। मदद करोगे?",
+      mobile_apps: "मुझे अपने बिजनेस आइडिया के लिए एक मोबाइल ऐप बनानी है",
+      business_apps: "मुझे एक कस्टम बिजनेस टूल चाहिए। मदद कर सकते हो?",
+      design: "मुझे अपने ऐप/वेबसाइट के लिए शानदार डिजाइन चाहिए",
+      ai_solutions: "मैं अपने बिजनेस में AI पावर लाना चाहता हूं"
+    }
+  },
+  hinglish: {
+    nav_init: "Initialize",
+    hero_badge: "NEURAL YEAR 2050 · QUANTUM READY",
+    hero_title1: "Aap sochen.",
+    hero_title2: "Hum banate hain.",
+    hero_title3: "Aapka ownership.",
+    hero_sub: "Apne idea share karo. Hum quantum speed mein build karenka. Full ownership aapka.",
+    cta_whatsapp: "Chat Karo",
+    cta_email: "Email Karo",
+    cta_whatsapp_msg: "Hey! Mujhe ek website/app banani hai. Kya kar sakte ho?",
+    services_title1: "Kuch Bhi",
+    services_title2: "Banao",
+    services_desc: "Idea se deployment tak. Infinite possibilities.",
+    process_title1: "Soch",
+    process_title2: "se",
+    process_title3: "→",
+    process_title4: "Sach",
+    cta_section_title: "Apna Project Shuru Karo",
+    cta_section_desc: "Idea batao. Hum banate hain reality.",
+    service_msgs: {
+      websites: "Mujhe professional website chahiye. Can you build it?",
+      stores: "Main online store launch karna chahta hu. Help karega?",
+      mobile_apps: "I want a mobile app for my business idea. Can you help?",
+      business_apps: "Mujhe custom business tool chahiye. Kar sakte ho?",
+      design: "Amazing UI/UX design chahiye mere app ke liye. Help?",
+      ai_solutions: "AI powers chahiye mere business mein. Kar sakta hai?"
+    }
+  }
+};
+
+// Get user's preferred language based on location
+function detectLanguage(country?: string): keyof typeof translations {
+  if (!country) return "en";
+  const country_lower = country.toLowerCase();
+  if (country_lower === "in" || country_lower === "india") {
+    return Math.random() > 0.5 ? "hinglish" : "hi";
+  }
+  return "en";
+}
+
 export default function Home() {
   const services = [
-    { icon: Globe2, title: "Websites", desc: "Neural web experiences", href: "/services/websites", glow: "from-cyan-500 to-blue-500", neural: true },
-    { icon: ShoppingCart, title: "Stores", desc: "Quantum commerce", href: "/services/stores", glow: "from-pink-500 to-rose-500", neural: true },
-    { icon: Smartphone, title: "Mobile Apps", desc: "AI-driven applications", href: "/services/mobile-apps", glow: "from-violet-500 to-purple-500", neural: true },
-    { icon: Database, title: "Business Apps", desc: "Synthetic intelligence", href: "/services/business-apps", glow: "from-emerald-500 to-teal-500", neural: true },
-    { icon: Palette, title: "UI/UX Design", desc: "Holographic interfaces", href: "/services/design", glow: "from-amber-500 to-orange-500", neural: true },
-    { icon: Atom, title: "AI Solutions", desc: "Machine consciousness", href: "/services/ai-solutions", glow: "from-rose-500 to-pink-500", neural: true },
+    { icon: Globe2, title: "Websites", desc: "Professional websites that convert", href: "/services/websites", glow: "from-cyan-500 to-blue-500", neural: true, whatsapp_key: "websites" },
+    { icon: ShoppingCart, title: "Online Stores", desc: "E-commerce that sells", href: "/services/stores", glow: "from-pink-500 to-rose-500", neural: true, whatsapp_key: "stores" },
+    { icon: Smartphone, title: "Mobile Apps", desc: "iOS & Android apps", href: "/services/mobile-apps", glow: "from-violet-500 to-purple-500", neural: true, whatsapp_key: "mobile_apps" },
+    { icon: Database, title: "Business Apps", desc: "Custom internal tools", href: "/services/business-apps", glow: "from-emerald-500 to-teal-500", neural: true, whatsapp_key: "business_apps" },
+    { icon: Palette, title: "UI/UX Design", desc: "Beautiful & functional", href: "/services/design", glow: "from-amber-500 to-orange-500", neural: true, whatsapp_key: "design" },
+    { icon: Atom, title: "AI Solutions", desc: "Smart automation", href: "/services/ai-solutions", glow: "from-rose-500 to-pink-500", neural: true, whatsapp_key: "ai_solutions" },
   ];
 
   const process = [
@@ -155,19 +253,19 @@ export default function Home() {
               <span className="text-purple-400"> Deploy globally</span>. Full ownership.
             </p>
 
-            {/* Neural CTAs */}
+            {/* Neural CTAs - Project Building Focus */}
             <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center items-center px-4 mb-12">
-              <a href="https://wa.me/918859820935?text=Hi! I have an idea I want to discuss..." target="_blank" rel="noopener noreferrer" 
+              <a href="https://wa.me/918859820935?text=Hi! I want to build a website/app for my business. Can you help?" target="_blank" rel="noopener noreferrer"
                 className="group w-full sm:w-auto relative inline-flex items-center justify-center gap-2 md:gap-3 px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-green-500 via-emerald-500 to-teal-500 rounded-xl font-semibold text-base md:text-lg overflow-hidden transition-all hover:scale-105 hover:shadow-[0_0_40px_rgba(34,197,94,0.5)]">
                 <div className="absolute inset-0 bg-gradient-to-r from-green-400 to-emerald-400 opacity-0 group-hover:opacity-100 transition-opacity" />
-                <Radio className="w-5 h-5 md:w-6 md:h-6 relative z-10 animate-pulse" /> 
-                <span className="relative z-10 whitespace-nowrap">Neural Chat</span>
+                <MessageCircle className="w-5 h-5 md:w-6 md:h-6 relative z-10 animate-pulse" />
+                <span className="relative z-10 whitespace-nowrap">Tell Your Idea</span>
               </a>
-              <a href="mailto:hritikchaudhary016@gmail.com?subject=Project Inquiry" 
+              <a href="mailto:hritikchaudhary016@gmail.com?subject=Project Inquiry - Let's Build Something Amazing"
                 className="group w-full sm:w-auto inline-flex items-center justify-center gap-2 md:gap-3 px-6 md:px-8 py-3 md:py-4 bg-white/[0.03] border border-white/10 rounded-xl font-semibold text-base md:text-lg hover:bg-white/[0.06] transition-all hover:border-white/20 backdrop-blur-sm relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-cyan-500/20 opacity-0 group-hover:opacity-100 transition-opacity" />
-                <Mail className="w-5 h-5 md:w-6 md:h-6 relative z-10 text-purple-400" /> 
-                <span className="relative z-10 whitespace-nowrap">Quantum Mail</span>
+                <Mail className="w-5 h-5 md:w-6 md:h-6 relative z-10 text-purple-400" />
+                <span className="relative z-10 whitespace-nowrap">Email Us</span>
               </a>
             </div>
 
@@ -189,52 +287,70 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Build Banner */}
+        <section className="relative z-10 py-8 md:py-12 px-4 md:px-6 bg-gradient-to-r from-emerald-900/30 via-teal-900/20 to-cyan-900/30 border-y border-white/10">
+          <div className="max-w-7xl mx-auto text-center">
+            <h2 className="text-2xl md:text-3xl font-bold mb-3">
+              <span className="text-white">What do you want to </span>
+              <span className="bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">build?</span>
+            </h2>
+            <p className="text-slate-300 text-sm md:text-base max-w-2xl mx-auto">
+              Website • Online Store • Mobile App • Business Tool • Custom Software • AI Automation
+            </p>
+          </div>
+        </section>
+
         {/* Services Section - Neural Cards */}
         <section id="services" className="relative z-10 py-16 md:py-28 px-4 md:px-6">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-12 md:mb-16">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-sm mb-4">
-                <Zap className="w-4 h-4" /> 
-                <span>Neural Capabilities</span>
+                <Zap className="w-4 h-4" />
+                <span>What We Build</span>
               </div>
               <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4">
-                <span className="bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">Build</span>
-                <span className="bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent"> Anything</span>
+                <span className="bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">Everything</span>
+                <span className="bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent"> You Need</span>
               </h2>
-              <p className="text-slate-400 text-base md:text-lg max-w-2xl mx-auto">From neural concepts to deployed quantum solutions. Infinite possibilities.</p>
+              <p className="text-slate-400 text-base md:text-lg max-w-2xl mx-auto">From concept to launch, we build web apps, mobile apps, e-commerce stores, and custom solutions. Click any to share your idea on WhatsApp.</p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-              {services.map((service, idx) => (
-                <Link key={idx} href={service.href} 
-                  className="group relative p-6 md:p-8 rounded-3xl bg-white/[0.01] border border-white/[0.05] hover:border-white/20 transition-all duration-500 hover:-translate-y-2 overflow-hidden">
-                  {/* Neural glow */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${service.glow} opacity-0 group-hover:opacity-15 transition-opacity duration-700`} />
-                  
-                  {/* Scanning effect */}
-                  <div className="absolute inset-0 overflow-hidden">
-                    <div className="absolute inset-x-0 h-px bg-gradient-to-r from-transparent via-cyan-400 to-transparent -translate-y-full group-hover:translate-y-full transition-transform duration-1000" />
-                  </div>
-                  
-                  <div className="relative z-10">
-                    <div className={`w-12 md:w-14 h-12 md:h-14 rounded-xl bg-gradient-to-br ${service.glow} flex items-center justify-center mb-4 md:mb-6 group-hover:scale-110 transition-transform duration-500 shadow-lg shadow-purple-500/20`}>
-                      <service.icon className="w-6 md:w-7 h-6 md:h-7 text-white" />
+              {services.map((service, idx) => {
+                const whatsappMsg = encodeURIComponent(translations.en.service_msgs[service.whatsapp_key as keyof typeof translations.en.service_msgs] || translations.en.cta_whatsapp_msg);
+                const whatsappUrl = `https://wa.me/918859820935?text=${whatsappMsg}`;
+
+                return (
+                  <a key={idx} href={whatsappUrl} target="_blank" rel="noopener noreferrer"
+                    className="group relative p-6 md:p-8 rounded-3xl bg-white/[0.01] border border-white/[0.05] hover:border-white/20 transition-all duration-500 hover:-translate-y-2 overflow-hidden cursor-pointer">
+                    {/* Neural glow */}
+                    <div className={`absolute inset-0 bg-gradient-to-br ${service.glow} opacity-0 group-hover:opacity-15 transition-opacity duration-700`} />
+
+                    {/* Scanning effect */}
+                    <div className="absolute inset-0 overflow-hidden">
+                      <div className="absolute inset-x-0 h-px bg-gradient-to-r from-transparent via-cyan-400 to-transparent -translate-y-full group-hover:translate-y-full transition-transform duration-1000" />
                     </div>
-                    
-                    <h3 className="text-xl md:text-2xl font-bold mb-2 text-white group-hover:text-cyan-400 transition-colors">{service.title}</h3>
-                    <p className="text-slate-400 text-sm md:text-base">{service.desc}</p>
-                    
-                    <div className="mt-4 md:mt-6 flex items-center text-sm text-purple-400 opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0">
-                      <span>Neural Link</span>
-                      <ChevronRight className="w-4 h-4 ml-1" />
+
+                    <div className="relative z-10">
+                      <div className={`w-12 md:w-14 h-12 md:h-14 rounded-xl bg-gradient-to-br ${service.glow} flex items-center justify-center mb-4 md:mb-6 group-hover:scale-110 transition-transform duration-500 shadow-lg shadow-purple-500/20`}>
+                        <service.icon className="w-6 md:w-7 h-6 md:h-7 text-white" />
+                      </div>
+
+                      <h3 className="text-xl md:text-2xl font-bold mb-2 text-white group-hover:text-cyan-400 transition-colors">{service.title}</h3>
+                      <p className="text-slate-400 text-sm md:text-base">{service.desc}</p>
+
+                      <div className="mt-4 md:mt-6 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/20 text-green-400 text-xs font-medium opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0">
+                        <MessageCircle className="w-4 h-4" />
+                        <span>Chat Now</span>
+                      </div>
                     </div>
-                  </div>
-                  
-                  {/* Corner neural nodes */}
-                  <div className="absolute top-2 right-2 w-2 h-2 rounded-full bg-cyan-400/0 group-hover:bg-cyan-400/50 transition-all" />
-                  <div className="absolute bottom-2 left-2 w-2 h-2 rounded-full bg-purple-400/0 group-hover:bg-purple-400/50 transition-all" />
-                </Link>
-              ))}
+
+                    {/* Corner neural nodes */}
+                    <div className="absolute top-2 right-2 w-2 h-2 rounded-full bg-cyan-400/0 group-hover:bg-cyan-400/50 transition-all" />
+                    <div className="absolute bottom-2 left-2 w-2 h-2 rounded-full bg-purple-400/0 group-hover:bg-purple-400/50 transition-all" />
+                  </a>
+                );
+              })}
             </div>
           </div>
         </section>
@@ -306,15 +422,17 @@ export default function Home() {
               </div>
               
               <div className="relative z-10">
-                <CircuitBoard className="w-12 md:w-16 h-12 md:h-16 text-purple-400 mx-auto mb-4 md:mb-6" />
+                <Rocket className="w-12 md:w-16 h-12 md:h-16 text-emerald-400 mx-auto mb-4 md:mb-6" />
                 <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4">
-                  <span className="bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent">Initialize</span>
-                  <span className="bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent"> Project</span>
+                  <span className="bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent">Ready to Build</span>
+                  <span className="bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent"> Your Project?</span>
                 </h2>
-                <p className="text-base md:text-lg text-slate-300 mb-6 md:mb-8 max-w-xl mx-auto">Upload your neural pattern. We'll build your quantum reality.</p>
-                <a href="https://wa.me/918859820935?text=Hi! I have an idea I want to discuss..." target="_blank" rel="noopener noreferrer" 
+                <p className="text-base md:text-lg text-slate-300 mb-6 md:mb-8 max-w-xl mx-auto">
+                  Have an idea for a website, app, or store? <span className="font-semibold text-emerald-300">Tell us what you want to build</span> and let's make it real.
+                </p>
+                <a href="https://wa.me/918859820935?text=Hi! I want to build a website/app for my business. Can you help?" target="_blank" rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2 px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl font-semibold text-base md:text-lg transition-all hover:scale-105 hover:shadow-[0_0_40px_rgba(34,197,94,0.5)] animate-neon-pulse">
-                  <Radio className="w-5 h-5 md:w-6 md:h-6" /> Start Neural Link
+                  <MessageCircle className="w-5 h-5 md:w-6 md:h-6" /> Chat on WhatsApp
                 </a>
               </div>
             </div>
@@ -323,17 +441,33 @@ export default function Home() {
 
         {/* Footer */}
         <footer className="relative z-10 border-t border-white/10 py-8 md:py-12">
-          <div className="max-w-7xl mx-auto px-4 md:px-6 flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-600 to-cyan-500 flex items-center justify-center">
-                <Atom className="w-4 h-4 text-white" />
+          <div className="max-w-7xl mx-auto px-4 md:px-6">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-6">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-600 to-cyan-500 flex items-center justify-center">
+                  <Atom className="w-4 h-4 text-white" />
+                </div>
+                <div className="flex flex-col">
+                  <span className="font-bold">KraftAI</span>
+                  <span className="text-[8px] text-slate-500 uppercase tracking-wider">Custom Software Dev</span>
+                </div>
               </div>
-              <div className="flex flex-col">
-                <span className="font-bold">KraftAI</span>
-                <span className="text-[8px] text-slate-500 uppercase tracking-wider">Neural Systems ©</span>
+
+              {/* Quick Links */}
+              <div className="flex gap-6 text-xs text-slate-400">
+                <a href="#services" className="hover:text-cyan-400 transition-colors">Services</a>
+                <a href="#process" className="hover:text-cyan-400 transition-colors">Process</a>
+                <a href="#contact" className="hover:text-cyan-400 transition-colors">Contact</a>
               </div>
             </div>
-            <p className="text-xs md:text-sm text-slate-500">© {new Date().getFullYear()} KraftAI. Quantum-Ready.</p>
+
+            <div className="border-t border-white/5 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
+              <p className="text-xs md:text-sm text-slate-500">© {new Date().getFullYear()} KraftAI India. All rights reserved.</p>
+              <div className="text-xs text-slate-400">
+                <span>💬 WhatsApp: </span>
+                <a href="https://wa.me/918859820935" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:text-emerald-300">+91 8859 820935</a>
+              </div>
+            </div>
           </div>
         </footer>
       </div>
