@@ -141,334 +141,197 @@ export default function Home() {
       <Script id="organization-schema" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "Organization", "name": "KraftAI", "url": "https://kraftai.in", "logo": "https://kraftai.in/icon.svg", "description": "Custom software development company - websites, apps, stores built from your idea in India", "address": { "@type": "PostalAddress", "addressCountry": "IN" }, "contactPoint": { "@type": "ContactPoint", "email": "hritikchaudhary016@gmail.com", "contactType": "customer service", "areaServed": "IN" }, "areaServed": "IN", "serviceType": ["Web Development", "Mobile App Development", "E-commerce Development", "Custom Software", "UI/UX Design", "AI Solutions"], "priceRange": "$$" }) }} />
       <Script id="website-schema" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "WebSite", "name": "KraftAI", "url": "https://kraftai.in", "potentialAction": { "@type": "SearchAction", "target": "https://kraftai.in{search_term_string}", "query-input": "required name=search_term_string" } }) }} />
       <Script id="services-schema" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "ItemList", "itemListElement": [{ "@type": "ListItem", position: 1, "name": "Custom Websites", "url": "https://kraftai.in/services/websites", "description": "Professional website development services" }, { "@type": "ListItem", position: 2, "name": "Online Stores", "url": "https://kraftai.in/services/stores", "description": "E-commerce website development" }, { "@type": "ListItem", position: 3, "name": "Mobile Apps", "url": "https://kraftai.in/services/mobile-apps", "description": "iOS and Android app development" }, { "@type": "ListItem", position: 4, "name": "Business Apps", "url": "https://kraftai.in/services/business-apps", "description": "Custom business software development" }, { "@type": "ListItem", position: 5, "name": "UI/UX Design", "url": "https://kraftai.in/services/design", "description": "Professional design services" }, { "@type": "ListItem", position: 6, "name": "AI Solutions", "url": "https://kraftai.in/services/ai-solutions", "description": "Artificial intelligence development" }] }) }} />
-      
-      <div className="min-h-screen bg-[#000008] text-white overflow-x-hidden selection:bg-purple-500/30 selection:text-cyan-300">
-        {/* Neural Network Background */}
-        <div className="fixed inset-0 z-0 overflow-hidden">
-          {/* Deep space */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#000008] via-[#050015] to-[#000008]" />
-          
-          {/* Animated starfield */}
-          <div className="absolute inset-0" style={{ perspective: '1000px' }}>
-            {[...Array(100)].map((_, i) => (
-              <div key={i} className="absolute rounded-full animate-twinkle" style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                width: `${Math.random() * 2 + 0.5}px`,
-                height: `${Math.random() * 2 + 0.5}px`,
-                backgroundColor: ['#a855f7', '#06b6d4', '#22d3ee', '#f472b6', '#ffffff'][Math.floor(Math.random() * 5)],
-                animationDelay: `${Math.random() * 5}s`,
-                animationDuration: `${2 + Math.random() * 3}s`,
-                boxShadow: `0 0 ${Math.random() * 10 + 5}px currentColor`,
-              }} />
-            ))}
-          </div>
-          
-          {/* Neural network lines */}
-          <svg className="absolute inset-0 w-full h-full opacity-20" style={{ stroke: 'url(#neuralGradient)' }}>
-            <defs>
-              <linearGradient id="neuralGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#a855f7" />
-                <stop offset="50%" stopColor="#06b6d4" />
-                <stop offset="100%" stopColor="#22d3ee" />
-              </linearGradient>
-            </defs>
-            {[...Array(8)].map((_, i) => (
-              <path key={i} d={`M0,${i * 80 + 40} Q400,${i * 80 + 40 + (i % 2 ? 30 : -30)} 800,${i * 80 + 40}`} fill="none" strokeWidth="0.5" className="animate-neural-flow" style={{ animationDelay: `${i * 0.5}s` }} />
-            ))}
-          </svg>
-          
-          {/* Holographic orbs */}
-          <div className="absolute top-[10%] left-[5%] w-[400px] h-[400px] rounded-full animate-orbit" style={{ background: 'radial-gradient(circle, rgba(139,92,246,0.15) 0%, transparent 70%)', animationDuration: '20s' }}>
-            <div className="absolute inset-10 rounded-full animate-pulse" style={{ background: 'radial-gradient(circle, rgba(6,182,212,0.1) 0%, transparent 70%)' }} />
-          </div>
-          <div className="absolute bottom-[20%] right-[10%] w-[300px] h-[300px] rounded-full animate-orbit-reverse" style={{ background: 'radial-gradient(circle, rgba(6,182,212,0.15) 0%, transparent 70%)', animationDuration: '25s' }}>
-            <div className="absolute inset-5 rounded-full animate-pulse" style={{ background: 'radial-gradient(circle, rgba(244,114,182,0.1) 0%, transparent 70%)', animationDelay: '1s' }} />
-          </div>
-          <div className="absolute top-[50%] left-[50%] w-[500px] h-[500px] rounded-full animate-orbit" style={{ background: 'radial-gradient(circle, rgba(244,114,182,0.08) 0%, transparent 70%)', animationDuration: '30s', transform: 'translate(-50%, -50%)' }} />
-          
-          {/* Data streams */}
-          <div className="absolute top-0 right-0 w-1 h-full animate-data-stream" style={{ background: 'linear-gradient(to bottom, transparent, rgba(139,92,246,0.3), transparent)' }} />
-          <div className="absolute top-0 left-0 w-1 h-full animate-data-stream-reverse" style={{ background: 'linear-gradient(to bottom, transparent, rgba(6,182,212,0.3), transparent)', animationDelay: '2s' }} />
-          
-          {/* Holographic scan line */}
-          <div className="absolute inset-0 animate-scan-line opacity-10" style={{ background: 'linear-gradient(transparent 49%, rgba(6,182,212,0.5) 50%, transparent 51%)' }} />
+
+      <div className="min-h-screen bg-[#050508] text-[#f0f0f8] overflow-x-hidden selection:bg-cyan-500/30 selection:text-cyan-200">
+        {/* Organic Background */}
+        <div className="fixed inset-0 z-0 overflow-hidden" style={{ background: '#050508' }}>
+          {/* Noise overlay */}
+          <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.035]"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+              backgroundSize: '180px',
+            }}
+          />
         </div>
 
         {/* Navigation */}
-        <nav className="relative z-50 mx-auto flex max-w-7xl items-center justify-between px-4 py-4 md:px-6 backdrop-blur-sm bg-black/20 border-b border-white/5">
-          <div className="flex items-center gap-3">
-            <div className="relative">
-              <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-gradient-to-br from-purple-600 via-cyan-500 to-blue-600 flex items-center justify-center animate-neon-pulse">
-                <Atom className="w-5 h-5 md:w-6 md:h-6 text-white" />
-              </div>
-              <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-purple-600 via-cyan-500 to-blue-600 blur-lg opacity-50 animate-neon-glow" />
-            </div>
-            <div className="flex flex-col">
-              <span className="text-lg md:text-xl font-bold tracking-tight leading-none">
-                Kraft<span className="bg-gradient-to-r from-purple-400 via-cyan-400 to-blue-400 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient-text">AI</span>
-              </span>
-              <span className="text-[8px] md:text-[10px] text-slate-500 tracking-[0.3em] uppercase">Neural Systems</span>
-            </div>
-          </div>
-          
-          <div className="hidden lg:flex items-center gap-8">
-            {['Services', 'Process', 'Products', 'Contact'].map((item) => (
-              <Link key={item} href={`#${item.toLowerCase()}`} className="text-xs uppercase tracking-wider text-slate-400 hover:text-cyan-400 transition-all relative group">
-                {item}
-                <span className="absolute -bottom-1 left-0 w-0 h-px bg-gradient-to-r from-cyan-400 to-purple-400 group-hover:w-full transition-all duration-300" />
-              </Link>
-            ))}
-          </div>
-          
-          <Link href="/services" className="group relative overflow-hidden rounded-full bg-gradient-to-r from-purple-600 via-cyan-500 to-purple-600 bg-[length:200%_auto] px-4 md:px-6 py-2 text-sm font-medium text-white transition-all hover:scale-105 animate-gradient-text">
-            <span className="relative z-10">Initialize</span>
-            <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+        <nav className="fixed top-0 left-0 right-0 z-[1000] flex items-center justify-between px-6 md:px-12 py-4 md:py-5 backdrop-blur-sm" style={{ background: 'rgba(5, 5, 8, 0.8)' }}>
+          <Link href="/" className="font-mono text-base font-bold text-[#f0f0f8] hover:text-[#00ffe0] transition-colors">
+            Kraft<span style={{ color: '#00ffe0' }}>AI</span>
           </Link>
+
+          <div className="flex gap-8 hidden md:flex">
+            <a href="#services" className="font-mono text-xs uppercase tracking-wider text-[rgba(240,240,248,0.42)] hover:text-[#f0f0f8] transition-colors">Services</a>
+            <a href="#process" className="font-mono text-xs uppercase tracking-wider text-[rgba(240,240,248,0.42)] hover:text-[#f0f0f8] transition-colors">Process</a>
+            <a href="#contact" className="font-mono text-xs uppercase tracking-wider text-[rgba(240,240,248,0.42)] hover:text-[#f0f0f8] transition-colors">Contact</a>
+          </div>
+
+          <a
+            href="https://wa.me/918859820935?text=Hi! Can you provide a quotation? Please share your details..."
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-mono text-xs uppercase tracking-wider font-bold px-4 md:px-6 py-2 md:py-3 rounded-full text-black transition-all whitespace-nowrap"
+            style={{ background: '#00ffe0', boxShadow: 'hover:0_0_32px_rgba(0,255,224,0.5)' }}
+          >
+            Get Quote
+          </a>
         </nav>
 
         {/* Hero Section */}
-        <section className="relative z-10 mx-auto max-w-7xl px-4 md:px-6 py-16 md:py-28">
-          <div className="text-center">
-            {/* Neural Badge */}
-            <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/[0.02] border border-white/10 backdrop-blur-md mb-6 md:mb-8 relative overflow-hidden">
-              <div className="absolute inset-0 animate-shimmer" style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)' }} />
-              <div className="w-2 h-2 rounded-full bg-cyan-400 animate-ping relative" />
-              <span className="text-xs md:text-sm text-slate-300 font-medium tracking-wider">NEURAL YEAR 2050 · QUANTUM READY</span>
-              <Sparkle className="w-4 h-4 text-purple-400 animate-pulse" />
+        <section className="relative z-10 min-h-screen flex flex-col justify-center items-start px-6 md:px-12 pt-24 pb-12">
+          <div className="max-w-3xl">
+            <div className="mb-6 inline-block">
+              <span className="font-mono text-xs uppercase tracking-wider text-[#00ffe0]">
+                ✨ KraftAI — Custom Software & Quotations
+              </span>
             </div>
-            
-            {/* Main Headline */}
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight mb-4 md:mb-6 leading-[1.1]">
-              <span className="bg-gradient-to-r from-white via-purple-100 to-cyan-100 bg-clip-text text-transparent">You Think.</span>
-              <br />
-              <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient-text">We Build.</span>
-              <br />
-              <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">You Own.</span>
+
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight" style={{ color: '#f0f0f8' }}>
+              You Think.<br />
+              <span style={{ color: '#00ffe0' }}>We Quote.</span><br />
+              You Decide.
             </h1>
-            
-            {/* Neural Subtitle */}
-            <p className="text-base md:text-xl text-slate-400 max-w-3xl mx-auto mb-8 md:mb-10 leading-relaxed px-4">
-              <span className="text-white font-medium">Neural upload</span> your vision. <span className="text-cyan-400">Quantum build</span> your dreams. 
-              <span className="text-purple-400"> Deploy globally</span>. Full ownership.
+
+            <p className="text-lg mb-8 max-w-2xl leading-relaxed" style={{ color: 'rgba(240,240,248,0.42)' }}>
+              Get detailed quotations for websites, apps, stores, and custom solutions.
+              Share your requirements and receive a comprehensive quote with exact costs and timelines.
             </p>
 
-            {/* Quotation CTAs - Interactive Discussion Focus */}
-            <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center items-center px-4 mb-12">
-              <a href="https://wa.me/918859820935?text=Hi! Can you provide a quotation for building a website/app for my business? Here's what I'm looking for: [Describe your project, features needed, timeline, and budget range]" target="_blank" rel="noopener noreferrer"
-                className="group w-full sm:w-auto relative inline-flex items-center justify-center gap-2 md:gap-3 px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-green-500 via-emerald-500 to-teal-500 rounded-xl font-semibold text-base md:text-lg overflow-hidden transition-all hover:scale-105 hover:shadow-[0_0_40px_rgba(34,197,94,0.5)]">
-                <div className="absolute inset-0 bg-gradient-to-r from-green-400 to-emerald-400 opacity-0 group-hover:opacity-100 transition-opacity" />
-                <MessageCircle className="w-5 h-5 md:w-6 md:h-6 relative z-10 animate-pulse" />
-                <span className="relative z-10 whitespace-nowrap">Get Quotation</span>
+            <div className="flex gap-4 flex-wrap">
+              <a
+                href="https://wa.me/918859820935?text=Hi! I need a quotation. Here are my details:%0A%0AProject Type: [what you need]%0AKey Features: [list them]%0ATimeline: [when needed]%0ABudget: [your range]%0A%0APlease provide a detailed quote."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-mono text-sm font-bold px-6 py-3 text-black rounded-lg transition-all flex items-center gap-2"
+                style={{ background: '#00ffe0', boxShadow: 'hover:0_0_32px_rgba(0,255,224,0.5)' }}
+              >
+                <MessageCircle className="w-4 h-4" />
+                Request Quotation
               </a>
-              <a href="mailto:hritikchaudhary016@gmail.com?subject=Quotation Request - Project Details Attached&body=Hi!%0A%0AI'm interested in getting a detailed quotation for my project.%0A%0AProject Type:%0AFeatures Needed:%0ATimeline:%0ABudget Range:%0A%0APlease provide a comprehensive quote with cost breakdown and timeline.%0A%0AThank you!"
-                className="group w-full sm:w-auto inline-flex items-center justify-center gap-2 md:gap-3 px-6 md:px-8 py-3 md:py-4 bg-white/[0.03] border border-white/10 rounded-xl font-semibold text-base md:text-lg hover:bg-white/[0.06] transition-all hover:border-white/20 backdrop-blur-sm relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-cyan-500/20 opacity-0 group-hover:opacity-100 transition-opacity" />
-                <Mail className="w-5 h-5 md:w-6 md:h-6 relative z-10 text-purple-400" />
-                <span className="relative z-10 whitespace-nowrap">Email Details</span>
+              <a
+                href="mailto:hritikchaudhary016@gmail.com?subject=Quotation Request&body=Hi!%0A%0AI'd like to get a quotation for my project.%0A%0AProject Details:%0AType:%0AFeatures:%0ATimeline:%0ABudget:%0A%0APlease provide a detailed quote."
+                className="font-mono text-sm font-bold px-6 py-3 text-[#f0f0f8] rounded-lg transition-all flex items-center gap-2 border"
+                style={{ borderColor: 'rgba(240,240,248,0.2)' }}
+              >
+                <Mail className="w-4 h-4" />
+                Email Quote
               </a>
-            </div>
-
-            {/* Neural Stats */}
-            <div className="flex flex-wrap justify-center gap-4 md:gap-8 lg:gap-12">
-              {[
-                { value: "∞", label: "Possibilities", icon: Infinity },
-                { value: "99.9%", label: "Uptime", icon: Gauge },
-                { value: "0ms", label: "Latency", icon: Zap },
-                { value: "256-bit", label: "Encryption", icon: Lock },
-              ].map((stat, idx) => (
-                <div key={idx} className="text-center group">
-                  <stat.icon className="w-5 h-5 mx-auto mb-2 text-cyan-400/60 group-hover:text-cyan-400 transition-all animate-pulse" />
-                  <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent group-hover:from-cyan-300 group-hover:to-purple-300 transition-all">{stat.value}</div>
-                  <div className="text-[10px] md:text-xs text-slate-500 uppercase tracking-widest">{stat.label}</div>
-                </div>
-              ))}
             </div>
           </div>
         </section>
 
         {/* Build Banner */}
-        <section className="relative z-10 py-8 md:py-12 px-4 md:px-6 bg-gradient-to-r from-emerald-900/30 via-teal-900/20 to-cyan-900/30 border-y border-white/10">
-          <div className="max-w-7xl mx-auto text-center">
+        <section className="relative z-10 py-8 md:py-12 px-6 md:px-12" style={{ borderTop: '1px solid rgba(240,240,248,0.1)', borderBottom: '1px solid rgba(240,240,248,0.1)' }}>
+          <div className="text-center">
             <h2 className="text-2xl md:text-3xl font-bold mb-3">
-              <span className="text-white">What do you want to </span>
-              <span className="bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">build?</span>
+              <span style={{ color: '#f0f0f8' }}>What do you want to </span>
+              <span style={{ color: '#00ffe0' }}>build?</span>
             </h2>
-            <p className="text-slate-300 text-sm md:text-base max-w-2xl mx-auto">
+            <p className="text-sm md:text-base max-w-2xl mx-auto" style={{ color: 'rgba(240,240,248,0.42)' }}>
               Website • Online Store • Mobile App • Business Tool • Custom Software • AI Automation
             </p>
           </div>
         </section>
 
-        {/* Services Section - Neural Cards */}
-        <section id="services" className="relative z-10 py-16 md:py-28 px-4 md:px-6">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-12 md:mb-16">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-sm mb-4">
-                <Zap className="w-4 h-4" />
-                <span>What We Build</span>
-              </div>
-              <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4">
-                <span className="bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">Everything</span>
-                <span className="bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent"> You Need</span>
-              </h2>
-              <p className="text-slate-400 text-base md:text-lg max-w-2xl mx-auto">From concept to launch, we build web apps, mobile apps, e-commerce stores, and custom solutions. Click any to share your idea on WhatsApp.</p>
-            </div>
+        {/* Services Section - Bento Cards */}
+        <section id="services" className="relative z-10 px-6 md:px-12 py-16 md:py-24">
+          <h2 className="text-4xl font-bold mb-16">Services & Solutions</h2>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-              {services.map((service, idx) => {
-                const whatsappMsg = encodeURIComponent(translations.en.service_msgs[service.whatsapp_key as keyof typeof translations.en.service_msgs] || translations.en.cta_whatsapp_msg);
-                const whatsappUrl = `https://wa.me/918859820935?text=${whatsappMsg}`;
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {services.map((service, idx) => {
+              const whatsappMsg = encodeURIComponent(translations.en.service_msgs[service.whatsapp_key as keyof typeof translations.en.service_msgs] || translations.en.cta_whatsapp_msg);
+              const whatsappUrl = `https://wa.me/918859820935?text=${whatsappMsg}`;
 
-                return (
-                  <a key={idx} href={whatsappUrl} target="_blank" rel="noopener noreferrer"
-                    className="group relative p-6 md:p-8 rounded-3xl bg-white/[0.01] border border-white/[0.05] hover:border-white/20 transition-all duration-500 hover:-translate-y-2 overflow-hidden cursor-pointer">
-                    {/* Neural glow */}
-                    <div className={`absolute inset-0 bg-gradient-to-br ${service.glow} opacity-0 group-hover:opacity-15 transition-opacity duration-700`} />
+              return (
+                <a
+                  key={idx}
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group bento-card relative p-8 rounded-2xl border transition-all hover:-translate-y-1 cursor-pointer overflow-hidden"
+                  style={{
+                    background: '#0c0c14',
+                    borderColor: 'rgba(240,240,248,0.1)',
+                    '--mx': '50%',
+                    '--my': '50%',
+                  } as any}
+                >
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"
+                    style={{
+                      background: 'radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(0,255,224,0.1), transparent 50%)',
+                    }}
+                  />
 
-                    {/* Scanning effect */}
-                    <div className="absolute inset-0 overflow-hidden">
-                      <div className="absolute inset-x-0 h-px bg-gradient-to-r from-transparent via-cyan-400 to-transparent -translate-y-full group-hover:translate-y-full transition-transform duration-1000" />
-                    </div>
+                  <service.icon className="w-8 h-8 mb-4 relative z-10" style={{ color: '#00ffe0' }} />
+                  <h3 className="text-xl font-bold mb-2 relative z-10" style={{ color: '#f0f0f8' }}>{service.title}</h3>
+                  <p className="text-sm relative z-10" style={{ color: 'rgba(240,240,248,0.42)' }}>{service.desc}</p>
 
-                    <div className="relative z-10">
-                      <div className={`w-12 md:w-14 h-12 md:h-14 rounded-xl bg-gradient-to-br ${service.glow} flex items-center justify-center mb-4 md:mb-6 group-hover:scale-110 transition-transform duration-500 shadow-lg shadow-purple-500/20`}>
-                        <service.icon className="w-6 md:w-7 h-6 md:h-7 text-white" />
-                      </div>
-
-                      <h3 className="text-xl md:text-2xl font-bold mb-2 text-white group-hover:text-cyan-400 transition-colors">{service.title}</h3>
-                      <p className="text-slate-400 text-sm md:text-base">{service.desc}</p>
-
-                      <div className="mt-4 md:mt-6 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/20 text-green-400 text-xs font-medium opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0">
-                        <MessageCircle className="w-4 h-4" />
-                        <span>Chat Now</span>
-                      </div>
-                    </div>
-
-                    {/* Corner neural nodes */}
-                    <div className="absolute top-2 right-2 w-2 h-2 rounded-full bg-cyan-400/0 group-hover:bg-cyan-400/50 transition-all" />
-                    <div className="absolute bottom-2 left-2 w-2 h-2 rounded-full bg-purple-400/0 group-hover:bg-purple-400/50 transition-all" />
-                  </a>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-
-        {/* Process Section - Quantum Flow */}
-        <section id="process" className="relative z-10 py-16 md:py-28 px-4 md:px-6 bg-gradient-to-b from-transparent via-purple-950/20 to-transparent">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-12 md:mb-16">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-sm mb-4">
-                <Layers className="w-4 h-4" /> 
-                <span>Neural Pipeline</span>
-              </div>
-              <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold">
-                <span className="bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">From</span>
-                <span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent"> Thought</span>
-                <span className="bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent"> →</span>
-                <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent"> Reality</span>
-              </h2>
-            </div>
-
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-              {process.map((step, idx) => (
-                <div key={idx} className="relative text-center p-4 md:p-6 group">
-                  {idx < process.length - 1 && (
-                    <div className="hidden md:block absolute top-14 left-[45%] w-[110%] h-px bg-gradient-to-r from-transparent via-purple-500/50 to-transparent" />
-                  )}
-                  
-                  <div className={`relative inline-flex items-center justify-center w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br from-purple-600 to-cyan-500 mb-4 md:mb-6 group-hover:scale-110 transition-transform ${step.effect === 'pulse-cyan' ? 'animate-pulse-cyan' : step.effect === 'pulse-purple' ? 'animate-pulse-purple' : step.effect === 'pulse-blue' ? 'animate-pulse-blue' : 'animate-pulse-green'}`}>
-                    <step.icon className="w-6 md:w-7 h-6 md:h-7" />
+                  <div className="mt-6 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity relative z-10" style={{ color: '#00ffe0' }}>
+                    <span className="text-xs font-mono uppercase">Get Quote</span>
+                    <ArrowRight className="w-4 h-4" />
                   </div>
-                  
-                  <div className="absolute -top-1 -right-1 md:right-auto md:-left-1 w-6 h-6 rounded-full bg-gradient-to-r from-purple-500 to-cyan-500 flex items-center justify-center text-[10px] font-bold">
-                    {step.num}
-                  </div>
-                  
-                  <h3 className="text-lg md:text-xl font-bold mb-1 md:mb-2 text-white">{step.title}</h3>
-                  <p className="text-xs md:text-sm text-slate-400">{step.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Tech Stack - Neural Grid */}
-        <section className="relative z-10 py-16 md:py-24 px-4 md:px-6">
-          <div className="max-w-5xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm mb-6">
-              <Cpu className="w-4 h-4" /> 
-              <span>Neural Stack</span>
-            </div>
-            <div className="flex flex-wrap justify-center gap-3 md:gap-4">
-              {techStack.map((tech, idx) => (
-                <div key={idx} className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.02] border border-white/10 hover:border-emerald-500/30 transition-all hover:bg-emerald-500/10">
-                  <tech.icon className="w-4 h-4 text-emerald-400" />
-                  <span className="text-xs md:text-sm text-slate-300">{tech.name}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* CTA - Neural Link */}
-        <section id="contact" className="relative z-10 py-16 md:py-28 px-4 md:px-6">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="p-8 md:p-12 rounded-3xl bg-gradient-to-br from-purple-900/30 via-slate-900/80 to-cyan-900/30 border border-white/10 backdrop-blur-xl relative overflow-hidden">
-              <div className="absolute inset-0">
-                <div className="absolute top-0 left-1/4 w-32 h-32 bg-purple-500/20 rounded-full blur-3xl animate-pulse" />
-                <div className="absolute bottom-0 right-1/4 w-32 h-32 bg-cyan-500/20 rounded-full blur-3xl animate-pulse delay-1000" />
-              </div>
-              
-              <div className="relative z-10">
-                <Rocket className="w-12 md:w-16 h-12 md:h-16 text-emerald-400 mx-auto mb-4 md:mb-6" />
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4">
-                  <span className="bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent">Get Your</span>
-                  <span className="bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent"> Detailed Quotation</span>
-                </h2>
-                <p className="text-base md:text-lg text-slate-300 mb-6 md:mb-8 max-w-xl mx-auto">
-                  Share your project requirements and get an <span className="font-semibold text-emerald-300">informative quotation with exact cost, timeline, and deliverables</span>.
-                </p>
-                <a href="https://wa.me/918859820935?text=Hi! I need a quotation for my project. Here are the details:%0A%0AProject Type: [your project]%0AKey Features: [what you need]%0ATimeline: [when you need it]%0ABudget Range: [your budget]%0A%0APlease provide a detailed quote with breakdown." target="_blank" rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl font-semibold text-base md:text-lg transition-all hover:scale-105 hover:shadow-[0_0_40px_rgba(34,197,94,0.5)] animate-neon-pulse">
-                  <MessageCircle className="w-5 h-5 md:w-6 md:h-6" /> Request Quotation
                 </a>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* Process Section */}
+        <section id="process" className="relative z-10 px-6 md:px-12 py-16 md:py-24">
+          <h2 className="text-4xl font-bold mb-16">Our Process</h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            {[
+              { num: '01', title: 'Share Details', desc: 'Tell us about your project' },
+              { num: '02', title: 'Get Quotation', desc: 'Receive a detailed quote' },
+              { num: '03', title: 'Discuss & Refine', desc: 'Clarify scope and timeline' },
+              { num: '04', title: 'Build & Deploy', desc: 'We deliver your project' },
+            ].map((step, i) => (
+              <div key={i} className="relative">
+                <div className="font-mono text-5xl font-bold mb-4 opacity-20" style={{ color: '#00ffe0' }}>{step.num}</div>
+                <h3 className="text-xl font-bold mb-2" style={{ color: '#f0f0f8' }}>{step.title}</h3>
+                <p className="text-sm" style={{ color: 'rgba(240,240,248,0.42)' }}>{step.desc}</p>
               </div>
-            </div>
+            ))}
+          </div>
+        </section>
+
+        {/* CTA Section */}
+        <section id="contact" className="relative z-10 px-6 md:px-12 py-16 md:py-24 text-center">
+          <h2 className="text-4xl font-bold mb-6">Ready for Your Quote?</h2>
+          <p className="text-lg mb-8 max-w-2xl mx-auto" style={{ color: 'rgba(240,240,248,0.42)' }}>
+            Get a detailed quotation with cost breakdown and timeline.
+            Share your requirements and let's build something amazing.
+          </p>
+
+          <div className="flex gap-4 justify-center flex-wrap">
+            <a
+              href="https://wa.me/918859820935?text=Hi! I'm ready for a quotation. Here are my project details:%0A%0AProject Type:%0AFeatures:%0ATimeline:%0ABudget:%0A%0APlease provide a detailed quote."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-mono text-sm font-bold px-8 py-4 text-black rounded-lg transition-all"
+              style={{ background: '#00ffe0' }}
+            >
+              Get Started on WhatsApp
+            </a>
+            <a
+              href="mailto:hritikchaudhary016@gmail.com"
+              className="font-mono text-sm font-bold px-8 py-4 text-[#00ffe0] rounded-lg transition-all border"
+              style={{ borderColor: '#00ffe0' }}
+            >
+              Send Email
+            </a>
           </div>
         </section>
 
         {/* Footer */}
-        <footer className="relative z-10 border-t border-white/10 py-8 md:py-12">
-          <div className="max-w-7xl mx-auto px-4 md:px-6">
-            <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-6">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-600 to-cyan-500 flex items-center justify-center">
-                  <Atom className="w-4 h-4 text-white" />
-                </div>
-                <div className="flex flex-col">
-                  <span className="font-bold">KraftAI</span>
-                  <span className="text-[8px] text-slate-500 uppercase tracking-wider">Custom Software Dev</span>
-                </div>
-              </div>
-
-              {/* Quick Links */}
-              <div className="flex gap-6 text-xs text-slate-400">
-                <a href="#services" className="hover:text-cyan-400 transition-colors">Services</a>
-                <a href="#process" className="hover:text-cyan-400 transition-colors">Process</a>
-                <a href="#contact" className="hover:text-cyan-400 transition-colors">Contact</a>
-              </div>
-            </div>
-
-            <div className="border-t border-white/5 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
-              <p className="text-xs md:text-sm text-slate-500">© {new Date().getFullYear()} KraftAI India. All rights reserved.</p>
-              <div className="text-xs text-slate-400">
-                <span>💬 WhatsApp: </span>
-                <a href="https://wa.me/918859820935" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:text-emerald-300">+91 8859 820935</a>
-              </div>
-            </div>
-          </div>
+        <footer className="relative z-10 border-t px-6 md:px-12 py-8 md:py-12 text-center" style={{ borderColor: 'rgba(240,240,248,0.1)' }}>
+          <p className="font-mono text-xs uppercase tracking-wider" style={{ color: 'rgba(240,240,248,0.42)' }}>
+            © 2026 KraftAI. Get detailed quotes for your projects.
+          </p>
+          <p className="font-mono text-xs uppercase tracking-wider mt-2" style={{ color: 'rgba(240,240,248,0.42)' }}>
+            💬 WhatsApp: +91 8859 820935 | 📧 Email: hritikchaudhary016@gmail.com
+          </p>
         </footer>
       </div>
     </>

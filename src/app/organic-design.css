@@ -1,0 +1,234 @@
+/* Organic Loaders Design System for KraftAI */
+
+:root {
+  --organic-bg: #050508;
+  --organic-ink: #f0f0f8;
+  --organic-muted: rgba(240, 240, 248, 0.42);
+  --organic-cyan: #00ffe0;
+  --organic-amber: #ffb830;
+  --organic-magenta: #ff2d78;
+  --organic-surface: #0c0c14;
+}
+
+/* Custom Cursor */
+#cursor-dot {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--organic-cyan);
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.08s, width 0.2s, height 0.2s, opacity 0.2s;
+  mix-blend-mode: screen;
+  display: none; /* Hidden by default, enabled via JS */
+}
+
+#cursor-ring {
+  position: fixed;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(0, 255, 224, 0.5);
+  pointer-events: none;
+  z-index: 99998;
+  transform: translate(-50%, -50%);
+  transition: transform 0.18s ease-out, width 0.25s, height 0.25s, border-color 0.2s;
+  display: none; /* Hidden by default, enabled via JS */
+}
+
+/* Body with noise overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 180px;
+}
+
+/* Bento Card with Glow */
+.bento-card {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bento-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.3s;
+  background: radial-gradient(
+    circle at var(--mx, 50%) var(--my, 50%),
+    rgba(0, 255, 224, 0.1),
+    transparent 50%
+  );
+  pointer-events: none;
+}
+
+.bento-card:hover::before {
+  opacity: 1;
+}
+
+.bento-card:hover {
+  border-color: var(--organic-cyan);
+  transform: translateY(-4px);
+}
+
+/* Smooth Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+/* Organic Typography */
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Mono:wght@400;700&display=swap');
+
+.organic-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.organic-mono {
+  font-family: 'Space Mono', monospace;
+  letter-spacing: 0.08em;
+}
+
+/* Hover Effects */
+.organic-hover-glow:hover {
+  box-shadow: 0 0 32px rgba(0, 255, 224, 0.5);
+}
+
+.organic-hover-lift:hover {
+  transform: translateY(-4px);
+}
+
+/* Button Styles - Organic */
+.btn-organic {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  border: none;
+}
+
+.btn-organic-primary {
+  background: var(--organic-cyan);
+  color: var(--organic-bg);
+}
+
+.btn-organic-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 32px rgba(0, 255, 224, 0.5);
+}
+
+.btn-organic-secondary {
+  background: transparent;
+  color: var(--organic-ink);
+  border: 1px solid rgba(240, 240, 248, 0.2);
+}
+
+.btn-organic-secondary:hover {
+  border-color: var(--organic-cyan);
+  color: var(--organic-cyan);
+}
+
+/* Responsive Grid */
+.organic-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Glow Effects */
+.glow-cyan {
+  text-shadow: 0 0 20px rgba(0, 255, 224, 0.5);
+}
+
+.glow-amber {
+  text-shadow: 0 0 20px rgba(255, 184, 48, 0.5);
+}
+
+.glow-magenta {
+  text-shadow: 0 0 20px rgba(255, 45, 120, 0.5);
+}
+
+/* Underline Animation */
+.underline-animate {
+  position: relative;
+  text-decoration: none;
+}
+
+.underline-animate::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--organic-cyan);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s;
+}
+
+.underline-animate:hover::after {
+  transform: scaleX(1);
+}
+
+/* Dark Theme - Organic */
+[data-theme='dark'] {
+  --organic-bg: #050508;
+  --organic-ink: #f0f0f8;
+  --organic-surface: #0c0c14;
+  --organic-muted: rgba(240, 240, 248, 0.42);
+}
+
+[data-theme='ocean'] {
+  --organic-bg: #020916;
+  --organic-ink: #f0f0f8;
+  --organic-surface: #04102a;
+  --organic-muted: rgba(240, 240, 248, 0.42);
+}
+
+[data-theme='obsidian'] {
+  --organic-bg: #07070a;
+  --organic-ink: #f0f0f8;
+  --organic-surface: #0d0d12;
+  --organic-muted: rgba(240, 240, 248, 0.42);
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  #cursor-dot,
+  #cursor-ring {
+    display: none !important;
+  }
+}
