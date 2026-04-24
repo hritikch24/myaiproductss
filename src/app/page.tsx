@@ -21,79 +21,79 @@ const translations = {
     hero_sub: "Neural upload your vision. Quantum build your dreams. Deploy globally. Full ownership.",
     cta_whatsapp: "Start a Conversation",
     cta_email: "Send an Email",
-    cta_whatsapp_msg: "Hi! I want to build a website/app for my business. Can you help?",
+    cta_whatsapp_msg: "Hi! Can you provide a quotation for building a website/app for my business? Here's what I'm looking for...",
     services_title1: "Build",
     services_title2: "Anything",
-    services_desc: "From neural concepts to deployed quantum solutions. Infinite possibilities.",
+    services_desc: "From concept to launch. Get custom quotes for your project needs.",
     process_title1: "From",
-    process_title2: "Thought",
+    process_title2: "Idea",
     process_title3: "→",
-    process_title4: "Reality",
-    cta_section_title: "Initialize Project",
-    cta_section_desc: "Tell us your idea. We'll build your reality.",
+    process_title4: "Quotation → Project",
+    cta_section_title: "Get Your Quotation",
+    cta_section_desc: "Tell us your requirements and get an informed quote.",
     service_msgs: {
-      websites: "Mujhe ek professional website banani hai apne business ke liye. Can we discuss?",
-      stores: "Main apna online store launch karna chahta hoon. Help kare?",
-      mobile_apps: "I want to build a mobile app for my business idea",
-      business_apps: "Mujhe ek custom business tool banani hai - help kar sakte ho?",
-      design: "I need amazing UI/UX design for my app/website",
-      ai_solutions: "Mujhe AI powers chahiye mere business mein"
+      websites: "Hi! I need a quotation for a professional website. Here's what I need: [describe your business, features, timeline, budget range]",
+      stores: "Hi! Can you give me a quotation for building an e-commerce store? Details: [product types, features needed, monthly target, when needed]",
+      mobile_apps: "Hi! I need a quotation for a mobile app. Requirements: [app purpose, platforms-iOS/Android/both, key features, launch timeline]",
+      business_apps: "Hi! Can you provide a quotation for a custom business tool? What I need: [current process, features required, team size, budget]",
+      design: "Hi! I need a quotation for UI/UX design. Project details: [what it's for, design style, revisions, timeline and budget]",
+      ai_solutions: "Hi! Can you quote for AI integration? What I need: [current system, AI capabilities required, expected ROI, timeline]"
     }
   },
   hi: {
     nav_init: "शुरू करें",
-    hero_badge: "तंत्रिका वर्ष 2050 · क्वांटम तैयार",
+    hero_badge: "तेज़ कोटेशन · सही कीमत",
     hero_title1: "आप सोचें।",
-    hero_title2: "हम बनाएं।",
-    hero_title3: "आप के पास रहे।",
-    hero_sub: "अपनी सोच को साझा करें। हम आपके सपने को हकीकत में बदल देंगे। पूरी स्वामित्व के साथ।",
-    cta_whatsapp: "बातचीत शुरू करें",
+    hero_title2: "हम कोटेशन दें।",
+    hero_title3: "आप तय करें।",
+    hero_sub: "अपनी जरूरतें बताएं। हम विस्तृत कोटेशन देंगे - समय सीमा और लागत के साथ। फिर आप तय कर सकते हैं।",
+    cta_whatsapp: "कोटेशन माँगें",
     cta_email: "ईमेल भेजें",
-    cta_whatsapp_msg: "नमस्ते! मुझे अपने बिजनेस के लिए एक वेबसाइट/ऐप बनानी है। क्या आप मदद कर सकते हो?",
-    services_title1: "कुछ भी",
-    services_title2: "बनाओ",
-    services_desc: "सपनों से लेकर तैनाती तक। अनंत संभावनाएं।",
-    process_title1: "विचार",
-    process_title2: "से",
-    process_title3: "→",
-    process_title4: "वास्तविकता",
-    cta_section_title: "अपना प्रोजेक्ट शुरू करें",
-    cta_section_desc: "अपनी आईडिया बताएं। हम आपकी वास्तविकता बनाएंगे।",
+    cta_whatsapp_msg: "नमस्ते! मुझे वेबसाइट/ऐप के लिए कोटेशन चाहिए। मेरी जरूरत: [अपनी आवश्यकता बताएं]",
+    services_title1: "कौन सी",
+    services_title2: "सेवा",
+    services_desc: "विस्तृत कोटेशन में आपको सटीक लागत और समय मिलेगा।",
+    process_title1: "जरूरत",
+    process_title2: "→",
+    process_title3: "कोटेशन",
+    process_title4: "→ बनाएं",
+    cta_section_title: "अपना कोटेशन माँगें",
+    cta_section_desc: "विस्तृत जरूरतें बताएं। हम जानकारी भरपूर कोटेशन देंगे।",
     service_msgs: {
-      websites: "मुझे अपने बिजनेस के लिए एक प्रोफेशनल वेबसाइट चाहिए। बना सकते हो?",
-      stores: "मैं अपना ऑनलाइन स्टोर शुरू करना चाहता हूं। मदद करोगे?",
-      mobile_apps: "मुझे अपने बिजनेस आइडिया के लिए एक मोबाइल ऐप बनानी है",
-      business_apps: "मुझे एक कस्टम बिजनेस टूल चाहिए। मदद कर सकते हो?",
-      design: "मुझे अपने ऐप/वेबसाइट के लिए शानदार डिजाइन चाहिए",
-      ai_solutions: "मैं अपने बिजनेस में AI पावर लाना चाहता हूं"
+      websites: "नमस्ते! मुझे प्रोफेशनल वेबसाइट के लिए कोटेशन चाहिए। मेरा बिजनेस: [टाइप], फीचर्स: [क्या चाहिए], समय सीमा: [कब तक], बजट: [रेंज]",
+      stores: "नमस्ते! ऑनलाइन स्टोर के लिए कोटेशन चाहिए। उत्पाद: [कौन से], फीचर्स: [क्या चाहिए], मासिक लक्ष्य: [कितना], लॉन्च: [कब]",
+      mobile_apps: "नमस्ते! मोबाइल ऐप के लिए कोटेशन चाहिए। उद्देश्य: [ऐप क्या करेगा], प्लेटफॉर्म: [iOS/Android/दोनों], फीचर्स: [सूची], समय: [कब]",
+      business_apps: "नमस्ते! कस्टम टूल के लिए कोटेशन चाहिए। वर्तमान प्रक्रिया: [समझाएं], जरूरी फीचर्स: [सूची], टीम साइज़: [कितने यूजर], बजट: [रेंज]",
+      design: "नमस्ते! डिजाइन के लिए कोटेशन चाहिए। प्रोजेक्ट: [किस तरह का], स्टाइल: [पसंद], संशोधन: [कितने], समय और बजट: [विवरण]",
+      ai_solutions: "नमस्ते! AI इंटीग्रेशन के लिए कोटेशन चाहिए। वर्तमान सिस्टम: [विवरण], AI क्षमता: [क्या चाहिए], अपेक्षित ROI: [क्या चाहते हैं], समय: [कब]"
     }
   },
   hinglish: {
     nav_init: "Initialize",
-    hero_badge: "NEURAL YEAR 2050 · QUANTUM READY",
+    hero_badge: "FAST QUOTES · AFFORDABLE PRICING",
     hero_title1: "Aap sochen.",
-    hero_title2: "Hum banate hain.",
-    hero_title3: "Aapka ownership.",
-    hero_sub: "Apne idea share karo. Hum quantum speed mein build karenka. Full ownership aapka.",
-    cta_whatsapp: "Chat Karo",
+    hero_title2: "Hum quote dete hain.",
+    hero_title3: "Aap decide karo.",
+    hero_sub: "Apne requirements batao. Hum detailed quotation denge with timeline aur cost. Fir aap decide kar sakte ho.",
+    cta_whatsapp: "Quote Manga",
     cta_email: "Email Karo",
-    cta_whatsapp_msg: "Hey! Mujhe ek website/app banani hai. Kya kar sakte ho?",
-    services_title1: "Kuch Bhi",
-    services_title2: "Banao",
-    services_desc: "Idea se deployment tak. Infinite possibilities.",
-    process_title1: "Soch",
-    process_title2: "se",
-    process_title3: "→",
-    process_title4: "Sach",
-    cta_section_title: "Apna Project Shuru Karo",
-    cta_section_desc: "Idea batao. Hum banate hain reality.",
+    cta_whatsapp_msg: "Hi! Mujhe quotation chahiye ek website/app ke liye. Mera requirement: [describe your needs]",
+    services_title1: "Kaunsa",
+    services_title2: "Service",
+    services_desc: "Detailed quotes mein aapko exact cost aur timeline milega.",
+    process_title1: "Requirement",
+    process_title2: "→",
+    process_title3: "Quotation",
+    process_title4: "→ Build",
+    cta_section_title: "Apna Quotation Manga",
+    cta_section_desc: "Detailed requirements batao. Hum informative quote denge.",
     service_msgs: {
-      websites: "Mujhe professional website chahiye. Can you build it?",
-      stores: "Main online store launch karna chahta hu. Help karega?",
-      mobile_apps: "I want a mobile app for my business idea. Can you help?",
-      business_apps: "Mujhe custom business tool chahiye. Kar sakte ho?",
-      design: "Amazing UI/UX design chahiye mere app ke liye. Help?",
-      ai_solutions: "AI powers chahiye mere business mein. Kar sakta hai?"
+      websites: "Hi! Mujhe quotation chahiye professional website ke liye. Mera business: [type], features: [what you need], timeline: [when], budget: [range]",
+      stores: "Hi! Online store quotation chahiye. Products: [what type], features: [required], target sales: [monthly], launch: [when needed]",
+      mobile_apps: "Hi! Mobile app quotation chahiye. Purpose: [app kya karega], Platform: [iOS/Android/both], Features: [list], Timeline: [when]",
+      business_apps: "Hi! Custom tool quotation chahiye. Current process: [explain], Features needed: [list], Team size: [how many users], Budget: [range]",
+      design: "Hi! Design quotation chahiye. Project: [what type], Style: [preferred], Revisions: [how many], Timeline aur Budget: [details]",
+      ai_solutions: "Hi! AI integration quotation chahiye. Current system: [details], AI capabilities: [what needed], Expected ROI: [what you expect], Timeline: [when]"
     }
   }
 };
@@ -253,19 +253,19 @@ export default function Home() {
               <span className="text-purple-400"> Deploy globally</span>. Full ownership.
             </p>
 
-            {/* Neural CTAs - Project Building Focus */}
+            {/* Quotation CTAs - Interactive Discussion Focus */}
             <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center items-center px-4 mb-12">
-              <a href="https://wa.me/918859820935?text=Hi! I want to build a website/app for my business. Can you help?" target="_blank" rel="noopener noreferrer"
+              <a href="https://wa.me/918859820935?text=Hi! Can you provide a quotation for building a website/app for my business? Here's what I'm looking for: [Describe your project, features needed, timeline, and budget range]" target="_blank" rel="noopener noreferrer"
                 className="group w-full sm:w-auto relative inline-flex items-center justify-center gap-2 md:gap-3 px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-green-500 via-emerald-500 to-teal-500 rounded-xl font-semibold text-base md:text-lg overflow-hidden transition-all hover:scale-105 hover:shadow-[0_0_40px_rgba(34,197,94,0.5)]">
                 <div className="absolute inset-0 bg-gradient-to-r from-green-400 to-emerald-400 opacity-0 group-hover:opacity-100 transition-opacity" />
                 <MessageCircle className="w-5 h-5 md:w-6 md:h-6 relative z-10 animate-pulse" />
-                <span className="relative z-10 whitespace-nowrap">Tell Your Idea</span>
+                <span className="relative z-10 whitespace-nowrap">Get Quotation</span>
               </a>
-              <a href="mailto:hritikchaudhary016@gmail.com?subject=Project Inquiry - Let's Build Something Amazing"
+              <a href="mailto:hritikchaudhary016@gmail.com?subject=Quotation Request - Project Details Attached&body=Hi!%0A%0AI'm interested in getting a detailed quotation for my project.%0A%0AProject Type:%0AFeatures Needed:%0ATimeline:%0ABudget Range:%0A%0APlease provide a comprehensive quote with cost breakdown and timeline.%0A%0AThank you!"
                 className="group w-full sm:w-auto inline-flex items-center justify-center gap-2 md:gap-3 px-6 md:px-8 py-3 md:py-4 bg-white/[0.03] border border-white/10 rounded-xl font-semibold text-base md:text-lg hover:bg-white/[0.06] transition-all hover:border-white/20 backdrop-blur-sm relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-cyan-500/20 opacity-0 group-hover:opacity-100 transition-opacity" />
                 <Mail className="w-5 h-5 md:w-6 md:h-6 relative z-10 text-purple-400" />
-                <span className="relative z-10 whitespace-nowrap">Email Us</span>
+                <span className="relative z-10 whitespace-nowrap">Email Details</span>
               </a>
             </div>
 
@@ -424,15 +424,15 @@ export default function Home() {
               <div className="relative z-10">
                 <Rocket className="w-12 md:w-16 h-12 md:h-16 text-emerald-400 mx-auto mb-4 md:mb-6" />
                 <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4">
-                  <span className="bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent">Ready to Build</span>
-                  <span className="bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent"> Your Project?</span>
+                  <span className="bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent">Get Your</span>
+                  <span className="bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent"> Detailed Quotation</span>
                 </h2>
                 <p className="text-base md:text-lg text-slate-300 mb-6 md:mb-8 max-w-xl mx-auto">
-                  Have an idea for a website, app, or store? <span className="font-semibold text-emerald-300">Tell us what you want to build</span> and let's make it real.
+                  Share your project requirements and get an <span className="font-semibold text-emerald-300">informative quotation with exact cost, timeline, and deliverables</span>.
                 </p>
-                <a href="https://wa.me/918859820935?text=Hi! I want to build a website/app for my business. Can you help?" target="_blank" rel="noopener noreferrer"
+                <a href="https://wa.me/918859820935?text=Hi! I need a quotation for my project. Here are the details:%0A%0AProject Type: [your project]%0AKey Features: [what you need]%0ATimeline: [when you need it]%0ABudget Range: [your budget]%0A%0APlease provide a detailed quote with breakdown." target="_blank" rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2 px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl font-semibold text-base md:text-lg transition-all hover:scale-105 hover:shadow-[0_0_40px_rgba(34,197,94,0.5)] animate-neon-pulse">
-                  <MessageCircle className="w-5 h-5 md:w-6 md:h-6" /> Chat on WhatsApp
+                  <MessageCircle className="w-5 h-5 md:w-6 md:h-6" /> Request Quotation
                 </a>
               </div>
             </div>
