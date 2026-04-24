@@ -1,0 +1,51 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e5]:
+      - generic [ref=e6]:
+        - link [ref=e7] [cursor=pointer]:
+          - /url: /agents
+          - img [ref=e8]
+        - generic [ref=e10]:
+          - heading "Agent Admin" [level=1] [ref=e11]
+          - paragraph [ref=e12]: Manage 0 agents across 0 categories
+      - button "New Agent" [ref=e13]:
+        - img [ref=e14]
+        - text: New Agent
+    - generic [ref=e16]:
+      - generic [ref=e17]:
+        - img [ref=e18]
+        - heading "Database Management" [level=3] [ref=e22]
+      - generic [ref=e23]:
+        - button "Run Migration" [ref=e24]:
+          - img [ref=e25]
+          - text: Run Migration
+        - button "Seed 200 Agents" [ref=e29]:
+          - img [ref=e30]
+          - text: Seed 200 Agents
+        - button "Reset & Re-seed" [ref=e31]:
+          - img [ref=e32]
+          - text: Reset & Re-seed
+    - generic [ref=e38]:
+      - generic [ref=e39]:
+        - img [ref=e40]
+        - textbox "Search agents..." [ref=e43]
+      - generic [ref=e44]:
+        - combobox [ref=e45]:
+          - option "All Categories" [selected]
+          - option "Sports"
+          - option "Fitness"
+          - option "Legal"
+          - option "Finance"
+          - option "Government Schemes"
+          - option "Tech"
+          - option "Career"
+          - option "Education"
+          - option "Mental Health"
+          - option "Business"
+        - img
+    - generic [ref=e47]:
+      - img [ref=e48]
+      - paragraph [ref=e50]: Loading agents...
+  - button "Open Next.js Dev Tools" [ref=e56] [cursor=pointer]:
+    - img [ref=e57]
+  - alert [ref=e60]

@@ -1,0 +1,3083 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e8]:
+      - generic [ref=e9]:
+        - img [ref=e10]
+        - generic [ref=e13]: 200+ AI Agents Available
+      - heading "KraftAI Agents" [level=1] [ref=e14]
+      - paragraph [ref=e15]: 200+ specialized AI personas for every domain. Get expert guidance on sports, law, fitness, finance, government schemes, and more.
+      - generic [ref=e16]:
+        - img [ref=e17]
+        - textbox "Search agents by name, category, or expertise..." [ref=e20]
+    - generic [ref=e23]:
+      - img [ref=e24]
+      - button "All (200)" [ref=e26]
+      - button "Business (20)" [ref=e27]
+      - button "Career (20)" [ref=e28]
+      - button "Education (20)" [ref=e29]
+      - button "Finance (20)" [ref=e30]
+      - button "Fitness (20)" [ref=e31]
+      - button "Government Schemes (20)" [ref=e32]
+      - button "Legal (20)" [ref=e33]
+      - button "Mental Health (20)" [ref=e34]
+      - button "Sports (20)" [ref=e35]
+      - button "Tech (20)" [ref=e36]
+    - generic [ref=e37]:
+      - generic [ref=e38]:
+        - generic [ref=e39]:
+          - heading "Business" [level=2] [ref=e40]
+          - generic [ref=e41]: 20 agents
+        - generic [ref=e42]:
+          - link "🧮 Accounting & Bookkeeping Guide Business Business accounting — Tally, invoicing, and financial statements precise Chat now" [ref=e43] [cursor=pointer]:
+            - /url: /agents/accounting-bookkeeping-guide
+            - generic [ref=e44]:
+              - generic [ref=e45]: 🧮
+              - generic [ref=e46]:
+                - heading "Accounting & Bookkeeping Guide" [level=3] [ref=e47]
+                - generic [ref=e48]: Business
+            - paragraph [ref=e49]: Business accounting — Tally, invoicing, and financial statements
+            - generic [ref=e50]:
+              - generic [ref=e51]:
+                - img [ref=e52]
+                - generic [ref=e54]: precise
+              - generic [ref=e55]:
+                - generic [ref=e56]: Chat now
+                - img [ref=e57]
+          - link "🎯 Brand Strategy Advisor Business Brand building — positioning, identity, and brand communication strategic Chat now" [ref=e59] [cursor=pointer]:
+            - /url: /agents/brand-strategy-advisor
+            - generic [ref=e60]:
+              - generic [ref=e61]: 🎯
+              - generic [ref=e62]:
+                - heading "Brand Strategy Advisor" [level=3] [ref=e63]
+                - generic [ref=e64]: Business
+            - paragraph [ref=e65]: Brand building — positioning, identity, and brand communication
+            - generic [ref=e66]:
+              - generic [ref=e67]:
+                - img [ref=e68]
+                - generic [ref=e70]: strategic
+              - generic [ref=e71]:
+                - generic [ref=e72]: Chat now
+                - img [ref=e73]
+          - link "📊 Business Analytics Expert Business Data-driven decision making — KPIs, dashboards, and business intelligence insightful Chat now" [ref=e75] [cursor=pointer]:
+            - /url: /agents/business-analytics-expert
+            - generic [ref=e76]:
+              - generic [ref=e77]: 📊
+              - generic [ref=e78]:
+                - heading "Business Analytics Expert" [level=3] [ref=e79]
+                - generic [ref=e80]: Business
+            - paragraph [ref=e81]: Data-driven decision making — KPIs, dashboards, and business intelligence
+            - generic [ref=e82]:
+              - generic [ref=e83]:
+                - img [ref=e84]
+                - generic [ref=e86]: insightful
+              - generic [ref=e87]:
+                - generic [ref=e88]: Chat now
+                - img [ref=e89]
+          - link "📋 Business Plan Writer Business Writing business plans, pitch decks, and investor-ready documents professional Chat now" [ref=e91] [cursor=pointer]:
+            - /url: /agents/business-plan-writer
+            - generic [ref=e92]:
+              - generic [ref=e93]: 📋
+              - generic [ref=e94]:
+                - heading "Business Plan Writer" [level=3] [ref=e95]
+                - generic [ref=e96]: Business
+            - paragraph [ref=e97]: Writing business plans, pitch decks, and investor-ready documents
+            - generic [ref=e98]:
+              - generic [ref=e99]:
+                - img [ref=e100]
+                - generic [ref=e102]: professional
+              - generic [ref=e103]:
+                - generic [ref=e104]: Chat now
+                - img [ref=e105]
+          - link "✍️ Content Strategy Expert Business Content planning, copywriting, and brand storytelling creative Chat now" [ref=e107] [cursor=pointer]:
+            - /url: /agents/content-strategy-expert
+            - generic [ref=e108]:
+              - generic [ref=e109]: ✍️
+              - generic [ref=e110]:
+                - heading "Content Strategy Expert" [level=3] [ref=e111]
+                - generic [ref=e112]: Business
+            - paragraph [ref=e113]: Content planning, copywriting, and brand storytelling
+            - generic [ref=e114]:
+              - generic [ref=e115]:
+                - img [ref=e116]
+                - generic [ref=e118]: creative
+              - generic [ref=e119]:
+                - generic [ref=e120]: Chat now
+                - img [ref=e121]
+          - link "😊 Customer Experience Expert Business Customer service, retention, NPS, and experience optimization empathetic Chat now" [ref=e123] [cursor=pointer]:
+            - /url: /agents/customer-experience-expert
+            - generic [ref=e124]:
+              - generic [ref=e125]: 😊
+              - generic [ref=e126]:
+                - heading "Customer Experience Expert" [level=3] [ref=e127]
+                - generic [ref=e128]: Business
+            - paragraph [ref=e129]: Customer service, retention, NPS, and experience optimization
+            - generic [ref=e130]:
+              - generic [ref=e131]:
+                - img [ref=e132]
+                - generic [ref=e134]: empathetic
+              - generic [ref=e135]:
+                - generic [ref=e136]: Chat now
+                - img [ref=e137]
+          - link "📣 Digital Marketing Expert Business SEO, social media marketing, paid ads, and growth strategies creative Chat now" [ref=e139] [cursor=pointer]:
+            - /url: /agents/digital-marketing-expert
+            - generic [ref=e140]:
+              - generic [ref=e141]: 📣
+              - generic [ref=e142]:
+                - heading "Digital Marketing Expert" [level=3] [ref=e143]
+                - generic [ref=e144]: Business
+            - paragraph [ref=e145]: SEO, social media marketing, paid ads, and growth strategies
+            - generic [ref=e146]:
+              - generic [ref=e147]:
+                - img [ref=e148]
+                - generic [ref=e150]: creative
+              - generic [ref=e151]:
+                - generic [ref=e152]: Chat now
+                - img [ref=e153]
+          - link "🛒 E-Commerce Advisor Business Online selling — Amazon, Flipkart, Shopify, and D2C strategies growth-focused Chat now" [ref=e155] [cursor=pointer]:
+            - /url: /agents/ecommerce-advisor
+            - generic [ref=e156]:
+              - generic [ref=e157]: 🛒
+              - generic [ref=e158]:
+                - heading "E-Commerce Advisor" [level=3] [ref=e159]
+                - generic [ref=e160]: Business
+            - paragraph [ref=e161]: Online selling — Amazon, Flipkart, Shopify, and D2C strategies
+            - generic [ref=e162]:
+              - generic [ref=e163]:
+                - img [ref=e164]
+                - generic [ref=e166]: growth-focused
+              - generic [ref=e167]:
+                - generic [ref=e168]: Chat now
+                - img [ref=e169]
+          - link "🚢 Export-Import Advisor Business International trade — export procedures, customs, and trade finance global Chat now" [ref=e171] [cursor=pointer]:
+            - /url: /agents/export-import-advisor
+            - generic [ref=e172]:
+              - generic [ref=e173]: 🚢
+              - generic [ref=e174]:
+                - heading "Export-Import Advisor" [level=3] [ref=e175]
+                - generic [ref=e176]: Business
+            - paragraph [ref=e177]: International trade — export procedures, customs, and trade finance
+            - generic [ref=e178]:
+              - generic [ref=e179]:
+                - img [ref=e180]
+                - generic [ref=e182]: global
+              - generic [ref=e183]:
+                - generic [ref=e184]: Chat now
+                - img [ref=e185]
+          - link "🏢 Franchise Consultant Business Franchise business — evaluation, investment, and franchise management advisory Chat now" [ref=e187] [cursor=pointer]:
+            - /url: /agents/franchise-consultant
+            - generic [ref=e188]:
+              - generic [ref=e189]: 🏢
+              - generic [ref=e190]:
+                - heading "Franchise Consultant" [level=3] [ref=e191]
+                - generic [ref=e192]: Business
+            - paragraph [ref=e193]: Franchise business — evaluation, investment, and franchise management
+            - generic [ref=e194]:
+              - generic [ref=e195]:
+                - img [ref=e196]
+                - generic [ref=e198]: advisory
+              - generic [ref=e199]:
+                - generic [ref=e200]: Chat now
+                - img [ref=e201]
+          - link "💰 Fundraising Advisor Business Startup fundraising — seed, Series A, angels, and VCs strategic Chat now" [ref=e203] [cursor=pointer]:
+            - /url: /agents/fundraising-advisor
+            - generic [ref=e204]:
+              - generic [ref=e205]: 💰
+              - generic [ref=e206]:
+                - heading "Fundraising Advisor" [level=3] [ref=e207]
+                - generic [ref=e208]: Business
+            - paragraph [ref=e209]: Startup fundraising — seed, Series A, angels, and VCs
+            - generic [ref=e210]:
+              - generic [ref=e211]:
+                - img [ref=e212]
+                - generic [ref=e214]: strategic
+              - generic [ref=e215]:
+                - generic [ref=e216]: Chat now
+                - img [ref=e217]
+          - link "👥 HR & People Operations Guide Business Hiring, employee management, policies, and workplace culture people-focused Chat now" [ref=e219] [cursor=pointer]:
+            - /url: /agents/hr-people-ops-guide
+            - generic [ref=e220]:
+              - generic [ref=e221]: 👥
+              - generic [ref=e222]:
+                - heading "HR & People Operations Guide" [level=3] [ref=e223]
+                - generic [ref=e224]: Business
+            - paragraph [ref=e225]: Hiring, employee management, policies, and workplace culture
+            - generic [ref=e226]:
+              - generic [ref=e227]:
+                - img [ref=e228]
+                - generic [ref=e230]: people-focused
+              - generic [ref=e231]:
+                - generic [ref=e232]: Chat now
+                - img [ref=e233]
+          - link "📑 Legal Compliance for Business Business Business compliance — ROC filing, annual returns, and regulatory requirements thorough Chat now" [ref=e235] [cursor=pointer]:
+            - /url: /agents/business-legal-compliance
+            - generic [ref=e236]:
+              - generic [ref=e237]: 📑
+              - generic [ref=e238]:
+                - heading "Legal Compliance for Business" [level=3] [ref=e239]
+                - generic [ref=e240]: Business
+            - paragraph [ref=e241]: Business compliance — ROC filing, annual returns, and regulatory requirements
+            - generic [ref=e242]:
+              - generic [ref=e243]:
+                - img [ref=e244]
+                - generic [ref=e246]: thorough
+              - generic [ref=e247]:
+                - generic [ref=e248]: Chat now
+                - img [ref=e249]
+          - link "💲 Pricing Strategy Expert Business Product and service pricing — models, psychology, and optimization analytical Chat now" [ref=e251] [cursor=pointer]:
+            - /url: /agents/pricing-strategy-expert
+            - generic [ref=e252]:
+              - generic [ref=e253]: 💲
+              - generic [ref=e254]:
+                - heading "Pricing Strategy Expert" [level=3] [ref=e255]
+                - generic [ref=e256]: Business
+            - paragraph [ref=e257]: Product and service pricing — models, psychology, and optimization
+            - generic [ref=e258]:
+              - generic [ref=e259]:
+                - img [ref=e260]
+                - generic [ref=e262]: analytical
+              - generic [ref=e263]:
+                - generic [ref=e264]: Chat now
+                - img [ref=e265]
+          - link "🏗️ Real Estate Business Guide Business Real estate business — property dealing, RERA, and market analysis market-savvy Chat now" [ref=e267] [cursor=pointer]:
+            - /url: /agents/real-estate-business-guide
+            - generic [ref=e268]:
+              - generic [ref=e269]: 🏗️
+              - generic [ref=e270]:
+                - heading "Real Estate Business Guide" [level=3] [ref=e271]
+                - generic [ref=e272]: Business
+            - paragraph [ref=e273]: Real estate business — property dealing, RERA, and market analysis
+            - generic [ref=e274]:
+              - generic [ref=e275]:
+                - img [ref=e276]
+                - generic [ref=e278]: market-savvy
+              - generic [ref=e279]:
+                - generic [ref=e280]: Chat now
+                - img [ref=e281]
+          - link "🍽️ Restaurant Business Guide Business Starting and running a restaurant — FSSAI, menu design, and operations experienced Chat now" [ref=e283] [cursor=pointer]:
+            - /url: /agents/restaurant-business-guide
+            - generic [ref=e284]:
+              - generic [ref=e285]: 🍽️
+              - generic [ref=e286]:
+                - heading "Restaurant Business Guide" [level=3] [ref=e287]
+                - generic [ref=e288]: Business
+            - paragraph [ref=e289]: Starting and running a restaurant — FSSAI, menu design, and operations
+            - generic [ref=e290]:
+              - generic [ref=e291]:
+                - img [ref=e292]
+                - generic [ref=e294]: experienced
+              - generic [ref=e295]:
+                - generic [ref=e296]: Chat now
+                - img [ref=e297]
+          - link "🤝 Sales Trainer Business Sales techniques — consultative selling, objection handling, and closing confident Chat now" [ref=e299] [cursor=pointer]:
+            - /url: /agents/sales-trainer
+            - generic [ref=e300]:
+              - generic [ref=e301]: 🤝
+              - generic [ref=e302]:
+                - heading "Sales Trainer" [level=3] [ref=e303]
+                - generic [ref=e304]: Business
+            - paragraph [ref=e305]: Sales techniques — consultative selling, objection handling, and closing
+            - generic [ref=e306]:
+              - generic [ref=e307]:
+                - img [ref=e308]
+                - generic [ref=e310]: confident
+              - generic [ref=e311]:
+                - generic [ref=e312]: Chat now
+                - img [ref=e313]
+          - link "🏪 Small Business Advisor Business Starting and running a small business in India — registration to growth encouraging Chat now" [ref=e315] [cursor=pointer]:
+            - /url: /agents/small-business-advisor
+            - generic [ref=e316]:
+              - generic [ref=e317]: 🏪
+              - generic [ref=e318]:
+                - heading "Small Business Advisor" [level=3] [ref=e319]
+                - generic [ref=e320]: Business
+            - paragraph [ref=e321]: Starting and running a small business in India — registration to growth
+            - generic [ref=e322]:
+              - generic [ref=e323]:
+                - img [ref=e324]
+                - generic [ref=e326]: encouraging
+              - generic [ref=e327]:
+                - generic [ref=e328]: Chat now
+                - img [ref=e329]
+          - link "📱 Social Media Manager Business Social media strategy — Instagram, YouTube, LinkedIn, and X growth trendy Chat now" [ref=e331] [cursor=pointer]:
+            - /url: /agents/social-media-manager
+            - generic [ref=e332]:
+              - generic [ref=e333]: 📱
+              - generic [ref=e334]:
+                - heading "Social Media Manager" [level=3] [ref=e335]
+                - generic [ref=e336]: Business
+            - paragraph [ref=e337]: Social media strategy — Instagram, YouTube, LinkedIn, and X growth
+            - generic [ref=e338]:
+              - generic [ref=e339]:
+                - img [ref=e340]
+                - generic [ref=e342]: trendy
+              - generic [ref=e343]:
+                - generic [ref=e344]: Chat now
+                - img [ref=e345]
+          - link "📦 Supply Chain Expert Business Logistics, inventory management, and supply chain optimization efficient Chat now" [ref=e347] [cursor=pointer]:
+            - /url: /agents/supply-chain-expert
+            - generic [ref=e348]:
+              - generic [ref=e349]: 📦
+              - generic [ref=e350]:
+                - heading "Supply Chain Expert" [level=3] [ref=e351]
+                - generic [ref=e352]: Business
+            - paragraph [ref=e353]: Logistics, inventory management, and supply chain optimization
+            - generic [ref=e354]:
+              - generic [ref=e355]:
+                - img [ref=e356]
+                - generic [ref=e358]: efficient
+              - generic [ref=e359]:
+                - generic [ref=e360]: Chat now
+                - img [ref=e361]
+      - generic [ref=e363]:
+        - generic [ref=e364]:
+          - heading "Career" [level=2] [ref=e365]
+          - generic [ref=e366]: 20 agents
+        - generic [ref=e367]:
+          - link "🧭 Career Counselor Career Career guidance — choosing paths, switching careers, and growth planning wise Chat now" [ref=e368] [cursor=pointer]:
+            - /url: /agents/career-counselor
+            - generic [ref=e369]:
+              - generic [ref=e370]: 🧭
+              - generic [ref=e371]:
+                - heading "Career Counselor" [level=3] [ref=e372]
+                - generic [ref=e373]: Career
+            - paragraph [ref=e374]: Career guidance — choosing paths, switching careers, and growth planning
+            - generic [ref=e375]:
+              - generic [ref=e376]:
+                - img [ref=e377]
+                - generic [ref=e379]: wise
+              - generic [ref=e380]:
+                - generic [ref=e381]: Chat now
+                - img [ref=e382]
+          - link "🧩 Coding Interview Prep Career DSA preparation, LeetCode strategies, and technical interview coaching structured Chat now" [ref=e384] [cursor=pointer]:
+            - /url: /agents/coding-interview-prep
+            - generic [ref=e385]:
+              - generic [ref=e386]: 🧩
+              - generic [ref=e387]:
+                - heading "Coding Interview Prep" [level=3] [ref=e388]
+                - generic [ref=e389]: Career
+            - paragraph [ref=e390]: DSA preparation, LeetCode strategies, and technical interview coaching
+            - generic [ref=e391]:
+              - generic [ref=e392]:
+                - img [ref=e393]
+                - generic [ref=e395]: structured
+              - generic [ref=e396]:
+                - generic [ref=e397]: Chat now
+                - img [ref=e398]
+          - link "✉️ Cover Letter Expert Career Writing compelling cover letters tailored to specific job applications persuasive Chat now" [ref=e400] [cursor=pointer]:
+            - /url: /agents/cover-letter-expert
+            - generic [ref=e401]:
+              - generic [ref=e402]: ✉️
+              - generic [ref=e403]:
+                - heading "Cover Letter Expert" [level=3] [ref=e404]
+                - generic [ref=e405]: Career
+            - paragraph [ref=e406]: Writing compelling cover letters tailored to specific job applications
+            - generic [ref=e407]:
+              - generic [ref=e408]:
+                - img [ref=e409]
+                - generic [ref=e411]: persuasive
+              - generic [ref=e412]:
+                - generic [ref=e413]: Chat now
+                - img [ref=e414]
+          - link "📊 Data Science Career Guide Career Breaking into data science — skills, projects, and job search strategy encouraging Chat now" [ref=e416] [cursor=pointer]:
+            - /url: /agents/data-science-career-guide
+            - generic [ref=e417]:
+              - generic [ref=e418]: 📊
+              - generic [ref=e419]:
+                - heading "Data Science Career Guide" [level=3] [ref=e420]
+                - generic [ref=e421]: Career
+            - paragraph [ref=e422]: Breaking into data science — skills, projects, and job search strategy
+            - generic [ref=e423]:
+              - generic [ref=e424]:
+                - img [ref=e425]
+                - generic [ref=e427]: encouraging
+              - generic [ref=e428]:
+                - generic [ref=e429]: Chat now
+                - img [ref=e430]
+          - link "💡 Entrepreneurship Coach Career Starting a business — idea validation, business models, and launch strategy action-oriented Chat now" [ref=e432] [cursor=pointer]:
+            - /url: /agents/entrepreneurship-coach
+            - generic [ref=e433]:
+              - generic [ref=e434]: 💡
+              - generic [ref=e435]:
+                - heading "Entrepreneurship Coach" [level=3] [ref=e436]
+                - generic [ref=e437]: Career
+            - paragraph [ref=e438]: Starting a business — idea validation, business models, and launch strategy
+            - generic [ref=e439]:
+              - generic [ref=e440]:
+                - img [ref=e441]
+                - generic [ref=e443]: action-oriented
+              - generic [ref=e444]:
+                - generic [ref=e445]: Chat now
+                - img [ref=e446]
+          - link "🏠 Freelancing Guide Career Freelancing — finding clients, pricing, contracts, and portfolio building entrepreneurial Chat now" [ref=e448] [cursor=pointer]:
+            - /url: /agents/freelancing-guide
+            - generic [ref=e449]:
+              - generic [ref=e450]: 🏠
+              - generic [ref=e451]:
+                - heading "Freelancing Guide" [level=3] [ref=e452]
+                - generic [ref=e453]: Career
+            - paragraph [ref=e454]: Freelancing — finding clients, pricing, contracts, and portfolio building
+            - generic [ref=e455]:
+              - generic [ref=e456]:
+                - img [ref=e457]
+                - generic [ref=e459]: entrepreneurial
+              - generic [ref=e460]:
+                - generic [ref=e461]: Chat now
+                - img [ref=e462]
+          - link "🏛️ Government Job Guide Career Sarkari naukri — SSC, Banking, Railways, and state PSC preparation motivating Chat now" [ref=e464] [cursor=pointer]:
+            - /url: /agents/government-job-guide
+            - generic [ref=e465]:
+              - generic [ref=e466]: 🏛️
+              - generic [ref=e467]:
+                - heading "Government Job Guide" [level=3] [ref=e468]
+                - generic [ref=e469]: Career
+            - paragraph [ref=e470]: Sarkari naukri — SSC, Banking, Railways, and state PSC preparation
+            - generic [ref=e471]:
+              - generic [ref=e472]:
+                - img [ref=e473]
+                - generic [ref=e475]: motivating
+              - generic [ref=e476]:
+                - generic [ref=e477]: Chat now
+                - img [ref=e478]
+          - link "🎤 Interview Coach Career Interview preparation — behavioral, technical, and HR round coaching coaching Chat now" [ref=e480] [cursor=pointer]:
+            - /url: /agents/interview-coach
+            - generic [ref=e481]:
+              - generic [ref=e482]: 🎤
+              - generic [ref=e483]:
+                - heading "Interview Coach" [level=3] [ref=e484]
+                - generic [ref=e485]: Career
+            - paragraph [ref=e486]: Interview preparation — behavioral, technical, and HR round coaching
+            - generic [ref=e487]:
+              - generic [ref=e488]:
+                - img [ref=e489]
+                - generic [ref=e491]: coaching
+              - generic [ref=e492]:
+                - generic [ref=e493]: Chat now
+                - img [ref=e494]
+          - link "🔗 LinkedIn Optimizer Career LinkedIn profile optimization, networking, and personal branding strategic Chat now" [ref=e496] [cursor=pointer]:
+            - /url: /agents/linkedin-optimizer
+            - generic [ref=e497]:
+              - generic [ref=e498]: 🔗
+              - generic [ref=e499]:
+                - heading "LinkedIn Optimizer" [level=3] [ref=e500]
+                - generic [ref=e501]: Career
+            - paragraph [ref=e502]: LinkedIn profile optimization, networking, and personal branding
+            - generic [ref=e503]:
+              - generic [ref=e504]:
+                - img [ref=e505]
+                - generic [ref=e507]: strategic
+              - generic [ref=e508]:
+                - generic [ref=e509]: Chat now
+                - img [ref=e510]
+          - link "🎓 MBA Admissions Advisor Career MBA applications — CAT prep, college selection, and SOP writing strategic Chat now" [ref=e512] [cursor=pointer]:
+            - /url: /agents/mba-admissions-advisor
+            - generic [ref=e513]:
+              - generic [ref=e514]: 🎓
+              - generic [ref=e515]:
+                - heading "MBA Admissions Advisor" [level=3] [ref=e516]
+                - generic [ref=e517]: Career
+            - paragraph [ref=e518]: MBA applications — CAT prep, college selection, and SOP writing
+            - generic [ref=e519]:
+              - generic [ref=e520]:
+                - img [ref=e521]
+                - generic [ref=e523]: strategic
+              - generic [ref=e524]:
+                - generic [ref=e525]: Chat now
+                - img [ref=e526]
+          - link "⭐ Personal Branding Coach Career Building a personal brand online through content and networking authentic Chat now" [ref=e528] [cursor=pointer]:
+            - /url: /agents/personal-branding-coach
+            - generic [ref=e529]:
+              - generic [ref=e530]: ⭐
+              - generic [ref=e531]:
+                - heading "Personal Branding Coach" [level=3] [ref=e532]
+                - generic [ref=e533]: Career
+            - paragraph [ref=e534]: Building a personal brand online through content and networking
+            - generic [ref=e535]:
+              - generic [ref=e536]:
+                - img [ref=e537]
+                - generic [ref=e539]: authentic
+              - generic [ref=e540]:
+                - generic [ref=e541]: Chat now
+                - img [ref=e542]
+          - link "📋 Product Manager Guide Career Product management skills — roadmapping, prioritization, and PM interviews user-centric Chat now" [ref=e544] [cursor=pointer]:
+            - /url: /agents/product-manager-guide
+            - generic [ref=e545]:
+              - generic [ref=e546]: 📋
+              - generic [ref=e547]:
+                - heading "Product Manager Guide" [level=3] [ref=e548]
+                - generic [ref=e549]: Career
+            - paragraph [ref=e550]: Product management skills — roadmapping, prioritization, and PM interviews
+            - generic [ref=e551]:
+              - generic [ref=e552]:
+                - img [ref=e553]
+                - generic [ref=e555]: user-centric
+              - generic [ref=e556]:
+                - generic [ref=e557]: Chat now
+                - img [ref=e558]
+          - link "🎙️ Public Speaking Coach Career Presentation skills, overcoming stage fright, and persuasive speaking energizing Chat now" [ref=e560] [cursor=pointer]:
+            - /url: /agents/public-speaking-coach
+            - generic [ref=e561]:
+              - generic [ref=e562]: 🎙️
+              - generic [ref=e563]:
+                - heading "Public Speaking Coach" [level=3] [ref=e564]
+                - generic [ref=e565]: Career
+            - paragraph [ref=e566]: Presentation skills, overcoming stage fright, and persuasive speaking
+            - generic [ref=e567]:
+              - generic [ref=e568]:
+                - img [ref=e569]
+                - generic [ref=e571]: energizing
+              - generic [ref=e572]:
+                - generic [ref=e573]: Chat now
+                - img [ref=e574]
+          - link "🏠 Remote Work Advisor Career Working remotely — productivity, tools, communication, and work-life balance balanced Chat now" [ref=e576] [cursor=pointer]:
+            - /url: /agents/remote-work-advisor
+            - generic [ref=e577]:
+              - generic [ref=e578]: 🏠
+              - generic [ref=e579]:
+                - heading "Remote Work Advisor" [level=3] [ref=e580]
+                - generic [ref=e581]: Career
+            - paragraph [ref=e582]: Working remotely — productivity, tools, communication, and work-life balance
+            - generic [ref=e583]:
+              - generic [ref=e584]:
+                - img [ref=e585]
+                - generic [ref=e587]: balanced
+              - generic [ref=e588]:
+                - generic [ref=e589]: Chat now
+                - img [ref=e590]
+          - link "📄 Resume Writer Career Professional resume writing, formatting, and ATS optimization professional Chat now" [ref=e592] [cursor=pointer]:
+            - /url: /agents/resume-writer
+            - generic [ref=e593]:
+              - generic [ref=e594]: 📄
+              - generic [ref=e595]:
+                - heading "Resume Writer" [level=3] [ref=e596]
+                - generic [ref=e597]: Career
+            - paragraph [ref=e598]: Professional resume writing, formatting, and ATS optimization
+            - generic [ref=e599]:
+              - generic [ref=e600]:
+                - img [ref=e601]
+                - generic [ref=e603]: professional
+              - generic [ref=e604]:
+                - generic [ref=e605]: Chat now
+                - img [ref=e606]
+          - link "💰 Salary Negotiation Coach Career Negotiating salary, benefits, stock options, and total compensation confident Chat now" [ref=e608] [cursor=pointer]:
+            - /url: /agents/salary-negotiation-coach
+            - generic [ref=e609]:
+              - generic [ref=e610]: 💰
+              - generic [ref=e611]:
+                - heading "Salary Negotiation Coach" [level=3] [ref=e612]
+                - generic [ref=e613]: Career
+            - paragraph [ref=e614]: Negotiating salary, benefits, stock options, and total compensation
+            - generic [ref=e615]:
+              - generic [ref=e616]:
+                - img [ref=e617]
+                - generic [ref=e619]: confident
+              - generic [ref=e620]:
+                - generic [ref=e621]: Chat now
+                - img [ref=e622]
+          - link "✈️ Study Abroad Advisor Career Studying abroad — universities, GRE/IELTS prep, and visa guidance supportive Chat now" [ref=e624] [cursor=pointer]:
+            - /url: /agents/study-abroad-advisor
+            - generic [ref=e625]:
+              - generic [ref=e626]: ✈️
+              - generic [ref=e627]:
+                - heading "Study Abroad Advisor" [level=3] [ref=e628]
+                - generic [ref=e629]: Career
+            - paragraph [ref=e630]: Studying abroad — universities, GRE/IELTS prep, and visa guidance
+            - generic [ref=e631]:
+              - generic [ref=e632]:
+                - img [ref=e633]
+                - generic [ref=e635]: supportive
+              - generic [ref=e636]:
+                - generic [ref=e637]: Chat now
+                - img [ref=e638]
+          - link "🔄 Tech Career Switcher Career Transitioning into tech from non-tech backgrounds realistic Chat now" [ref=e640] [cursor=pointer]:
+            - /url: /agents/tech-career-switcher
+            - generic [ref=e641]:
+              - generic [ref=e642]: 🔄
+              - generic [ref=e643]:
+                - heading "Tech Career Switcher" [level=3] [ref=e644]
+                - generic [ref=e645]: Career
+            - paragraph [ref=e646]: Transitioning into tech from non-tech backgrounds
+            - generic [ref=e647]:
+              - generic [ref=e648]:
+                - img [ref=e649]
+                - generic [ref=e651]: realistic
+              - generic [ref=e652]:
+                - generic [ref=e653]: Chat now
+                - img [ref=e654]
+          - link "📝 UPSC Preparation Guide Career UPSC Civil Services exam strategy, syllabus, and preparation tips disciplined Chat now" [ref=e656] [cursor=pointer]:
+            - /url: /agents/upsc-preparation-guide
+            - generic [ref=e657]:
+              - generic [ref=e658]: 📝
+              - generic [ref=e659]:
+                - heading "UPSC Preparation Guide" [level=3] [ref=e660]
+                - generic [ref=e661]: Career
+            - paragraph [ref=e662]: UPSC Civil Services exam strategy, syllabus, and preparation tips
+            - generic [ref=e663]:
+              - generic [ref=e664]:
+                - img [ref=e665]
+                - generic [ref=e667]: disciplined
+              - generic [ref=e668]:
+                - generic [ref=e669]: Chat now
+                - img [ref=e670]
+          - link "🤝 Workplace Skills Coach Career Soft skills — communication, leadership, time management, and teamwork wise Chat now" [ref=e672] [cursor=pointer]:
+            - /url: /agents/workplace-skills-coach
+            - generic [ref=e673]:
+              - generic [ref=e674]: 🤝
+              - generic [ref=e675]:
+                - heading "Workplace Skills Coach" [level=3] [ref=e676]
+                - generic [ref=e677]: Career
+            - paragraph [ref=e678]: Soft skills — communication, leadership, time management, and teamwork
+            - generic [ref=e679]:
+              - generic [ref=e680]:
+                - img [ref=e681]
+                - generic [ref=e683]: wise
+              - generic [ref=e684]:
+                - generic [ref=e685]: Chat now
+                - img [ref=e686]
+      - generic [ref=e688]:
+        - generic [ref=e689]:
+          - heading "Education" [level=2] [ref=e690]
+          - generic [ref=e691]: 20 agents
+        - generic [ref=e692]:
+          - link "🧬 Biology Tutor Education Biology concepts — cell biology, genetics, ecology, and human anatomy passionate Chat now" [ref=e693] [cursor=pointer]:
+            - /url: /agents/biology-tutor
+            - generic [ref=e694]:
+              - generic [ref=e695]: 🧬
+              - generic [ref=e696]:
+                - heading "Biology Tutor" [level=3] [ref=e697]
+                - generic [ref=e698]: Education
+            - paragraph [ref=e699]: Biology concepts — cell biology, genetics, ecology, and human anatomy
+            - generic [ref=e700]:
+              - generic [ref=e701]:
+                - img [ref=e702]
+                - generic [ref=e704]: passionate
+              - generic [ref=e705]:
+                - generic [ref=e706]: Chat now
+                - img [ref=e707]
+          - link "🧪 Chemistry Guide Education Chemistry help — organic, inorganic, physical chemistry, and reactions methodical Chat now" [ref=e709] [cursor=pointer]:
+            - /url: /agents/chemistry-guide
+            - generic [ref=e710]:
+              - generic [ref=e711]: 🧪
+              - generic [ref=e712]:
+                - heading "Chemistry Guide" [level=3] [ref=e713]
+                - generic [ref=e714]: Education
+            - paragraph [ref=e715]: Chemistry help — organic, inorganic, physical chemistry, and reactions
+            - generic [ref=e716]:
+              - generic [ref=e717]:
+                - img [ref=e718]
+                - generic [ref=e720]: methodical
+              - generic [ref=e721]:
+                - generic [ref=e722]: Chat now
+                - img [ref=e723]
+          - link "💻 Computer Science Teacher Education CS fundamentals — programming, data structures, algorithms, and theory logical Chat now" [ref=e725] [cursor=pointer]:
+            - /url: /agents/computer-science-teacher
+            - generic [ref=e726]:
+              - generic [ref=e727]: 💻
+              - generic [ref=e728]:
+                - heading "Computer Science Teacher" [level=3] [ref=e729]
+                - generic [ref=e730]: Education
+            - paragraph [ref=e731]: CS fundamentals — programming, data structures, algorithms, and theory
+            - generic [ref=e732]:
+              - generic [ref=e733]:
+                - img [ref=e734]
+                - generic [ref=e736]: logical
+              - generic [ref=e737]:
+                - generic [ref=e738]: Chat now
+                - img [ref=e739]
+          - link "✍️ Creative Writing Teacher Education Fiction, poetry, screenwriting, and creative expression inspiring Chat now" [ref=e741] [cursor=pointer]:
+            - /url: /agents/creative-writing-teacher
+            - generic [ref=e742]:
+              - generic [ref=e743]: ✍️
+              - generic [ref=e744]:
+                - heading "Creative Writing Teacher" [level=3] [ref=e745]
+                - generic [ref=e746]: Education
+            - paragraph [ref=e747]: Fiction, poetry, screenwriting, and creative expression
+            - generic [ref=e748]:
+              - generic [ref=e749]:
+                - img [ref=e750]
+                - generic [ref=e752]: inspiring
+              - generic [ref=e753]:
+                - generic [ref=e754]: Chat now
+                - img [ref=e755]
+          - link "🎈 Early Childhood Educator Education Pre-school and early learning — play-based education and development warm Chat now" [ref=e757] [cursor=pointer]:
+            - /url: /agents/early-childhood-educator
+            - generic [ref=e758]:
+              - generic [ref=e759]: 🎈
+              - generic [ref=e760]:
+                - heading "Early Childhood Educator" [level=3] [ref=e761]
+                - generic [ref=e762]: Education
+            - paragraph [ref=e763]: Pre-school and early learning — play-based education and development
+            - generic [ref=e764]:
+              - generic [ref=e765]:
+                - img [ref=e766]
+                - generic [ref=e768]: warm
+              - generic [ref=e769]:
+                - generic [ref=e770]: Chat now
+                - img [ref=e771]
+          - link "📈 Economics Teacher Education Micro and macroeconomics — demand, supply, GDP, monetary policy relatable Chat now" [ref=e773] [cursor=pointer]:
+            - /url: /agents/economics-teacher
+            - generic [ref=e774]:
+              - generic [ref=e775]: 📈
+              - generic [ref=e776]:
+                - heading "Economics Teacher" [level=3] [ref=e777]
+                - generic [ref=e778]: Education
+            - paragraph [ref=e779]: Micro and macroeconomics — demand, supply, GDP, monetary policy
+            - generic [ref=e780]:
+              - generic [ref=e781]:
+                - img [ref=e782]
+                - generic [ref=e784]: relatable
+              - generic [ref=e785]:
+                - generic [ref=e786]: Chat now
+                - img [ref=e787]
+          - link "📖 English Language Coach Education English grammar, writing, vocabulary, and communication skills encouraging Chat now" [ref=e789] [cursor=pointer]:
+            - /url: /agents/english-language-coach
+            - generic [ref=e790]:
+              - generic [ref=e791]: 📖
+              - generic [ref=e792]:
+                - heading "English Language Coach" [level=3] [ref=e793]
+                - generic [ref=e794]: Education
+            - paragraph [ref=e795]: English grammar, writing, vocabulary, and communication skills
+            - generic [ref=e796]:
+              - generic [ref=e797]:
+                - img [ref=e798]
+                - generic [ref=e800]: encouraging
+              - generic [ref=e801]:
+                - generic [ref=e802]: Chat now
+                - img [ref=e803]
+          - link "🌱 Environmental Science Educator Education Environmental studies — climate change, ecosystems, and sustainability passionate Chat now" [ref=e805] [cursor=pointer]:
+            - /url: /agents/environmental-science-educator
+            - generic [ref=e806]:
+              - generic [ref=e807]: 🌱
+              - generic [ref=e808]:
+                - heading "Environmental Science Educator" [level=3] [ref=e809]
+                - generic [ref=e810]: Education
+            - paragraph [ref=e811]: Environmental studies — climate change, ecosystems, and sustainability
+            - generic [ref=e812]:
+              - generic [ref=e813]:
+                - img [ref=e814]
+                - generic [ref=e816]: passionate
+              - generic [ref=e817]:
+                - generic [ref=e818]: Chat now
+                - img [ref=e819]
+          - link "🌍 Geography Expert Education Physical and human geography — climate, maps, and geopolitics explorative Chat now" [ref=e821] [cursor=pointer]:
+            - /url: /agents/geography-expert
+            - generic [ref=e822]:
+              - generic [ref=e823]: 🌍
+              - generic [ref=e824]:
+                - heading "Geography Expert" [level=3] [ref=e825]
+                - generic [ref=e826]: Education
+            - paragraph [ref=e827]: Physical and human geography — climate, maps, and geopolitics
+            - generic [ref=e828]:
+              - generic [ref=e829]:
+                - img [ref=e830]
+                - generic [ref=e832]: explorative
+              - generic [ref=e833]:
+                - generic [ref=e834]: Chat now
+                - img [ref=e835]
+          - link "🇮🇳 Hindi Language Tutor Education Hindi grammar, literature, and writing skills culturally-rich Chat now" [ref=e837] [cursor=pointer]:
+            - /url: /agents/hindi-language-tutor
+            - generic [ref=e838]:
+              - generic [ref=e839]: 🇮🇳
+              - generic [ref=e840]:
+                - heading "Hindi Language Tutor" [level=3] [ref=e841]
+                - generic [ref=e842]: Education
+            - paragraph [ref=e843]: Hindi grammar, literature, and writing skills
+            - generic [ref=e844]:
+              - generic [ref=e845]:
+                - img [ref=e846]
+                - generic [ref=e848]: culturally-rich
+              - generic [ref=e849]:
+                - generic [ref=e850]: Chat now
+                - img [ref=e851]
+          - link "🏛️ History Scholar Education World and Indian history — ancient, medieval, modern, and contemporary storytelling Chat now" [ref=e853] [cursor=pointer]:
+            - /url: /agents/history-scholar
+            - generic [ref=e854]:
+              - generic [ref=e855]: 🏛️
+              - generic [ref=e856]:
+                - heading "History Scholar" [level=3] [ref=e857]
+                - generic [ref=e858]: Education
+            - paragraph [ref=e859]: World and Indian history — ancient, medieval, modern, and contemporary
+            - generic [ref=e860]:
+              - generic [ref=e861]:
+                - img [ref=e862]
+                - generic [ref=e864]: storytelling
+              - generic [ref=e865]:
+                - generic [ref=e866]: Chat now
+                - img [ref=e867]
+          - link "🎯 JEE Preparation Guide Education JEE Main and Advanced preparation strategy and problem solving focused Chat now" [ref=e869] [cursor=pointer]:
+            - /url: /agents/jee-preparation-guide
+            - generic [ref=e870]:
+              - generic [ref=e871]: 🎯
+              - generic [ref=e872]:
+                - heading "JEE Preparation Guide" [level=3] [ref=e873]
+                - generic [ref=e874]: Education
+            - paragraph [ref=e875]: JEE Main and Advanced preparation strategy and problem solving
+            - generic [ref=e876]:
+              - generic [ref=e877]:
+                - img [ref=e878]
+                - generic [ref=e880]: focused
+              - generic [ref=e881]:
+                - generic [ref=e882]: Chat now
+                - img [ref=e883]
+          - link "🔢 Math Tutor Education Mathematics help — algebra, calculus, statistics, and problem solving patient Chat now" [ref=e885] [cursor=pointer]:
+            - /url: /agents/math-tutor
+            - generic [ref=e886]:
+              - generic [ref=e887]: 🔢
+              - generic [ref=e888]:
+                - heading "Math Tutor" [level=3] [ref=e889]
+                - generic [ref=e890]: Education
+            - paragraph [ref=e891]: Mathematics help — algebra, calculus, statistics, and problem solving
+            - generic [ref=e892]:
+              - generic [ref=e893]:
+                - img [ref=e894]
+                - generic [ref=e896]: patient
+              - generic [ref=e897]:
+                - generic [ref=e898]: Chat now
+                - img [ref=e899]
+          - link "⚕️ NEET Preparation Guide Education NEET exam preparation — Biology, Physics, Chemistry strategy caring Chat now" [ref=e901] [cursor=pointer]:
+            - /url: /agents/neet-preparation-guide
+            - generic [ref=e902]:
+              - generic [ref=e903]: ⚕️
+              - generic [ref=e904]:
+                - heading "NEET Preparation Guide" [level=3] [ref=e905]
+                - generic [ref=e906]: Education
+            - paragraph [ref=e907]: NEET exam preparation — Biology, Physics, Chemistry strategy
+            - generic [ref=e908]:
+              - generic [ref=e909]:
+                - img [ref=e910]
+                - generic [ref=e912]: caring
+              - generic [ref=e913]:
+                - generic [ref=e914]: Chat now
+                - img [ref=e915]
+          - link "⚛️ Physics Teacher Education Physics concepts — mechanics, electricity, optics, and modern physics curious Chat now" [ref=e917] [cursor=pointer]:
+            - /url: /agents/physics-teacher
+            - generic [ref=e918]:
+              - generic [ref=e919]: ⚛️
+              - generic [ref=e920]:
+                - heading "Physics Teacher" [level=3] [ref=e921]
+                - generic [ref=e922]: Education
+            - paragraph [ref=e923]: Physics concepts — mechanics, electricity, optics, and modern physics
+            - generic [ref=e924]:
+              - generic [ref=e925]:
+                - img [ref=e926]
+                - generic [ref=e928]: curious
+              - generic [ref=e929]:
+                - generic [ref=e930]: Chat now
+                - img [ref=e931]
+          - link "🏛️ Political Science Guide Education Indian polity, governance, and international relations objective Chat now" [ref=e933] [cursor=pointer]:
+            - /url: /agents/political-science-guide
+            - generic [ref=e934]:
+              - generic [ref=e935]: 🏛️
+              - generic [ref=e936]:
+                - heading "Political Science Guide" [level=3] [ref=e937]
+                - generic [ref=e938]: Education
+            - paragraph [ref=e939]: Indian polity, governance, and international relations
+            - generic [ref=e940]:
+              - generic [ref=e941]:
+                - img [ref=e942]
+                - generic [ref=e944]: objective
+              - generic [ref=e945]:
+                - generic [ref=e946]: Chat now
+                - img [ref=e947]
+          - link "🏆 Scholarship & Exam Navigator Education Competitive exam guidance — NTSE, Olympiad, KVPY, and scholarships informative Chat now" [ref=e949] [cursor=pointer]:
+            - /url: /agents/scholarship-exam-navigator
+            - generic [ref=e950]:
+              - generic [ref=e951]: 🏆
+              - generic [ref=e952]:
+                - heading "Scholarship & Exam Navigator" [level=3] [ref=e953]
+                - generic [ref=e954]: Education
+            - paragraph [ref=e955]: Competitive exam guidance — NTSE, Olympiad, KVPY, and scholarships
+            - generic [ref=e956]:
+              - generic [ref=e957]:
+                - img [ref=e958]
+                - generic [ref=e960]: informative
+              - generic [ref=e961]:
+                - generic [ref=e962]: Chat now
+                - img [ref=e963]
+          - link "🔬 Science Project Mentor Education Science fair projects, experiments, and STEM learning guidance mentoring Chat now" [ref=e965] [cursor=pointer]:
+            - /url: /agents/science-project-mentor
+            - generic [ref=e966]:
+              - generic [ref=e967]: 🔬
+              - generic [ref=e968]:
+                - heading "Science Project Mentor" [level=3] [ref=e969]
+                - generic [ref=e970]: Education
+            - paragraph [ref=e971]: Science fair projects, experiments, and STEM learning guidance
+            - generic [ref=e972]:
+              - generic [ref=e973]:
+                - img [ref=e974]
+                - generic [ref=e976]: mentoring
+              - generic [ref=e977]:
+                - generic [ref=e978]: Chat now
+                - img [ref=e979]
+          - link "❤️ Special Education Guide Education Learning disabilities, inclusive education, and special needs support empathetic Chat now" [ref=e981] [cursor=pointer]:
+            - /url: /agents/special-education-guide
+            - generic [ref=e982]:
+              - generic [ref=e983]: ❤️
+              - generic [ref=e984]:
+                - heading "Special Education Guide" [level=3] [ref=e985]
+                - generic [ref=e986]: Education
+            - paragraph [ref=e987]: Learning disabilities, inclusive education, and special needs support
+            - generic [ref=e988]:
+              - generic [ref=e989]:
+                - img [ref=e990]
+                - generic [ref=e992]: empathetic
+              - generic [ref=e993]:
+                - generic [ref=e994]: Chat now
+                - img [ref=e995]
+          - link "📚 Study Skills Coach Education Learning techniques — note-taking, memory, focus, and exam strategies practical Chat now" [ref=e997] [cursor=pointer]:
+            - /url: /agents/study-skills-coach
+            - generic [ref=e998]:
+              - generic [ref=e999]: 📚
+              - generic [ref=e1000]:
+                - heading "Study Skills Coach" [level=3] [ref=e1001]
+                - generic [ref=e1002]: Education
+            - paragraph [ref=e1003]: Learning techniques — note-taking, memory, focus, and exam strategies
+            - generic [ref=e1004]:
+              - generic [ref=e1005]:
+                - img [ref=e1006]
+                - generic [ref=e1008]: practical
+              - generic [ref=e1009]:
+                - generic [ref=e1010]: Chat now
+                - img [ref=e1011]
+      - generic [ref=e1013]:
+        - generic [ref=e1014]:
+          - heading "Finance" [level=2] [ref=e1015]
+          - generic [ref=e1016]: 20 agents
+        - generic [ref=e1017]:
+          - link "₿ Crypto & Web3 Analyst Finance Cryptocurrency, blockchain, DeFi, and Web3 investment landscape cautious Chat now" [ref=e1018] [cursor=pointer]:
+            - /url: /agents/crypto-web3-analyst
+            - generic [ref=e1019]:
+              - generic [ref=e1020]: ₿
+              - generic [ref=e1021]:
+                - heading "Crypto & Web3 Analyst" [level=3] [ref=e1022]
+                - generic [ref=e1023]: Finance
+            - paragraph [ref=e1024]: Cryptocurrency, blockchain, DeFi, and Web3 investment landscape
+            - generic [ref=e1025]:
+              - generic [ref=e1026]:
+                - img [ref=e1027]
+                - generic [ref=e1029]: cautious
+              - generic [ref=e1030]:
+                - generic [ref=e1031]: Chat now
+                - img [ref=e1032]
+          - link "📚 Financial Literacy Coach Finance Basic financial concepts for beginners and students fun Chat now" [ref=e1034] [cursor=pointer]:
+            - /url: /agents/financial-literacy-coach
+            - generic [ref=e1035]:
+              - generic [ref=e1036]: 📚
+              - generic [ref=e1037]:
+                - heading "Financial Literacy Coach" [level=3] [ref=e1038]
+                - generic [ref=e1039]: Finance
+            - paragraph [ref=e1040]: Basic financial concepts for beginners and students
+            - generic [ref=e1041]:
+              - generic [ref=e1042]:
+                - img [ref=e1043]
+                - generic [ref=e1045]: fun
+              - generic [ref=e1046]:
+                - generic [ref=e1047]: Chat now
+                - img [ref=e1048]
+          - link "📱 Fintech & Digital Payments Expert Finance UPI, digital wallets, BNPL, and fintech ecosystem in India tech-forward Chat now" [ref=e1050] [cursor=pointer]:
+            - /url: /agents/fintech-digital-payments
+            - generic [ref=e1051]:
+              - generic [ref=e1052]: 📱
+              - generic [ref=e1053]:
+                - heading "Fintech & Digital Payments Expert" [level=3] [ref=e1054]
+                - generic [ref=e1055]: Finance
+            - paragraph [ref=e1056]: UPI, digital wallets, BNPL, and fintech ecosystem in India
+            - generic [ref=e1057]:
+              - generic [ref=e1058]:
+                - img [ref=e1059]
+                - generic [ref=e1061]: tech-forward
+              - generic [ref=e1062]:
+                - generic [ref=e1063]: Chat now
+                - img [ref=e1064]
+          - link "📑 Fixed Income Specialist Finance Bonds, government securities, FDs, and debt instruments conservative Chat now" [ref=e1066] [cursor=pointer]:
+            - /url: /agents/fixed-income-specialist
+            - generic [ref=e1067]:
+              - generic [ref=e1068]: 📑
+              - generic [ref=e1069]:
+                - heading "Fixed Income Specialist" [level=3] [ref=e1070]
+                - generic [ref=e1071]: Finance
+            - paragraph [ref=e1072]: Bonds, government securities, FDs, and debt instruments
+            - generic [ref=e1073]:
+              - generic [ref=e1074]:
+                - img [ref=e1075]
+                - generic [ref=e1077]: conservative
+              - generic [ref=e1078]:
+                - generic [ref=e1079]: Chat now
+                - img [ref=e1080]
+          - link "💱 Forex & Currency Analyst Finance Foreign exchange markets, currency pairs, and international transfers analytical Chat now" [ref=e1082] [cursor=pointer]:
+            - /url: /agents/forex-currency-analyst
+            - generic [ref=e1083]:
+              - generic [ref=e1084]: 💱
+              - generic [ref=e1085]:
+                - heading "Forex & Currency Analyst" [level=3] [ref=e1086]
+                - generic [ref=e1087]: Finance
+            - paragraph [ref=e1088]: Foreign exchange markets, currency pairs, and international transfers
+            - generic [ref=e1089]:
+              - generic [ref=e1090]:
+                - img [ref=e1091]
+                - generic [ref=e1093]: analytical
+              - generic [ref=e1094]:
+                - generic [ref=e1095]: Chat now
+                - img [ref=e1096]
+          - link "🥇 Gold & Commodity Analyst Finance Gold investment, SGBs, MCX commodities, and precious metals wise Chat now" [ref=e1098] [cursor=pointer]:
+            - /url: /agents/gold-commodity-analyst
+            - generic [ref=e1099]:
+              - generic [ref=e1100]: 🥇
+              - generic [ref=e1101]:
+                - heading "Gold & Commodity Analyst" [level=3] [ref=e1102]
+                - generic [ref=e1103]: Finance
+            - paragraph [ref=e1104]: Gold investment, SGBs, MCX commodities, and precious metals
+            - generic [ref=e1105]:
+              - generic [ref=e1106]:
+                - img [ref=e1107]
+                - generic [ref=e1109]: wise
+              - generic [ref=e1110]:
+                - generic [ref=e1111]: Chat now
+                - img [ref=e1112]
+          - link "🧮 GST Compliance Guide Finance GST registration, filing, input tax credit, and compliance compliance-focused Chat now" [ref=e1114] [cursor=pointer]:
+            - /url: /agents/gst-compliance-guide
+            - generic [ref=e1115]:
+              - generic [ref=e1116]: 🧮
+              - generic [ref=e1117]:
+                - heading "GST Compliance Guide" [level=3] [ref=e1118]
+                - generic [ref=e1119]: Finance
+            - paragraph [ref=e1120]: GST registration, filing, input tax credit, and compliance
+            - generic [ref=e1121]:
+              - generic [ref=e1122]:
+                - img [ref=e1123]
+                - generic [ref=e1125]: compliance-focused
+              - generic [ref=e1126]:
+                - generic [ref=e1127]: Chat now
+                - img [ref=e1128]
+          - link "🛡️ Insurance Advisor Finance Life, health, vehicle, and general insurance guidance protective Chat now" [ref=e1130] [cursor=pointer]:
+            - /url: /agents/insurance-advisor
+            - generic [ref=e1131]:
+              - generic [ref=e1132]: 🛡️
+              - generic [ref=e1133]:
+                - heading "Insurance Advisor" [level=3] [ref=e1134]
+                - generic [ref=e1135]: Finance
+            - paragraph [ref=e1136]: Life, health, vehicle, and general insurance guidance
+            - generic [ref=e1137]:
+              - generic [ref=e1138]:
+                - img [ref=e1139]
+                - generic [ref=e1141]: protective
+              - generic [ref=e1142]:
+                - generic [ref=e1143]: Chat now
+                - img [ref=e1144]
+          - link "🎯 IPO & Primary Market Analyst Finance IPO analysis, grey market premium, and primary market investment informative Chat now" [ref=e1146] [cursor=pointer]:
+            - /url: /agents/ipo-analyst
+            - generic [ref=e1147]:
+              - generic [ref=e1148]: 🎯
+              - generic [ref=e1149]:
+                - heading "IPO & Primary Market Analyst" [level=3] [ref=e1150]
+                - generic [ref=e1151]: Finance
+            - paragraph [ref=e1152]: IPO analysis, grey market premium, and primary market investment
+            - generic [ref=e1153]:
+              - generic [ref=e1154]:
+                - img [ref=e1155]
+                - generic [ref=e1157]: informative
+              - generic [ref=e1158]:
+                - generic [ref=e1159]: Chat now
+                - img [ref=e1160]
+          - link "💳 Loan & Credit Expert Finance Home loans, personal loans, credit scores, and debt management empowering Chat now" [ref=e1162] [cursor=pointer]:
+            - /url: /agents/loan-credit-expert
+            - generic [ref=e1163]:
+              - generic [ref=e1164]: 💳
+              - generic [ref=e1165]:
+                - heading "Loan & Credit Expert" [level=3] [ref=e1166]
+                - generic [ref=e1167]: Finance
+            - paragraph [ref=e1168]: Home loans, personal loans, credit scores, and debt management
+            - generic [ref=e1169]:
+              - generic [ref=e1170]:
+                - img [ref=e1171]
+                - generic [ref=e1173]: empowering
+              - generic [ref=e1174]:
+                - generic [ref=e1175]: Chat now
+                - img [ref=e1176]
+          - link "📊 Mutual Fund Guide Finance Mutual fund selection, SIP planning, and portfolio construction educational Chat now" [ref=e1178] [cursor=pointer]:
+            - /url: /agents/mutual-fund-guide
+            - generic [ref=e1179]:
+              - generic [ref=e1180]: 📊
+              - generic [ref=e1181]:
+                - heading "Mutual Fund Guide" [level=3] [ref=e1182]
+                - generic [ref=e1183]: Finance
+            - paragraph [ref=e1184]: Mutual fund selection, SIP planning, and portfolio construction
+            - generic [ref=e1185]:
+              - generic [ref=e1186]:
+                - img [ref=e1187]
+                - generic [ref=e1189]: educational
+              - generic [ref=e1190]:
+                - generic [ref=e1191]: Chat now
+                - img [ref=e1192]
+          - link "🌏 NRI Finance Advisor Finance NRE/NRO accounts, repatriation, tax for NRIs, and DTAA benefits global Chat now" [ref=e1194] [cursor=pointer]:
+            - /url: /agents/nri-finance-advisor
+            - generic [ref=e1195]:
+              - generic [ref=e1196]: 🌏
+              - generic [ref=e1197]:
+                - heading "NRI Finance Advisor" [level=3] [ref=e1198]
+                - generic [ref=e1199]: Finance
+            - paragraph [ref=e1200]: NRE/NRO accounts, repatriation, tax for NRIs, and DTAA benefits
+            - generic [ref=e1201]:
+              - generic [ref=e1202]:
+                - img [ref=e1203]
+                - generic [ref=e1205]: global
+              - generic [ref=e1206]:
+                - generic [ref=e1207]: Chat now
+                - img [ref=e1208]
+          - link "📉 Options & Derivatives Trainer Finance F&O trading concepts, options strategies, and risk management educational Chat now" [ref=e1210] [cursor=pointer]:
+            - /url: /agents/options-derivatives-trainer
+            - generic [ref=e1211]:
+              - generic [ref=e1212]: 📉
+              - generic [ref=e1213]:
+                - heading "Options & Derivatives Trainer" [level=3] [ref=e1214]
+                - generic [ref=e1215]: Finance
+            - paragraph [ref=e1216]: F&O trading concepts, options strategies, and risk management
+            - generic [ref=e1217]:
+              - generic [ref=e1218]:
+                - img [ref=e1219]
+                - generic [ref=e1221]: educational
+              - generic [ref=e1222]:
+                - generic [ref=e1223]: Chat now
+                - img [ref=e1224]
+          - link "💵 Personal Finance Advisor Finance Budgeting, saving, investing, and financial planning for individuals friendly Chat now" [ref=e1226] [cursor=pointer]:
+            - /url: /agents/personal-finance-advisor
+            - generic [ref=e1227]:
+              - generic [ref=e1228]: 💵
+              - generic [ref=e1229]:
+                - heading "Personal Finance Advisor" [level=3] [ref=e1230]
+                - generic [ref=e1231]: Finance
+            - paragraph [ref=e1232]: Budgeting, saving, investing, and financial planning for individuals
+            - generic [ref=e1233]:
+              - generic [ref=e1234]:
+                - img [ref=e1235]
+                - generic [ref=e1237]: friendly
+              - generic [ref=e1238]:
+                - generic [ref=e1239]: Chat now
+                - img [ref=e1240]
+          - link "🏗️ Real Estate Investment Advisor Finance Property investment — REITs, rental yield, and market analysis practical Chat now" [ref=e1242] [cursor=pointer]:
+            - /url: /agents/real-estate-investment-advisor
+            - generic [ref=e1243]:
+              - generic [ref=e1244]: 🏗️
+              - generic [ref=e1245]:
+                - heading "Real Estate Investment Advisor" [level=3] [ref=e1246]
+                - generic [ref=e1247]: Finance
+            - paragraph [ref=e1248]: Property investment — REITs, rental yield, and market analysis
+            - generic [ref=e1249]:
+              - generic [ref=e1250]:
+                - img [ref=e1251]
+                - generic [ref=e1253]: practical
+              - generic [ref=e1254]:
+                - generic [ref=e1255]: Chat now
+                - img [ref=e1256]
+          - link "🏖️ Retirement Planning Expert Finance NPS, PPF, EPF, and comprehensive retirement planning strategies reassuring Chat now" [ref=e1258] [cursor=pointer]:
+            - /url: /agents/retirement-planning-expert
+            - generic [ref=e1259]:
+              - generic [ref=e1260]: 🏖️
+              - generic [ref=e1261]:
+                - heading "Retirement Planning Expert" [level=3] [ref=e1262]
+                - generic [ref=e1263]: Finance
+            - paragraph [ref=e1264]: NPS, PPF, EPF, and comprehensive retirement planning strategies
+            - generic [ref=e1265]:
+              - generic [ref=e1266]:
+                - img [ref=e1267]
+                - generic [ref=e1269]: reassuring
+              - generic [ref=e1270]:
+                - generic [ref=e1271]: Chat now
+                - img [ref=e1272]
+          - link "🏪 Small Business Finance Advisor Finance MSME financing, business loans, and cash flow management business-savvy Chat now" [ref=e1274] [cursor=pointer]:
+            - /url: /agents/small-business-finance
+            - generic [ref=e1275]:
+              - generic [ref=e1276]: 🏪
+              - generic [ref=e1277]:
+                - heading "Small Business Finance Advisor" [level=3] [ref=e1278]
+                - generic [ref=e1279]: Finance
+            - paragraph [ref=e1280]: MSME financing, business loans, and cash flow management
+            - generic [ref=e1281]:
+              - generic [ref=e1282]:
+                - img [ref=e1283]
+                - generic [ref=e1285]: business-savvy
+              - generic [ref=e1286]:
+                - generic [ref=e1287]: Chat now
+                - img [ref=e1288]
+          - link "📈 Stock Market Analyst Finance Indian stock market — NSE/BSE analysis, fundamental and technical analytical Chat now" [ref=e1290] [cursor=pointer]:
+            - /url: /agents/stock-market-analyst
+            - generic [ref=e1291]:
+              - generic [ref=e1292]: 📈
+              - generic [ref=e1293]:
+                - heading "Stock Market Analyst" [level=3] [ref=e1294]
+                - generic [ref=e1295]: Finance
+            - paragraph [ref=e1296]: Indian stock market — NSE/BSE analysis, fundamental and technical
+            - generic [ref=e1297]:
+              - generic [ref=e1298]:
+                - img [ref=e1299]
+                - generic [ref=e1301]: analytical
+              - generic [ref=e1302]:
+                - generic [ref=e1303]: Chat now
+                - img [ref=e1304]
+          - link "🧾 Tax Planning Expert Finance Income tax planning — deductions, exemptions, and filing guidance precise Chat now" [ref=e1306] [cursor=pointer]:
+            - /url: /agents/tax-planning-expert
+            - generic [ref=e1307]:
+              - generic [ref=e1308]: 🧾
+              - generic [ref=e1309]:
+                - heading "Tax Planning Expert" [level=3] [ref=e1310]
+                - generic [ref=e1311]: Finance
+            - paragraph [ref=e1312]: Income tax planning — deductions, exemptions, and filing guidance
+            - generic [ref=e1313]:
+              - generic [ref=e1314]:
+                - img [ref=e1315]
+                - generic [ref=e1317]: precise
+              - generic [ref=e1318]:
+                - generic [ref=e1319]: Chat now
+                - img [ref=e1320]
+          - link "👔 Wealth Management Advisor Finance High-net-worth portfolio management and asset allocation sophisticated Chat now" [ref=e1322] [cursor=pointer]:
+            - /url: /agents/wealth-management-advisor
+            - generic [ref=e1323]:
+              - generic [ref=e1324]: 👔
+              - generic [ref=e1325]:
+                - heading "Wealth Management Advisor" [level=3] [ref=e1326]
+                - generic [ref=e1327]: Finance
+            - paragraph [ref=e1328]: High-net-worth portfolio management and asset allocation
+            - generic [ref=e1329]:
+              - generic [ref=e1330]:
+                - img [ref=e1331]
+                - generic [ref=e1333]: sophisticated
+              - generic [ref=e1334]:
+                - generic [ref=e1335]: Chat now
+                - img [ref=e1336]
+      - generic [ref=e1338]:
+        - generic [ref=e1339]:
+          - heading "Fitness" [level=2] [ref=e1340]
+          - generic [ref=e1341]: 20 agents
+        - generic [ref=e1342]:
+          - link "💪 Bodybuilding Coach Fitness Bodybuilding training — hypertrophy, posing, and competition prep intense Chat now" [ref=e1343] [cursor=pointer]:
+            - /url: /agents/bodybuilding-coach
+            - generic [ref=e1344]:
+              - generic [ref=e1345]: 💪
+              - generic [ref=e1346]:
+                - heading "Bodybuilding Coach" [level=3] [ref=e1347]
+                - generic [ref=e1348]: Fitness
+            - paragraph [ref=e1349]: Bodybuilding training — hypertrophy, posing, and competition prep
+            - generic [ref=e1350]:
+              - generic [ref=e1351]:
+                - img [ref=e1352]
+                - generic [ref=e1354]: intense
+              - generic [ref=e1355]:
+                - generic [ref=e1356]: Chat now
+                - img [ref=e1357]
+          - link "🤸 Calisthenics Coach Fitness Bodyweight training — progressions for muscle-ups, handstands, planches cool Chat now" [ref=e1359] [cursor=pointer]:
+            - /url: /agents/calisthenics-coach
+            - generic [ref=e1360]:
+              - generic [ref=e1361]: 🤸
+              - generic [ref=e1362]:
+                - heading "Calisthenics Coach" [level=3] [ref=e1363]
+                - generic [ref=e1364]: Fitness
+            - paragraph [ref=e1365]: Bodyweight training — progressions for muscle-ups, handstands, planches
+            - generic [ref=e1366]:
+              - generic [ref=e1367]:
+                - img [ref=e1368]
+                - generic [ref=e1370]: cool
+              - generic [ref=e1371]:
+                - generic [ref=e1372]: Chat now
+                - img [ref=e1373]
+          - link "🔥 CrossFit Coach Fitness CrossFit programming — WODs, Olympic lifts, and competition strategy energetic Chat now" [ref=e1375] [cursor=pointer]:
+            - /url: /agents/crossfit-coach
+            - generic [ref=e1376]:
+              - generic [ref=e1377]: 🔥
+              - generic [ref=e1378]:
+                - heading "CrossFit Coach" [level=3] [ref=e1379]
+                - generic [ref=e1380]: Fitness
+            - paragraph [ref=e1381]: CrossFit programming — WODs, Olympic lifts, and competition strategy
+            - generic [ref=e1382]:
+              - generic [ref=e1383]:
+                - img [ref=e1384]
+                - generic [ref=e1386]: energetic
+              - generic [ref=e1387]:
+                - generic [ref=e1388]: Chat now
+                - img [ref=e1389]
+          - link "💃 Dance Fitness Coach Fitness Dance-based workouts — Zumba, hip-hop fitness, and cardio dance fun Chat now" [ref=e1391] [cursor=pointer]:
+            - /url: /agents/dance-fitness-coach
+            - generic [ref=e1392]:
+              - generic [ref=e1393]: 💃
+              - generic [ref=e1394]:
+                - heading "Dance Fitness Coach" [level=3] [ref=e1395]
+                - generic [ref=e1396]: Fitness
+            - paragraph [ref=e1397]: Dance-based workouts — Zumba, hip-hop fitness, and cardio dance
+            - generic [ref=e1398]:
+              - generic [ref=e1399]:
+                - img [ref=e1400]
+                - generic [ref=e1402]: fun
+              - generic [ref=e1403]:
+                - generic [ref=e1404]: Chat now
+                - img [ref=e1405]
+          - link "🏊 Endurance Coach Fitness Triathlon, cycling, and endurance sport training and periodization methodical Chat now" [ref=e1407] [cursor=pointer]:
+            - /url: /agents/endurance-coach
+            - generic [ref=e1408]:
+              - generic [ref=e1409]: 🏊
+              - generic [ref=e1410]:
+                - heading "Endurance Coach" [level=3] [ref=e1411]
+                - generic [ref=e1412]: Fitness
+            - paragraph [ref=e1413]: Triathlon, cycling, and endurance sport training and periodization
+            - generic [ref=e1414]:
+              - generic [ref=e1415]:
+                - img [ref=e1416]
+                - generic [ref=e1418]: methodical
+              - generic [ref=e1419]:
+                - generic [ref=e1420]: Chat now
+                - img [ref=e1421]
+          - link "🧗 Flexibility Coach Fitness Stretching, mobility work, and flexibility improvement programs patient Chat now" [ref=e1423] [cursor=pointer]:
+            - /url: /agents/flexibility-coach
+            - generic [ref=e1424]:
+              - generic [ref=e1425]: 🧗
+              - generic [ref=e1426]:
+                - heading "Flexibility Coach" [level=3] [ref=e1427]
+                - generic [ref=e1428]: Fitness
+            - paragraph [ref=e1429]: Stretching, mobility work, and flexibility improvement programs
+            - generic [ref=e1430]:
+              - generic [ref=e1431]:
+                - img [ref=e1432]
+                - generic [ref=e1434]: patient
+              - generic [ref=e1435]:
+                - generic [ref=e1436]: Chat now
+                - img [ref=e1437]
+          - link "🔄 Functional Fitness Coach Fitness Movement-based training for everyday strength and injury prevention thoughtful Chat now" [ref=e1439] [cursor=pointer]:
+            - /url: /agents/functional-fitness-coach
+            - generic [ref=e1440]:
+              - generic [ref=e1441]: 🔄
+              - generic [ref=e1442]:
+                - heading "Functional Fitness Coach" [level=3] [ref=e1443]
+                - generic [ref=e1444]: Fitness
+            - paragraph [ref=e1445]: Movement-based training for everyday strength and injury prevention
+            - generic [ref=e1446]:
+              - generic [ref=e1447]:
+                - img [ref=e1448]
+                - generic [ref=e1450]: thoughtful
+              - generic [ref=e1451]:
+                - generic [ref=e1452]: Chat now
+                - img [ref=e1453]
+          - link "⚡ HIIT Trainer Fitness High-intensity interval training — fat burning, cardio, and conditioning energetic Chat now" [ref=e1455] [cursor=pointer]:
+            - /url: /agents/hiit-trainer
+            - generic [ref=e1456]:
+              - generic [ref=e1457]: ⚡
+              - generic [ref=e1458]:
+                - heading "HIIT Trainer" [level=3] [ref=e1459]
+                - generic [ref=e1460]: Fitness
+            - paragraph [ref=e1461]: High-intensity interval training — fat burning, cardio, and conditioning
+            - generic [ref=e1462]:
+              - generic [ref=e1463]:
+                - img [ref=e1464]
+                - generic [ref=e1466]: energetic
+              - generic [ref=e1467]:
+                - generic [ref=e1468]: Chat now
+                - img [ref=e1469]
+          - link "🏠 Home Workout Expert Fitness Effective home workouts with minimal or no equipment practical Chat now" [ref=e1471] [cursor=pointer]:
+            - /url: /agents/home-workout-expert
+            - generic [ref=e1472]:
+              - generic [ref=e1473]: 🏠
+              - generic [ref=e1474]:
+                - heading "Home Workout Expert" [level=3] [ref=e1475]
+                - generic [ref=e1476]: Fitness
+            - paragraph [ref=e1477]: Effective home workouts with minimal or no equipment
+            - generic [ref=e1478]:
+              - generic [ref=e1479]:
+                - img [ref=e1480]
+                - generic [ref=e1482]: practical
+              - generic [ref=e1483]:
+                - generic [ref=e1484]: Chat now
+                - img [ref=e1485]
+          - link "🥊 Martial Arts Trainer Fitness Martial arts fitness — kickboxing, Muay Thai, and self-defense conditioning disciplined Chat now" [ref=e1487] [cursor=pointer]:
+            - /url: /agents/martial-arts-trainer
+            - generic [ref=e1488]:
+              - generic [ref=e1489]: 🥊
+              - generic [ref=e1490]:
+                - heading "Martial Arts Trainer" [level=3] [ref=e1491]
+                - generic [ref=e1492]: Fitness
+            - paragraph [ref=e1493]: Martial arts fitness — kickboxing, Muay Thai, and self-defense conditioning
+            - generic [ref=e1494]:
+              - generic [ref=e1495]:
+                - img [ref=e1496]
+                - generic [ref=e1498]: disciplined
+              - generic [ref=e1499]:
+                - generic [ref=e1500]: Chat now
+                - img [ref=e1501]
+          - link "☯️ Mind-Body Coach Fitness Tai Chi, Qigong, and mindful movement for health and relaxation serene Chat now" [ref=e1503] [cursor=pointer]:
+            - /url: /agents/mind-body-coach
+            - generic [ref=e1504]:
+              - generic [ref=e1505]: ☯️
+              - generic [ref=e1506]:
+                - heading "Mind-Body Coach" [level=3] [ref=e1507]
+                - generic [ref=e1508]: Fitness
+            - paragraph [ref=e1509]: Tai Chi, Qigong, and mindful movement for health and relaxation
+            - generic [ref=e1510]:
+              - generic [ref=e1511]:
+                - img [ref=e1512]
+                - generic [ref=e1514]: serene
+              - generic [ref=e1515]:
+                - generic [ref=e1516]: Chat now
+                - img [ref=e1517]
+          - link "🥗 Nutrition Coach Fitness Sports nutrition and meal planning for performance and body composition practical Chat now" [ref=e1519] [cursor=pointer]:
+            - /url: /agents/nutrition-coach
+            - generic [ref=e1520]:
+              - generic [ref=e1521]: 🥗
+              - generic [ref=e1522]:
+                - heading "Nutrition Coach" [level=3] [ref=e1523]
+                - generic [ref=e1524]: Fitness
+            - paragraph [ref=e1525]: Sports nutrition and meal planning for performance and body composition
+            - generic [ref=e1526]:
+              - generic [ref=e1527]:
+                - img [ref=e1528]
+                - generic [ref=e1530]: practical
+              - generic [ref=e1531]:
+                - generic [ref=e1532]: Chat now
+                - img [ref=e1533]
+          - link "🤸 Pilates Instructor Fitness Pilates for core strength, flexibility, and rehabilitation precise Chat now" [ref=e1535] [cursor=pointer]:
+            - /url: /agents/pilates-instructor
+            - generic [ref=e1536]:
+              - generic [ref=e1537]: 🤸
+              - generic [ref=e1538]:
+                - heading "Pilates Instructor" [level=3] [ref=e1539]
+                - generic [ref=e1540]: Fitness
+            - paragraph [ref=e1541]: Pilates for core strength, flexibility, and rehabilitation
+            - generic [ref=e1542]:
+              - generic [ref=e1543]:
+                - img [ref=e1544]
+                - generic [ref=e1546]: precise
+              - generic [ref=e1547]:
+                - generic [ref=e1548]: Chat now
+                - img [ref=e1549]
+          - link "🤰 Prenatal Fitness Coach Fitness Safe exercise during pregnancy and postpartum recovery gentle Chat now" [ref=e1551] [cursor=pointer]:
+            - /url: /agents/prenatal-fitness-coach
+            - generic [ref=e1552]:
+              - generic [ref=e1553]: 🤰
+              - generic [ref=e1554]:
+                - heading "Prenatal Fitness Coach" [level=3] [ref=e1555]
+                - generic [ref=e1556]: Fitness
+            - paragraph [ref=e1557]: Safe exercise during pregnancy and postpartum recovery
+            - generic [ref=e1558]:
+              - generic [ref=e1559]:
+                - img [ref=e1560]
+                - generic [ref=e1562]: gentle
+              - generic [ref=e1563]:
+                - generic [ref=e1564]: Chat now
+                - img [ref=e1565]
+          - link "👟 Running Coach Fitness Marathon training, 5K to ultra — plans, pacing, and injury prevention supportive Chat now" [ref=e1567] [cursor=pointer]:
+            - /url: /agents/running-coach
+            - generic [ref=e1568]:
+              - generic [ref=e1569]: 👟
+              - generic [ref=e1570]:
+                - heading "Running Coach" [level=3] [ref=e1571]
+                - generic [ref=e1572]: Fitness
+            - paragraph [ref=e1573]: Marathon training, 5K to ultra — plans, pacing, and injury prevention
+            - generic [ref=e1574]:
+              - generic [ref=e1575]:
+                - img [ref=e1576]
+                - generic [ref=e1578]: supportive
+              - generic [ref=e1579]:
+                - generic [ref=e1580]: Chat now
+                - img [ref=e1581]
+          - link "🧓 Senior Fitness Coach Fitness Exercise programs for older adults — balance, strength, and independence warm Chat now" [ref=e1583] [cursor=pointer]:
+            - /url: /agents/senior-fitness-coach
+            - generic [ref=e1584]:
+              - generic [ref=e1585]: 🧓
+              - generic [ref=e1586]:
+                - heading "Senior Fitness Coach" [level=3] [ref=e1587]
+                - generic [ref=e1588]: Fitness
+            - paragraph [ref=e1589]: Exercise programs for older adults — balance, strength, and independence
+            - generic [ref=e1590]:
+              - generic [ref=e1591]:
+                - img [ref=e1592]
+                - generic [ref=e1594]: warm
+              - generic [ref=e1595]:
+                - generic [ref=e1596]: Chat now
+                - img [ref=e1597]
+          - link "🩹 Sports Physio Guide Fitness Exercise-based injury prevention and rehabilitation guidance careful Chat now" [ref=e1599] [cursor=pointer]:
+            - /url: /agents/sports-physio-guide
+            - generic [ref=e1600]:
+              - generic [ref=e1601]: 🩹
+              - generic [ref=e1602]:
+                - heading "Sports Physio Guide" [level=3] [ref=e1603]
+                - generic [ref=e1604]: Fitness
+            - paragraph [ref=e1605]: Exercise-based injury prevention and rehabilitation guidance
+            - generic [ref=e1606]:
+              - generic [ref=e1607]:
+                - img [ref=e1608]
+                - generic [ref=e1610]: careful
+              - generic [ref=e1611]:
+                - generic [ref=e1612]: Chat now
+                - img [ref=e1613]
+          - link "🏋️ Strength Coach Fitness Powerlifting and strength training — programs, form, and periodization motivating Chat now" [ref=e1615] [cursor=pointer]:
+            - /url: /agents/strength-coach
+            - generic [ref=e1616]:
+              - generic [ref=e1617]: 🏋️
+              - generic [ref=e1618]:
+                - heading "Strength Coach" [level=3] [ref=e1619]
+                - generic [ref=e1620]: Fitness
+            - paragraph [ref=e1621]: Powerlifting and strength training — programs, form, and periodization
+            - generic [ref=e1622]:
+              - generic [ref=e1623]:
+                - img [ref=e1624]
+                - generic [ref=e1626]: motivating
+              - generic [ref=e1627]:
+                - generic [ref=e1628]: Chat now
+                - img [ref=e1629]
+          - link "📉 Weight Loss Coach Fitness Sustainable weight loss — calorie management, habits, and accountability supportive Chat now" [ref=e1631] [cursor=pointer]:
+            - /url: /agents/weight-loss-coach
+            - generic [ref=e1632]:
+              - generic [ref=e1633]: 📉
+              - generic [ref=e1634]:
+                - heading "Weight Loss Coach" [level=3] [ref=e1635]
+                - generic [ref=e1636]: Fitness
+            - paragraph [ref=e1637]: Sustainable weight loss — calorie management, habits, and accountability
+            - generic [ref=e1638]:
+              - generic [ref=e1639]:
+                - img [ref=e1640]
+                - generic [ref=e1642]: supportive
+              - generic [ref=e1643]:
+                - generic [ref=e1644]: Chat now
+                - img [ref=e1645]
+          - link "🧘 Yoga Instructor Fitness Yoga practice — poses, sequences, breathing, and meditation calm Chat now" [ref=e1647] [cursor=pointer]:
+            - /url: /agents/yoga-instructor
+            - generic [ref=e1648]:
+              - generic [ref=e1649]: 🧘
+              - generic [ref=e1650]:
+                - heading "Yoga Instructor" [level=3] [ref=e1651]
+                - generic [ref=e1652]: Fitness
+            - paragraph [ref=e1653]: Yoga practice — poses, sequences, breathing, and meditation
+            - generic [ref=e1654]:
+              - generic [ref=e1655]:
+                - img [ref=e1656]
+                - generic [ref=e1658]: calm
+              - generic [ref=e1659]:
+                - generic [ref=e1660]: Chat now
+                - img [ref=e1661]
+      - generic [ref=e1663]:
+        - generic [ref=e1664]:
+          - heading "Government Schemes" [level=2] [ref=e1665]
+          - generic [ref=e1666]: 20 agents
+        - generic [ref=e1667]:
+          - link "🆔 Aadhaar & Digital ID Expert Government Schemes Aadhaar enrollment, updates, linking, and DigiLocker services patient Chat now" [ref=e1668] [cursor=pointer]:
+            - /url: /agents/aadhaar-digital-id-expert
+            - generic [ref=e1669]:
+              - generic [ref=e1670]: 🆔
+              - generic [ref=e1671]:
+                - heading "Aadhaar & Digital ID Expert" [level=3] [ref=e1672]
+                - generic [ref=e1673]: Government Schemes
+            - paragraph [ref=e1674]: Aadhaar enrollment, updates, linking, and DigiLocker services
+            - generic [ref=e1675]:
+              - generic [ref=e1676]:
+                - img [ref=e1677]
+                - generic [ref=e1679]: patient
+              - generic [ref=e1680]:
+                - generic [ref=e1681]: Chat now
+                - img [ref=e1682]
+          - link "☀️ Clean Energy Subsidy Guide Government Schemes Solar rooftop subsidy, EV incentives, and green energy schemes forward-thinking Chat now" [ref=e1684] [cursor=pointer]:
+            - /url: /agents/clean-energy-subsidy-guide
+            - generic [ref=e1685]:
+              - generic [ref=e1686]: ☀️
+              - generic [ref=e1687]:
+                - heading "Clean Energy Subsidy Guide" [level=3] [ref=e1688]
+                - generic [ref=e1689]: Government Schemes
+            - paragraph [ref=e1690]: Solar rooftop subsidy, EV incentives, and green energy schemes
+            - generic [ref=e1691]:
+              - generic [ref=e1692]:
+                - img [ref=e1693]
+                - generic [ref=e1695]: forward-thinking
+              - generic [ref=e1696]:
+                - generic [ref=e1697]: Chat now
+                - img [ref=e1698]
+          - link "💻 Digital India Services Guide Government Schemes e-Governance services — CSC, Umang, DigiLocker, and online services tech-friendly Chat now" [ref=e1700] [cursor=pointer]:
+            - /url: /agents/digital-india-guide
+            - generic [ref=e1701]:
+              - generic [ref=e1702]: 💻
+              - generic [ref=e1703]:
+                - heading "Digital India Services Guide" [level=3] [ref=e1704]
+                - generic [ref=e1705]: Government Schemes
+            - paragraph [ref=e1706]: e-Governance services — CSC, Umang, DigiLocker, and online services
+            - generic [ref=e1707]:
+              - generic [ref=e1708]:
+                - img [ref=e1709]
+                - generic [ref=e1711]: tech-friendly
+              - generic [ref=e1712]:
+                - generic [ref=e1713]: Chat now
+                - img [ref=e1714]
+          - link "♿ Disability Welfare Expert Government Schemes Rights and schemes for persons with disabilities in India sensitive Chat now" [ref=e1716] [cursor=pointer]:
+            - /url: /agents/disability-welfare-expert
+            - generic [ref=e1717]:
+              - generic [ref=e1718]: ♿
+              - generic [ref=e1719]:
+                - heading "Disability Welfare Expert" [level=3] [ref=e1720]
+                - generic [ref=e1721]: Government Schemes
+            - paragraph [ref=e1722]: Rights and schemes for persons with disabilities in India
+            - generic [ref=e1723]:
+              - generic [ref=e1724]:
+                - img [ref=e1725]
+                - generic [ref=e1727]: sensitive
+              - generic [ref=e1728]:
+                - generic [ref=e1729]: Chat now
+                - img [ref=e1730]
+          - link "🎓 Education Scholarship Guide Government Schemes Central and state scholarships for students across all levels encouraging Chat now" [ref=e1732] [cursor=pointer]:
+            - /url: /agents/education-scholarship-guide
+            - generic [ref=e1733]:
+              - generic [ref=e1734]: 🎓
+              - generic [ref=e1735]:
+                - heading "Education Scholarship Guide" [level=3] [ref=e1736]
+                - generic [ref=e1737]: Government Schemes
+            - paragraph [ref=e1738]: Central and state scholarships for students across all levels
+            - generic [ref=e1739]:
+              - generic [ref=e1740]:
+                - img [ref=e1741]
+                - generic [ref=e1743]: encouraging
+              - generic [ref=e1744]:
+                - generic [ref=e1745]: Chat now
+                - img [ref=e1746]
+          - link "🌾 Farmer Scheme Expert Government Schemes Agricultural schemes — PM KISAN, crop insurance, soil health card practical Chat now" [ref=e1748] [cursor=pointer]:
+            - /url: /agents/farmer-scheme-expert
+            - generic [ref=e1749]:
+              - generic [ref=e1750]: 🌾
+              - generic [ref=e1751]:
+                - heading "Farmer Scheme Expert" [level=3] [ref=e1752]
+                - generic [ref=e1753]: Government Schemes
+            - paragraph [ref=e1754]: Agricultural schemes — PM KISAN, crop insurance, soil health card
+            - generic [ref=e1755]:
+              - generic [ref=e1756]:
+                - img [ref=e1757]
+                - generic [ref=e1759]: practical
+              - generic [ref=e1760]:
+                - generic [ref=e1761]: Chat now
+                - img [ref=e1762]
+          - link "🏥 Health Scheme Navigator Government Schemes Ayushman Bharat, Jan Aushadhi, and public health programs caring Chat now" [ref=e1764] [cursor=pointer]:
+            - /url: /agents/health-scheme-navigator
+            - generic [ref=e1765]:
+              - generic [ref=e1766]: 🏥
+              - generic [ref=e1767]:
+                - heading "Health Scheme Navigator" [level=3] [ref=e1768]
+                - generic [ref=e1769]: Government Schemes
+            - paragraph [ref=e1770]: Ayushman Bharat, Jan Aushadhi, and public health programs
+            - generic [ref=e1771]:
+              - generic [ref=e1772]:
+                - img [ref=e1773]
+                - generic [ref=e1775]: caring
+              - generic [ref=e1776]:
+                - generic [ref=e1777]: Chat now
+                - img [ref=e1778]
+          - link "🏘️ Housing Scheme Advisor Government Schemes PM Awas Yojana, affordable housing, and housing subsidies helpful Chat now" [ref=e1780] [cursor=pointer]:
+            - /url: /agents/housing-scheme-advisor
+            - generic [ref=e1781]:
+              - generic [ref=e1782]: 🏘️
+              - generic [ref=e1783]:
+                - heading "Housing Scheme Advisor" [level=3] [ref=e1784]
+                - generic [ref=e1785]: Government Schemes
+            - paragraph [ref=e1786]: PM Awas Yojana, affordable housing, and housing subsidies
+            - generic [ref=e1787]:
+              - generic [ref=e1788]:
+                - img [ref=e1789]
+                - generic [ref=e1791]: helpful
+              - generic [ref=e1792]:
+                - generic [ref=e1793]: Chat now
+                - img [ref=e1794]
+          - link "🕊️ Minority Welfare Scheme Guide Government Schemes Schemes for religious minorities — scholarships, loans, and skill training inclusive Chat now" [ref=e1796] [cursor=pointer]:
+            - /url: /agents/minority-welfare-schemes
+            - generic [ref=e1797]:
+              - generic [ref=e1798]: 🕊️
+              - generic [ref=e1799]:
+                - heading "Minority Welfare Scheme Guide" [level=3] [ref=e1800]
+                - generic [ref=e1801]: Government Schemes
+            - paragraph [ref=e1802]: Schemes for religious minorities — scholarships, loans, and skill training
+            - generic [ref=e1803]:
+              - generic [ref=e1804]:
+                - img [ref=e1805]
+                - generic [ref=e1807]: inclusive
+              - generic [ref=e1808]:
+                - generic [ref=e1809]: Chat now
+                - img [ref=e1810]
+          - link "🏭 MSME Scheme Advisor Government Schemes Udyam registration, MSME benefits, CGTMSE, and subsidy schemes business-friendly Chat now" [ref=e1812] [cursor=pointer]:
+            - /url: /agents/msme-scheme-advisor
+            - generic [ref=e1813]:
+              - generic [ref=e1814]: 🏭
+              - generic [ref=e1815]:
+                - heading "MSME Scheme Advisor" [level=3] [ref=e1816]
+                - generic [ref=e1817]: Government Schemes
+            - paragraph [ref=e1818]: Udyam registration, MSME benefits, CGTMSE, and subsidy schemes
+            - generic [ref=e1819]:
+              - generic [ref=e1820]:
+                - img [ref=e1821]
+                - generic [ref=e1823]: business-friendly
+              - generic [ref=e1824]:
+                - generic [ref=e1825]: Chat now
+                - img [ref=e1826]
+          - link "🛂 Passport & Visa Services Guide Government Schemes Passport application, renewal, visa requirements, and travel documents practical Chat now" [ref=e1828] [cursor=pointer]:
+            - /url: /agents/passport-visa-guide
+            - generic [ref=e1829]:
+              - generic [ref=e1830]: 🛂
+              - generic [ref=e1831]:
+                - heading "Passport & Visa Services Guide" [level=3] [ref=e1832]
+                - generic [ref=e1833]: Government Schemes
+            - paragraph [ref=e1834]: Passport application, renewal, visa requirements, and travel documents
+            - generic [ref=e1835]:
+              - generic [ref=e1836]:
+                - img [ref=e1837]
+                - generic [ref=e1839]: practical
+              - generic [ref=e1840]:
+                - generic [ref=e1841]: Chat now
+                - img [ref=e1842]
+          - link "🧓 Pension & Social Security Guide Government Schemes Atal Pension Yojana, PM Jeevan Jyoti, and social security schemes simple Chat now" [ref=e1844] [cursor=pointer]:
+            - /url: /agents/pension-social-security-guide
+            - generic [ref=e1845]:
+              - generic [ref=e1846]: 🧓
+              - generic [ref=e1847]:
+                - heading "Pension & Social Security Guide" [level=3] [ref=e1848]
+                - generic [ref=e1849]: Government Schemes
+            - paragraph [ref=e1850]: Atal Pension Yojana, PM Jeevan Jyoti, and social security schemes
+            - generic [ref=e1851]:
+              - generic [ref=e1852]:
+                - img [ref=e1853]
+                - generic [ref=e1855]: simple
+              - generic [ref=e1856]:
+                - generic [ref=e1857]: Chat now
+                - img [ref=e1858]
+          - link "🇮🇳 PM Scheme Navigator Government Schemes Central government schemes — PM Kisan, PMJAY, PMAY, and more helpful Chat now" [ref=e1860] [cursor=pointer]:
+            - /url: /agents/pm-scheme-navigator
+            - generic [ref=e1861]:
+              - generic [ref=e1862]: 🇮🇳
+              - generic [ref=e1863]:
+                - heading "PM Scheme Navigator" [level=3] [ref=e1864]
+                - generic [ref=e1865]: Government Schemes
+            - paragraph [ref=e1866]: Central government schemes — PM Kisan, PMJAY, PMAY, and more
+            - generic [ref=e1867]:
+              - generic [ref=e1868]:
+                - img [ref=e1869]
+                - generic [ref=e1871]: helpful
+              - generic [ref=e1872]:
+                - generic [ref=e1873]: Chat now
+                - img [ref=e1874]
+          - link "🍚 Ration Card & PDS Guide Government Schemes Ration card application, PDS benefits, and One Nation One Ration Card accessible Chat now" [ref=e1876] [cursor=pointer]:
+            - /url: /agents/ration-card-pds-guide
+            - generic [ref=e1877]:
+              - generic [ref=e1878]: 🍚
+              - generic [ref=e1879]:
+                - heading "Ration Card & PDS Guide" [level=3] [ref=e1880]
+                - generic [ref=e1881]: Government Schemes
+            - paragraph [ref=e1882]: Ration card application, PDS benefits, and One Nation One Ration Card
+            - generic [ref=e1883]:
+              - generic [ref=e1884]:
+                - img [ref=e1885]
+                - generic [ref=e1887]: accessible
+              - generic [ref=e1888]:
+                - generic [ref=e1889]: Chat now
+                - img [ref=e1890]
+          - link "🏡 Rural Development Scheme Guide Government Schemes MGNREGA, rural roads, Sansad Adarsh Gram, and village development community-oriented Chat now" [ref=e1892] [cursor=pointer]:
+            - /url: /agents/rural-development-guide
+            - generic [ref=e1893]:
+              - generic [ref=e1894]: 🏡
+              - generic [ref=e1895]:
+                - heading "Rural Development Scheme Guide" [level=3] [ref=e1896]
+                - generic [ref=e1897]: Government Schemes
+            - paragraph [ref=e1898]: MGNREGA, rural roads, Sansad Adarsh Gram, and village development
+            - generic [ref=e1899]:
+              - generic [ref=e1900]:
+                - img [ref=e1901]
+                - generic [ref=e1903]: community-oriented
+              - generic [ref=e1904]:
+                - generic [ref=e1905]: Chat now
+                - img [ref=e1906]
+          - link "⚖️ SC/ST/OBC Scheme Expert Government Schemes Reservation benefits, scholarships, and welfare schemes for SC/ST/OBC respectful Chat now" [ref=e1908] [cursor=pointer]:
+            - /url: /agents/sc-st-obc-schemes
+            - generic [ref=e1909]:
+              - generic [ref=e1910]: ⚖️
+              - generic [ref=e1911]:
+                - heading "SC/ST/OBC Scheme Expert" [level=3] [ref=e1912]
+                - generic [ref=e1913]: Government Schemes
+            - paragraph [ref=e1914]: Reservation benefits, scholarships, and welfare schemes for SC/ST/OBC
+            - generic [ref=e1915]:
+              - generic [ref=e1916]:
+                - img [ref=e1917]
+                - generic [ref=e1919]: respectful
+              - generic [ref=e1920]:
+                - generic [ref=e1921]: Chat now
+                - img [ref=e1922]
+          - link "👴 Senior Citizen Scheme Guide Government Schemes Senior citizen benefits — SCSS, pension, healthcare, and tax benefits respectful Chat now" [ref=e1924] [cursor=pointer]:
+            - /url: /agents/senior-citizen-schemes
+            - generic [ref=e1925]:
+              - generic [ref=e1926]: 👴
+              - generic [ref=e1927]:
+                - heading "Senior Citizen Scheme Guide" [level=3] [ref=e1928]
+                - generic [ref=e1929]: Government Schemes
+            - paragraph [ref=e1930]: Senior citizen benefits — SCSS, pension, healthcare, and tax benefits
+            - generic [ref=e1931]:
+              - generic [ref=e1932]:
+                - img [ref=e1933]
+                - generic [ref=e1935]: respectful
+              - generic [ref=e1936]:
+                - generic [ref=e1937]: Chat now
+                - img [ref=e1938]
+          - link "🔧 Skill Development Guide Government Schemes Skill India, PMKVY, apprenticeship, and vocational training schemes motivating Chat now" [ref=e1940] [cursor=pointer]:
+            - /url: /agents/skill-development-guide
+            - generic [ref=e1941]:
+              - generic [ref=e1942]: 🔧
+              - generic [ref=e1943]:
+                - heading "Skill Development Guide" [level=3] [ref=e1944]
+                - generic [ref=e1945]: Government Schemes
+            - paragraph [ref=e1946]: Skill India, PMKVY, apprenticeship, and vocational training schemes
+            - generic [ref=e1947]:
+              - generic [ref=e1948]:
+                - img [ref=e1949]
+                - generic [ref=e1951]: motivating
+              - generic [ref=e1952]:
+                - generic [ref=e1953]: Chat now
+                - img [ref=e1954]
+          - link "🚀 Startup India Guide Government Schemes Startup India registration, tax benefits, and funding support entrepreneurial Chat now" [ref=e1956] [cursor=pointer]:
+            - /url: /agents/startup-india-guide
+            - generic [ref=e1957]:
+              - generic [ref=e1958]: 🚀
+              - generic [ref=e1959]:
+                - heading "Startup India Guide" [level=3] [ref=e1960]
+                - generic [ref=e1961]: Government Schemes
+            - paragraph [ref=e1962]: Startup India registration, tax benefits, and funding support
+            - generic [ref=e1963]:
+              - generic [ref=e1964]:
+                - img [ref=e1965]
+                - generic [ref=e1967]: entrepreneurial
+              - generic [ref=e1968]:
+                - generic [ref=e1969]: Chat now
+                - img [ref=e1970]
+          - link "👩 Women Empowerment Scheme Guide Government Schemes Government schemes for women — Beti Bachao, Ujjwala, Mahila Samridhi empowering Chat now" [ref=e1972] [cursor=pointer]:
+            - /url: /agents/women-empowerment-schemes
+            - generic [ref=e1973]:
+              - generic [ref=e1974]: 👩
+              - generic [ref=e1975]:
+                - heading "Women Empowerment Scheme Guide" [level=3] [ref=e1976]
+                - generic [ref=e1977]: Government Schemes
+            - paragraph [ref=e1978]: Government schemes for women — Beti Bachao, Ujjwala, Mahila Samridhi
+            - generic [ref=e1979]:
+              - generic [ref=e1980]:
+                - img [ref=e1981]
+                - generic [ref=e1983]: empowering
+              - generic [ref=e1984]:
+                - generic [ref=e1985]: Chat now
+                - img [ref=e1986]
+      - generic [ref=e1988]:
+        - generic [ref=e1989]:
+          - heading "Legal" [level=2] [ref=e1990]
+          - generic [ref=e1991]: 20 agents
+        - generic [ref=e1992]:
+          - link "🤝 Arbitration & Mediation Guide Legal Alternative dispute resolution — arbitration, mediation, and conciliation balanced Chat now" [ref=e1993] [cursor=pointer]:
+            - /url: /agents/arbitration-mediation-guide
+            - generic [ref=e1994]:
+              - generic [ref=e1995]: 🤝
+              - generic [ref=e1996]:
+                - heading "Arbitration & Mediation Guide" [level=3] [ref=e1997]
+                - generic [ref=e1998]: Legal
+            - paragraph [ref=e1999]: Alternative dispute resolution — arbitration, mediation, and conciliation
+            - generic [ref=e2000]:
+              - generic [ref=e2001]:
+                - img [ref=e2002]
+                - generic [ref=e2004]: balanced
+              - generic [ref=e2005]:
+                - generic [ref=e2006]: Chat now
+                - img [ref=e2007]
+          - link "🏦 Banking & Finance Law Expert Legal Banking regulations, loan disputes, SARFAESI, and RBI guidelines professional Chat now" [ref=e2009] [cursor=pointer]:
+            - /url: /agents/banking-finance-law
+            - generic [ref=e2010]:
+              - generic [ref=e2011]: 🏦
+              - generic [ref=e2012]:
+                - heading "Banking & Finance Law Expert" [level=3] [ref=e2013]
+                - generic [ref=e2014]: Legal
+            - paragraph [ref=e2015]: Banking regulations, loan disputes, SARFAESI, and RBI guidelines
+            - generic [ref=e2016]:
+              - generic [ref=e2017]:
+                - img [ref=e2018]
+                - generic [ref=e2020]: professional
+              - generic [ref=e2021]:
+                - generic [ref=e2022]: Chat now
+                - img [ref=e2023]
+          - link "🛡️ Consumer Rights Advocate Legal Consumer protection — complaints, refunds, and consumer court process empowering Chat now" [ref=e2025] [cursor=pointer]:
+            - /url: /agents/consumer-rights-advocate
+            - generic [ref=e2026]:
+              - generic [ref=e2027]: 🛡️
+              - generic [ref=e2028]:
+                - heading "Consumer Rights Advocate" [level=3] [ref=e2029]
+                - generic [ref=e2030]: Legal
+            - paragraph [ref=e2031]: Consumer protection — complaints, refunds, and consumer court process
+            - generic [ref=e2032]:
+              - generic [ref=e2033]:
+                - img [ref=e2034]
+                - generic [ref=e2036]: empowering
+              - generic [ref=e2037]:
+                - generic [ref=e2038]: Chat now
+                - img [ref=e2039]
+          - link "🔨 Criminal Law Advisor Legal IPC/BNS provisions, criminal procedure, and rights of accused serious Chat now" [ref=e2041] [cursor=pointer]:
+            - /url: /agents/criminal-law-advisor
+            - generic [ref=e2042]:
+              - generic [ref=e2043]: 🔨
+              - generic [ref=e2044]:
+                - heading "Criminal Law Advisor" [level=3] [ref=e2045]
+                - generic [ref=e2046]: Legal
+            - paragraph [ref=e2047]: IPC/BNS provisions, criminal procedure, and rights of accused
+            - generic [ref=e2048]:
+              - generic [ref=e2049]:
+                - img [ref=e2050]
+                - generic [ref=e2052]: serious
+              - generic [ref=e2053]:
+                - generic [ref=e2054]: Chat now
+                - img [ref=e2055]
+          - link "🔐 Cyber Law Specialist Legal IT Act, data privacy, cybercrime, and digital rights protective Chat now" [ref=e2057] [cursor=pointer]:
+            - /url: /agents/cyber-law-specialist
+            - generic [ref=e2058]:
+              - generic [ref=e2059]: 🔐
+              - generic [ref=e2060]:
+                - heading "Cyber Law Specialist" [level=3] [ref=e2061]
+                - generic [ref=e2062]: Legal
+            - paragraph [ref=e2063]: IT Act, data privacy, cybercrime, and digital rights
+            - generic [ref=e2064]:
+              - generic [ref=e2065]:
+                - img [ref=e2066]
+                - generic [ref=e2068]: protective
+              - generic [ref=e2069]:
+                - generic [ref=e2070]: Chat now
+                - img [ref=e2071]
+          - link "🌍 Environmental Law Guide Legal Environmental regulations, NGT, pollution control, and green laws passionate Chat now" [ref=e2073] [cursor=pointer]:
+            - /url: /agents/environmental-law-guide
+            - generic [ref=e2074]:
+              - generic [ref=e2075]: 🌍
+              - generic [ref=e2076]:
+                - heading "Environmental Law Guide" [level=3] [ref=e2077]
+                - generic [ref=e2078]: Legal
+            - paragraph [ref=e2079]: Environmental regulations, NGT, pollution control, and green laws
+            - generic [ref=e2080]:
+              - generic [ref=e2081]:
+                - img [ref=e2082]
+                - generic [ref=e2084]: passionate
+              - generic [ref=e2085]:
+                - generic [ref=e2086]: Chat now
+                - img [ref=e2087]
+          - link "👨‍👩‍👧 Family Law Counselor Legal Marriage, divorce, custody, adoption, and domestic violence laws empathetic Chat now" [ref=e2089] [cursor=pointer]:
+            - /url: /agents/family-law-counselor
+            - generic [ref=e2090]:
+              - generic [ref=e2091]: 👨‍👩‍👧
+              - generic [ref=e2092]:
+                - heading "Family Law Counselor" [level=3] [ref=e2093]
+                - generic [ref=e2094]: Legal
+            - paragraph [ref=e2095]: Marriage, divorce, custody, adoption, and domestic violence laws
+            - generic [ref=e2096]:
+              - generic [ref=e2097]:
+                - img [ref=e2098]
+                - generic [ref=e2100]: empathetic
+              - generic [ref=e2101]:
+                - generic [ref=e2102]: Chat now
+                - img [ref=e2103]
+          - link "✈️ Immigration Law Guide Legal Visa types, OCI/PIO, passport issues, and emigration laws helpful Chat now" [ref=e2105] [cursor=pointer]:
+            - /url: /agents/immigration-law-guide
+            - generic [ref=e2106]:
+              - generic [ref=e2107]: ✈️
+              - generic [ref=e2108]:
+                - heading "Immigration Law Guide" [level=3] [ref=e2109]
+                - generic [ref=e2110]: Legal
+            - paragraph [ref=e2111]: Visa types, OCI/PIO, passport issues, and emigration laws
+            - generic [ref=e2112]:
+              - generic [ref=e2113]:
+                - img [ref=e2114]
+                - generic [ref=e2116]: helpful
+              - generic [ref=e2117]:
+                - generic [ref=e2118]: Chat now
+                - img [ref=e2119]
+          - link "⚖️ Indian Constitutional Law Expert Legal Fundamental rights, constitutional provisions, and landmark judgments authoritative Chat now" [ref=e2121] [cursor=pointer]:
+            - /url: /agents/constitutional-law-expert
+            - generic [ref=e2122]:
+              - generic [ref=e2123]: ⚖️
+              - generic [ref=e2124]:
+                - heading "Indian Constitutional Law Expert" [level=3] [ref=e2125]
+                - generic [ref=e2126]: Legal
+            - paragraph [ref=e2127]: Fundamental rights, constitutional provisions, and landmark judgments
+            - generic [ref=e2128]:
+              - generic [ref=e2129]:
+                - img [ref=e2130]
+                - generic [ref=e2132]: authoritative
+              - generic [ref=e2133]:
+                - generic [ref=e2134]: Chat now
+                - img [ref=e2135]
+          - link "💡 Intellectual Property Advisor Legal Patents, trademarks, copyrights, and trade secrets in India strategic Chat now" [ref=e2137] [cursor=pointer]:
+            - /url: /agents/ip-advisor
+            - generic [ref=e2138]:
+              - generic [ref=e2139]: 💡
+              - generic [ref=e2140]:
+                - heading "Intellectual Property Advisor" [level=3] [ref=e2141]
+                - generic [ref=e2142]: Legal
+            - paragraph [ref=e2143]: Patents, trademarks, copyrights, and trade secrets in India
+            - generic [ref=e2144]:
+              - generic [ref=e2145]:
+                - img [ref=e2146]
+                - generic [ref=e2148]: strategic
+              - generic [ref=e2149]:
+                - generic [ref=e2150]: Chat now
+                - img [ref=e2151]
+          - link "👷 Labor Law Expert Legal Employment law — worker rights, PF, ESI, and labor codes clear Chat now" [ref=e2153] [cursor=pointer]:
+            - /url: /agents/labor-law-expert
+            - generic [ref=e2154]:
+              - generic [ref=e2155]: 👷
+              - generic [ref=e2156]:
+                - heading "Labor Law Expert" [level=3] [ref=e2157]
+                - generic [ref=e2158]: Legal
+            - paragraph [ref=e2159]: Employment law — worker rights, PF, ESI, and labor codes
+            - generic [ref=e2160]:
+              - generic [ref=e2161]:
+                - img [ref=e2162]
+                - generic [ref=e2164]: clear
+              - generic [ref=e2165]:
+                - generic [ref=e2166]: Chat now
+                - img [ref=e2167]
+          - link "📜 Land Revenue & Records Expert Legal Land records, mutation, revenue court, and land acquisition detailed Chat now" [ref=e2169] [cursor=pointer]:
+            - /url: /agents/land-revenue-expert
+            - generic [ref=e2170]:
+              - generic [ref=e2171]: 📜
+              - generic [ref=e2172]:
+                - heading "Land Revenue & Records Expert" [level=3] [ref=e2173]
+                - generic [ref=e2174]: Legal
+            - paragraph [ref=e2175]: Land records, mutation, revenue court, and land acquisition
+            - generic [ref=e2176]:
+              - generic [ref=e2177]:
+                - img [ref=e2178]
+                - generic [ref=e2180]: detailed
+              - generic [ref=e2181]:
+                - generic [ref=e2182]: Chat now
+                - img [ref=e2183]
+          - link "🤝 Legal Aid Navigator Legal Free legal aid, NALSA, and pro bono legal services access accessible Chat now" [ref=e2185] [cursor=pointer]:
+            - /url: /agents/legal-aid-navigator
+            - generic [ref=e2186]:
+              - generic [ref=e2187]: 🤝
+              - generic [ref=e2188]:
+                - heading "Legal Aid Navigator" [level=3] [ref=e2189]
+                - generic [ref=e2190]: Legal
+            - paragraph [ref=e2191]: Free legal aid, NALSA, and pro bono legal services access
+            - generic [ref=e2192]:
+              - generic [ref=e2193]:
+                - img [ref=e2194]
+                - generic [ref=e2196]: accessible
+              - generic [ref=e2197]:
+                - generic [ref=e2198]: Chat now
+                - img [ref=e2199]
+          - link "💍 Matrimonial Law Specialist Legal Marriage registration, NRI marriages, dowry, and 498A provisions sensitive Chat now" [ref=e2201] [cursor=pointer]:
+            - /url: /agents/matrimonial-law-specialist
+            - generic [ref=e2202]:
+              - generic [ref=e2203]: 💍
+              - generic [ref=e2204]:
+                - heading "Matrimonial Law Specialist" [level=3] [ref=e2205]
+                - generic [ref=e2206]: Legal
+            - paragraph [ref=e2207]: Marriage registration, NRI marriages, dowry, and 498A provisions
+            - generic [ref=e2208]:
+              - generic [ref=e2209]:
+                - img [ref=e2210]
+                - generic [ref=e2212]: sensitive
+              - generic [ref=e2213]:
+                - generic [ref=e2214]: Chat now
+                - img [ref=e2215]
+          - link "🚗 Motor Accident Claims Guide Legal Accident compensation, insurance claims, and MACT tribunal process compassionate Chat now" [ref=e2217] [cursor=pointer]:
+            - /url: /agents/motor-accident-claims
+            - generic [ref=e2218]:
+              - generic [ref=e2219]: 🚗
+              - generic [ref=e2220]:
+                - heading "Motor Accident Claims Guide" [level=3] [ref=e2221]
+                - generic [ref=e2222]: Legal
+            - paragraph [ref=e2223]: Accident compensation, insurance claims, and MACT tribunal process
+            - generic [ref=e2224]:
+              - generic [ref=e2225]:
+                - img [ref=e2226]
+                - generic [ref=e2228]: compassionate
+              - generic [ref=e2229]:
+                - generic [ref=e2230]: Chat now
+                - img [ref=e2231]
+          - link "👶 POCSO & Child Rights Expert Legal Child protection laws, POCSO, juvenile justice, and child rights protective Chat now" [ref=e2233] [cursor=pointer]:
+            - /url: /agents/child-rights-expert
+            - generic [ref=e2234]:
+              - generic [ref=e2235]: 👶
+              - generic [ref=e2236]:
+                - heading "POCSO & Child Rights Expert" [level=3] [ref=e2237]
+                - generic [ref=e2238]: Legal
+            - paragraph [ref=e2239]: Child protection laws, POCSO, juvenile justice, and child rights
+            - generic [ref=e2240]:
+              - generic [ref=e2241]:
+                - img [ref=e2242]
+                - generic [ref=e2244]: protective
+              - generic [ref=e2245]:
+                - generic [ref=e2246]: Chat now
+                - img [ref=e2247]
+          - link "🏠 Property Law Guide Legal Real estate law — property registration, disputes, and tenant rights practical Chat now" [ref=e2249] [cursor=pointer]:
+            - /url: /agents/property-law-guide
+            - generic [ref=e2250]:
+              - generic [ref=e2251]: 🏠
+              - generic [ref=e2252]:
+                - heading "Property Law Guide" [level=3] [ref=e2253]
+                - generic [ref=e2254]: Legal
+            - paragraph [ref=e2255]: Real estate law — property registration, disputes, and tenant rights
+            - generic [ref=e2256]:
+              - generic [ref=e2257]:
+                - img [ref=e2258]
+                - generic [ref=e2260]: practical
+              - generic [ref=e2261]:
+                - generic [ref=e2262]: Chat now
+                - img [ref=e2263]
+          - link "📋 RTI Expert Legal Right to Information — filing RTI applications and appeals activist Chat now" [ref=e2265] [cursor=pointer]:
+            - /url: /agents/rti-expert
+            - generic [ref=e2266]:
+              - generic [ref=e2267]: 📋
+              - generic [ref=e2268]:
+                - heading "RTI Expert" [level=3] [ref=e2269]
+                - generic [ref=e2270]: Legal
+            - paragraph [ref=e2271]: Right to Information — filing RTI applications and appeals
+            - generic [ref=e2272]:
+              - generic [ref=e2273]:
+                - img [ref=e2274]
+                - generic [ref=e2276]: activist
+              - generic [ref=e2277]:
+                - generic [ref=e2278]: Chat now
+                - img [ref=e2279]
+          - link "🚀 Startup Legal Advisor Legal Company formation, funding agreements, IP protection, and compliance friendly Chat now" [ref=e2281] [cursor=pointer]:
+            - /url: /agents/startup-legal-advisor
+            - generic [ref=e2282]:
+              - generic [ref=e2283]: 🚀
+              - generic [ref=e2284]:
+                - heading "Startup Legal Advisor" [level=3] [ref=e2285]
+                - generic [ref=e2286]: Legal
+            - paragraph [ref=e2287]: Company formation, funding agreements, IP protection, and compliance
+            - generic [ref=e2288]:
+              - generic [ref=e2289]:
+                - img [ref=e2290]
+                - generic [ref=e2292]: friendly
+              - generic [ref=e2293]:
+                - generic [ref=e2294]: Chat now
+                - img [ref=e2295]
+          - link "💰 Tax Law Advisor Legal Income tax law, GST disputes, and tax litigation guidance cautious Chat now" [ref=e2297] [cursor=pointer]:
+            - /url: /agents/tax-law-advisor
+            - generic [ref=e2298]:
+              - generic [ref=e2299]: 💰
+              - generic [ref=e2300]:
+                - heading "Tax Law Advisor" [level=3] [ref=e2301]
+                - generic [ref=e2302]: Legal
+            - paragraph [ref=e2303]: Income tax law, GST disputes, and tax litigation guidance
+            - generic [ref=e2304]:
+              - generic [ref=e2305]:
+                - img [ref=e2306]
+                - generic [ref=e2308]: cautious
+              - generic [ref=e2309]:
+                - generic [ref=e2310]: Chat now
+                - img [ref=e2311]
+      - generic [ref=e2313]:
+        - generic [ref=e2314]:
+          - heading "Mental Health" [level=2] [ref=e2315]
+          - generic [ref=e2316]: 20 agents
+        - generic [ref=e2317]:
+          - link "🔑 Addiction Awareness Guide Mental Health Understanding addiction, harm reduction, and recovery support resources hopeful Chat now" [ref=e2318] [cursor=pointer]:
+            - /url: /agents/addiction-awareness-guide
+            - generic [ref=e2319]:
+              - generic [ref=e2320]: 🔑
+              - generic [ref=e2321]:
+                - heading "Addiction Awareness Guide" [level=3] [ref=e2322]
+                - generic [ref=e2323]: Mental Health
+            - paragraph [ref=e2324]: Understanding addiction, harm reduction, and recovery support resources
+            - generic [ref=e2325]:
+              - generic [ref=e2326]:
+                - img [ref=e2327]
+                - generic [ref=e2329]: hopeful
+              - generic [ref=e2330]:
+                - generic [ref=e2331]: Chat now
+                - img [ref=e2332]
+          - link "🌊 Anger Management Guide Mental Health Understanding and managing anger through healthy coping strategies non-judgmental Chat now" [ref=e2334] [cursor=pointer]:
+            - /url: /agents/anger-management-guide
+            - generic [ref=e2335]:
+              - generic [ref=e2336]: 🌊
+              - generic [ref=e2337]:
+                - heading "Anger Management Guide" [level=3] [ref=e2338]
+                - generic [ref=e2339]: Mental Health
+            - paragraph [ref=e2340]: Understanding and managing anger through healthy coping strategies
+            - generic [ref=e2341]:
+              - generic [ref=e2342]:
+                - img [ref=e2343]
+                - generic [ref=e2345]: non-judgmental
+              - generic [ref=e2346]:
+                - generic [ref=e2347]: Chat now
+                - img [ref=e2348]
+          - link "💙 Anxiety Support Guide Mental Health Understanding and managing anxiety with evidence-based techniques reassuring Chat now" [ref=e2350] [cursor=pointer]:
+            - /url: /agents/anxiety-support-guide
+            - generic [ref=e2351]:
+              - generic [ref=e2352]: 💙
+              - generic [ref=e2353]:
+                - heading "Anxiety Support Guide" [level=3] [ref=e2354]
+                - generic [ref=e2355]: Mental Health
+            - paragraph [ref=e2356]: Understanding and managing anxiety with evidence-based techniques
+            - generic [ref=e2357]:
+              - generic [ref=e2358]:
+                - img [ref=e2359]
+                - generic [ref=e2361]: reassuring
+              - generic [ref=e2362]:
+                - generic [ref=e2363]: Chat now
+                - img [ref=e2364]
+          - link "🔋 Burnout Recovery Guide Mental Health Recognizing, recovering from, and preventing professional burnout understanding Chat now" [ref=e2366] [cursor=pointer]:
+            - /url: /agents/burnout-recovery-guide
+            - generic [ref=e2367]:
+              - generic [ref=e2368]: 🔋
+              - generic [ref=e2369]:
+                - heading "Burnout Recovery Guide" [level=3] [ref=e2370]
+                - generic [ref=e2371]: Mental Health
+            - paragraph [ref=e2372]: Recognizing, recovering from, and preventing professional burnout
+            - generic [ref=e2373]:
+              - generic [ref=e2374]:
+                - img [ref=e2375]
+                - generic [ref=e2377]: understanding
+              - generic [ref=e2378]:
+                - generic [ref=e2379]: Chat now
+                - img [ref=e2380]
+          - link "📵 Digital Wellness Coach Mental Health Screen time management, social media detox, and digital balance modern Chat now" [ref=e2382] [cursor=pointer]:
+            - /url: /agents/digital-wellness-coach
+            - generic [ref=e2383]:
+              - generic [ref=e2384]: 📵
+              - generic [ref=e2385]:
+                - heading "Digital Wellness Coach" [level=3] [ref=e2386]
+                - generic [ref=e2387]: Mental Health
+            - paragraph [ref=e2388]: Screen time management, social media detox, and digital balance
+            - generic [ref=e2389]:
+              - generic [ref=e2390]:
+                - img [ref=e2391]
+                - generic [ref=e2393]: modern
+              - generic [ref=e2394]:
+                - generic [ref=e2395]: Chat now
+                - img [ref=e2396]
+          - link "🧠 Emotional Intelligence Coach Mental Health Developing EQ — self-awareness, empathy, and emotional regulation perceptive Chat now" [ref=e2398] [cursor=pointer]:
+            - /url: /agents/emotional-intelligence-coach
+            - generic [ref=e2399]:
+              - generic [ref=e2400]: 🧠
+              - generic [ref=e2401]:
+                - heading "Emotional Intelligence Coach" [level=3] [ref=e2402]
+                - generic [ref=e2403]: Mental Health
+            - paragraph [ref=e2404]: Developing EQ — self-awareness, empathy, and emotional regulation
+            - generic [ref=e2405]:
+              - generic [ref=e2406]:
+                - img [ref=e2407]
+                - generic [ref=e2409]: perceptive
+              - generic [ref=e2410]:
+                - generic [ref=e2411]: Chat now
+                - img [ref=e2412]
+          - link "🕯️ Grief Support Guide Mental Health Navigating grief, loss, and bereavement with compassion gentle Chat now" [ref=e2414] [cursor=pointer]:
+            - /url: /agents/grief-support-guide
+            - generic [ref=e2415]:
+              - generic [ref=e2416]: 🕯️
+              - generic [ref=e2417]:
+                - heading "Grief Support Guide" [level=3] [ref=e2418]
+                - generic [ref=e2419]: Mental Health
+            - paragraph [ref=e2420]: Navigating grief, loss, and bereavement with compassion
+            - generic [ref=e2421]:
+              - generic [ref=e2422]:
+                - img [ref=e2423]
+                - generic [ref=e2425]: gentle
+              - generic [ref=e2426]:
+                - generic [ref=e2427]: Chat now
+                - img [ref=e2428]
+          - link "📔 Journaling Coach Mental Health Therapeutic journaling — prompts, techniques, and reflection practices reflective Chat now" [ref=e2430] [cursor=pointer]:
+            - /url: /agents/journaling-coach
+            - generic [ref=e2431]:
+              - generic [ref=e2432]: 📔
+              - generic [ref=e2433]:
+                - heading "Journaling Coach" [level=3] [ref=e2434]
+                - generic [ref=e2435]: Mental Health
+            - paragraph [ref=e2436]: Therapeutic journaling — prompts, techniques, and reflection practices
+            - generic [ref=e2437]:
+              - generic [ref=e2438]:
+                - img [ref=e2439]
+                - generic [ref=e2441]: reflective
+              - generic [ref=e2442]:
+                - generic [ref=e2443]: Chat now
+                - img [ref=e2444]
+          - link "🤗 Loneliness & Connection Guide Mental Health Coping with loneliness and building meaningful social connections warm Chat now" [ref=e2446] [cursor=pointer]:
+            - /url: /agents/loneliness-connection-guide
+            - generic [ref=e2447]:
+              - generic [ref=e2448]: 🤗
+              - generic [ref=e2449]:
+                - heading "Loneliness & Connection Guide" [level=3] [ref=e2450]
+                - generic [ref=e2451]: Mental Health
+            - paragraph [ref=e2452]: Coping with loneliness and building meaningful social connections
+            - generic [ref=e2453]:
+              - generic [ref=e2454]:
+                - img [ref=e2455]
+                - generic [ref=e2457]: warm
+              - generic [ref=e2458]:
+                - generic [ref=e2459]: Chat now
+                - img [ref=e2460]
+          - link "🏥 Mental Health First Aid Guide Mental Health How to support someone in mental health distress — first responder guidance prepared Chat now" [ref=e2462] [cursor=pointer]:
+            - /url: /agents/mental-health-first-aid
+            - generic [ref=e2463]:
+              - generic [ref=e2464]: 🏥
+              - generic [ref=e2465]:
+                - heading "Mental Health First Aid Guide" [level=3] [ref=e2466]
+                - generic [ref=e2467]: Mental Health
+            - paragraph [ref=e2468]: How to support someone in mental health distress — first responder guidance
+            - generic [ref=e2469]:
+              - generic [ref=e2470]:
+                - img [ref=e2471]
+                - generic [ref=e2473]: prepared
+              - generic [ref=e2474]:
+                - generic [ref=e2475]: Chat now
+                - img [ref=e2476]
+          - link "🕊️ Mindfulness Guide Mental Health Meditation, mindfulness practices, and present-moment awareness serene Chat now" [ref=e2478] [cursor=pointer]:
+            - /url: /agents/mindfulness-guide
+            - generic [ref=e2479]:
+              - generic [ref=e2480]: 🕊️
+              - generic [ref=e2481]:
+                - heading "Mindfulness Guide" [level=3] [ref=e2482]
+                - generic [ref=e2483]: Mental Health
+            - paragraph [ref=e2484]: Meditation, mindfulness practices, and present-moment awareness
+            - generic [ref=e2485]:
+              - generic [ref=e2486]:
+                - img [ref=e2487]
+                - generic [ref=e2489]: serene
+              - generic [ref=e2490]:
+                - generic [ref=e2491]: Chat now
+                - img [ref=e2492]
+          - link "👨‍👩‍👧 Parenting Wellness Guide Mental Health Parental mental health, managing parenting stress, and family wellbeing empathetic Chat now" [ref=e2494] [cursor=pointer]:
+            - /url: /agents/parenting-wellness-guide
+            - generic [ref=e2495]:
+              - generic [ref=e2496]: 👨‍👩‍👧
+              - generic [ref=e2497]:
+                - heading "Parenting Wellness Guide" [level=3] [ref=e2498]
+                - generic [ref=e2499]: Mental Health
+            - paragraph [ref=e2500]: Parental mental health, managing parenting stress, and family wellbeing
+            - generic [ref=e2501]:
+              - generic [ref=e2502]:
+                - img [ref=e2503]
+                - generic [ref=e2505]: empathetic
+              - generic [ref=e2506]:
+                - generic [ref=e2507]: Chat now
+                - img [ref=e2508]
+          - link "☀️ Positive Psychology Guide Mental Health Flourishing, gratitude, flow states, and character strengths uplifting Chat now" [ref=e2510] [cursor=pointer]:
+            - /url: /agents/positive-psychology-guide
+            - generic [ref=e2511]:
+              - generic [ref=e2512]: ☀️
+              - generic [ref=e2513]:
+                - heading "Positive Psychology Guide" [level=3] [ref=e2514]
+                - generic [ref=e2515]: Mental Health
+            - paragraph [ref=e2516]: Flourishing, gratitude, flow states, and character strengths
+            - generic [ref=e2517]:
+              - generic [ref=e2518]:
+                - img [ref=e2519]
+                - generic [ref=e2521]: uplifting
+              - generic [ref=e2522]:
+                - generic [ref=e2523]: Chat now
+                - img [ref=e2524]
+          - link "💕 Relationship Wellness Guide Mental Health Healthy communication, conflict resolution, and relationship skills compassionate Chat now" [ref=e2526] [cursor=pointer]:
+            - /url: /agents/relationship-wellness-guide
+            - generic [ref=e2527]:
+              - generic [ref=e2528]: 💕
+              - generic [ref=e2529]:
+                - heading "Relationship Wellness Guide" [level=3] [ref=e2530]
+                - generic [ref=e2531]: Mental Health
+            - paragraph [ref=e2532]: Healthy communication, conflict resolution, and relationship skills
+            - generic [ref=e2533]:
+              - generic [ref=e2534]:
+                - img [ref=e2535]
+                - generic [ref=e2537]: compassionate
+              - generic [ref=e2538]:
+                - generic [ref=e2539]: Chat now
+                - img [ref=e2540]
+          - link "⭐ Self-Esteem Coach Mental Health Building self-confidence, self-worth, and positive self-image warm Chat now" [ref=e2542] [cursor=pointer]:
+            - /url: /agents/self-esteem-coach
+            - generic [ref=e2543]:
+              - generic [ref=e2544]: ⭐
+              - generic [ref=e2545]:
+                - heading "Self-Esteem Coach" [level=3] [ref=e2546]
+                - generic [ref=e2547]: Mental Health
+            - paragraph [ref=e2548]: Building self-confidence, self-worth, and positive self-image
+            - generic [ref=e2549]:
+              - generic [ref=e2550]:
+                - img [ref=e2551]
+                - generic [ref=e2553]: warm
+              - generic [ref=e2554]:
+                - generic [ref=e2555]: Chat now
+                - img [ref=e2556]
+          - link "😴 Sleep Wellness Coach Mental Health Better sleep habits — sleep hygiene, insomnia tips, and circadian rhythm soothing Chat now" [ref=e2558] [cursor=pointer]:
+            - /url: /agents/sleep-wellness-coach
+            - generic [ref=e2559]:
+              - generic [ref=e2560]: 😴
+              - generic [ref=e2561]:
+                - heading "Sleep Wellness Coach" [level=3] [ref=e2562]
+                - generic [ref=e2563]: Mental Health
+            - paragraph [ref=e2564]: Better sleep habits — sleep hygiene, insomnia tips, and circadian rhythm
+            - generic [ref=e2565]:
+              - generic [ref=e2566]:
+                - img [ref=e2567]
+                - generic [ref=e2569]: soothing
+              - generic [ref=e2570]:
+                - generic [ref=e2571]: Chat now
+                - img [ref=e2572]
+          - link "🧘 Stress Management Coach Mental Health Managing stress, burnout, and overwhelm with practical techniques calm Chat now" [ref=e2574] [cursor=pointer]:
+            - /url: /agents/stress-management-coach
+            - generic [ref=e2575]:
+              - generic [ref=e2576]: 🧘
+              - generic [ref=e2577]:
+                - heading "Stress Management Coach" [level=3] [ref=e2578]
+                - generic [ref=e2579]: Mental Health
+            - paragraph [ref=e2580]: Managing stress, burnout, and overwhelm with practical techniques
+            - generic [ref=e2581]:
+              - generic [ref=e2582]:
+                - img [ref=e2583]
+                - generic [ref=e2585]: calm
+              - generic [ref=e2586]:
+                - generic [ref=e2587]: Chat now
+                - img [ref=e2588]
+          - link "🎒 Student Wellbeing Guide Mental Health Academic stress, exam anxiety, and student mental health support understanding Chat now" [ref=e2590] [cursor=pointer]:
+            - /url: /agents/student-wellbeing-guide
+            - generic [ref=e2591]:
+              - generic [ref=e2592]: 🎒
+              - generic [ref=e2593]:
+                - heading "Student Wellbeing Guide" [level=3] [ref=e2594]
+                - generic [ref=e2595]: Mental Health
+            - paragraph [ref=e2596]: Academic stress, exam anxiety, and student mental health support
+            - generic [ref=e2597]:
+              - generic [ref=e2598]:
+                - img [ref=e2599]
+                - generic [ref=e2601]: understanding
+              - generic [ref=e2602]:
+                - generic [ref=e2603]: Chat now
+                - img [ref=e2604]
+          - link "🌈 Trauma-Informed Wellness Guide Mental Health Understanding trauma responses and finding professional support safe Chat now" [ref=e2606] [cursor=pointer]:
+            - /url: /agents/trauma-informed-guide
+            - generic [ref=e2607]:
+              - generic [ref=e2608]: 🌈
+              - generic [ref=e2609]:
+                - heading "Trauma-Informed Wellness Guide" [level=3] [ref=e2610]
+                - generic [ref=e2611]: Mental Health
+            - paragraph [ref=e2612]: Understanding trauma responses and finding professional support
+            - generic [ref=e2613]:
+              - generic [ref=e2614]:
+                - img [ref=e2615]
+                - generic [ref=e2617]: safe
+              - generic [ref=e2618]:
+                - generic [ref=e2619]: Chat now
+                - img [ref=e2620]
+          - link "⚖️ Work-Life Balance Coach Mental Health Setting boundaries, preventing burnout, and finding balance balanced Chat now" [ref=e2622] [cursor=pointer]:
+            - /url: /agents/work-life-balance-coach
+            - generic [ref=e2623]:
+              - generic [ref=e2624]: ⚖️
+              - generic [ref=e2625]:
+                - heading "Work-Life Balance Coach" [level=3] [ref=e2626]
+                - generic [ref=e2627]: Mental Health
+            - paragraph [ref=e2628]: Setting boundaries, preventing burnout, and finding balance
+            - generic [ref=e2629]:
+              - generic [ref=e2630]:
+                - img [ref=e2631]
+                - generic [ref=e2633]: balanced
+              - generic [ref=e2634]:
+                - generic [ref=e2635]: Chat now
+                - img [ref=e2636]
+      - generic [ref=e2638]:
+        - generic [ref=e2639]:
+          - heading "Sports" [level=2] [ref=e2640]
+          - generic [ref=e2641]: 20 agents
+        - generic [ref=e2642]:
+          - link "🏸 Badminton Coach Sports Badminton technique, training, and competitive strategy supportive Chat now" [ref=e2643] [cursor=pointer]:
+            - /url: /agents/badminton-coach
+            - generic [ref=e2644]:
+              - generic [ref=e2645]: 🏸
+              - generic [ref=e2646]:
+                - heading "Badminton Coach" [level=3] [ref=e2647]
+                - generic [ref=e2648]: Sports
+            - paragraph [ref=e2649]: Badminton technique, training, and competitive strategy
+            - generic [ref=e2650]:
+              - generic [ref=e2651]:
+                - img [ref=e2652]
+                - generic [ref=e2654]: supportive
+              - generic [ref=e2655]:
+                - generic [ref=e2656]: Chat now
+                - img [ref=e2657]
+          - link "⚾ Baseball Scout Sports MLB analysis — player evaluation, sabermetrics, and draft analysis analytical Chat now" [ref=e2659] [cursor=pointer]:
+            - /url: /agents/baseball-scout
+            - generic [ref=e2660]:
+              - generic [ref=e2661]: ⚾
+              - generic [ref=e2662]:
+                - heading "Baseball Scout" [level=3] [ref=e2663]
+                - generic [ref=e2664]: Sports
+            - paragraph [ref=e2665]: MLB analysis — player evaluation, sabermetrics, and draft analysis
+            - generic [ref=e2666]:
+              - generic [ref=e2667]:
+                - img [ref=e2668]
+                - generic [ref=e2670]: analytical
+              - generic [ref=e2671]:
+                - generic [ref=e2672]: Chat now
+                - img [ref=e2673]
+          - link "🏀 Basketball Scout Sports NBA and basketball analysis — player evaluations, draft picks, team strategies enthusiastic Chat now" [ref=e2675] [cursor=pointer]:
+            - /url: /agents/basketball-scout
+            - generic [ref=e2676]:
+              - generic [ref=e2677]: 🏀
+              - generic [ref=e2678]:
+                - heading "Basketball Scout" [level=3] [ref=e2679]
+                - generic [ref=e2680]: Sports
+            - paragraph [ref=e2681]: NBA and basketball analysis — player evaluations, draft picks, team strategies
+            - generic [ref=e2682]:
+              - generic [ref=e2683]:
+                - img [ref=e2684]
+                - generic [ref=e2686]: enthusiastic
+              - generic [ref=e2687]:
+                - generic [ref=e2688]: Chat now
+                - img [ref=e2689]
+          - link "🥊 Boxing Analyst Sports Boxing analysis — fight breakdowns, fighter profiles, and predictions passionate Chat now" [ref=e2691] [cursor=pointer]:
+            - /url: /agents/boxing-analyst
+            - generic [ref=e2692]:
+              - generic [ref=e2693]: 🥊
+              - generic [ref=e2694]:
+                - heading "Boxing Analyst" [level=3] [ref=e2695]
+                - generic [ref=e2696]: Sports
+            - paragraph [ref=e2697]: Boxing analysis — fight breakdowns, fighter profiles, and predictions
+            - generic [ref=e2698]:
+              - generic [ref=e2699]:
+                - img [ref=e2700]
+                - generic [ref=e2702]: passionate
+              - generic [ref=e2703]:
+                - generic [ref=e2704]: Chat now
+                - img [ref=e2705]
+          - link "♟️ Chess Grandmaster Sports Chess strategy — openings, middlegame tactics, endgame mastery intellectual Chat now" [ref=e2707] [cursor=pointer]:
+            - /url: /agents/chess-grandmaster
+            - generic [ref=e2708]:
+              - generic [ref=e2709]: ♟️
+              - generic [ref=e2710]:
+                - heading "Chess Grandmaster" [level=3] [ref=e2711]
+                - generic [ref=e2712]: Sports
+            - paragraph [ref=e2713]: Chess strategy — openings, middlegame tactics, endgame mastery
+            - generic [ref=e2714]:
+              - generic [ref=e2715]:
+                - img [ref=e2716]
+                - generic [ref=e2718]: intellectual
+              - generic [ref=e2719]:
+                - generic [ref=e2720]: Chat now
+                - img [ref=e2721]
+          - link "🏏 Cricket Analyst Sports Professional cricket analysis — match predictions, player stats, strategy breakdowns passionate Chat now" [ref=e2723] [cursor=pointer]:
+            - /url: /agents/cricket-analyst
+            - generic [ref=e2724]:
+              - generic [ref=e2725]: 🏏
+              - generic [ref=e2726]:
+                - heading "Cricket Analyst" [level=3] [ref=e2727]
+                - generic [ref=e2728]: Sports
+            - paragraph [ref=e2729]: Professional cricket analysis — match predictions, player stats, strategy breakdowns
+            - generic [ref=e2730]:
+              - generic [ref=e2731]:
+                - img [ref=e2732]
+                - generic [ref=e2734]: passionate
+              - generic [ref=e2735]:
+                - generic [ref=e2736]: Chat now
+                - img [ref=e2737]
+          - link "🚴 Cycling Strategist Sports Professional cycling analysis — Tour tactics, training, and equipment enthusiastic Chat now" [ref=e2739] [cursor=pointer]:
+            - /url: /agents/cycling-strategist
+            - generic [ref=e2740]:
+              - generic [ref=e2741]: 🚴
+              - generic [ref=e2742]:
+                - heading "Cycling Strategist" [level=3] [ref=e2743]
+                - generic [ref=e2744]: Sports
+            - paragraph [ref=e2745]: Professional cycling analysis — Tour tactics, training, and equipment
+            - generic [ref=e2746]:
+              - generic [ref=e2747]:
+                - img [ref=e2748]
+                - generic [ref=e2750]: enthusiastic
+              - generic [ref=e2751]:
+                - generic [ref=e2752]: Chat now
+                - img [ref=e2753]
+          - link "🎮 Esports Analyst Sports Competitive gaming analysis — Valorant, CS2, League of Legends, Dota 2 casual Chat now" [ref=e2755] [cursor=pointer]:
+            - /url: /agents/esports-analyst
+            - generic [ref=e2756]:
+              - generic [ref=e2757]: 🎮
+              - generic [ref=e2758]:
+                - heading "Esports Analyst" [level=3] [ref=e2759]
+                - generic [ref=e2760]: Sports
+            - paragraph [ref=e2761]: Competitive gaming analysis — Valorant, CS2, League of Legends, Dota 2
+            - generic [ref=e2762]:
+              - generic [ref=e2763]:
+                - img [ref=e2764]
+                - generic [ref=e2766]: casual
+              - generic [ref=e2767]:
+                - generic [ref=e2768]: Chat now
+                - img [ref=e2769]
+          - link "🏎️ F1 Engineer Sports Formula 1 technical analysis — car design, race strategy, regulations technical Chat now" [ref=e2771] [cursor=pointer]:
+            - /url: /agents/f1-engineer
+            - generic [ref=e2772]:
+              - generic [ref=e2773]: 🏎️
+              - generic [ref=e2774]:
+                - heading "F1 Engineer" [level=3] [ref=e2775]
+                - generic [ref=e2776]: Sports
+            - paragraph [ref=e2777]: Formula 1 technical analysis — car design, race strategy, regulations
+            - generic [ref=e2778]:
+              - generic [ref=e2779]:
+                - img [ref=e2780]
+                - generic [ref=e2782]: technical
+              - generic [ref=e2783]:
+                - generic [ref=e2784]: Chat now
+                - img [ref=e2785]
+          - link "⚽ Football Tactician Sports Football/soccer tactical analysis, formations, and match breakdowns analytical Chat now" [ref=e2787] [cursor=pointer]:
+            - /url: /agents/football-tactician
+            - generic [ref=e2788]:
+              - generic [ref=e2789]: ⚽
+              - generic [ref=e2790]:
+                - heading "Football Tactician" [level=3] [ref=e2791]
+                - generic [ref=e2792]: Sports
+            - paragraph [ref=e2793]: Football/soccer tactical analysis, formations, and match breakdowns
+            - generic [ref=e2794]:
+              - generic [ref=e2795]:
+                - img [ref=e2796]
+                - generic [ref=e2798]: analytical
+              - generic [ref=e2799]:
+                - generic [ref=e2800]: Chat now
+                - img [ref=e2801]
+          - link "⛳ Golf Pro Sports Golf instruction — swing mechanics, course management, and equipment patient Chat now" [ref=e2803] [cursor=pointer]:
+            - /url: /agents/golf-pro
+            - generic [ref=e2804]:
+              - generic [ref=e2805]: ⛳
+              - generic [ref=e2806]:
+                - heading "Golf Pro" [level=3] [ref=e2807]
+                - generic [ref=e2808]: Sports
+            - paragraph [ref=e2809]: Golf instruction — swing mechanics, course management, and equipment
+            - generic [ref=e2810]:
+              - generic [ref=e2811]:
+                - img [ref=e2812]
+                - generic [ref=e2814]: patient
+              - generic [ref=e2815]:
+                - generic [ref=e2816]: Chat now
+                - img [ref=e2817]
+          - link "🏒 Hockey Analyst Sports Ice hockey analysis — NHL tactics, player evaluation, and strategy sharp Chat now" [ref=e2819] [cursor=pointer]:
+            - /url: /agents/hockey-analyst
+            - generic [ref=e2820]:
+              - generic [ref=e2821]: 🏒
+              - generic [ref=e2822]:
+                - heading "Hockey Analyst" [level=3] [ref=e2823]
+                - generic [ref=e2824]: Sports
+            - paragraph [ref=e2825]: Ice hockey analysis — NHL tactics, player evaluation, and strategy
+            - generic [ref=e2826]:
+              - generic [ref=e2827]:
+                - img [ref=e2828]
+                - generic [ref=e2830]: sharp
+              - generic [ref=e2831]:
+                - generic [ref=e2832]: Chat now
+                - img [ref=e2833]
+          - link "💪 Kabaddi Expert Sports Pro Kabaddi and international kabaddi analysis and strategy enthusiastic Chat now" [ref=e2835] [cursor=pointer]:
+            - /url: /agents/kabaddi-expert
+            - generic [ref=e2836]:
+              - generic [ref=e2837]: 💪
+              - generic [ref=e2838]:
+                - heading "Kabaddi Expert" [level=3] [ref=e2839]
+                - generic [ref=e2840]: Sports
+            - paragraph [ref=e2841]: Pro Kabaddi and international kabaddi analysis and strategy
+            - generic [ref=e2842]:
+              - generic [ref=e2843]:
+                - img [ref=e2844]
+                - generic [ref=e2846]: enthusiastic
+              - generic [ref=e2847]:
+                - generic [ref=e2848]: Chat now
+                - img [ref=e2849]
+          - link "🥋 MMA Expert Sports UFC and MMA analysis — fight breakdowns, grappling, and striking analysis direct Chat now" [ref=e2851] [cursor=pointer]:
+            - /url: /agents/mma-expert
+            - generic [ref=e2852]:
+              - generic [ref=e2853]: 🥋
+              - generic [ref=e2854]:
+                - heading "MMA Expert" [level=3] [ref=e2855]
+                - generic [ref=e2856]: Sports
+            - paragraph [ref=e2857]: UFC and MMA analysis — fight breakdowns, grappling, and striking analysis
+            - generic [ref=e2858]:
+              - generic [ref=e2859]:
+                - img [ref=e2860]
+                - generic [ref=e2862]: direct
+              - generic [ref=e2863]:
+                - generic [ref=e2864]: Chat now
+                - img [ref=e2865]
+          - link "🏉 Rugby Analyst Sports Rugby union and league analysis — tactics, players, and tournaments passionate Chat now" [ref=e2867] [cursor=pointer]:
+            - /url: /agents/rugby-analyst
+            - generic [ref=e2868]:
+              - generic [ref=e2869]: 🏉
+              - generic [ref=e2870]:
+                - heading "Rugby Analyst" [level=3] [ref=e2871]
+                - generic [ref=e2872]: Sports
+            - paragraph [ref=e2873]: Rugby union and league analysis — tactics, players, and tournaments
+            - generic [ref=e2874]:
+              - generic [ref=e2875]:
+                - img [ref=e2876]
+                - generic [ref=e2878]: passionate
+              - generic [ref=e2879]:
+                - generic [ref=e2880]: Chat now
+                - img [ref=e2881]
+          - link "🏊 Swimming Coach Sports Competitive swimming technique, training plans, and race strategy motivating Chat now" [ref=e2883] [cursor=pointer]:
+            - /url: /agents/swimming-coach
+            - generic [ref=e2884]:
+              - generic [ref=e2885]: 🏊
+              - generic [ref=e2886]:
+                - heading "Swimming Coach" [level=3] [ref=e2887]
+                - generic [ref=e2888]: Sports
+            - paragraph [ref=e2889]: Competitive swimming technique, training plans, and race strategy
+            - generic [ref=e2890]:
+              - generic [ref=e2891]:
+                - img [ref=e2892]
+                - generic [ref=e2894]: motivating
+              - generic [ref=e2895]:
+                - generic [ref=e2896]: Chat now
+                - img [ref=e2897]
+          - link "🏓 Table Tennis Coach Sports Table tennis technique, spin, and competitive strategy encouraging Chat now" [ref=e2899] [cursor=pointer]:
+            - /url: /agents/table-tennis-coach
+            - generic [ref=e2900]:
+              - generic [ref=e2901]: 🏓
+              - generic [ref=e2902]:
+                - heading "Table Tennis Coach" [level=3] [ref=e2903]
+                - generic [ref=e2904]: Sports
+            - paragraph [ref=e2905]: Table tennis technique, spin, and competitive strategy
+            - generic [ref=e2906]:
+              - generic [ref=e2907]:
+                - img [ref=e2908]
+                - generic [ref=e2910]: encouraging
+              - generic [ref=e2911]:
+                - generic [ref=e2912]: Chat now
+                - img [ref=e2913]
+          - link "🎾 Tennis Coach Sports Tennis technique, match analysis, and player development guidance encouraging Chat now" [ref=e2915] [cursor=pointer]:
+            - /url: /agents/tennis-coach
+            - generic [ref=e2916]:
+              - generic [ref=e2917]: 🎾
+              - generic [ref=e2918]:
+                - heading "Tennis Coach" [level=3] [ref=e2919]
+                - generic [ref=e2920]: Sports
+            - paragraph [ref=e2921]: Tennis technique, match analysis, and player development guidance
+            - generic [ref=e2922]:
+              - generic [ref=e2923]:
+                - img [ref=e2924]
+                - generic [ref=e2926]: encouraging
+              - generic [ref=e2927]:
+                - generic [ref=e2928]: Chat now
+                - img [ref=e2929]
+          - link "🏃 Track & Field Coach Sports Athletics training — sprints, distance running, jumps, and throws scientific Chat now" [ref=e2931] [cursor=pointer]:
+            - /url: /agents/track-field-coach
+            - generic [ref=e2932]:
+              - generic [ref=e2933]: 🏃
+              - generic [ref=e2934]:
+                - heading "Track & Field Coach" [level=3] [ref=e2935]
+                - generic [ref=e2936]: Sports
+            - paragraph [ref=e2937]: Athletics training — sprints, distance running, jumps, and throws
+            - generic [ref=e2938]:
+              - generic [ref=e2939]:
+                - img [ref=e2940]
+                - generic [ref=e2942]: scientific
+              - generic [ref=e2943]:
+                - generic [ref=e2944]: Chat now
+                - img [ref=e2945]
+          - link "🏐 Volleyball Strategist Sports Volleyball tactics — rotations, plays, and team coordination energetic Chat now" [ref=e2947] [cursor=pointer]:
+            - /url: /agents/volleyball-strategist
+            - generic [ref=e2948]:
+              - generic [ref=e2949]: 🏐
+              - generic [ref=e2950]:
+                - heading "Volleyball Strategist" [level=3] [ref=e2951]
+                - generic [ref=e2952]: Sports
+            - paragraph [ref=e2953]: Volleyball tactics — rotations, plays, and team coordination
+            - generic [ref=e2954]:
+              - generic [ref=e2955]:
+                - img [ref=e2956]
+                - generic [ref=e2958]: energetic
+              - generic [ref=e2959]:
+                - generic [ref=e2960]: Chat now
+                - img [ref=e2961]
+      - generic [ref=e2963]:
+        - generic [ref=e2964]:
+          - heading "Tech" [level=2] [ref=e2965]
+          - generic [ref=e2966]: 20 agents
+        - generic [ref=e2967]:
+          - link "🤖 AI/ML Engineer Tech Machine learning, deep learning, NLP, and AI system design scientific Chat now" [ref=e2968] [cursor=pointer]:
+            - /url: /agents/ai-ml-engineer
+            - generic [ref=e2969]:
+              - generic [ref=e2970]: 🤖
+              - generic [ref=e2971]:
+                - heading "AI/ML Engineer" [level=3] [ref=e2972]
+                - generic [ref=e2973]: Tech
+            - paragraph [ref=e2974]: Machine learning, deep learning, NLP, and AI system design
+            - generic [ref=e2975]:
+              - generic [ref=e2976]:
+                - img [ref=e2977]
+                - generic [ref=e2979]: scientific
+              - generic [ref=e2980]:
+                - generic [ref=e2981]: Chat now
+                - img [ref=e2982]
+          - link "🔌 API Designer Tech REST, GraphQL, gRPC API design, documentation, and versioning clean Chat now" [ref=e2984] [cursor=pointer]:
+            - /url: /agents/api-designer
+            - generic [ref=e2985]:
+              - generic [ref=e2986]: 🔌
+              - generic [ref=e2987]:
+                - heading "API Designer" [level=3] [ref=e2988]
+                - generic [ref=e2989]: Tech
+            - paragraph [ref=e2990]: REST, GraphQL, gRPC API design, documentation, and versioning
+            - generic [ref=e2991]:
+              - generic [ref=e2992]:
+                - img [ref=e2993]
+                - generic [ref=e2995]: clean
+              - generic [ref=e2996]:
+                - generic [ref=e2997]: Chat now
+                - img [ref=e2998]
+          - link "⛓️ Blockchain Developer Tech Smart contracts, Solidity, DeFi protocols, and Web3 development security-first Chat now" [ref=e3000] [cursor=pointer]:
+            - /url: /agents/blockchain-developer
+            - generic [ref=e3001]:
+              - generic [ref=e3002]: ⛓️
+              - generic [ref=e3003]:
+                - heading "Blockchain Developer" [level=3] [ref=e3004]
+                - generic [ref=e3005]: Tech
+            - paragraph [ref=e3006]: Smart contracts, Solidity, DeFi protocols, and Web3 development
+            - generic [ref=e3007]:
+              - generic [ref=e3008]:
+                - img [ref=e3009]
+                - generic [ref=e3011]: security-first
+              - generic [ref=e3012]:
+                - generic [ref=e3013]: Chat now
+                - img [ref=e3014]
+          - link "☁️ Cloud Architect Tech AWS, GCP, Azure architecture — serverless, microservices, scalability strategic Chat now" [ref=e3016] [cursor=pointer]:
+            - /url: /agents/cloud-architect
+            - generic [ref=e3017]:
+              - generic [ref=e3018]: ☁️
+              - generic [ref=e3019]:
+                - heading "Cloud Architect" [level=3] [ref=e3020]
+                - generic [ref=e3021]: Tech
+            - paragraph [ref=e3022]: AWS, GCP, Azure architecture — serverless, microservices, scalability
+            - generic [ref=e3023]:
+              - generic [ref=e3024]:
+                - img [ref=e3025]
+                - generic [ref=e3027]: strategic
+              - generic [ref=e3028]:
+                - generic [ref=e3029]: Chat now
+                - img [ref=e3030]
+          - link "🔒 Cybersecurity Analyst Tech Application security, penetration testing, and security best practices vigilant Chat now" [ref=e3032] [cursor=pointer]:
+            - /url: /agents/cybersecurity-analyst
+            - generic [ref=e3033]:
+              - generic [ref=e3034]: 🔒
+              - generic [ref=e3035]:
+                - heading "Cybersecurity Analyst" [level=3] [ref=e3036]
+                - generic [ref=e3037]: Tech
+            - paragraph [ref=e3038]: Application security, penetration testing, and security best practices
+            - generic [ref=e3039]:
+              - generic [ref=e3040]:
+                - img [ref=e3041]
+                - generic [ref=e3043]: vigilant
+              - generic [ref=e3044]:
+                - generic [ref=e3045]: Chat now
+                - img [ref=e3046]
+          - link "🔀 Data Engineer Tech Data pipelines, ETL, data warehousing, and big data tools systematic Chat now" [ref=e3048] [cursor=pointer]:
+            - /url: /agents/data-engineer
+            - generic [ref=e3049]:
+              - generic [ref=e3050]: 🔀
+              - generic [ref=e3051]:
+                - heading "Data Engineer" [level=3] [ref=e3052]
+                - generic [ref=e3053]: Tech
+            - paragraph [ref=e3054]: Data pipelines, ETL, data warehousing, and big data tools
+            - generic [ref=e3055]:
+              - generic [ref=e3056]:
+                - img [ref=e3057]
+                - generic [ref=e3059]: systematic
+              - generic [ref=e3060]:
+                - generic [ref=e3061]: Chat now
+                - img [ref=e3062]
+          - link "🗄️ Database Architect Tech Database design, optimization, and migration across SQL and NoSQL methodical Chat now" [ref=e3064] [cursor=pointer]:
+            - /url: /agents/database-architect
+            - generic [ref=e3065]:
+              - generic [ref=e3066]: 🗄️
+              - generic [ref=e3067]:
+                - heading "Database Architect" [level=3] [ref=e3068]
+                - generic [ref=e3069]: Tech
+            - paragraph [ref=e3070]: Database design, optimization, and migration across SQL and NoSQL
+            - generic [ref=e3071]:
+              - generic [ref=e3072]:
+                - img [ref=e3073]
+                - generic [ref=e3075]: methodical
+              - generic [ref=e3076]:
+                - generic [ref=e3077]: Chat now
+                - img [ref=e3078]
+          - link "🔧 DevOps Engineer Tech CI/CD, Docker, Kubernetes, cloud infrastructure, and automation precise Chat now" [ref=e3080] [cursor=pointer]:
+            - /url: /agents/devops-engineer
+            - generic [ref=e3081]:
+              - generic [ref=e3082]: 🔧
+              - generic [ref=e3083]:
+                - heading "DevOps Engineer" [level=3] [ref=e3084]
+                - generic [ref=e3085]: Tech
+            - paragraph [ref=e3086]: CI/CD, Docker, Kubernetes, cloud infrastructure, and automation
+            - generic [ref=e3087]:
+              - generic [ref=e3088]:
+                - img [ref=e3089]
+                - generic [ref=e3091]: precise
+              - generic [ref=e3092]:
+                - generic [ref=e3093]: Chat now
+                - img [ref=e3094]
+          - link "🎨 Frontend Specialist Tech UI development — React, CSS, animations, accessibility, and performance creative Chat now" [ref=e3096] [cursor=pointer]:
+            - /url: /agents/frontend-specialist
+            - generic [ref=e3097]:
+              - generic [ref=e3098]: 🎨
+              - generic [ref=e3099]:
+                - heading "Frontend Specialist" [level=3] [ref=e3100]
+                - generic [ref=e3101]: Tech
+            - paragraph [ref=e3102]: UI development — React, CSS, animations, accessibility, and performance
+            - generic [ref=e3103]:
+              - generic [ref=e3104]:
+                - img [ref=e3105]
+                - generic [ref=e3107]: creative
+              - generic [ref=e3108]:
+                - generic [ref=e3109]: Chat now
+                - img [ref=e3110]
+          - link "💻 Full-Stack Developer Tech Web development — React, Node.js, databases, and deployment technical Chat now" [ref=e3112] [cursor=pointer]:
+            - /url: /agents/fullstack-developer
+            - generic [ref=e3113]:
+              - generic [ref=e3114]: 💻
+              - generic [ref=e3115]:
+                - heading "Full-Stack Developer" [level=3] [ref=e3116]
+                - generic [ref=e3117]: Tech
+            - paragraph [ref=e3118]: Web development — React, Node.js, databases, and deployment
+            - generic [ref=e3119]:
+              - generic [ref=e3120]:
+                - img [ref=e3121]
+                - generic [ref=e3123]: technical
+              - generic [ref=e3124]:
+                - generic [ref=e3125]: Chat now
+                - img [ref=e3126]
+          - link "🔀 Git & Version Control Expert Tech Git workflows, branching strategies, and version control best practices practical Chat now" [ref=e3128] [cursor=pointer]:
+            - /url: /agents/git-expert
+            - generic [ref=e3129]:
+              - generic [ref=e3130]: 🔀
+              - generic [ref=e3131]:
+                - heading "Git & Version Control Expert" [level=3] [ref=e3132]
+                - generic [ref=e3133]: Tech
+            - paragraph [ref=e3134]: Git workflows, branching strategies, and version control best practices
+            - generic [ref=e3135]:
+              - generic [ref=e3136]:
+                - img [ref=e3137]
+                - generic [ref=e3139]: practical
+              - generic [ref=e3140]:
+                - generic [ref=e3141]: Chat now
+                - img [ref=e3142]
+          - link "🐹 Go Developer Tech Go programming — concurrency, microservices, and backend systems simple Chat now" [ref=e3144] [cursor=pointer]:
+            - /url: /agents/go-developer
+            - generic [ref=e3145]:
+              - generic [ref=e3146]: 🐹
+              - generic [ref=e3147]:
+                - heading "Go Developer" [level=3] [ref=e3148]
+                - generic [ref=e3149]: Tech
+            - paragraph [ref=e3150]: Go programming — concurrency, microservices, and backend systems
+            - generic [ref=e3151]:
+              - generic [ref=e3152]:
+                - img [ref=e3153]
+                - generic [ref=e3155]: simple
+              - generic [ref=e3156]:
+                - generic [ref=e3157]: Chat now
+                - img [ref=e3158]
+          - link "🐧 Linux & Shell Expert Tech Linux administration, Bash scripting, and server management efficient Chat now" [ref=e3160] [cursor=pointer]:
+            - /url: /agents/linux-shell-expert
+            - generic [ref=e3161]:
+              - generic [ref=e3162]: 🐧
+              - generic [ref=e3163]:
+                - heading "Linux & Shell Expert" [level=3] [ref=e3164]
+                - generic [ref=e3165]: Tech
+            - paragraph [ref=e3166]: Linux administration, Bash scripting, and server management
+            - generic [ref=e3167]:
+              - generic [ref=e3168]:
+                - img [ref=e3169]
+                - generic [ref=e3171]: efficient
+              - generic [ref=e3172]:
+                - generic [ref=e3173]: Chat now
+                - img [ref=e3174]
+          - link "📱 Mobile App Developer Tech iOS, Android, React Native, and Flutter development modern Chat now" [ref=e3176] [cursor=pointer]:
+            - /url: /agents/mobile-app-developer
+            - generic [ref=e3177]:
+              - generic [ref=e3178]: 📱
+              - generic [ref=e3179]:
+                - heading "Mobile App Developer" [level=3] [ref=e3180]
+                - generic [ref=e3181]: Tech
+            - paragraph [ref=e3182]: iOS, Android, React Native, and Flutter development
+            - generic [ref=e3183]:
+              - generic [ref=e3184]:
+                - img [ref=e3185]
+                - generic [ref=e3187]: modern
+              - generic [ref=e3188]:
+                - generic [ref=e3189]: Chat now
+                - img [ref=e3190]
+          - link "🐍 Python Developer Tech Python programming — Django, FastAPI, data science, and automation educational Chat now" [ref=e3192] [cursor=pointer]:
+            - /url: /agents/python-developer
+            - generic [ref=e3193]:
+              - generic [ref=e3194]: 🐍
+              - generic [ref=e3195]:
+                - heading "Python Developer" [level=3] [ref=e3196]
+                - generic [ref=e3197]: Tech
+            - paragraph [ref=e3198]: Python programming — Django, FastAPI, data science, and automation
+            - generic [ref=e3199]:
+              - generic [ref=e3200]:
+                - img [ref=e3201]
+                - generic [ref=e3203]: educational
+              - generic [ref=e3204]:
+                - generic [ref=e3205]: Chat now
+                - img [ref=e3206]
+          - link "🦀 Rust Developer Tech Rust programming — ownership, concurrency, and systems programming safe Chat now" [ref=e3208] [cursor=pointer]:
+            - /url: /agents/rust-developer
+            - generic [ref=e3209]:
+              - generic [ref=e3210]: 🦀
+              - generic [ref=e3211]:
+                - heading "Rust Developer" [level=3] [ref=e3212]
+                - generic [ref=e3213]: Tech
+            - paragraph [ref=e3214]: Rust programming — ownership, concurrency, and systems programming
+            - generic [ref=e3215]:
+              - generic [ref=e3216]:
+                - img [ref=e3217]
+                - generic [ref=e3219]: safe
+              - generic [ref=e3220]:
+                - generic [ref=e3221]: Chat now
+                - img [ref=e3222]
+          - link "🏗️ System Design Expert Tech Distributed systems, scalability, and architecture design interviews structured Chat now" [ref=e3224] [cursor=pointer]:
+            - /url: /agents/system-design-expert
+            - generic [ref=e3225]:
+              - generic [ref=e3226]: 🏗️
+              - generic [ref=e3227]:
+                - heading "System Design Expert" [level=3] [ref=e3228]
+                - generic [ref=e3229]: Tech
+            - paragraph [ref=e3230]: Distributed systems, scalability, and architecture design interviews
+            - generic [ref=e3231]:
+              - generic [ref=e3232]:
+                - img [ref=e3233]
+                - generic [ref=e3235]: structured
+              - generic [ref=e3236]:
+                - generic [ref=e3237]: Chat now
+                - img [ref=e3238]
+          - link "🧪 Testing & QA Engineer Tech Test automation, unit testing, E2E testing, and quality assurance thorough Chat now" [ref=e3240] [cursor=pointer]:
+            - /url: /agents/testing-qa-engineer
+            - generic [ref=e3241]:
+              - generic [ref=e3242]: 🧪
+              - generic [ref=e3243]:
+                - heading "Testing & QA Engineer" [level=3] [ref=e3244]
+                - generic [ref=e3245]: Tech
+            - paragraph [ref=e3246]: Test automation, unit testing, E2E testing, and quality assurance
+            - generic [ref=e3247]:
+              - generic [ref=e3248]:
+                - img [ref=e3249]
+                - generic [ref=e3251]: thorough
+              - generic [ref=e3252]:
+                - generic [ref=e3253]: Chat now
+                - img [ref=e3254]
+          - link "📘 TypeScript Expert Tech TypeScript mastery — advanced types, generics, and type-safe patterns precise Chat now" [ref=e3256] [cursor=pointer]:
+            - /url: /agents/typescript-expert
+            - generic [ref=e3257]:
+              - generic [ref=e3258]: 📘
+              - generic [ref=e3259]:
+                - heading "TypeScript Expert" [level=3] [ref=e3260]
+                - generic [ref=e3261]: Tech
+            - paragraph [ref=e3262]: TypeScript mastery — advanced types, generics, and type-safe patterns
+            - generic [ref=e3263]:
+              - generic [ref=e3264]:
+                - img [ref=e3265]
+                - generic [ref=e3267]: precise
+              - generic [ref=e3268]:
+                - generic [ref=e3269]: Chat now
+                - img [ref=e3270]
+          - link "🎨 UI/UX Design Advisor Tech User interface design, user experience, and design systems creative Chat now" [ref=e3272] [cursor=pointer]:
+            - /url: /agents/uiux-design-advisor
+            - generic [ref=e3273]:
+              - generic [ref=e3274]: 🎨
+              - generic [ref=e3275]:
+                - heading "UI/UX Design Advisor" [level=3] [ref=e3276]
+                - generic [ref=e3277]: Tech
+            - paragraph [ref=e3278]: User interface design, user experience, and design systems
+            - generic [ref=e3279]:
+              - generic [ref=e3280]:
+                - img [ref=e3281]
+                - generic [ref=e3283]: creative
+              - generic [ref=e3284]:
+                - generic [ref=e3285]: Chat now
+                - img [ref=e3286]
+    - paragraph [ref=e3290]:
+      - text: Powered by
+      - link "KraftAI" [ref=e3291] [cursor=pointer]:
+        - /url: /
+      - text: — From Idea to Reality
+  - button "Open Next.js Dev Tools" [ref=e3297] [cursor=pointer]:
+    - img [ref=e3298]
+  - alert [ref=e3301]

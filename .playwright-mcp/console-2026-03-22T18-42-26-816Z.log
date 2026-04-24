@@ -1,0 +1,2 @@
+[     148ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://localhost:3000/api/padhai/student:0
+[     149ms] [ERROR] Cannot update a component (`%s`) while rendering a different component (`%s`). To locate the bad setState() call inside `%s`, follow the stack trace as described in https://react.dev/link/setstate-in-render Router OnboardingContent OnboardingContent @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127

@@ -1,0 +1,210 @@
+╭─── Claude Code v2.1.81 ──────────────────────────────────────────────────────╮
+│                                                │ Tips for getting started    │
+│              Welcome back Hritik!              │ Run /init to create a CLAU… │
+│                                                │ ─────────────────────────── │
+│                    ▗ ▗   ▖ ▖                   │ Recent activity             │
+│                                                │ 6d ago  Go ahead and test … │
+│                      ▘▘ ▝▝                     │ /resume for more            │
+│                                                │                             │
+│   Sonnet 4.6 · Claude Pro · Hritik Chaudhary   │                             │
+│          ~/Projects/kanoon-simplified          │                             │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+✻ Conversation compacted (ctrl+o for history)
+
+  ⎿  Read src/components/padhai/chat-widget.tsx (254 lines)
+  ⎿  Referenced file src/app/padhai/track/page.tsx
+  ⎿  Read src/app/padhai/layout.tsx (76 lines)
+  ⎿  Read src/components/padhai/chat-wrapper.tsx (16 lines)
+  ⎿  Read src/app/padhai/dashboard/page.tsx (412 lines)
+
+⏺ Let me build the app to verify the chat widget fix works.
+
+⏺ Bash(npx next build 2>&1 | tail -40)
+  ⎿  ├ ○ /padhai/onboarding
+     ├ ○ /padhai/parent
+     ├ ○ /padhai/photo
+     … +36 lines (ctrl+o to expand)
+  ⎿  (timeout 2m)
+
+⏺ Build succeeded with no errors. Now let me push the changes.
+
+⏺ Bash(git status)
+  ⎿  On branch main
+     Your branch is up to date with 'origin/main'.
+     … +18 lines (ctrl+o to expand)
+
+⏺ Bash(git diff --stat)
+  ⎿   src/app/padhai/dashboard/page.tsx     |  2 --
+      src/app/padhai/layout.tsx             |  2 ++
+      src/app/padhai/track/page.tsx         |  4 ++--
+     … +2 lines (ctrl+o to expand)
+
+⏺ Bash(git add src/app/padhai/dashboard/page.tsx src/app/padhai/layout.tsx
+      src/app/padhai/track/page.tsx src/components/padhai/chat-widget.tsx
+      src/components/padhai/ch…)
+  ⎿  [main b7ca6cd] Fix: Move chat widget to layout level so it renders on
+     all padhai pages
+      Committer: Hritik Chaudhary <hritik@Mac.lan>
+     … +14 lines (ctrl+o to expand)
+
+⏺ Bash(git push)
+  ⎿  To github.com:hritikch24/myaiproductss.git
+        a79fb74..b7ca6cd  main -> main
+
+⏺ Pushed. The floating chat button should now be visible on all padhai pages
+  (dashboard, track, goals, quiz, etc.) — it's rendered at the layout level so
+  it won't be blocked by any page-level loading guards. On the track page, it'll
+   also pick up the invite code from sessionStorage so parents get the
+  parent-specific chat experience.
+
+✻ Crunched for 4m 14s
+
+❯ have you put limits on chatbot?                                               
+
+  Read 1 file (ctrl+o to expand)
+
+⏺ No limits currently. Anyone can spam the endpoint endlessly. Let me add rate
+  limiting — per-user for students and per-invite-code for parents.
+
+⏺ Update(src/app/api/padhai/chat/route.ts)
+  ⎿  Added 45 lines
+       4  
+       5  const GROQ_API_KEY = process.env.GROQ_API_KEY || "";
+       6  
+       7 +// --- Rate limiting (in-memory, per-process) ---              
+       8 +const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000; // 1 hour         
+       9 +const MAX_MESSAGES_PER_HOUR = 30; // 30 messages per hour per u
+         +ser/code                                                       
+      10 +const MAX_MESSAGES_PER_DAY = 100; // 100 messages per day per u
+         +ser/code                                                       
+      11 +const DAY_MS = 24 * 60 * 60 * 1000;                            
+      12 +                                                               
+      13 +interface RateEntry {                                          
+      14 +  timestamps: number[];                                        
+      15 +}                                                              
+      16 +                                                               
+      17 +const rateLimitMap = new Map<string, RateEntry>();             
+      18 +                                                               
+      19 +// Clean old entries every 10 minutes                          
+      20 +setInterval(() => {                                            
+      21 +  const cutoff = Date.now() - DAY_MS;                          
+      22 +  for (const [key, entry] of rateLimitMap) {                   
+      23 +    entry.timestamps = entry.timestamps.filter((t) => t > cutof
+         +f);                                                            
+      24 +    if (entry.timestamps.length === 0) rateLimitMap.delete(key)
+         +;                                                              
+      25 +  }                                                            
+      26 +}, 10 * 60 * 1000);                                            
+      27 +                                                               
+      28 +function checkRateLimit(key: string): { allowed: boolean; retry
+         +AfterSec?: number } {                                          
+      29 +  const now = Date.now();                                      
+      30 +  const entry = rateLimitMap.get(key) || { timestamps: [] };   
+      31 +                                                               
+      32 +  // Clean timestamps older than 24h                           
+      33 +  entry.timestamps = entry.timestamps.filter((t) => t > now - D
+         +AY_MS);                                                        
+      34 +                                                               
+      35 +  const hourTimestamps = entry.timestamps.filter((t) => t > now
+         + - RATE_LIMIT_WINDOW_MS);                                      
+      36 +                                                               
+      37 +  if (entry.timestamps.length >= MAX_MESSAGES_PER_DAY) {       
+      38 +    const oldest = entry.timestamps[0];                        
+      39 +    return { allowed: false, retryAfterSec: Math.ceil((oldest +
+         + DAY_MS - now) / 1000) };                                      
+      40 +  }                                                            
+      41 +                                                               
+      42 +  if (hourTimestamps.length >= MAX_MESSAGES_PER_HOUR) {        
+      43 +    const oldest = hourTimestamps[0];                          
+      44 +    return { allowed: false, retryAfterSec: Math.ceil((oldest +
+         + RATE_LIMIT_WINDOW_MS - now) / 1000) };                        
+      45 +  }                                                            
+      46 +                                                               
+      47 +  entry.timestamps.push(now);                                  
+      48 +  rateLimitMap.set(key, entry);                                
+      49 +  return { allowed: true };                                    
+      50 +}                                                              
+      51 +                                                               
+      52  interface ChatMessage {
+      53    role: "user" | "assistant";
+      54    content: string;
+
+⏺ Now add the rate limit check in the POST handler, right after determining the
+  student:
+
+⏺ Update(src/app/api/padhai/chat/route.ts)
+  ⎿  Added 10 lines
+      207        return NextResponse.json({ error: "Student not found" },
+            { status: 404 });
+      208      }
+      209  
+      210 +    // Rate limit check                                       
+      211 +    const rateLimitKey = inviteCode ? `invite:${inviteCode.tri
+          +m()}` : `student:${studentId}`;                               
+      212 +    const rateCheck = checkRateLimit(rateLimitKey);           
+      213 +    if (!rateCheck.allowed) {                                 
+      214 +      return NextResponse.json(                               
+      215 +        { error: `You've reached the message limit. Try again 
+          +in ${Math.ceil((rateCheck.retryAfterSec || 60) / 60)} minutes.
+          +` },                                                          
+      216 +        { status: 429 }                                       
+      217 +      );                                                      
+      218 +    }                                                         
+      219 +                                                              
+      220      // Fetch student context
+      221      const ctx = await getStudentContext(studentId);
+      222      if (!ctx) {
+
+⏺ Also limit message length to prevent abuse:
+
+⏺ Update(src/app/api/padhai/chat/route.ts)
+  ⎿  Added 9 lines
+      173        return NextResponse.json({ error: "Messages required" },
+            { status: 400 });
+      174      }
+      175  
+      176 +    // Validate message length                                
+      177 +    const lastMsg = messages[messages.length - 1];            
+      178 +    if (lastMsg?.content && lastMsg.content.length > 500) {   
+      179 +      return NextResponse.json(                               
+      180 +        { error: "Message too long. Keep it under 500 characte
+          +rs." },                                                       
+      181 +        { status: 400 }                                       
+      182 +      );                                                      
+      183 +    }                                                         
+      184 +                                                              
+      185      // Determine student — either via auth session or invite c
+           ode
+      186      let studentId: string | null = null;
+      187      let isParent = false;
+
+⏺ Now build and push.
+
+⏺ Bash(npx next build 2>&1 | grep -E "(error|Error|✓|✗)" | head -10)
+  ⎿  ✓ Compiled successfully in 6.1s
+     ✓ Generating static pages using 9 workers (87/87) in 219.7ms
+  ⎿  (timeout 2m)
+
+⏺ Bash(git add src/app/api/padhai/chat/route.ts && git commit -m "$(cat <<'EOF'
+      Add rate limiting to AI chatbot API…)
+  ⎿  [main ad2e2de] Add rate limiting to AI chatbot API
+      Committer: Hritik Chaudhary <hritik@Mac.lan>
+     Your name and email address were configured automatically based
+     … +14 lines (ctrl+o to expand)
+
+⏺ Done. Here's what's now in place:
+
+  - 30 messages/hour per user (student or parent invite code)
+  - 100 messages/day per user
+  - 500 character max per message
+  - Returns a friendly error with retry time when limit is hit
+  - In-memory tracking with automatic cleanup every 10 minutes
+
+  Note: since it's in-memory, limits reset on server restart (Vercel redeploys).
+   For a production-grade solution you'd use Redis, but this is solid for
+  launch.
+
+✻ Crunched for 1m 2s
+❯ /extra-usage                                                                  
+  ⎿  Login interrupted

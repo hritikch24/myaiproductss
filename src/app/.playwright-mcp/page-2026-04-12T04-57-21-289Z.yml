@@ -1,0 +1,20 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e8]:
+      - generic [ref=e9]:
+        - img [ref=e10]
+        - generic [ref=e13]: 0+ AI Agents Available
+      - heading "KraftAI Agents" [level=1] [ref=e14]
+      - paragraph [ref=e15]: 200+ specialized AI personas for every domain. Get expert guidance on sports, law, fitness, finance, government schemes, and more.
+      - generic [ref=e16]:
+        - img [ref=e17]
+        - textbox "Search agents by name, category, or expertise..." [ref=e20]
+    - generic [ref=e23]:
+      - img [ref=e24]
+      - button "All (0)" [ref=e26]
+    - paragraph [ref=e127]:
+      - text: Powered by
+      - link "KraftAI" [ref=e128] [cursor=pointer]:
+        - /url: /
+      - text: — From Idea to Reality
+  - alert [ref=e129]

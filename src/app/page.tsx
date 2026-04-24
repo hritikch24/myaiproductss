@@ -152,6 +152,17 @@ export default function Home() {
               backgroundSize: '180px',
             }}
           />
+
+          {/* Neural dots and connections */}
+          <svg className="absolute inset-0 w-full h-full opacity-30" style={{ pointerEvents: 'none' }}>
+            <circle cx="75%" cy="20%" r="4" fill="#00ffe0" opacity="0.7" />
+            <circle cx="85%" cy="15%" r="3" fill="#00ffe0" opacity="0.5" />
+            <circle cx="90%" cy="30%" r="5" fill="#00ffe0" opacity="0.4" />
+            <circle cx="70%" cy="35%" r="3" fill="#00ffe0" opacity="0.5" />
+            <line x1="75%" y1="20%" x2="85%" y2="15%" stroke="#00ffe0" strokeWidth="1" opacity="0.2" />
+            <line x1="85%" y1="15%" x2="90%" y2="30%" stroke="#00ffe0" strokeWidth="1" opacity="0.2" />
+            <line x1="70%" y1="35%" x2="75%" y2="20%" stroke="#00ffe0" strokeWidth="1" opacity="0.2" />
+          </svg>
         </div>
 
         {/* Navigation */}
@@ -178,40 +189,40 @@ export default function Home() {
         </nav>
 
         {/* Hero Section */}
-        <section className="relative z-10 min-h-screen flex flex-col justify-center items-start px-6 md:px-12 pt-24 pb-12">
-          <div className="max-w-3xl">
-            <div className="mb-6 inline-block">
-              <span className="font-mono text-xs uppercase tracking-wider text-[#00ffe0]">
+        <section className="relative z-10 min-h-screen flex flex-col justify-center items-center px-6 md:px-12 pt-32 pb-12 text-center">
+          <div className="max-w-4xl">
+            <div className="mb-8 inline-block">
+              <span className="font-mono text-xs uppercase tracking-wider text-[#00ffe0] opacity-90">
                 ✨ KraftAI — Custom Software & Quotations
               </span>
             </div>
 
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight" style={{ color: '#f0f0f8' }}>
+            <h1 className="text-6xl md:text-8xl font-bold mb-8 leading-tight" style={{ color: '#f0f0f8' }}>
               You Think.<br />
-              <span style={{ color: '#00ffe0' }}>We Quote.</span><br />
-              You Decide.
+              <span style={{ color: '#00ffe0' }}>We Build.</span><br />
+              You Own.
             </h1>
 
-            <p className="text-lg mb-8 max-w-2xl leading-relaxed" style={{ color: 'rgba(240,240,248,0.42)' }}>
+            <p className="text-lg md:text-xl mb-12 max-w-3xl mx-auto leading-relaxed" style={{ color: 'rgba(240,240,248,0.6)' }}>
               Get detailed quotations for websites, apps, stores, and custom solutions.
               Share your requirements and receive a comprehensive quote with exact costs and timelines.
             </p>
 
-            <div className="flex gap-4 flex-wrap">
+            <div className="flex gap-4 flex-wrap justify-center mb-16">
               <a
                 href="https://wa.me/918859820935?text=Hi! I need a quotation. Here are my details:%0A%0AProject Type: [what you need]%0AKey Features: [list them]%0ATimeline: [when needed]%0ABudget: [your range]%0A%0APlease provide a detailed quote."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-mono text-sm font-bold px-6 py-3 text-black rounded-lg transition-all flex items-center gap-2"
-                style={{ background: '#00ffe0', boxShadow: 'hover:0_0_32px_rgba(0,255,224,0.5)' }}
+                className="font-mono text-sm font-bold px-8 py-4 text-black rounded-full transition-all flex items-center gap-2 hover:shadow-lg"
+                style={{ background: '#00ffe0' }}
               >
                 <MessageCircle className="w-4 h-4" />
-                Request Quotation
+                Get Quotation
               </a>
               <a
                 href="mailto:hritikchaudhary016@gmail.com?subject=Quotation Request&body=Hi!%0A%0AI'd like to get a quotation for my project.%0A%0AProject Details:%0AType:%0AFeatures:%0ATimeline:%0ABudget:%0A%0APlease provide a detailed quote."
-                className="font-mono text-sm font-bold px-6 py-3 text-[#f0f0f8] rounded-lg transition-all flex items-center gap-2 border"
-                style={{ borderColor: 'rgba(240,240,248,0.2)' }}
+                className="font-mono text-sm font-bold px-8 py-4 text-[#f0f0f8] rounded-full transition-all flex items-center gap-2 border hover:border-[#00ffe0] hover:text-[#00ffe0]"
+                style={{ borderColor: 'rgba(240,240,248,0.3)' }}
               >
                 <Mail className="w-4 h-4" />
                 Email Quote
@@ -234,45 +245,52 @@ export default function Home() {
         </section>
 
         {/* Services Section - Bento Cards */}
-        <section id="services" className="relative z-10 px-6 md:px-12 py-16 md:py-24">
-          <h2 className="text-4xl font-bold mb-16">Services & Solutions</h2>
+        <section id="services" className="relative z-10 px-6 md:px-12 py-16 md:py-28">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: '#f0f0f8' }}>What We Build</h2>
+              <p className="text-lg" style={{ color: 'rgba(240,240,248,0.42)' }}>Select your project type to get an instant quotation</p>
+            </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {services.map((service, idx) => {
-              const whatsappMsg = encodeURIComponent(translations.en.service_msgs[service.whatsapp_key as keyof typeof translations.en.service_msgs] || translations.en.cta_whatsapp_msg);
-              const whatsappUrl = `https://wa.me/918859820935?text=${whatsappMsg}`;
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {services.map((service, idx) => {
+                const whatsappMsg = encodeURIComponent(translations.en.service_msgs[service.whatsapp_key as keyof typeof translations.en.service_msgs] || translations.en.cta_whatsapp_msg);
+                const whatsappUrl = `https://wa.me/918859820935?text=${whatsappMsg}`;
 
-              return (
-                <a
-                  key={idx}
-                  href={whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group bento-card relative p-8 rounded-2xl border transition-all hover:-translate-y-1 cursor-pointer overflow-hidden"
-                  style={{
-                    background: '#0c0c14',
-                    borderColor: 'rgba(240,240,248,0.1)',
-                    '--mx': '50%',
-                    '--my': '50%',
-                  } as any}
-                >
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"
+                return (
+                  <a
+                    key={idx}
+                    href={whatsappUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative p-6 md:p-8 rounded-2xl border transition-all hover:-translate-y-2 cursor-pointer overflow-hidden hover:border-[#00ffe0]"
                     style={{
-                      background: 'radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(0,255,224,0.1), transparent 50%)',
-                    }}
-                  />
+                      background: '#0c0c14',
+                      borderColor: 'rgba(240,240,248,0.1)',
+                      '--mx': '50%',
+                      '--my': '50%',
+                    } as any}
+                  >
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"
+                      style={{
+                        background: 'radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(0,255,224,0.15), transparent 60%)',
+                      }}
+                    />
 
-                  <service.icon className="w-8 h-8 mb-4 relative z-10" style={{ color: '#00ffe0' }} />
-                  <h3 className="text-xl font-bold mb-2 relative z-10" style={{ color: '#f0f0f8' }}>{service.title}</h3>
-                  <p className="text-sm relative z-10" style={{ color: 'rgba(240,240,248,0.42)' }}>{service.desc}</p>
+                    <div className="relative z-10">
+                      <service.icon className="w-10 h-10 mb-4" style={{ color: '#00ffe0' }} />
+                      <h3 className="text-xl font-bold mb-3" style={{ color: '#f0f0f8' }}>{service.title}</h3>
+                      <p className="text-sm mb-6" style={{ color: 'rgba(240,240,248,0.5)' }}>{service.desc}</p>
 
-                  <div className="mt-6 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity relative z-10" style={{ color: '#00ffe0' }}>
-                    <span className="text-xs font-mono uppercase">Get Quote</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </div>
-                </a>
-              );
-            })}
+                      <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm opacity-0 group-hover:opacity-100 transition-all" style={{ background: 'rgba(0,255,224,0.1)', color: '#00ffe0' }}>
+                        <MessageCircle className="w-4 h-4" />
+                        <span className="font-mono text-xs uppercase">Get Quote</span>
+                      </div>
+                    </div>
+                  </a>
+                );
+              })}
+            </div>
           </div>
         </section>
 
