@@ -335,9 +335,39 @@ export default function KraftAILanding() {
           }
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0.05, rootMargin: "0px 0px -40px 0px" }
     );
     revealEls.forEach((el) => revealObs.observe(el));
+    // Trigger reveal for elements already in viewport on mount
+    const triggerVisible = () => {
+      revealEls.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight + 100 && rect.bottom > 0) {
+          el.classList.add("in");
+        }
+      });
+      countEls.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+          const target = parseInt((el as HTMLElement).dataset.count || "0", 10);
+          const suffix = (el as HTMLElement).dataset.suffix || "";
+          const duration = 1600;
+          const start = performance.now();
+          const animate = (now: number) => {
+            const progress = Math.min((now - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            el.textContent = `${Math.round(target * eased)}${suffix}`;
+            if (progress < 1) requestAnimationFrame(animate);
+          };
+          requestAnimationFrame(animate);
+          countObs.unobserve(el);
+        }
+      });
+    };
+    setTimeout(triggerVisible, 100);
+    // Also trigger on first scroll
+    const onFirstScroll = () => { triggerVisible(); window.removeEventListener("scroll", onFirstScroll); };
+    window.addEventListener("scroll", onFirstScroll, { passive: true });
 
     // Count-up
     const countEls = document.querySelectorAll<HTMLElement>("[data-count]");
@@ -770,7 +800,7 @@ export default function KraftAILanding() {
 
         /* Bento Grid */
         .bento-section {
-          padding: 100px 52px;
+          padding: 80px 52px;
           position: relative;
           z-index: 1;
         }
@@ -876,7 +906,7 @@ export default function KraftAILanding() {
         .process-section {
           background: #07070d;
           border-top: 1px solid rgba(255,255,255,0.06);
-          padding: 100px 52px;
+          padding: 80px 52px;
           position: relative;
           z-index: 1;
         }
@@ -949,7 +979,7 @@ export default function KraftAILanding() {
         .tech-section {
           background: #08080f;
           border-top: 1px solid rgba(255,255,255,0.06);
-          padding: 100px 52px;
+          padding: 72px 52px;
           position: relative;
           z-index: 1;
         }
@@ -988,7 +1018,7 @@ export default function KraftAILanding() {
         .why-section {
           position: relative;
           z-index: 1;
-          padding: 100px 52px;
+          padding: 80px 52px;
         }
         .why-grid {
           display: grid;
@@ -1041,7 +1071,7 @@ export default function KraftAILanding() {
         /* CTA */
         .cta-section {
           text-align: center;
-          padding: 160px 52px;
+          padding: 100px 52px;
           position: relative;
           z-index: 1;
           overflow: hidden;
@@ -1139,12 +1169,12 @@ export default function KraftAILanding() {
         /* Scroll reveal */
         .scroll-reveal {
           opacity: 0;
-          transform: translateY(40px);
-          transition: opacity 0.75s ease, transform 0.75s ease;
+          transform: translateY(24px);
+          transition: opacity 0.6s ease, transform 0.6s ease;
         }
         .scroll-reveal.in {
           opacity: 1;
-          transform: translateY(0);
+          transform: none;
         }
 
         /* Keyframes */
@@ -1367,13 +1397,13 @@ export default function KraftAILanding() {
           </div>
         </div>
 
-        <div className="bento-grid">
+        <div className="bento-grid scroll-reveal">
           {/* AI Solutions - Featured */}
           <a
             href={waLink(translations.en.service_msgs.ai_solutions)}
             target="_blank"
             rel="noopener noreferrer"
-            className="bento-card bento-featured scroll-reveal"
+            className="bento-card bento-featured"
             onMouseMove={handleCardMouse}
           >
             <span className="bento-ghost">{"\u2605"}</span>
@@ -1398,7 +1428,7 @@ export default function KraftAILanding() {
             href={waLink(translations.en.service_msgs.websites)}
             target="_blank"
             rel="noopener noreferrer"
-            className="bento-card bento-3 scroll-reveal"
+            className="bento-card bento-3"
             onMouseMove={handleCardMouse}
           >
             <span className="bento-ghost">01</span>
@@ -1419,7 +1449,7 @@ export default function KraftAILanding() {
             href={waLink(translations.en.service_msgs.mobile_apps)}
             target="_blank"
             rel="noopener noreferrer"
-            className="bento-card bento-2 scroll-reveal"
+            className="bento-card bento-2"
             onMouseMove={handleCardMouse}
           >
             <span className="bento-ghost">02</span>
@@ -1439,7 +1469,7 @@ export default function KraftAILanding() {
             href={waLink(translations.en.service_msgs.stores)}
             target="_blank"
             rel="noopener noreferrer"
-            className="bento-card bento-2 scroll-reveal"
+            className="bento-card bento-2"
             onMouseMove={handleCardMouse}
           >
             <span className="bento-ghost">03</span>
@@ -1460,7 +1490,7 @@ export default function KraftAILanding() {
             href={waLink(translations.en.service_msgs.business_apps)}
             target="_blank"
             rel="noopener noreferrer"
-            className="bento-card bento-4 scroll-reveal"
+            className="bento-card bento-4"
             onMouseMove={handleCardMouse}
           >
             <span className="bento-ghost">04</span>
