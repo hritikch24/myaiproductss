@@ -20,6 +20,9 @@ import {
   Copy,
   Share2,
   KeyRound,
+  AlertTriangle,
+  Zap,
+  Calendar,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -67,24 +70,47 @@ export default function PadhaiDashboard() {
   if (!student) return null;
 
   const isParent = student?.role === "parent";
-
   const today = new Date();
-  const studentMessages = [
-    "Every step forward counts. Keep going!",
-    "Consistency is key. You're doing great!",
-    "Small progress is still progress.",
-    "Your future self will thank you!",
-    "Learning is a journey. Enjoy every bit!",
-  ];
-  const parentMessages = [
-    "Your support means everything to your child.",
-    "Consistency matters more than perfection.",
-    "Ask 'What was interesting today?' instead of 'How much did you study?'",
-    "Celebrating small wins builds lasting motivation.",
-    "Your child is making progress, one step at a time.",
-  ];
-  const messages = isParent ? parentMessages : studentMessages;
-  const dailyMessage = messages[today.getDay() % messages.length];
+
+  const examTarget = student.exam_target;
+  const studentClass = student.class;
+  let examDate: Date | null = null;
+  let examLabel = "";
+  if (examTarget === "JEE") {
+    examLabel = "JEE Mains";
+    examDate = new Date(studentClass === "11" ? today.getFullYear() + 2 : today.getFullYear() + 1, 0, 24);
+    if (examDate < today) examDate = new Date(examDate.getFullYear() + 1, 0, 24);
+  } else if (examTarget === "NEET") {
+    examLabel = "NEET";
+    examDate = new Date(studentClass === "11" ? today.getFullYear() + 2 : today.getFullYear() + 1, 4, 5);
+    if (examDate < today) examDate = new Date(examDate.getFullYear() + 1, 4, 5);
+  } else {
+    examLabel = "Board Exams";
+    examDate = new Date(studentClass === "11" ? today.getFullYear() + 2 : today.getFullYear() + 1, 1, 15);
+    if (examDate < today) examDate = new Date(examDate.getFullYear() + 1, 1, 15);
+  }
+  const daysLeft = examDate ? Math.max(0, Math.ceil((examDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24))) : 0;
+  const weeksLeft = Math.floor(daysLeft / 7);
+
+  const progressPct = progress?.progressPercent || 0;
+  const completedCh = progress?.completedChapters || 0;
+
+  function getDailyTip() {
+    const streak = student.streak_count || 0;
+    if (streak === 0) return isParent
+      ? `${student.name} hasn't started this week yet. A gentle nudge could help!`
+      : "Start today — even 1 chapter keeps your streak alive.";
+    if (streak >= 7) return isParent
+      ? `Great consistency! ${student.name} has a ${streak}-day streak.`
+      : `${streak}-day streak! You're in the top 20% of Padhai students.`;
+    if (completedCh === 0) return isParent
+      ? "First step: help your child mark their first chapter as done."
+      : "Mark your first chapter done today!";
+    return isParent
+      ? `${student.name} is making steady progress. Keep encouraging!`
+      : "Consistency beats intensity. Keep showing up daily!";
+  }
+  const dailyMessage = getDailyTip();
 
   return (
     <div className="min-h-screen bg-[#030712]">
@@ -141,7 +167,45 @@ export default function PadhaiDashboard() {
           </div>
         )}
 
-        {/* Streak Card */}
+        {/* Exam Countdown */}
+        <div className="rounded-xl border border-slate-800 bg-gradient-to-r from-blue-500/10 to-purple-500/10 p-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-500/20">
+                <Calendar className="h-5 w-5 text-blue-400" />
+              </div>
+              <div>
+                <p className="text-xs text-slate-400">{examLabel} {examDate?.getFullYear()}</p>
+                <p className="text-xl font-bold text-white">{daysLeft} days left</p>
+              </div>
+            </div>
+            <div className="text-right">
+              <p className="text-2xl font-bold text-white">{weeksLeft}</p>
+              <p className="text-xs text-slate-400">weeks</p>
+            </div>
+          </div>
+          {progressPct > 0 && (
+            <div className="mt-3 flex items-center gap-2 text-xs">
+              {progressPct >= 40 ? (
+                <span className="flex items-center gap-1 text-emerald-400">
+                  <Zap className="h-3 w-3" />
+                  {isParent ? `${student.name} is` : "You're"} on track — {progressPct}% syllabus done
+                </span>
+              ) : daysLeft < 180 ? (
+                <span className="flex items-center gap-1 text-amber-400">
+                  <AlertTriangle className="h-3 w-3" />
+                  Only {progressPct}% done with {weeksLeft} weeks left — need to pick up pace
+                </span>
+              ) : (
+                <span className="text-slate-500">
+                  {progressPct}% done — {isParent ? "steady start" : "keep building momentum"}
+                </span>
+              )}
+            </div>
+          )}
+        </div>
+
+        {/* Streak + Daily Tip */}
         <div className="rounded-xl border border-slate-800 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 p-5">
           <div className="flex items-center justify-between">
             <div>
@@ -226,6 +290,35 @@ export default function PadhaiDashboard() {
               </button>
             </div>
           </div>
+        )}
+
+        {/* Today's Focus — students only */}
+        {!isParent && (
+          <Link
+            href={completedCh === 0 ? "/padhai/syllabus" : "/padhai/goals"}
+            className="block rounded-xl border border-emerald-500/20 bg-emerald-500/[0.06] p-4 transition-all hover:bg-emerald-500/10"
+          >
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-500/20">
+                <Zap className="h-5 w-5 text-emerald-400" />
+              </div>
+              <div className="flex-1">
+                <p className="text-sm font-semibold text-white">
+                  {completedCh === 0
+                    ? "Start here: Mark your first chapter done"
+                    : progressPct < 25
+                    ? "Set this week's goals — pick 3-4 chapters"
+                    : "Continue your weekly goals"}
+                </p>
+                <p className="text-xs text-slate-400 mt-0.5">
+                  {completedCh === 0
+                    ? "Open your syllabus and tap any chapter you've already studied"
+                    : `${progressPct}% done — ${progress?.remainingHours || "?"} study hours left to finish syllabus`}
+                </p>
+              </div>
+              <ChevronRight className="h-5 w-5 text-emerald-500/60" />
+            </div>
+          </Link>
         )}
 
         {/* Quick Actions */}

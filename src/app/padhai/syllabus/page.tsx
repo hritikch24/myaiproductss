@@ -140,13 +140,13 @@ export default function MySyllabusPage() {
 
       <main className="mx-auto max-w-4xl px-4 py-6 pb-24">
         {/* Progress Card */}
-        <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-5 mb-6">
+        <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-5 mb-4">
           <div className="flex items-center justify-between mb-3">
             <h2 className="text-lg font-semibold text-white">Syllabus Progress</h2>
             <span className="text-sm text-slate-400">{completedCount}/{totalChapters} chapters</span>
           </div>
           <div className="h-3 bg-slate-800 rounded-full overflow-hidden">
-            <div 
+            <div
               className="h-full bg-gradient-to-r from-emerald-500 to-teal-500 transition-all duration-500"
               style={{ width: `${progress}%` }}
             />
@@ -154,6 +154,19 @@ export default function MySyllabusPage() {
           <p className="mt-2 text-sm text-slate-400">
             Class {studentClass} • {board} Board • {examTarget} • Tap chapters to mark as completed
           </p>
+        </div>
+
+        {/* Context tip */}
+        <div className="rounded-lg border border-blue-500/15 bg-blue-500/[0.05] p-3 mb-6 text-xs text-blue-300/80">
+          {studentClass === "11" && examTarget === "JEE"
+            ? "70% of JEE Mains questions come from Class 11 topics. A strong foundation here = a strong score."
+            : studentClass === "11" && examTarget === "NEET"
+            ? "Class 11 Biology & Chemistry form the base for 60%+ of NEET. Don't leave gaps."
+            : studentClass === "12" && examTarget === "JEE"
+            ? "Class 12 chapters are fresh in your mind during the exam. Complete them first, revise 11th alongside."
+            : studentClass === "12" && examTarget === "NEET"
+            ? "Focus on completing new chapters fast — you'll need revision time for 11th topics before NEET."
+            : "Complete each chapter and take the quiz to verify your understanding."}
         </div>
 
         {/* Subjects */}

@@ -98,8 +98,16 @@ export default function TrackPage() {
               <p className="text-slate-400 text-sm">
                 Enter the invite code your child shared with you.
                 <br />
-                No login needed.
+                No login needed — see real progress in 5 seconds.
               </p>
+            </div>
+
+            <div className="rounded-lg bg-white/[0.03] border border-white/[0.06] p-3 space-y-1.5 text-xs text-slate-400">
+              <p className="text-slate-300 font-medium">What you&apos;ll see:</p>
+              <p>&#10003; Chapters completed this week</p>
+              <p>&#10003; Quiz scores with verification status</p>
+              <p>&#10003; Study streak and activity heatmap</p>
+              <p>&#10003; Overall syllabus progress by subject</p>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
