@@ -23,6 +23,7 @@ import {
   AlertTriangle,
   Zap,
   Calendar,
+  Trophy,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -497,6 +498,72 @@ export default function PadhaiDashboard() {
             <ChevronRight className="h-5 w-5 text-slate-500" />
           </Link>
         </div>
+
+        {/* Daily Motivation — Why you're doing this */}
+        {!isParent && (
+          <div className="rounded-xl border border-amber-500/15 bg-gradient-to-r from-amber-500/[0.06] to-orange-500/[0.04] p-5">
+            <div className="flex items-center gap-2 mb-3">
+              <Trophy className="h-4 w-4 text-amber-400" />
+              <span className="text-xs font-medium text-amber-400/80">Daily Motivation</span>
+            </div>
+            {(() => {
+              const motivations = examTarget === "NEET" ? [
+                { fact: "AIIMS Delhi doctors start at ₹1 lakh/month during residency itself.", push: "Every chapter you finish today brings you closer to that white coat." },
+                { fact: "Dr. Mansukh Mandaviya, India's Health Minister, started with the same NCERT books you're reading.", push: "The syllabus is the same for everyone — discipline makes the difference." },
+                { fact: "Top NEET scorers complete their syllabus at least 2 months before the exam for revision.", push: "Check your syllabus page — are you on track for that?" },
+                { fact: "A surgeon in India earns ₹25-50 LPA. Super-specialists earn ₹1 Cr+.", push: "That future starts with finishing today's chapter." },
+                { fact: "76% of NEET questions are directly from NCERT textbooks.", push: "You don't need fancy resources — you need consistency. Keep going." },
+                { fact: "Your parents are investing lakhs in your coaching. One hour of focused study = real ROI.", push: "Open your goals and knock out one more chapter today." },
+                { fact: "India needs 6 lakh more doctors. NEET is your entry ticket to a career that matters.", push: "The country needs you. Keep preparing." },
+              ] : [
+                { fact: "Average IIT graduate salary: ₹30-80 LPA. Top packages: ₹1-3 crore.", push: "Every chapter you finish today is an investment in that future." },
+                { fact: "Sundar Pichai (Google CEO), Sachin Bansal (Flipkart) — both IITians who started just like you.", push: "They sat in the same classrooms, studied the same subjects. Consistency got them there." },
+                { fact: "IIT campus placements: Google, Microsoft, Amazon, Goldman Sachs visit every year.", push: "These companies don't care about your coaching brand — they care about your fundamentals." },
+                { fact: "Top JEE rankers study 6-8 hours daily with proper tracking. Not 14 hours of sitting.", push: "Quality > Quantity. Use your timer, take the quiz, and call it a day." },
+                { fact: "70% of JEE Mains comes from Class 11 topics. The foundation you build now = your score.", push: "Don't skip Class 11 chapters. Check your syllabus page right now." },
+                { fact: "Your parents spent ₹2-3 lakh on coaching. Every tracked chapter = visible ROI for them.", push: "Share your invite code — let them see your progress." },
+                { fact: "IIT Bombay, Delhi, Madras — beautiful campuses, world-class labs, friends for life.", push: "That hostel room, that campus, that life — it's earned one chapter at a time." },
+              ];
+              const dayIndex = today.getDate() % motivations.length;
+              const m = motivations[dayIndex];
+              return (
+                <>
+                  <p className="text-sm text-white font-medium leading-relaxed">{m.fact}</p>
+                  <p className="mt-2 text-xs text-amber-400/70 italic">{m.push}</p>
+                </>
+              );
+            })()}
+          </div>
+        )}
+
+        {/* Parent motivation */}
+        {isParent && (
+          <div className="rounded-xl border border-purple-500/15 bg-purple-500/[0.04] p-5">
+            <div className="flex items-center gap-2 mb-3">
+              <Heart className="h-4 w-4 text-purple-400" />
+              <span className="text-xs font-medium text-purple-400/80">Parenting Tip</span>
+            </div>
+            {(() => {
+              const tips = [
+                { tip: "Ask \"What was the most interesting thing you studied today?\" instead of \"Kitna padha?\"", why: "It shows interest in learning, not just output — and builds a positive study association." },
+                { tip: "Celebrate small wins: \"5 chapters done this week? That's great progress!\"", why: "Recognition of effort matters more than pressure about results." },
+                { tip: "Don't compare your child with others. Every student has a different pace.", why: "Comparison creates anxiety, not motivation. Focus on their personal progress curve." },
+                { tip: "If quiz scores are low, don't scold — help them identify weak areas.", why: "Low scores = opportunity to improve, not failure. The quiz already did the hard work of finding the gap." },
+                { tip: "Share this week's progress with your child: \"I saw you completed 4 chapters — proud of you.\"", why: "When children know parents are watching with pride (not pressure), they self-motivate." },
+                { tip: "Trust the process. Syllabus completion + quiz verification = genuine preparation.", why: "Padhai's tracking is designed to make self-cheating impossible. If the numbers look good, the prep is real." },
+                { tip: "The best thing you can do: provide a quiet study space and emotional support.", why: "Environment matters. A supportive home + good tracking = results." },
+              ];
+              const dayIndex = today.getDate() % tips.length;
+              const t = tips[dayIndex];
+              return (
+                <>
+                  <p className="text-sm text-white font-medium leading-relaxed">{t.tip}</p>
+                  <p className="mt-2 text-xs text-purple-400/70 italic">{t.why}</p>
+                </>
+              );
+            })()}
+          </div>
+        )}
       </main>
 
     </div>

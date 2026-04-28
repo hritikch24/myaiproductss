@@ -789,6 +789,141 @@ export default function PadhaiLanding() {
         </AnimatedSection>
       </section>
 
+      {/* ─── Why IIT/NEET? Motivation Section ─── */}
+      <section className="relative z-10 mx-auto max-w-5xl px-5 pb-28">
+        <AnimatedSection>
+          <h2 className="mb-4 text-2xl sm:text-3xl font-bold text-center">
+            Why cracking IIT/NEET changes everything
+          </h2>
+          <p className="mb-12 text-center text-sm text-slate-500">
+            The effort you put in today decides the life you live tomorrow
+          </p>
+        </AnimatedSection>
+
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {[
+            {
+              stat: "₹30-80 LPA",
+              label: "Average IITian salary after graduation",
+              detail: "Top companies like Google, Microsoft, Goldman Sachs hire directly from IIT campus placements.",
+              color: "text-emerald-400",
+              bg: "from-emerald-500/10 to-teal-500/10",
+            },
+            {
+              stat: "₹1 Cr+",
+              label: "Top packages at IIT placements",
+              detail: "Every year, IIT students receive packages of ₹1 crore+. The highest international offers cross ₹3 crore.",
+              color: "text-yellow-400",
+              bg: "from-yellow-500/10 to-orange-500/10",
+            },
+            {
+              stat: "AIIMS/MAMC",
+              label: "NEET toppers enter India's best medical colleges",
+              detail: "A NEET score above 650 opens doors to AIIMS Delhi, Maulana Azad, JIPMER — the most prestigious medical colleges.",
+              color: "text-blue-400",
+              bg: "from-blue-500/10 to-cyan-500/10",
+            },
+            {
+              stat: "₹15-25 LPA",
+              label: "Starting salary for doctors from top colleges",
+              detail: "After MBBS + PG from a top college, doctors earn ₹15-25 LPA minimum. Specialists earn much more.",
+              color: "text-purple-400",
+              bg: "from-purple-500/10 to-pink-500/10",
+            },
+            {
+              stat: "IIT Campus Life",
+              label: "World-class facilities, research, and network",
+              detail: "Beautiful campuses, international exposure, startup incubators, alumni network that opens doors for life.",
+              color: "text-cyan-400",
+              bg: "from-cyan-500/10 to-blue-500/10",
+            },
+            {
+              stat: "Family Pride",
+              label: "\"Mera beta IIT/AIIMS mein hai\"",
+              detail: "The pride your parents feel, the respect in your community, the confidence you carry — it all starts with consistent preparation today.",
+              color: "text-pink-400",
+              bg: "from-pink-500/10 to-rose-500/10",
+            },
+          ].map((item, i) => (
+            <AnimatedSection key={i} delay={i * 80}>
+              <GlowCard className="h-full p-6">
+                <p className={`text-2xl font-bold ${item.color} mb-1`}>{item.stat}</p>
+                <p className="text-sm font-medium text-white mb-2">{item.label}</p>
+                <p className="text-xs text-slate-400 leading-relaxed">{item.detail}</p>
+              </GlowCard>
+            </AnimatedSection>
+          ))}
+        </div>
+
+        <AnimatedSection delay={500}>
+          <div className="mt-10 rounded-xl border border-emerald-500/20 bg-emerald-500/[0.05] p-6 text-center">
+            <p className="text-base sm:text-lg font-medium text-white mb-2">
+              But none of this happens without consistent preparation.
+            </p>
+            <p className="text-sm text-slate-400 mb-5">
+              Students who track their syllabus weekly are <span className="text-emerald-400 font-semibold">2x more likely</span> to finish their syllabus on time.
+              Padhai makes sure you never lose track.
+            </p>
+            <Link
+              href="/padhai/onboarding"
+              className="group inline-flex rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 px-8 py-3.5 text-sm font-semibold text-white transition-all hover:shadow-[0_0_40px_rgba(16,185,129,0.3)] active:scale-95"
+            >
+              Start Your Journey — Free
+              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </Link>
+          </div>
+        </AnimatedSection>
+      </section>
+
+      {/* ─── FAQ Section (SEO + Trust) ─── */}
+      <section className="relative z-10 mx-auto max-w-3xl px-5 pb-28">
+        <AnimatedSection>
+          <h2 className="mb-10 text-2xl sm:text-3xl font-bold text-center">
+            Frequently asked questions
+          </h2>
+        </AnimatedSection>
+
+        <div className="space-y-4">
+          {[
+            {
+              q: "Is Padhai really free?",
+              a: "Yes, 100% free. No credit card, no trial period, no hidden charges. We believe every student deserves access to good study tracking regardless of their financial situation.",
+            },
+            {
+              q: "How does Padhai help me crack JEE/NEET?",
+              a: "Padhai shows you exactly which chapters are done and which are pending — subject-wise, chapter-wise. You take quick quizzes to verify understanding (no self-cheating). Your parents get weekly reports automatically. The result: you always know where you stand and what to focus on next.",
+            },
+            {
+              q: "I'm a parent. How do I track my child's progress?",
+              a: "Your child signs up on Padhai and gets a unique invite code. You enter that code at kraftai.in/padhai/track — no login needed. You'll see chapters completed, quiz scores, study streaks, and more. Plus, you get an automatic weekly report every Sunday at 7 PM.",
+            },
+            {
+              q: "Does Padhai work for Class 11 students?",
+              a: "Absolutely! In fact, Class 11 is the most important time to start. 70% of JEE Mains questions come from Class 11 topics. Starting early gives you a massive advantage over students who only start tracking in Class 12.",
+            },
+            {
+              q: "Which boards and exams are supported?",
+              a: "Padhai supports JEE Mains, NEET, and Board exams (CBSE and state boards) for Class 11 and 12. We're adding CUET, CA Foundation, and more exams soon.",
+            },
+            {
+              q: "Is my data safe?",
+              a: "Yes. We don't share your data with anyone. Your study progress is visible only to you and the parent you choose to share your invite code with. No ads, no data selling.",
+            },
+            {
+              q: "Do I need to download an app?",
+              a: "No. Padhai works in your phone's browser — just go to kraftai.in/padhai. You can also add it to your home screen for an app-like experience. No Play Store or App Store download needed.",
+            },
+          ].map((faq, i) => (
+            <AnimatedSection key={i} delay={i * 50}>
+              <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-5">
+                <h3 className="text-sm font-semibold text-white mb-2">{faq.q}</h3>
+                <p className="text-sm text-slate-400 leading-relaxed">{faq.a}</p>
+              </div>
+            </AnimatedSection>
+          ))}
+        </div>
+      </section>
+
       {/* ─── Waitlist ─── */}
       <section
         id="waitlist"
@@ -840,12 +975,40 @@ export default function PadhaiLanding() {
       </section>
 
       {/* ─── Footer ─── */}
-      <footer className="relative z-10 border-t border-white/[0.06] py-8">
-        <div className="mx-auto max-w-6xl px-6 text-center text-sm text-slate-600">
-          <p>
-            &copy; {new Date().getFullYear()} Padhai by KraftAI. All rights
-            reserved.
-          </p>
+      <footer className="relative z-10 border-t border-white/[0.06] py-10">
+        <div className="mx-auto max-w-6xl px-6">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mb-8">
+            <div>
+              <span className="text-lg font-bold text-white">Pad<span className="text-emerald-400">hai</span></span>
+              <p className="mt-2 text-xs text-slate-500 leading-relaxed">
+                Free study tracker for JEE Mains, NEET &amp; Board exam preparation.
+                Track syllabus, take quizzes, send weekly reports to parents.
+              </p>
+            </div>
+            <div>
+              <p className="text-xs font-medium text-slate-400 uppercase tracking-wider mb-3">For Students</p>
+              <div className="space-y-1.5 text-xs text-slate-500">
+                <Link href="/padhai/onboarding" className="block hover:text-emerald-400 transition-colors">Start Tracking Free</Link>
+                <Link href="/padhai/login" className="block hover:text-emerald-400 transition-colors">Sign In</Link>
+                <a href="#waitlist" className="block hover:text-emerald-400 transition-colors">Join Waitlist</a>
+              </div>
+            </div>
+            <div>
+              <p className="text-xs font-medium text-slate-400 uppercase tracking-wider mb-3">For Parents</p>
+              <div className="space-y-1.5 text-xs text-slate-500">
+                <Link href="/padhai/track" className="block hover:text-emerald-400 transition-colors">Track My Child&apos;s Progress</Link>
+                <a href="https://wa.me/+918859820935" className="block hover:text-emerald-400 transition-colors">WhatsApp Support</a>
+              </div>
+            </div>
+          </div>
+          <div className="border-t border-white/[0.06] pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p className="text-xs text-slate-600">
+              &copy; {new Date().getFullYear()} Padhai by KraftAI. All rights reserved.
+            </p>
+            <p className="text-xs text-slate-600">
+              JEE Mains Study Tracker &middot; NEET Preparation Tracker &middot; Class 11 &amp; 12 Syllabus Tracker
+            </p>
+          </div>
         </div>
       </footer>
 
