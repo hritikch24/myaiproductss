@@ -241,10 +241,15 @@ export default function PadhaiLanding() {
   const [waitlistLoading, setWaitlistLoading] = useState(false);
   const [userType, setUserType] = useState<"student" | "parent">("student");
   const [navScrolled, setNavScrolled] = useState(false);
+  const [session, setSession] = useState<{ user?: { name?: string; image?: string } } | null>(null);
 
   useEffect(() => {
     const onScroll = () => setNavScrolled(window.scrollY > 20);
     window.addEventListener("scroll", onScroll, { passive: true });
+    fetch("/api/auth/session")
+      .then((r) => r.json())
+      .then((d) => { if (d?.user) setSession(d); })
+      .catch(() => {});
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
@@ -296,18 +301,37 @@ export default function PadhaiLanding() {
             Pad<span className="text-emerald-400">hai</span>
           </span>
           <div className="flex items-center gap-3">
-            <Link
-              href="/padhai/login"
-              className="text-sm font-medium text-slate-400 hover:text-white transition-colors"
-            >
-              Sign In
-            </Link>
-            <Link
-              href="/padhai/onboarding"
-              className="rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 px-5 py-2 text-sm font-semibold text-white transition-all hover:shadow-lg hover:shadow-emerald-500/25 active:scale-95"
-            >
-              Get Started
-            </Link>
+            {session?.user ? (
+              <Link
+                href="/padhai/dashboard"
+                className="flex items-center gap-2 rounded-full bg-white/[0.06] border border-white/[0.1] px-4 py-2 text-sm font-medium text-white transition-all hover:bg-white/[0.1]"
+              >
+                {session.user.image ? (
+                  <img src={session.user.image} alt="" className="h-6 w-6 rounded-full" />
+                ) : (
+                  <div className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-500 text-xs font-bold text-white">
+                    {(session.user.name || "U")[0].toUpperCase()}
+                  </div>
+                )}
+                <span className="max-w-[100px] truncate">{session.user.name || "Dashboard"}</span>
+                <ArrowRight className="h-3.5 w-3.5 text-slate-400" />
+              </Link>
+            ) : (
+              <>
+                <Link
+                  href="/padhai/login"
+                  className="text-sm font-medium text-slate-400 hover:text-white transition-colors"
+                >
+                  Sign In
+                </Link>
+                <Link
+                  href="/padhai/onboarding"
+                  className="rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 px-5 py-2 text-sm font-semibold text-white transition-all hover:shadow-lg hover:shadow-emerald-500/25 active:scale-95"
+                >
+                  Get Started
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </nav>
