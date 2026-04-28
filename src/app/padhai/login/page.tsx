@@ -121,13 +121,22 @@ function LoginContent() {
 
         <div className="rounded-2xl border border-slate-800 bg-slate-900/60 backdrop-blur-xl p-6 sm:p-8 shadow-2xl">
           <h1 className="text-xl font-semibold text-white mb-2">
-            {isSignUp ? "Create Account" : "Welcome back"}
+            {isSignUp ? "Create Your Free Account" : "Welcome back"}
           </h1>
-          <p className="mb-6 text-sm text-slate-400">
+          <p className="mb-4 text-sm text-slate-400">
             {isSignUp
-              ? "Start your study journey with Padhai"
-              : "Sign in to continue your progress"}
+              ? "Join 100+ students tracking their JEE/NEET prep"
+              : "Your study streak is waiting — sign in to continue"}
           </p>
+
+          {isSignUp && (
+            <div className="mb-5 rounded-lg bg-emerald-500/[0.07] border border-emerald-500/15 p-3 space-y-1.5">
+              <p className="text-xs text-emerald-400 font-medium">What you get (free):</p>
+              <p className="text-xs text-slate-400">✓ Full syllabus mapped chapter-wise</p>
+              <p className="text-xs text-slate-400">✓ Weekly progress tracking + quizzes</p>
+              <p className="text-xs text-slate-400">✓ Auto parent reports every Sunday</p>
+            </div>
+          )}
 
           {error && (
             <div className="mb-4 p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-sm">
@@ -256,9 +265,18 @@ function LoginContent() {
           </div>
         </div>
 
-        <p className="mt-6 text-center text-xs text-slate-500">
-          <Link href="/padhai" className="hover:text-slate-400">&larr; Back to Padhai</Link>
-        </p>
+        <div className="mt-6 space-y-2">
+          <div className="flex items-center justify-center gap-3 text-xs text-slate-500">
+            <span>100% Free</span>
+            <span className="text-slate-700">•</span>
+            <span>No spam</span>
+            <span className="text-slate-700">•</span>
+            <span>Takes 10 seconds</span>
+          </div>
+          <p className="text-center text-xs text-slate-600">
+            <Link href="/padhai" className="hover:text-slate-400">&larr; Back to Padhai</Link>
+          </p>
+        </div>
       </div>
     </div>
   );

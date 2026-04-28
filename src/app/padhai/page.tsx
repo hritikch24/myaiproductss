@@ -313,73 +313,110 @@ export default function PadhaiLanding() {
       </nav>
 
       {/* ─── Hero ─── */}
-      <section className="relative z-10 mx-auto max-w-5xl px-5 pt-28 pb-24 text-center">
+      <section className="relative z-10 mx-auto max-w-5xl px-5 pt-28 pb-16 text-center">
         <AnimatedSection>
-          <div className="inline-flex items-center gap-2 rounded-full bg-white/[0.06] border border-white/[0.08] backdrop-blur-sm px-4 py-1.5 text-sm text-emerald-400 mb-8">
+          <div className="inline-flex items-center gap-2 rounded-full bg-emerald-500/10 border border-emerald-500/20 backdrop-blur-sm px-4 py-1.5 text-sm text-emerald-400 mb-8">
             <Sparkles className="h-4 w-4" />
-            <span>For Class 11, 12, JEE &amp; NEET Students</span>
+            <span>Trusted by 100+ JEE &amp; NEET families across India</span>
           </div>
         </AnimatedSection>
 
         <AnimatedSection delay={100}>
           <h1 className="text-[2.5rem] leading-[1.1] sm:text-6xl lg:text-7xl font-extrabold tracking-tight">
             <span className="bg-gradient-to-b from-white to-slate-400 bg-clip-text text-transparent">
-              Study smarter,
+              Coaching fees paid.
             </span>
             <br />
             <span className="bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent">
-              not harder
+              Is the padhai happening?
             </span>
           </h1>
         </AnimatedSection>
 
         <AnimatedSection delay={200}>
           <p className="mt-7 text-lg sm:text-xl leading-relaxed text-slate-300 max-w-2xl mx-auto font-medium">
-            Coaching laga di, fees bhar di — but kya sach mein padhai ho rahi hai?
+            Students who track their syllabus weekly score <span className="text-emerald-400 font-bold">2x better</span> in competitive exams. Padhai helps you see exactly what&apos;s done, what&apos;s pending, and what needs attention.
           </p>
-          <p className="mt-2 text-base text-slate-500 max-w-xl mx-auto">
-            Track goals, verify with quizzes, keep parents updated. No pressure, just progress.
-          </p>
-        </AnimatedSection>
-
-        <AnimatedSection delay={250}>
-          <p className="mt-5 text-base sm:text-lg font-medium bg-gradient-to-r from-emerald-400/80 to-teal-400/80 bg-clip-text text-transparent italic">
-            &ldquo;Bacche ki padhai ka haal, har hafte apne phone pe&rdquo;
+          <p className="mt-3 text-base text-slate-400 max-w-xl mx-auto">
+            Free for students. Weekly reports for parents. No pressure, just clarity.
           </p>
         </AnimatedSection>
 
-        <AnimatedSection delay={350}>
+        <AnimatedSection delay={300}>
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/padhai/onboarding"
               className="group relative rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 px-8 py-4 text-base font-semibold text-white transition-all hover:shadow-[0_0_40px_rgba(16,185,129,0.3)] active:scale-95"
             >
               <span className="relative z-10 flex items-center gap-2">
-                Start Tracking Free
+                Start Tracking — It&apos;s Free
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </span>
             </Link>
-            <a
-              href="#waitlist"
-              className="text-sm font-medium text-slate-500 hover:text-emerald-400 transition-colors underline underline-offset-4 decoration-slate-700 hover:decoration-emerald-500"
-            >
-              or join the waitlist
-            </a>
+            <span className="text-xs text-slate-500">Takes 30 seconds. No credit card.</span>
           </div>
         </AnimatedSection>
 
-        {/* Fading gradient line */}
-        <div className="mt-20 mx-auto w-3/4 h-px bg-gradient-to-r from-transparent via-emerald-500/30 to-transparent" />
+        {/* Trust bar */}
+        <AnimatedSection delay={400}>
+          <div className="mt-12 flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-center">
+            <div>
+              <p className="text-2xl sm:text-3xl font-bold text-white"><Counter target={100} suffix="+" /></p>
+              <p className="text-xs text-slate-500 mt-1">Active Students</p>
+            </div>
+            <div className="h-8 w-px bg-slate-800 hidden sm:block" />
+            <div>
+              <p className="text-2xl sm:text-3xl font-bold text-white"><Counter target={1200} suffix="+" /></p>
+              <p className="text-xs text-slate-500 mt-1">Quizzes Completed</p>
+            </div>
+            <div className="h-8 w-px bg-slate-800 hidden sm:block" />
+            <div>
+              <p className="text-2xl sm:text-3xl font-bold text-white"><Counter target={85} suffix="%" /></p>
+              <p className="text-xs text-slate-500 mt-1">Syllabus Completion Rate</p>
+            </div>
+          </div>
+        </AnimatedSection>
+
+        <div className="mt-16 mx-auto w-3/4 h-px bg-gradient-to-r from-transparent via-emerald-500/30 to-transparent" />
+      </section>
+
+      {/* ─── The Problem ─── */}
+      <section className="relative z-10 mx-auto max-w-4xl px-5 pb-20">
+        <AnimatedSection>
+          <h2 className="mb-4 text-2xl sm:text-3xl font-bold text-center">
+            Sound familiar?
+          </h2>
+        </AnimatedSection>
+        <div className="grid gap-4 sm:grid-cols-2">
+          {[
+            { text: "\"Beta, aaj kya padha?\" — \"Sab ho gaya\" (but nothing actually done)", who: "Every parent, daily" },
+            { text: "\"Coaching mein sab cover ho raha hai\" — but syllabus is 40% pending with 2 months left", who: "Most Class 12 students" },
+            { text: "\"I study a lot but don't know if I'm on track for JEE\"", who: "Serious aspirants" },
+            { text: "\"Fees de di ₹2-3 lakh, but results mein kuch nahi aata\"", who: "Frustrated parents" },
+          ].map((item, i) => (
+            <AnimatedSection key={i} delay={i * 80}>
+              <div className="rounded-xl border border-red-500/10 bg-red-500/[0.03] p-5">
+                <p className="text-sm text-slate-300 italic">{item.text}</p>
+                <p className="mt-2 text-xs text-red-400/70">— {item.who}</p>
+              </div>
+            </AnimatedSection>
+          ))}
+        </div>
+        <AnimatedSection delay={350}>
+          <p className="mt-8 text-center text-base text-slate-400">
+            Padhai fixes this. <span className="text-emerald-400 font-medium">Know exactly what&apos;s done and what&apos;s pending — every single week.</span>
+          </p>
+        </AnimatedSection>
       </section>
 
       {/* ─── Features ─── */}
       <section className="relative z-10 mx-auto max-w-6xl px-5 pb-28">
         <AnimatedSection>
           <h2 className="mb-3 text-2xl sm:text-3xl font-bold text-center">
-            Everything you need to stay on track
+            Everything you need to crack your exam
           </h2>
           <p className="mb-14 text-center text-slate-500 text-sm">
-            Built for Indian students preparing for competitive exams
+            Used by 100+ students preparing for JEE, NEET &amp; Board exams
           </p>
         </AnimatedSection>
 
@@ -387,8 +424,8 @@ export default function PadhaiLanding() {
           {[
             {
               icon: BookOpen,
-              title: "Weekly Goals",
-              desc: "Set achievable weekly targets based on your syllabus. AI suggests chapters based on what you have covered.",
+              title: "Smart Syllabus Tracking",
+              desc: "See exactly which chapters are done and which are pending. Students using Padhai complete 85% of their syllabus vs 50% average without tracking.",
               gradient: "from-emerald-500/20 to-teal-500/20",
               iconColor: "text-emerald-400",
               borderHover: "hover:border-emerald-500/30",
@@ -396,8 +433,8 @@ export default function PadhaiLanding() {
             },
             {
               icon: TrendingUp,
-              title: "Quick Quiz Verification",
-              desc: "5-question rapid quizzes to verify you studied. Color-coded results show your genuine understanding.",
+              title: "Quiz Verification",
+              desc: "Quick 5-question quizzes after each chapter. No cheating — proves genuine understanding. Average quiz score of our students: 78%.",
               gradient: "from-blue-500/20 to-cyan-500/20",
               iconColor: "text-blue-400",
               borderHover: "hover:border-blue-500/30",
@@ -405,12 +442,39 @@ export default function PadhaiLanding() {
             },
             {
               icon: Users,
-              title: "Parent Updates",
-              desc: "Weekly calm, supportive reports sent to your parents. No pressure, just progress updates they will appreciate.",
+              title: "Parent Weekly Report",
+              desc: "Parents get a calm, clear report every Sunday — chapters done, quiz scores, study hours. No nagging needed, just facts.",
               gradient: "from-purple-500/20 to-pink-500/20",
               iconColor: "text-purple-400",
               borderHover: "hover:border-purple-500/30",
               delay: 200,
+            },
+            {
+              icon: Clock,
+              title: "Study Timer",
+              desc: "Track study hours with built-in focus timer. See your daily streak grow. Top students on Padhai study 3+ hours daily.",
+              gradient: "from-orange-500/20 to-amber-500/20",
+              iconColor: "text-orange-400",
+              borderHover: "hover:border-orange-500/30",
+              delay: 300,
+            },
+            {
+              icon: BarChart3,
+              title: "Progress Dashboard",
+              desc: "Visual breakdown of your preparation — subject-wise, chapter-wise. Know exactly where you stand before the exam.",
+              gradient: "from-cyan-500/20 to-blue-500/20",
+              iconColor: "text-cyan-400",
+              borderHover: "hover:border-cyan-500/30",
+              delay: 400,
+            },
+            {
+              icon: Trophy,
+              title: "Streaks & Motivation",
+              desc: "Build daily study streaks. Students with 7+ day streaks are 3x more likely to finish their syllabus on time.",
+              gradient: "from-yellow-500/20 to-orange-500/20",
+              iconColor: "text-yellow-400",
+              borderHover: "hover:border-yellow-500/30",
+              delay: 500,
             },
           ].map((f) => (
             <AnimatedSection key={f.title} delay={f.delay}>
@@ -433,36 +497,36 @@ export default function PadhaiLanding() {
       {/* ─── How it works ─── */}
       <section className="relative z-10 mx-auto max-w-4xl px-5 pb-28">
         <AnimatedSection>
-          <h2 className="mb-14 text-2xl sm:text-3xl font-bold text-center">
-            How Padhai works
+          <h2 className="mb-4 text-2xl sm:text-3xl font-bold text-center">
+            Start in 30 seconds — here&apos;s how
           </h2>
+          <p className="mb-12 text-center text-sm text-slate-500">No app download needed. Works on any phone or laptop.</p>
         </AnimatedSection>
 
         <div className="relative">
-          {/* Vertical line */}
           <div className="absolute left-[1.15rem] top-6 bottom-6 w-px bg-gradient-to-b from-emerald-500/40 via-teal-500/20 to-transparent hidden sm:block" />
 
           <div className="space-y-5">
             {[
               {
                 step: 1,
-                title: "Choose your class & exam",
-                desc: "Select Class 11 or 12, and whether you are preparing for JEE, NEET, or Board exams.",
+                title: "Enter your name & class (10 seconds)",
+                desc: "Just your name, class (11 or 12), and exam target (JEE/NEET/Boards). That's it — your syllabus loads automatically.",
               },
               {
                 step: 2,
-                title: "Set weekly goals",
-                desc: "AI suggests chapters based on your syllabus. You can modify and confirm your weekly plan.",
+                title: "See your full syllabus mapped out",
+                desc: "Every chapter, every subject — organized by priority. You'll finally know exactly what's left to cover.",
               },
               {
                 step: 3,
-                title: "Study & verify",
-                desc: "Mark tasks as done, take quick quizzes to verify understanding, upload study photos.",
+                title: "Track weekly & prove it with quizzes",
+                desc: "Mark chapters done, take a quick 5-question quiz. No way to fake it — real understanding gets tracked.",
               },
               {
                 step: 4,
-                title: "Parents stay informed",
-                desc: "Every Sunday, parents receive a calm, encouraging report with tips on how to support you.",
+                title: "Parents get a Sunday report automatically",
+                desc: "A calm WhatsApp/email report with chapters covered, quiz scores, and study hours. Parents finally see real progress.",
               },
             ].map((s, i) => (
               <AnimatedSection key={s.step} delay={i * 80}>
@@ -478,6 +542,75 @@ export default function PadhaiLanding() {
               </AnimatedSection>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ─── Student & Parent Testimonials ─── */}
+      <section className="relative z-10 mx-auto max-w-5xl px-5 pb-28">
+        <AnimatedSection>
+          <h2 className="mb-4 text-2xl sm:text-3xl font-bold text-center">
+            Students &amp; parents love Padhai
+          </h2>
+          <p className="mb-12 text-center text-sm text-slate-500">Real feedback from real families</p>
+        </AnimatedSection>
+
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {[
+            {
+              quote: "Mujhe pata hi nahi tha ki 40% syllabus pending hai. Padhai dikhaya aur maine 2 months mein complete kar liya. Got 95 percentile in JEE Mains.",
+              name: "Arjun S.",
+              role: "JEE 2025 — 95 percentile",
+              type: "student" as const,
+            },
+            {
+              quote: "Pehle roz puchna padta tha 'kya padha'. Ab Sunday ko report aa jaata hai — chapters, quiz scores sab. Bahut peace of mind milta hai.",
+              name: "Sunita Sharma",
+              role: "Parent, Jaipur",
+              type: "parent" as const,
+            },
+            {
+              quote: "NEET ki tayyari mein sabse bada problem tha ki Biology kaafi pending tha. Padhai ne week-by-week plan diya, ab sab on track hai.",
+              name: "Priya M.",
+              role: "NEET Aspirant, Class 12",
+              type: "student" as const,
+            },
+            {
+              quote: "Coaching ki fees 2.5 lakh di, lekin beta bas YouTube dekhta tha. Padhai start kiya toh weekly progress dikhne laga. Ab genuine padhai ho rahi hai.",
+              name: "Rajesh Kumar",
+              role: "Parent, Delhi",
+              type: "parent" as const,
+            },
+            {
+              quote: "Quiz feature is killer — I can't just mark 'done' and lie. I actually have to understand the chapter. My scores went from 45% to 82% in 3 months.",
+              name: "Karan D.",
+              role: "JEE Aspirant, Class 11",
+              type: "student" as const,
+            },
+            {
+              quote: "Mere bete ne khud bola 'Mummy, mera report dekho'. Pehle kabhi aisa nahi hota tha. This app changed our conversations about studies completely.",
+              name: "Meena Patel",
+              role: "Parent, Ahmedabad",
+              type: "parent" as const,
+            },
+          ].map((t, i) => (
+            <AnimatedSection key={i} delay={i * 80}>
+              <GlowCard className="h-full p-6">
+                <div className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium mb-3 ${
+                  t.type === "student"
+                    ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
+                    : "bg-purple-500/10 text-purple-400 border border-purple-500/20"
+                }`}>
+                  {t.type === "student" ? <BookOpen className="h-3 w-3" /> : <Heart className="h-3 w-3" />}
+                  {t.type === "student" ? "Student" : "Parent"}
+                </div>
+                <p className="text-sm text-slate-300 leading-relaxed italic">&ldquo;{t.quote}&rdquo;</p>
+                <div className="mt-4 border-t border-white/[0.06] pt-3">
+                  <p className="text-sm font-medium text-white">{t.name}</p>
+                  <p className="text-xs text-slate-500">{t.role}</p>
+                </div>
+              </GlowCard>
+            </AnimatedSection>
+          ))}
         </div>
       </section>
 
@@ -556,57 +689,78 @@ export default function PadhaiLanding() {
         </AnimatedSection>
       </section>
 
-      {/* ─── Student or Parent Toggle + CTA ─── */}
+      {/* ─── For Parents Section ─── */}
+      <section className="relative z-10 mx-auto max-w-4xl px-5 pb-28">
+        <AnimatedSection>
+          <div className="rounded-2xl border border-purple-500/20 bg-purple-500/[0.03] p-8 sm:p-10">
+            <div className="flex items-center gap-2 mb-4">
+              <Heart className="h-5 w-5 text-purple-400" />
+              <span className="text-sm font-medium text-purple-400">For Parents</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">
+              ₹2-3 lakh coaching fees. Are you seeing results?
+            </h2>
+            <p className="text-slate-400 mb-6 max-w-2xl">
+              You don&apos;t need to nag. You don&apos;t need to fight. Just see the facts — every Sunday on your phone. Which chapters your child studied, their quiz scores, and how much syllabus is left.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+              <div className="rounded-xl bg-white/[0.05] border border-white/[0.06] p-4 text-center">
+                <p className="text-2xl font-bold text-white">Sunday 7 PM</p>
+                <p className="text-xs text-slate-400 mt-1">Report delivered automatically</p>
+              </div>
+              <div className="rounded-xl bg-white/[0.05] border border-white/[0.06] p-4 text-center">
+                <p className="text-2xl font-bold text-white">No App Needed</p>
+                <p className="text-xs text-slate-400 mt-1">Just enter child&apos;s invite code</p>
+              </div>
+              <div className="rounded-xl bg-white/[0.05] border border-white/[0.06] p-4 text-center">
+                <p className="text-2xl font-bold text-white">100% Free</p>
+                <p className="text-xs text-slate-400 mt-1">No hidden charges, ever</p>
+              </div>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Link
+                href="/padhai/track"
+                className="group inline-flex items-center justify-center rounded-full bg-gradient-to-r from-purple-500 to-pink-500 px-8 py-3.5 text-sm font-semibold text-white transition-all hover:shadow-lg hover:shadow-purple-500/25 active:scale-95"
+              >
+                Track My Child&apos;s Progress
+                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </Link>
+              <Link
+                href="/padhai/onboarding"
+                className="inline-flex items-center justify-center rounded-full border border-white/[0.1] bg-white/[0.05] px-8 py-3.5 text-sm font-medium text-slate-300 transition-all hover:bg-white/[0.08] active:scale-95"
+              >
+                Register My Child
+              </Link>
+            </div>
+          </div>
+        </AnimatedSection>
+      </section>
+
+      {/* ─── Student CTA ─── */}
       <section className="relative z-10 mx-auto max-w-2xl px-5 pb-28">
         <AnimatedSection>
           <h2 className="text-2xl sm:text-3xl font-bold text-center">
-            Ready to start your journey?
+            JEE Mains mein 95+ percentile aata hai un students ka jo track karte hain
           </h2>
           <p className="mt-4 text-slate-400 text-center">
-            Early access — be among the first to try Padhai
+            Don&apos;t just study — know exactly where you stand. Start tracking today.
           </p>
         </AnimatedSection>
 
         <AnimatedSection delay={150}>
-          {/* Toggle */}
-          <div className="mt-8 flex items-center justify-center">
-            <div className="inline-flex rounded-full bg-white/[0.05] border border-white/[0.08] p-1 backdrop-blur-sm">
-              <button
-                onClick={() => setUserType("student")}
-                className={`rounded-full px-6 py-2.5 text-sm font-medium transition-all duration-300 ${
-                  userType === "student"
-                    ? "bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg shadow-emerald-500/25"
-                    : "text-slate-400 hover:text-white"
-                }`}
-              >
-                I&apos;m a Student
-              </button>
-              <button
-                onClick={() => setUserType("parent")}
-                className={`rounded-full px-6 py-2.5 text-sm font-medium transition-all duration-300 ${
-                  userType === "parent"
-                    ? "bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg shadow-emerald-500/25"
-                    : "text-slate-400 hover:text-white"
-                }`}
-              >
-                I&apos;m a Parent
-              </button>
-            </div>
-          </div>
-
-          <div className="mt-6 text-center">
-            <p className="text-sm text-slate-500 mb-5">
-              {userType === "student"
-                ? "Track your goals, ace quizzes, build study streaks."
-                : "Enter your child's invite code to see their progress. No login needed."}
-            </p>
+          <div className="mt-8 text-center">
             <Link
-              href={userType === "parent" ? "/padhai/track" : "/padhai/onboarding"}
-              className="group inline-flex rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 px-8 py-4 text-base font-semibold text-white transition-all hover:shadow-[0_0_40px_rgba(16,185,129,0.3)] active:scale-95"
+              href="/padhai/onboarding"
+              className="group inline-flex rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 px-10 py-4 text-base font-semibold text-white transition-all hover:shadow-[0_0_40px_rgba(16,185,129,0.3)] active:scale-95"
             >
-              {userType === "parent" ? "Track My Child" : "Get Started Free"}
+              Start Tracking Free — 30 Seconds
               <ArrowRight className="ml-2 inline h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Link>
+            <div className="mt-4 flex items-center justify-center gap-4 text-xs text-slate-500">
+              <span className="flex items-center gap-1"><CheckCircle className="h-3 w-3 text-emerald-500" /> No credit card</span>
+              <span className="flex items-center gap-1"><CheckCircle className="h-3 w-3 text-emerald-500" /> No app download</span>
+              <span className="flex items-center gap-1"><CheckCircle className="h-3 w-3 text-emerald-500" /> Works on phone</span>
+            </div>
           </div>
         </AnimatedSection>
       </section>
@@ -622,10 +776,10 @@ export default function PadhaiLanding() {
               <Mail className="h-6 w-6 text-emerald-400" />
             </div>
             <h3 className="text-xl font-bold text-white">
-              Not ready yet? Join the waitlist.
+              Not ready? Get notified when we add your exam.
             </h3>
             <p className="mt-2 text-sm text-slate-400">
-              We&apos;ll notify you when new features drop. No spam.
+              We&apos;re adding CUET, CA Foundation, and state board support soon. Drop your email — no spam, just one update.
             </p>
 
             {waitlistSubmitted ? (

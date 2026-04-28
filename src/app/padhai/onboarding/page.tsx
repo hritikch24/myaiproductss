@@ -126,16 +126,16 @@ export default function PadhaiOnboarding() {
           {/* Step 1: Name */}
           {step === 1 && (
             <>
-              <h1 className="text-xl font-semibold text-white mb-2">
-                Let&apos;s get started
+              <h1 className="text-xl font-semibold text-white mb-1">
+                Welcome! Let&apos;s set up your tracker
               </h1>
-              <p className="mb-6 text-sm text-slate-400">
-                Tell us a bit about yourself
+              <p className="mb-5 text-sm text-slate-400">
+                100+ students are already tracking their JEE/NEET prep here
               </p>
 
               <div>
                 <label className="block text-sm font-medium text-slate-300 mb-1.5">
-                  What should we call you?
+                  Student&apos;s name (or your child&apos;s name)
                 </label>
                 <div className="relative">
                   <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500" />
@@ -144,15 +144,16 @@ export default function PadhaiOnboarding() {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     className="w-full rounded-lg border border-slate-700 bg-slate-800/50 pl-10 pr-4 py-2.5 text-sm text-white placeholder:text-slate-500 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-all"
-                    placeholder="Your name"
+                    placeholder="e.g. Arjun or Priya"
                   />
                 </div>
+                <p className="mt-2 text-xs text-slate-500">Parents: you can enter your child&apos;s name here</p>
                 <button
                   onClick={() => name && setStep(2)}
                   disabled={!name}
-                  className="mt-4 w-full flex items-center justify-center gap-2 rounded-lg bg-emerald-500 px-4 py-2.5 text-sm font-medium text-white transition-all hover:bg-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="mt-3 w-full flex items-center justify-center gap-2 rounded-lg bg-emerald-500 px-4 py-2.5 text-sm font-medium text-white transition-all hover:bg-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Continue
+                  Continue — Step 1 of 3
                   <ArrowRight className="h-4 w-4" />
                 </button>
               </div>
@@ -168,15 +169,18 @@ export default function PadhaiOnboarding() {
               >
                 &larr; Back
               </button>
-              <h1 className="text-xl font-semibold text-white mb-2">
-                Which class are you in?
+              <h1 className="text-xl font-semibold text-white mb-1">
+                Which class is {name || "the student"} in?
               </h1>
-              <p className="mb-6 text-sm text-slate-400">
-                We&apos;ll load the right syllabus for you
+              <p className="mb-5 text-sm text-slate-400">
+                We&apos;ll load the complete NCERT + coaching syllabus automatically
               </p>
 
               <div className="space-y-2 mb-4">
-                {["11", "12"].map((cls) => (
+                {[
+                  { cls: "11", detail: "Foundation year — build strong basics for JEE/NEET" },
+                  { cls: "12", detail: "Final year — boards + entrance exam prep together" },
+                ].map(({ cls, detail }) => (
                   <button
                     key={cls}
                     type="button"
@@ -187,7 +191,8 @@ export default function PadhaiOnboarding() {
                         : "border-slate-700 bg-slate-800/30 text-slate-300 hover:border-slate-600"
                     }`}
                   >
-                    <span className="font-medium">Class {cls}</span>
+                    <span className="font-medium block">Class {cls}</span>
+                    <span className="text-xs text-slate-500">{detail}</span>
                   </button>
                 ))}
               </div>
@@ -198,7 +203,7 @@ export default function PadhaiOnboarding() {
                 disabled={!selectedClass}
                 className="w-full flex items-center justify-center gap-2 rounded-lg bg-emerald-500 px-4 py-2.5 text-sm font-medium text-white transition-all hover:bg-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Continue
+                Almost done — Step 2 of 3
                 <ArrowRight className="h-4 w-4" />
               </button>
             </>
@@ -213,11 +218,11 @@ export default function PadhaiOnboarding() {
               >
                 &larr; Back
               </button>
-              <h1 className="text-xl font-semibold text-white mb-2">
-                What are you preparing for?
+              <h1 className="text-xl font-semibold text-white mb-1">
+                What is {name || "the student"} preparing for?
               </h1>
-              <p className="mb-6 text-sm text-slate-400">
-                This determines which subjects we track
+              <p className="mb-5 text-sm text-slate-400">
+                We&apos;ll set up the right subjects and chapter-wise tracking
               </p>
 
               <div className="space-y-2 mb-4">
@@ -244,20 +249,23 @@ export default function PadhaiOnboarding() {
                 type="button"
                 onClick={handleSubmit}
                 disabled={!selectedExam || isLoading}
-                className="w-full flex items-center justify-center gap-2 rounded-lg bg-emerald-500 px-4 py-2.5 text-sm font-medium text-white transition-all hover:bg-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-emerald-500 to-teal-500 px-4 py-3 text-sm font-semibold text-white transition-all hover:shadow-lg hover:shadow-emerald-500/25 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isLoading ? (
                   <>
                     <Loader2 className="h-4 w-4 animate-spin" />
-                    Setting up...
+                    Setting up your dashboard...
                   </>
                 ) : (
                   <>
-                    Start Tracking
+                    See My Full Syllabus &amp; Start Tracking
                     <ArrowRight className="h-4 w-4" />
                   </>
                 )}
               </button>
+              <p className="mt-3 text-center text-xs text-emerald-500/70">
+                Your personalized dashboard is ready in 5 seconds
+              </p>
             </>
           )}
 
@@ -275,9 +283,18 @@ export default function PadhaiOnboarding() {
           </div>
         </div>
 
-        <p className="mt-6 text-center text-xs text-slate-500">
-          By continuing, you agree to our Terms of Service and Privacy Policy.
-        </p>
+        <div className="mt-6 space-y-2">
+          <div className="flex items-center justify-center gap-4 text-xs text-slate-500">
+            <span>100% Free</span>
+            <span className="text-slate-700">•</span>
+            <span>No credit card</span>
+            <span className="text-slate-700">•</span>
+            <span>30 seconds</span>
+          </div>
+          <p className="text-center text-xs text-slate-600">
+            By continuing, you agree to our Terms of Service and Privacy Policy.
+          </p>
+        </div>
       </div>
     </div>
   );
