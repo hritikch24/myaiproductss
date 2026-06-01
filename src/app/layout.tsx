@@ -17,24 +17,32 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://kraftai.in"),
   title: {
-    default: "KraftAI — From Idea to Reality | Custom Software Development",
+    default: "KraftAI — Premium Web Development Agency | Websites, Apps & AI from $499",
     template: "%s | KraftAI",
   },
   description:
-    "Think it. Tell us. We build & deploy. Custom websites, apps, stores - everything from idea to ready-made product. Free consultation. Trusted delivery. Get websites, e-commerce stores, mobile apps, business software built in India.",
+    "Premium web development agency. Custom websites from $499, web apps, mobile apps, e-commerce stores & AI solutions built by senior engineers. 7-day delivery available. 100% code ownership. Free instant quote. Trusted by 50+ businesses worldwide.",
   keywords: [
-    "software development company",
+    "web development agency",
     "custom website development",
-    "web development services",
+    "hire web developer",
+    "website design company",
+    "web application development",
     "mobile app development",
-    "e-commerce website builder",
-    "online store development",
-    "business software",
-    "custom software development India",
-    "freelance developer",
-    "startup website",
-    "AI solutions",
-    "UI/UX design services",
+    "ecommerce website development",
+    "AI integration services",
+    "affordable web development",
+    "professional website design",
+    "React developer for hire",
+    "Next.js development",
+    "full stack developer",
+    "website development cost",
+    "web development pricing",
+    "custom software development",
+    "startup website builder",
+    "freelance web developer",
+    "build my app idea",
+    "get a quote for website",
   ],
   authors: [{ name: "KraftAI" }],
   creator: "KraftAI",
@@ -57,47 +65,48 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
-    locale: "en_IN",
+    locale: "en_US",
     url: "https://kraftai.in",
     siteName: "KraftAI",
-    title: "KraftAI — From Idea to Reality | Custom Software Development",
+    title: "KraftAI — Premium Web Development Agency | From $499",
     description:
-      "Think it. Tell us. We build & deploy. Custom websites, apps, stores - everything from idea to ready-made product. Free consultation. Trusted delivery.",
-      images: [
+      "Custom websites, web apps, mobile apps & AI solutions built by senior engineers. Transparent pricing from $499. 100% code ownership. Free instant quote.",
+    images: [
       {
         url: "/og-image.svg",
         width: 1200,
         height: 630,
-        alt: "KraftAI - Custom Software Development",
+        alt: "KraftAI - Premium Web Development Agency",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "KraftAI — From Idea to Reality",
+    title: "KraftAI — Premium Web Development from $499",
     description:
-      "Custom websites, apps, stores built from your idea. Free consultation. Trusted delivery.",
+      "Custom websites, apps & AI solutions. 7-day delivery. 100% code ownership. Free instant quote.",
     images: ["/og-image.svg"],
     creator: "@kraftai",
   },
   icons: {
     icon: [
       { url: "/icon.svg", type: "image/svg+xml" },
-      { url: "/favicon.ico", rel: "icon", type: "image/x-icon" }
+      { url: "/favicon.ico", rel: "icon", type: "image/x-icon" },
     ],
     shortcut: "/icon.svg",
     apple: "/icon.svg",
   },
   manifest: "/manifest.json",
   alternates: {
-    canonical: "/",
+    canonical: "https://kraftai.in",
     languages: {
-      en: "https://kraftai.in",
+      "en-US": "https://kraftai.in",
+      "en-GB": "https://kraftai.in",
       "en-IN": "https://kraftai.in",
     },
   },
   category: "technology",
-  classification: "Software Development Services",
+  classification: "Web Development Agency",
 };
 
 export default function RootLayout({
@@ -116,11 +125,11 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "Organization",
+              "@type": "ProfessionalService",
               name: "KraftAI",
               url: "https://kraftai.in",
               logo: "https://kraftai.in/icon.svg",
-              description: "Custom software development company - websites, apps, stores built from your idea",
+              description: "Premium web development agency. Custom websites, apps & AI solutions from $499. 100% code ownership.",
               address: {
                 "@type": "PostalAddress",
                 addressCountry: "IN",
@@ -128,10 +137,11 @@ export default function RootLayout({
               contactPoint: {
                 "@type": "ContactPoint",
                 email: "hritikchaudhary016@gmail.com",
-                contactType: "customer service",
+                contactType: "sales",
+                availableLanguage: ["English", "Hindi"],
               },
               sameAs: [],
-              areaServed: "IN",
+              areaServed: ["US", "GB", "CA", "AU", "IN", "AE", "SG"],
               serviceType: [
                 "Web Development",
                 "Mobile App Development",
@@ -140,6 +150,8 @@ export default function RootLayout({
                 "UI/UX Design",
                 "AI Solutions",
               ],
+              priceRange: "$499 - $25,000+",
+              currenciesAccepted: "USD",
             }),
           }}
         />
@@ -157,8 +169,8 @@ export default function RootLayout({
                 "@type": "PostalAddress",
                 addressCountry: "IN",
               },
-              priceRange: "$$",
-              openingHours: "Mo,Tu,We,Th,Fr 09:00-18:00",
+              priceRange: "$499 - $25,000+",
+              openingHours: "Mo,Tu,We,Th,Fr,Sa 09:00-21:00",
             }),
           }}
         />
