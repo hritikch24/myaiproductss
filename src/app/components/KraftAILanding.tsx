@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
+import KraftAITracker, { trackEvent } from "./KraftAITracker";
+import KraftAIChatbot from "./KraftAIChatbot";
 
 const WA_NUM = "918859820935";
 const WA_BASE = `https://wa.me/${WA_NUM}?text=`;
@@ -93,12 +95,15 @@ const techPills = [
 ];
 
 const faqItems = [
-  { q: "How much does a custom website cost?", a: "Our projects start at $499 for landing pages. Business websites start at $1,499, e-commerce at $2,999, and custom web apps at $4,999. Use our instant quote calculator above for a detailed breakdown, or message us for a custom estimate." },
-  { q: "How long does it take to build a website?", a: "Landing pages: 5-7 business days. Business websites: 2-3 weeks. E-commerce stores: 3-5 weeks. Complex web apps: 4-8 weeks. We also offer expedited delivery for urgent projects." },
-  { q: "Do I own the source code?", a: "Yes, 100%. Every line of code, every design asset, every credential belongs to you. We deploy on your infrastructure with your accounts. Zero vendor lock-in, zero recurring license fees." },
-  { q: "What payment methods do you accept?", a: "We accept wire transfers, PayPal, Stripe, and cryptocurrency. We typically work with 50% upfront and 50% on delivery, but we're flexible for larger projects." },
-  { q: "Can you build AI-powered features?", a: "Absolutely. We integrate AI capabilities including chatbots, content generation, image recognition, recommendation engines, and custom LLM solutions using OpenAI, Claude, and open-source models." },
-  { q: "Do you offer ongoing support?", a: "Yes. Maintenance plans start at $99/month and include bug fixes, security updates, performance monitoring, and minor feature additions. We also offer 24/7 emergency support." },
+  { q: "How much does a custom website cost?", a: "Our projects start at $499 for landing pages. Business websites start at $1,499, e-commerce at $2,999, and custom web apps at $4,999. Use our instant quote calculator above for a detailed breakdown, or message us for a custom estimate. All prices are fixed — no hourly billing." },
+  { q: "How long does it take to build a website?", a: "Landing pages: 5-7 business days. Business websites: 2-3 weeks. E-commerce stores: 3-5 weeks. Complex web apps: 4-8 weeks. We also offer express delivery for urgent projects." },
+  { q: "How are you different from Upwork or Fiverr freelancers?", a: "Fixed-price quotes (no hourly surprises), weekly demos, direct access to senior engineers, money-back guarantee, and 100% code ownership. No middlemen, no ghosting. You talk to the person writing your code." },
+  { q: "I have an app idea but I'm not technical. Can you help?", a: "Absolutely. Most of our clients are non-technical founders. We handle everything from requirements to deployment. Start with a free 30-minute discovery call — just describe your idea and we'll map out the entire project." },
+  { q: "Can you replace my WordPress or Wix site?", a: "Yes, we frequently migrate from WordPress, Wix, Squarespace to custom-built sites. Custom sites are faster, more secure, fully SEO-optimized, and you never pay recurring platform fees. Migration takes 2-3 weeks." },
+  { q: "Can you add AI chatbots or AI features to my website?", a: "Yes. We integrate chatbots, content generation, recommendation engines, and custom LLM solutions using OpenAI, Claude, and open-source models. AI integrations start at $1,999." },
+  { q: "Do I own the source code?", a: "Yes, 100%. Every line of code, every asset, every credential is yours. We deploy on your infrastructure with your accounts. Zero vendor lock-in, zero recurring license fees." },
+  { q: "What payment methods do you accept?", a: "Wire transfers, PayPal, Stripe, and cryptocurrency. Standard terms: 50% upfront, 50% on delivery. For projects over $10K, milestone-based payments available. All prices in USD." },
+  { q: "Do you offer ongoing support?", a: "Yes. Maintenance plans start at $99/month including bug fixes, security updates, performance monitoring, and minor feature additions. 24/7 emergency support available." },
 ];
 
 const processSteps = [
@@ -118,6 +123,38 @@ export default function KraftAILanding() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showQuoteForm, setShowQuoteForm] = useState(false);
+  const [quoteForm, setQuoteForm] = useState({ name: "", email: "", phone: "", company: "", message: "", timeline: "" });
+  const [quoteSubmitted, setQuoteSubmitted] = useState(false);
+  const [quoteSubmitting, setQuoteSubmitting] = useState(false);
+
+  const submitQuoteForm = useCallback(async () => {
+    if (!quoteForm.name && !quoteForm.email) return;
+    setQuoteSubmitting(true);
+    try {
+      await fetch("/api/kraftai/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: quoteForm.name,
+          email: quoteForm.email,
+          phone: quoteForm.phone,
+          company: quoteForm.company,
+          message: quoteForm.message,
+          timeline: quoteForm.timeline,
+          selected_tier: pricingTiers[selectedTier].name,
+          selected_addons: selectedAddOns.map((id) => addOns.find((a) => a.id === id)?.name).join(", "),
+          estimated_total: pricingTiers[selectedTier].price + selectedAddOns.reduce((s, id) => s + (addOns.find((a) => a.id === id)?.price || 0), 0),
+          project_type: pricingTiers[selectedTier].name,
+          budget: `$${pricingTiers[selectedTier].price + selectedAddOns.reduce((s, id) => s + (addOns.find((a) => a.id === id)?.price || 0), 0)}`,
+          source: "quote_form",
+        }),
+      });
+      setQuoteSubmitted(true);
+      trackEvent("lead_submitted", { tier: pricingTiers[selectedTier].name, total: pricingTiers[selectedTier].price + selectedAddOns.reduce((s, id) => s + (addOns.find((a) => a.id === id)?.price || 0), 0) });
+    } catch { /* will still redirect to WhatsApp */ }
+    setQuoteSubmitting(false);
+  }, [quoteForm, selectedTier, selectedAddOns]);
 
   const totalPrice = pricingTiers[selectedTier].price + selectedAddOns.reduce((sum, id) => {
     const addon = addOns.find((a) => a.id === id);
@@ -977,15 +1014,73 @@ export default function KraftAILanding() {
             <div className="k-quote-note">Final price confirmed after discovery call. 50% upfront, 50% on delivery.</div>
           </div>
           <div className="k-quote-actions">
-            <a href={waLink(quoteMessage)} target="_blank" rel="noopener noreferrer" className="k-btn k-btn-green">
+            <button className="k-btn k-btn-primary" onClick={() => { setShowQuoteForm(true); trackEvent("quote_form_opened", { tier: pricingTiers[selectedTier].name, total: totalPrice }); }}>
+              Get Detailed Quote
+            </button>
+            <a href={waLink(quoteMessage)} target="_blank" rel="noopener noreferrer" className="k-btn k-btn-green" onClick={() => trackEvent("quote_whatsapp", { tier: pricingTiers[selectedTier].name, total: totalPrice })}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-              Send Quote via WhatsApp
-            </a>
-            <a href={`mailto:hritikchaudhary016@gmail.com?subject=Quote Request: ${pricingTiers[selectedTier].name} ($${totalPrice})&body=${encodeURIComponent(quoteMessage)}`} className="k-btn k-btn-outline">
-              Send via Email
+              Quick Quote via WhatsApp
             </a>
           </div>
         </div>
+
+        {/* Lead Capture Form Modal */}
+        {showQuoteForm && (
+          <div style={{ position: "fixed", inset: 0, zIndex: 10000, display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(0,0,0,0.7)", backdropFilter: "blur(8px)" }} onClick={(e) => { if (e.target === e.currentTarget) setShowQuoteForm(false); }}>
+            <div style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 20, padding: 36, width: 460, maxWidth: "90vw", maxHeight: "90vh", overflowY: "auto", position: "relative" }}>
+              <button onClick={() => setShowQuoteForm(false)} style={{ position: "absolute", top: 16, right: 16, background: "none", border: "none", color: "var(--muted)", fontSize: 24, cursor: "pointer" }}>&times;</button>
+              {quoteSubmitted ? (
+                <div style={{ textAlign: "center", padding: "20px 0" }}>
+                  <div style={{ fontSize: 48, marginBottom: 16 }}>&#10003;</div>
+                  <h3 style={{ fontSize: 22, fontWeight: 700, marginBottom: 8 }}>Quote Request Received!</h3>
+                  <p style={{ color: "var(--muted)", fontSize: 14, lineHeight: 1.7, marginBottom: 24 }}>
+                    We&apos;ll get back to you within 2 hours with a detailed proposal.<br />
+                    For instant discussion, reach us on WhatsApp.
+                  </p>
+                  <a href={waLink(quoteMessage)} target="_blank" rel="noopener noreferrer" className="k-btn k-btn-green">
+                    Continue on WhatsApp
+                  </a>
+                </div>
+              ) : (
+                <>
+                  <h3 style={{ fontSize: 22, fontWeight: 700, marginBottom: 4 }}>Get Your Detailed Quote</h3>
+                  <p style={{ color: "var(--muted)", fontSize: 13, marginBottom: 24 }}>
+                    {pricingTiers[selectedTier].name} — ${totalPrice.toLocaleString()} estimated
+                  </p>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+                      <input placeholder="Your Name *" value={quoteForm.name} onChange={(e) => setQuoteForm({ ...quoteForm, name: e.target.value })} style={{ padding: "12px 14px", borderRadius: 10, border: "1px solid var(--border)", background: "var(--bg)", color: "var(--ink)", fontSize: 14, outline: "none", fontFamily: "inherit" }} />
+                      <input placeholder="Email *" type="email" value={quoteForm.email} onChange={(e) => setQuoteForm({ ...quoteForm, email: e.target.value })} style={{ padding: "12px 14px", borderRadius: 10, border: "1px solid var(--border)", background: "var(--bg)", color: "var(--ink)", fontSize: 14, outline: "none", fontFamily: "inherit" }} />
+                    </div>
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+                      <input placeholder="Phone (optional)" value={quoteForm.phone} onChange={(e) => setQuoteForm({ ...quoteForm, phone: e.target.value })} style={{ padding: "12px 14px", borderRadius: 10, border: "1px solid var(--border)", background: "var(--bg)", color: "var(--ink)", fontSize: 14, outline: "none", fontFamily: "inherit" }} />
+                      <input placeholder="Company (optional)" value={quoteForm.company} onChange={(e) => setQuoteForm({ ...quoteForm, company: e.target.value })} style={{ padding: "12px 14px", borderRadius: 10, border: "1px solid var(--border)", background: "var(--bg)", color: "var(--ink)", fontSize: 14, outline: "none", fontFamily: "inherit" }} />
+                    </div>
+                    <select value={quoteForm.timeline} onChange={(e) => setQuoteForm({ ...quoteForm, timeline: e.target.value })} style={{ padding: "12px 14px", borderRadius: 10, border: "1px solid var(--border)", background: "var(--bg)", color: quoteForm.timeline ? "var(--ink)" : "var(--muted)", fontSize: 14, outline: "none", fontFamily: "inherit" }}>
+                      <option value="">When do you need this?</option>
+                      <option value="asap">ASAP (Express)</option>
+                      <option value="2weeks">Within 2 weeks</option>
+                      <option value="1month">Within a month</option>
+                      <option value="flexible">Flexible timeline</option>
+                    </select>
+                    <textarea placeholder="Tell us about your project... (What do you want built? Any specific features?)" value={quoteForm.message} onChange={(e) => setQuoteForm({ ...quoteForm, message: e.target.value })} rows={4} style={{ padding: "12px 14px", borderRadius: 10, border: "1px solid var(--border)", background: "var(--bg)", color: "var(--ink)", fontSize: 14, outline: "none", resize: "vertical", fontFamily: "inherit" }} />
+                    <button
+                      className="k-btn k-btn-primary"
+                      style={{ width: "100%", justifyContent: "center", padding: "14px 24px" }}
+                      disabled={quoteSubmitting || (!quoteForm.name && !quoteForm.email)}
+                      onClick={async () => { await submitQuoteForm(); }}
+                    >
+                      {quoteSubmitting ? "Submitting..." : "Submit Quote Request"}
+                    </button>
+                    <p style={{ fontSize: 11, color: "var(--muted)", textAlign: "center" }}>
+                      We respond within 2 hours. Your data is never shared.
+                    </p>
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+        )}
       </section>
 
       {/* Process */}
@@ -1181,6 +1276,10 @@ export default function KraftAILanding() {
           </div>
         </div>
       </footer>
+
+      {/* Tracker & Chatbot */}
+      <KraftAITracker />
+      <KraftAIChatbot />
     </>
   );
 }
