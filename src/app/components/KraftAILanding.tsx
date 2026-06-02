@@ -127,9 +127,20 @@ export default function KraftAILanding() {
   const [quoteForm, setQuoteForm] = useState({ name: "", email: "", phone: "", company: "", message: "", timeline: "" });
   const [quoteSubmitted, setQuoteSubmitted] = useState(false);
   const [quoteSubmitting, setQuoteSubmitting] = useState(false);
+  const [quoteErrors, setQuoteErrors] = useState<Record<string, string>>({});
+
+  const validateQuoteForm = useCallback(() => {
+    const errors: Record<string, string> = {};
+    if (!quoteForm.name.trim()) errors.name = "Name is required";
+    if (!quoteForm.email.trim()) errors.email = "Email is required";
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(quoteForm.email.trim())) errors.email = "Enter a valid email";
+    if (quoteForm.phone && !/^[+\d\s()-]{7,20}$/.test(quoteForm.phone.trim())) errors.phone = "Enter a valid phone number";
+    setQuoteErrors(errors);
+    return Object.keys(errors).length === 0;
+  }, [quoteForm]);
 
   const submitQuoteForm = useCallback(async () => {
-    if (!quoteForm.name && !quoteForm.email) return;
+    if (!validateQuoteForm()) return;
     setQuoteSubmitting(true);
     try {
       await fetch("/api/kraftai/leads", {
@@ -154,7 +165,7 @@ export default function KraftAILanding() {
       trackEvent("lead_submitted", { tier: pricingTiers[selectedTier].name, total: pricingTiers[selectedTier].price + selectedAddOns.reduce((s, id) => s + (addOns.find((a) => a.id === id)?.price || 0), 0) });
     } catch { /* will still redirect to WhatsApp */ }
     setQuoteSubmitting(false);
-  }, [quoteForm, selectedTier, selectedAddOns]);
+  }, [quoteForm, selectedTier, selectedAddOns, validateQuoteForm]);
 
   const totalPrice = pricingTiers[selectedTier].price + selectedAddOns.reduce((sum, id) => {
     const addon = addOns.find((a) => a.id === id);
@@ -1049,11 +1060,20 @@ export default function KraftAILanding() {
                   </p>
                   <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-                      <input placeholder="Your Name *" value={quoteForm.name} onChange={(e) => setQuoteForm({ ...quoteForm, name: e.target.value })} style={{ padding: "12px 14px", borderRadius: 10, border: "1px solid var(--border)", background: "var(--bg)", color: "var(--ink)", fontSize: 14, outline: "none", fontFamily: "inherit" }} />
-                      <input placeholder="Email *" type="email" value={quoteForm.email} onChange={(e) => setQuoteForm({ ...quoteForm, email: e.target.value })} style={{ padding: "12px 14px", borderRadius: 10, border: "1px solid var(--border)", background: "var(--bg)", color: "var(--ink)", fontSize: 14, outline: "none", fontFamily: "inherit" }} />
+                      <div>
+                        <input placeholder="Your Name *" value={quoteForm.name} onChange={(e) => { setQuoteForm({ ...quoteForm, name: e.target.value }); if (quoteErrors.name) setQuoteErrors((p) => { const { name: _, ...rest } = p; return rest; }); }} style={{ width: "100%", padding: "12px 14px", borderRadius: 10, border: `1px solid ${quoteErrors.name ? "#ef4444" : "var(--border)"}`, background: "var(--bg)", color: "var(--ink)", fontSize: 14, outline: "none", fontFamily: "inherit" }} />
+                        {quoteErrors.name && <p style={{ color: "#ef4444", fontSize: 11, marginTop: 4 }}>{quoteErrors.name}</p>}
+                      </div>
+                      <div>
+                        <input placeholder="Email *" type="email" value={quoteForm.email} onChange={(e) => { setQuoteForm({ ...quoteForm, email: e.target.value }); if (quoteErrors.email) setQuoteErrors((p) => { const { email: _, ...rest } = p; return rest; }); }} style={{ width: "100%", padding: "12px 14px", borderRadius: 10, border: `1px solid ${quoteErrors.email ? "#ef4444" : "var(--border)"}`, background: "var(--bg)", color: "var(--ink)", fontSize: 14, outline: "none", fontFamily: "inherit" }} />
+                        {quoteErrors.email && <p style={{ color: "#ef4444", fontSize: 11, marginTop: 4 }}>{quoteErrors.email}</p>}
+                      </div>
                     </div>
                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-                      <input placeholder="Phone (optional)" value={quoteForm.phone} onChange={(e) => setQuoteForm({ ...quoteForm, phone: e.target.value })} style={{ padding: "12px 14px", borderRadius: 10, border: "1px solid var(--border)", background: "var(--bg)", color: "var(--ink)", fontSize: 14, outline: "none", fontFamily: "inherit" }} />
+                      <div>
+                        <input placeholder="Phone (optional)" value={quoteForm.phone} onChange={(e) => { setQuoteForm({ ...quoteForm, phone: e.target.value }); if (quoteErrors.phone) setQuoteErrors((p) => { const { phone: _, ...rest } = p; return rest; }); }} style={{ width: "100%", padding: "12px 14px", borderRadius: 10, border: `1px solid ${quoteErrors.phone ? "#ef4444" : "var(--border)"}`, background: "var(--bg)", color: "var(--ink)", fontSize: 14, outline: "none", fontFamily: "inherit" }} />
+                        {quoteErrors.phone && <p style={{ color: "#ef4444", fontSize: 11, marginTop: 4 }}>{quoteErrors.phone}</p>}
+                      </div>
                       <input placeholder="Company (optional)" value={quoteForm.company} onChange={(e) => setQuoteForm({ ...quoteForm, company: e.target.value })} style={{ padding: "12px 14px", borderRadius: 10, border: "1px solid var(--border)", background: "var(--bg)", color: "var(--ink)", fontSize: 14, outline: "none", fontFamily: "inherit" }} />
                     </div>
                     <select value={quoteForm.timeline} onChange={(e) => setQuoteForm({ ...quoteForm, timeline: e.target.value })} style={{ padding: "12px 14px", borderRadius: 10, border: "1px solid var(--border)", background: "var(--bg)", color: quoteForm.timeline ? "var(--ink)" : "var(--muted)", fontSize: 14, outline: "none", fontFamily: "inherit" }}>
@@ -1063,11 +1083,11 @@ export default function KraftAILanding() {
                       <option value="1month">Within a month</option>
                       <option value="flexible">Flexible timeline</option>
                     </select>
-                    <textarea placeholder="Tell us about your project... (What do you want built? Any specific features?)" value={quoteForm.message} onChange={(e) => setQuoteForm({ ...quoteForm, message: e.target.value })} rows={4} style={{ padding: "12px 14px", borderRadius: 10, border: "1px solid var(--border)", background: "var(--bg)", color: "var(--ink)", fontSize: 14, outline: "none", resize: "vertical", fontFamily: "inherit" }} />
+                    <textarea placeholder="Tell us about your project... (What do you want built? Any specific features?)" value={quoteForm.message} onChange={(e) => setQuoteForm({ ...quoteForm, message: e.target.value })} rows={4} style={{ padding: "12px 14px", borderRadius: 10, border: "1px solid var(--border)", background: "var(--bg)", color: "var(--ink)", fontSize: 14, outline: "none", resize: "vertical", fontFamily: "inherit" }} maxLength={2000} />
                     <button
                       className="k-btn k-btn-primary"
                       style={{ width: "100%", justifyContent: "center", padding: "14px 24px" }}
-                      disabled={quoteSubmitting || (!quoteForm.name && !quoteForm.email)}
+                      disabled={quoteSubmitting || !quoteForm.name.trim() || !quoteForm.email.trim()}
                       onClick={async () => { await submitQuoteForm(); }}
                     >
                       {quoteSubmitting ? "Submitting..." : "Submit Quote Request"}

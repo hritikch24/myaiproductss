@@ -211,8 +211,9 @@ export default function KraftAIChatbot() {
               className="kc-input"
               placeholder="Ask about pricing, services..."
               value={input}
-              onChange={(e) => setInput(e.target.value)}
+              onChange={(e) => setInput(e.target.value.slice(0, 500))}
               onKeyDown={(e) => { if (e.key === "Enter") sendMessage(); }}
+              maxLength={500}
               disabled={loading}
             />
             <button className="kc-send" onClick={sendMessage} disabled={loading || !input.trim()}>
