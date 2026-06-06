@@ -4,10 +4,12 @@ import { ArrowLeft, Globe, Palette, Zap, Shield, Rocket, ChevronRight, Hexagon, 
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Custom Website Development Services India | Professional Web Design",
-  description: "Get professional custom website development services in India. Responsive websites, landing pages, web platforms with futuristic 2050+ design. Free consultation. Trusted by startups and businesses.",
-  keywords: ["website development services India", "custom website design", "responsive website", "landing page design", "web development company India", "professional web designer", "freelance web developer"],
+  title: "Custom Website Development from $499 | Fast, SEO-Optimized Sites",
+  description: "Need a custom website that actually converts? We build landing pages ($499), business sites ($1,499), and web platforms with clean code, sub-2s load times, and perfect SEO. 7-day express delivery. 100% code ownership. No WordPress, no templates. Free instant quote.",
+  keywords: ["custom website development", "hire website developer", "website developer for startup", "landing page developer", "business website cost", "replace wordpress with custom site", "website built in 1 week", "convert figma to website", "professional web development", "responsive website design", "SEO optimized website", "website developer who gives source code"],
   metadataBase: new URL("https://kraftai.in"),
+  alternates: { canonical: "https://kraftai.in/services/websites" },
+  openGraph: { title: "Custom Website Development from $499", description: "Custom-coded websites with 7-day delivery and 100% code ownership.", url: "https://kraftai.in/services/websites", siteName: "KraftAI", type: "website" },
 };
 
 const themes = [

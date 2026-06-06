@@ -3,10 +3,12 @@ import { ArrowLeft, Brain, Bot, Sparkles, ChevronRight, ChevronLeft, Hexagon, Cp
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "AI Development Company India | Artificial Intelligence Solutions",
-  description: "Professional AI development services in India. Chatbot development, machine learning, computer vision, voice AI. Integrate smart AI features into your products. Free consultation.",
-  keywords: ["AI development company India", "artificial intelligence services", "machine learning development", "chatbot development India", "AI solutions business", "computer vision development", "voice AI"],
+  title: "AI Agent & Chatbot Development from $1,999 | Custom AI Solutions for Business",
+  description: "Custom AI agents, chatbots, and automation for your business. We build AI-powered customer support, sales bots, content generators, recommendation engines & workflow automation using OpenAI, Claude, and open-source LLMs. Fixed pricing from $1,999. Production-ready in 2-4 weeks.",
+  keywords: ["AI agent development", "custom AI chatbot for business", "hire AI developer", "AI automation for business", "build AI agent", "custom chatbot development", "LLM integration", "OpenAI integration developer", "Claude AI integration", "AI customer support bot", "AI workflow automation", "add AI to my website", "AI for small business", "conversational AI development", "RAG chatbot developer"],
   metadataBase: new URL("https://kraftai.in"),
+  alternates: { canonical: "https://kraftai.in/services/ai-solutions" },
+  openGraph: { title: "AI Agent & Chatbot Development from $1,999", description: "Custom AI agents, chatbots & automation. Production-ready in 2-4 weeks.", url: "https://kraftai.in/services/ai-solutions", siteName: "KraftAI", type: "website" },
 };
 
 const themes = [

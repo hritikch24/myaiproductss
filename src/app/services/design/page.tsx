@@ -3,10 +3,12 @@ import { ArrowLeft, Palette, Figma, PenTool, Type, Image, Sparkles, Layers, Zap,
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "UI UX Design Services India | Professional Web & App Design",
-  description: "Get professional UI/UX design services in India. Futuristic website design, mobile app interfaces, brand identity. Stunning 2050+ designs that convert. Free consultation.",
-  keywords: ["UI UX design services India", "web design company", "app UI design", "graphic design services", "brand identity design", "Figma design", "professional designer India"],
+  title: "UI/UX Design Services from $799 | Web & App Design That Converts",
+  description: "Premium UI/UX design that converts visitors into customers. Website design, mobile app interfaces, SaaS dashboards, brand identity. Figma to code. Fixed pricing from $799. We design AND build — no handoff headaches.",
+  keywords: ["UI UX design services", "web design that converts", "app UI design", "SaaS dashboard design", "hire UI designer", "Figma to code", "website redesign services", "mobile app design", "landing page design", "conversion rate optimization design", "premium web design"],
   metadataBase: new URL("https://kraftai.in"),
+  alternates: { canonical: "https://kraftai.in/services/design" },
+  openGraph: { title: "UI/UX Design Services from $799", description: "Design that converts. We design AND build — no handoff headaches.", url: "https://kraftai.in/services/design", siteName: "KraftAI", type: "website" },
 };
 
 const themes = [

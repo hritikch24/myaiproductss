@@ -3,10 +3,10 @@ import { Metadata } from "next";
 import KraftAILanding from "./components/KraftAILanding";
 
 export const metadata: Metadata = {
-  title: "KraftAI — Premium Web Development Agency | Custom Websites, Apps & AI from $499",
-  description: "Need a website, app, or AI solution but tired of overpriced agencies and unreliable freelancers? KraftAI builds custom websites from $499, web apps, mobile apps & AI solutions with transparent fixed pricing. 7-day express delivery. 100% code ownership. Free instant quote calculator. Trusted by 50+ businesses in US, UK, Canada, Australia.",
+  title: "KraftAI — Custom Websites, Apps & AI Agents from $499 | Fixed Pricing, No Freelancer BS",
+  description: "Tired of unreliable freelancers and overpriced agencies? KraftAI builds custom websites ($499), web apps ($4,999), mobile apps ($3,999), AI agents & chatbots ($1,999) with fixed pricing — no hourly billing, no surprises. 7-day express delivery. 100% source code ownership. Talk directly to the senior engineer writing your code. Free instant quote calculator. Trusted by 50+ businesses in US, UK, Canada, Australia.",
   keywords: [
-    // Underserved intent queries - people who searched but didn't find what they need
+    // Underserved intent queries - people searching but not finding solutions
     "someone to build my website idea",
     "who can build my app idea cheap",
     "need a developer for my startup",
@@ -27,7 +27,28 @@ export const metadata: Metadata = {
     "rebuild my slow wordpress site",
     "replace wix with custom website",
     "ecommerce store developer not shopify",
-    // Standard high-intent keywords
+    // AI Agent & Automation - massively underserved niche
+    "build AI agent for my business",
+    "custom AI chatbot developer",
+    "AI agent development company",
+    "hire someone to build AI agent",
+    "AI automation for small business",
+    "custom GPT for my company",
+    "AI customer support bot developer",
+    "LLM integration developer",
+    "RAG chatbot development",
+    "AI workflow automation developer",
+    "add ChatGPT to my website",
+    "AI sales agent development",
+    "voice AI agent builder",
+    // Startup & MVP
+    "build my startup MVP",
+    "MVP development in 2 weeks",
+    "startup developer for equity",
+    "non technical founder need developer",
+    "launch product fast developer",
+    "prototype to production developer",
+    // Standard high-intent
     "web development agency",
     "custom website development cost",
     "hire web developer fixed price",
@@ -82,6 +103,30 @@ const faqData = [
     question: "Do you offer ongoing support and maintenance?",
     answer: "Yes, we offer flexible maintenance plans starting at $99/month. This includes bug fixes, security updates, performance monitoring, and minor feature additions. We also offer 24/7 emergency support for critical issues.",
   },
+  {
+    question: "Can you build a custom AI agent or chatbot for my business?",
+    answer: "Yes, we specialize in building custom AI agents and chatbots. We work with OpenAI GPT, Claude, Llama, and other LLMs to create customer support bots, AI sales agents, content generators, recommendation engines, and workflow automation. AI projects start at $1,999 and are typically production-ready in 2-4 weeks.",
+  },
+  {
+    question: "I'm a non-technical founder with a startup idea. Where do I start?",
+    answer: "Start with a free 30-minute discovery call. We'll help you define your MVP scope, identify core features, and give you a fixed-price quote. Most MVPs launch in 2-4 weeks for $2,499-$4,999. We handle everything — design, development, deployment, and App Store submission if needed.",
+  },
+  {
+    question: "Can you build a SaaS product for me?",
+    answer: "Absolutely. We've built SaaS dashboards, subscription platforms, and multi-tenant applications. We handle user authentication, billing integration (Stripe), admin panels, analytics, and scalable architecture. SaaS projects typically start at $4,999 with ongoing maintenance available.",
+  },
+  {
+    question: "Do you work with clients outside India?",
+    answer: "Yes, most of our clients are from the US, UK, Canada, and Australia. We work in your timezone, communicate in English, and accept payments via wire transfer, PayPal, Stripe, and crypto. All prices are in USD.",
+  },
+  {
+    question: "What's the difference between KraftAI and a freelancer on Upwork?",
+    answer: "With freelancers, you risk ghosting, scope creep, and paying hourly for inefficiency. With KraftAI, you get fixed pricing agreed upfront, weekly demo calls, direct access to senior engineers (not juniors), a money-back guarantee, and 100% code ownership. We're an agency with freelancer-level pricing.",
+  },
+  {
+    question: "Can you add AI features to my existing website or app?",
+    answer: "Yes. We integrate AI into existing products — chatbots, smart search, content generation, recommendation engines, voice AI, and process automation. We work with your existing codebase and tech stack. AI add-ons start at $800.",
+  },
 ];
 
 export default function Home() {
@@ -106,7 +151,8 @@ export default function Home() {
               availableLanguage: ["English", "Hindi"],
             },
             areaServed: ["US", "GB", "CA", "AU", "IN", "AE", "SG"],
-            serviceType: ["Web Development", "Mobile App Development", "E-commerce Development", "Custom Software", "UI/UX Design", "AI Solutions"],
+            serviceType: ["Web Development", "Mobile App Development", "E-commerce Development", "Custom Software", "UI/UX Design", "AI Agent Development", "AI Chatbot Development", "SaaS Development", "MVP Development", "Workflow Automation"],
+            knowsAbout: ["React", "Next.js", "TypeScript", "Node.js", "Python", "Flutter", "PostgreSQL", "AWS", "OpenAI", "Claude AI", "LangChain", "RAG"],
             priceRange: "$499 - $25,000+",
             currenciesAccepted: "USD",
             paymentAccepted: "Wire Transfer, PayPal, Stripe, Crypto",
@@ -155,7 +201,7 @@ export default function Home() {
               lowPrice: "499",
               highPrice: "25000",
               priceCurrency: "USD",
-              offerCount: "6",
+              offerCount: "10",
             },
             hasOfferCatalog: {
               "@type": "OfferCatalog",
@@ -167,6 +213,10 @@ export default function Home() {
                 { "@type": "Offer", itemOffered: { "@type": "Service", name: "Web Application", description: "Custom web application" }, price: "4999", priceCurrency: "USD" },
                 { "@type": "Offer", itemOffered: { "@type": "Service", name: "Mobile App", description: "iOS and Android mobile application" }, price: "3999", priceCurrency: "USD" },
                 { "@type": "Offer", itemOffered: { "@type": "Service", name: "AI Integration", description: "AI-powered features and automation" }, price: "1999", priceCurrency: "USD" },
+                { "@type": "Offer", itemOffered: { "@type": "Service", name: "AI Agent Development", description: "Custom AI agents and chatbots for business" }, price: "1999", priceCurrency: "USD" },
+                { "@type": "Offer", itemOffered: { "@type": "Service", name: "MVP Development", description: "Launch your startup idea in 2-4 weeks" }, price: "2499", priceCurrency: "USD" },
+                { "@type": "Offer", itemOffered: { "@type": "Service", name: "SaaS Development", description: "Custom SaaS platforms with billing and multi-tenancy" }, price: "4999", priceCurrency: "USD" },
+                { "@type": "Offer", itemOffered: { "@type": "Service", name: "UI/UX Design", description: "Premium design that converts visitors into customers" }, price: "799", priceCurrency: "USD" },
               ],
             },
           }),

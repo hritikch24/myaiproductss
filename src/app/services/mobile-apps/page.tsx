@@ -3,10 +3,12 @@ import { ArrowLeft, Smartphone, Tablet, Watch, Box, Zap, Globe, ChevronRight, He
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Mobile App Development Company India | iOS Android Apps",
-  description: "Professional mobile app development services in India. iOS and Android apps with futuristic design. From concept to App Store deployment. Free consultation. Trusted app developers.",
-  keywords: ["mobile app development India", "iOS app development", "Android app development", "mobile app developer India", "app development company", "cross-platform app", "build mobile app"],
+  title: "Mobile App Development from $3,999 | iOS & Android Apps",
+  description: "Custom mobile app development for iOS and Android. From concept to App Store deployment in 4-8 weeks. Flutter & React Native. Fixed pricing from $3,999. 100% source code ownership. Push notifications, offline support, analytics built in.",
+  keywords: ["mobile app development cost", "build my app idea", "iOS app developer for hire", "Android app development", "hire mobile app developer", "app development company", "cross platform app development", "flutter developer", "react native developer", "startup app development", "I have an app idea", "app development pricing"],
   metadataBase: new URL("https://kraftai.in"),
+  alternates: { canonical: "https://kraftai.in/services/mobile-apps" },
+  openGraph: { title: "Mobile App Development from $3,999", description: "iOS & Android apps. Concept to App Store in 4-8 weeks. Fixed pricing.", url: "https://kraftai.in/services/mobile-apps", siteName: "KraftAI", type: "website" },
 };
 
 const themes = [

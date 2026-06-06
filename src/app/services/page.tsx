@@ -3,10 +3,18 @@ import { ArrowRight, CheckCircle, Clock, Shield, Zap, Code, Rocket, MessageCircl
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Software Development Services India | Custom Websites, Apps & More",
-  description: "Professional software development services in India. Custom websites, e-commerce stores, mobile apps, business software & AI solutions. Free consultation. On-time delivery. Fair pricing.",
-  keywords: ["software development services India", "custom website development", "web development company", "mobile app development India", "e-commerce development", "business software", "freelance developer India", "startup app development"],
+  title: "Web Development, App & AI Agent Services | Fixed Pricing from $499",
+  description: "Custom websites, web apps, mobile apps, AI agents & automation built by senior engineers. Fixed pricing from $499. 7-day express delivery. 100% code ownership. No freelancer headaches — talk directly to the dev writing your code.",
+  keywords: ["custom web development services", "hire web developer fixed price", "build my app idea", "AI agent development", "custom software development", "web app development company", "mobile app development", "startup MVP developer", "website development pricing", "AI chatbot development", "SaaS development", "full stack developer for hire"],
   metadataBase: new URL("https://kraftai.in"),
+  alternates: { canonical: "https://kraftai.in/services" },
+  openGraph: {
+    title: "Web Development, App & AI Agent Services | From $499",
+    description: "Custom websites, apps & AI agents. Fixed pricing, 7-day delivery, 100% code ownership.",
+    url: "https://kraftai.in/services",
+    siteName: "KraftAI",
+    type: "website",
+  },
 };
 
 export default function ServicesPage() {
@@ -22,11 +30,11 @@ export default function ServicesPage() {
               <span>Free Consultation Available</span>
             </div>
             <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-blue-100 to-blue-200 bg-clip-text text-transparent">
-              Tell Me Your Idea
+              Tell Us Your Idea
             </h1>
             <p className="text-xl md:text-2xl text-slate-400 max-w-3xl mx-auto mb-8">
-              I'll build, deploy and give you a ready-made site or app. 
-              Quality software at fair budget, delivered on time.
+              We build, deploy and hand you a ready-made site, app or AI agent.
+              Fixed pricing from $499. No surprises, no ghosting.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
@@ -68,10 +76,10 @@ export default function ServicesPage() {
       <section id="services" className="py-24 px-6">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-bold text-center mb-6">
-            What I <span className="text-blue-400">Build</span>
+            What We <span className="text-blue-400">Build</span>
           </h2>
           <p className="text-xl text-slate-400 text-center mb-16 max-w-2xl mx-auto">
-            From idea to deployment - I handle everything
+            From idea to deployment — we handle everything
           </p>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -130,7 +138,7 @@ export default function ServicesPage() {
       <section className="py-24 px-6">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-bold text-center mb-6">
-            Why Choose <span className="text-blue-400">Me</span>
+            Why Choose <span className="text-blue-400">KraftAI</span>
           </h2>
           
           <div className="grid md:grid-cols-2 gap-12 items-center mt-16">
@@ -183,14 +191,16 @@ export default function ServicesPage() {
               Free consultation available. Let's discuss your requirements.
             </p>
             <a
-              href="mailto:hritik@example.com"
+              href="https://wa.me/918859820935?text=Hi!%20I%20want%20to%20discuss%20a%20project."
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-blue-600 hover:bg-blue-500 rounded-lg font-semibold text-lg transition-all hover:scale-105"
             >
               <MessageCircle className="w-5 h-5" />
-              Get Free Consultation
+              Get Free Quote on WhatsApp
             </a>
             <p className="mt-4 text-sm text-slate-500">
-              Or email me directly at hritik@example.com
+              Or email us at hritikchaudhary016@gmail.com
             </p>
           </div>
         </div>
@@ -211,83 +221,83 @@ const services = [
   {
     icon: Code,
     title: "Custom Websites",
-    desc: "Beautiful, responsive websites tailored to your needs.",
-    features: ["Responsive Design", "SEO Optimized", "Fast Loading", "Easy to Manage"],
+    desc: "High-performance websites that convert visitors into customers. From $499.",
+    features: ["Responsive Design", "SEO Optimized", "Sub-2s Load Time", "CMS Integration"],
   },
   {
     icon: Rocket,
-    title: "Web Applications",
-    desc: "Powerful web apps with full functionality.",
-    features: ["User Authentication", "Database Integration", "API Development", "Real-time Features"],
+    title: "Web Applications & SaaS",
+    desc: "Full-stack web apps, dashboards, and SaaS platforms. From $4,999.",
+    features: ["User Auth & Roles", "Database & API", "Real-time Features", "Scalable Architecture"],
   },
   {
     icon: Zap,
-    title: "Mobile Apps",
-    desc: "Cross-platform mobile applications.",
-    features: ["iOS & Android", "Native Performance", "Push Notifications", "Offline Support"],
+    title: "AI Agents & Automation",
+    desc: "Custom AI agents, chatbots, and workflow automation. From $1,999.",
+    features: ["Custom LLM Agents", "Business Chatbots", "Process Automation", "API Integrations"],
   },
   {
     icon: Shield,
-    title: "E-Commerce",
-    desc: "Online stores with secure payments.",
-    features: ["Payment Gateway", "Inventory Management", "Order Tracking", "Admin Dashboard"],
+    title: "E-Commerce Stores",
+    desc: "Custom online stores that outperform Shopify templates. From $2,999.",
+    features: ["Payment Gateway", "Inventory System", "Order Tracking", "Admin Dashboard"],
   },
   {
     icon: Clock,
-    title: "API Development",
-    desc: "Robust APIs for your applications.",
-    features: ["REST & GraphQL", "Secure Endpoints", "Documentation", "Scalable Architecture"],
+    title: "Mobile Apps",
+    desc: "Native-quality iOS & Android apps. From $3,999.",
+    features: ["iOS & Android", "Push Notifications", "Offline Support", "App Store Deployment"],
   },
   {
     icon: CheckCircle,
-    title: "Maintenance",
-    desc: "Ongoing support and updates.",
-    features: ["Bug Fixes", "Security Updates", "Performance Optimization", "24/7 Support"],
+    title: "MVP Development",
+    desc: "Launch your startup idea in 2-4 weeks. From $2,499.",
+    features: ["Rapid Prototyping", "User Validation", "Investor-Ready", "Scalable Foundation"],
   },
 ];
 
 const process = [
   {
     title: "Share Your Idea",
-    desc: "Tell me what you want to build. No idea is too big or small.",
+    desc: "Tell us what you want to build. Use our instant quote calculator or chat with us.",
   },
   {
-    title: "Free Consultation",
-    desc: "We discuss requirements, timeline, and pricing. Totally free.",
+    title: "Free Discovery Call",
+    desc: "30-minute call to nail down requirements, timeline, and fixed pricing. No obligation.",
   },
   {
-    title: "I Build It",
-    desc: "I develop your software with regular updates on progress.",
+    title: "We Build It",
+    desc: "Senior engineers build your project with weekly demos and progress updates.",
   },
   {
-    title: "Deploy & Deliver",
-    desc: "Your ready-made site/app is deployed and handed to you.",
+    title: "Deploy & Own",
+    desc: "We deploy to your infrastructure. You own 100% of the code. No lock-in.",
   },
 ];
 
 const whyChoose = [
   {
-    title: "Free Consultation",
-    desc: "Unlike others, I offer free consultation to understand your needs before any commitment.",
+    title: "Fixed Pricing, No Surprises",
+    desc: "Know the exact cost before we write a single line. No hourly billing, no scope creep invoices.",
   },
   {
-    title: "On-Time Delivery",
-    desc: "I respect deadlines. Your project will be delivered within the agreed timeline.",
+    title: "7-Day Express Delivery",
+    desc: "Landing pages in 5-7 days. Business sites in 2-3 weeks. We ship fast.",
   },
   {
-    title: "Fair & Transparent Pricing",
-    desc: "No hidden costs. Quality software at budget-friendly rates.",
+    title: "100% Code Ownership",
+    desc: "Every line of code, every asset — it's yours. Deploy anywhere. No vendor lock-in.",
   },
   {
-    title: "You Think, I Build",
-    desc: "Just share your idea. I'll handle the entire development and deployment.",
+    title: "Talk to the Engineer",
+    desc: "No project managers, no account reps. You talk directly to the senior dev writing your code.",
   },
   {
-    title: "Trusted & Reliable",
-    desc: "Proven track record of delivering quality solutions to happy clients.",
+    title: "Money-Back Guarantee",
+    desc: "If deliverables don't match the agreement, you get your money back. Zero risk.",
   },
   {
-    title: "End-to-End Service",
-    desc: "From concept to deployment - I handle everything so you can focus on your business.",
+    title: "50+ Projects Delivered",
+    desc: "Trusted by startups and businesses across US, UK, Canada, Australia, and India.",
   },
 ];

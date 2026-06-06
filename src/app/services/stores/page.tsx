@@ -3,10 +3,12 @@ import { ArrowLeft, Store, ShoppingBag, CreditCard, Package, Users, BarChart3, C
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "E-Commerce Website Development India | Online Store Builder",
-  description: "Build professional e-commerce websites and online stores in India. Secure payments, inventory management, shipping integration. Start selling online today. Free consultation available.",
-  keywords: ["e-commerce development India", "online store builder", "e-commerce website", "shopping cart development", "payment gateway integration", "online selling India", "start e-commerce business"],
+  title: "Custom E-Commerce Development from $2,999 | Better Than Shopify Templates",
+  description: "Custom e-commerce stores that outperform Shopify templates. Stripe/PayPal payments, inventory management, order tracking, admin dashboard. Fixed pricing from $2,999. No monthly platform fees. 100% code ownership. Free instant quote.",
+  keywords: ["custom ecommerce development", "ecommerce store developer not shopify", "online store development cost", "custom shopping cart development", "ecommerce website builder alternative", "hire ecommerce developer", "custom online store", "payment gateway integration", "ecommerce developer for startup", "shopify alternative custom", "WooCommerce alternative"],
   metadataBase: new URL("https://kraftai.in"),
+  alternates: { canonical: "https://kraftai.in/services/stores" },
+  openGraph: { title: "Custom E-Commerce Development from $2,999", description: "Custom stores that outperform Shopify templates. No monthly fees.", url: "https://kraftai.in/services/stores", siteName: "KraftAI", type: "website" },
 };
 
 const themes = [

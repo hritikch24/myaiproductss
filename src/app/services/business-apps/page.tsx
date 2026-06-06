@@ -3,10 +3,12 @@ import { ArrowLeft, Building2, Briefcase, Users, BarChart3, FileText, Settings, 
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Custom Business Software Development India | ERP CRM Solutions",
-  description: "Professional business software development services in India. Custom ERP, CRM, HR systems, inventory management & automation. Streamline your business processes. Free consultation.",
-  keywords: ["business software development India", "custom ERP system", "CRM development India", "HR software", "inventory management system", "business automation", "enterprise software"],
+  title: "Custom Business Software & SaaS Development | Dashboards, CRM, ERP",
+  description: "Custom business software that replaces spreadsheets and manual processes. Admin dashboards, CRM, ERP, inventory systems, HR tools & workflow automation. Fixed pricing. Built with modern tech stack. 100% code ownership.",
+  keywords: ["custom business software development", "SaaS development company", "custom admin dashboard developer", "CRM development", "ERP system development", "custom inventory management system", "business process automation", "custom software development cost", "build my SaaS idea", "internal tools development", "workflow automation developer"],
   metadataBase: new URL("https://kraftai.in"),
+  alternates: { canonical: "https://kraftai.in/services/business-apps" },
+  openGraph: { title: "Custom Business Software & SaaS Development", description: "Replace spreadsheets with custom software. Dashboards, CRM, automation.", url: "https://kraftai.in/services/business-apps", siteName: "KraftAI", type: "website" },
 };
 
 const themes = [
