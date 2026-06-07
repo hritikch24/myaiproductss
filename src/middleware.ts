@@ -23,6 +23,10 @@ export async function middleware(request: NextRequest) {
   if (subdomainMatch) {
     const niche = subdomainMatch[1];
     if (NICHE_SUBDOMAINS.has(niche)) {
+      // Don't rewrite API routes or Next.js internals — they must resolve at their original paths
+      if (pathname.startsWith("/api/") || pathname.startsWith("/_next/")) {
+        return NextResponse.next();
+      }
       const url = request.nextUrl.clone();
       url.pathname = `/sites/${niche}${pathname}`;
       return NextResponse.rewrite(url);

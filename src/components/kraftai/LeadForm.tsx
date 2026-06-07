@@ -67,7 +67,7 @@ export default function LeadForm({ source }: LeadFormProps) {
 
       if (!response.ok) {
         const data = await response.json().catch(() => ({}));
-        throw new Error(data.message || 'Something went wrong. Please try again.');
+        throw new Error(data.error || data.message || 'Something went wrong. Please try again.');
       }
 
       setStatus('success');
