@@ -1,0 +1,188 @@
+- generic [active] [ref=e1]:
+  - alert [ref=e2]
+  - navigation [ref=e3]:
+    - link "KraftAI" [ref=e4] [cursor=pointer]:
+      - /url: /
+    - generic [ref=e5]:
+      - link "Services" [ref=e6] [cursor=pointer]:
+        - /url: "#services"
+      - link "Process" [ref=e7] [cursor=pointer]:
+        - /url: "#process"
+      - link "Why Us" [ref=e8] [cursor=pointer]:
+        - /url: "#why-us"
+    - link "Let's build →" [ref=e9] [cursor=pointer]:
+      - /url: https://wa.me/918859820935?text=Hi!%20Can%20you%20provide%20a%20quotation%20for%20building%20a%20website%2Fapp%20for%20my%20business%3F%20Here's%20what%20I'm%20looking%20for...
+  - generic [ref=e10]:
+    - generic [ref=e12]:
+      - generic [ref=e13]: Custom software · AI solutions · Full ownership
+      - heading "You Think. We Build. You Pay Forever Own." [level=1] [ref=e15]:
+        - generic [ref=e17]: You Think.
+        - generic [ref=e19]: We Build.
+        - generic [ref=e21]: You Pay Forever Own.
+    - generic [ref=e22]:
+      - paragraph [ref=e23]: Custom apps, websites, and AI systems — crafted to your exact spec. You get the code. You keep the keys.
+      - generic [ref=e24]:
+        - link "Chat on WhatsApp" [ref=e25] [cursor=pointer]:
+          - /url: https://wa.me/918859820935?text=Hi!%20Can%20you%20provide%20a%20quotation%20for%20building%20a%20website%2Fapp%20for%20my%20business%3F%20Here's%20what%20I'm%20looking%20for...
+          - img [ref=e26]
+          - text: Chat on WhatsApp
+        - link "Explore what we build ↓" [ref=e28] [cursor=pointer]:
+          - /url: "#services"
+    - generic [ref=e30]: Scroll
+  - generic [ref=e33]:
+    - generic [ref=e34]: Custom Software ✦ Mobile Apps ✦ AI Integration ✦ E-Commerce ✦ UI / UX Design ✦ Business Automation ✦ Full Code Ownership ✦ Cloud Deployment ✦
+    - generic [ref=e35]: Custom Software ✦ Mobile Apps ✦ AI Integration ✦ E-Commerce ✦ UI / UX Design ✦ Business Automation ✦ Full Code Ownership ✦ Cloud Deployment ✦
+  - generic [ref=e36]:
+    - generic [ref=e37]:
+      - generic [ref=e38]: 0%
+      - generic [ref=e39]: Code ownership
+    - generic [ref=e40]:
+      - generic [ref=e41]: 0ms
+      - generic [ref=e42]: Compromise
+    - generic [ref=e43]:
+      - generic [ref=e44]: 24/7
+      - generic [ref=e45]: Support coverage
+    - generic [ref=e46]:
+      - generic [ref=e47]: 1×
+      - generic [ref=e48]: Pay once, own forever
+  - generic [ref=e49]:
+    - generic [ref=e50]:
+      - generic [ref=e51]: ✦ What we build
+      - generic [ref=e52]: The full stack, your way
+      - generic [ref=e53]: Every service comes with full source code handover. No lock-in, no recurring license fees, no surprises.
+    - generic [ref=e54]:
+      - link "★ AI Solutions Intelligent automation, custom LLMs, chatbots, and AI-powered features integrated into your existing systems or built from scratch. Trending" [ref=e55] [cursor=pointer]:
+        - /url: https://wa.me/918859820935?text=Hi!%20Can%20you%20quote%20for%20AI%20integration%3F%20What%20I%20need%3A%20%5Bcurrent%20system%2C%20AI%20capabilities%20required%2C%20expected%20ROI%2C%20timeline%5D
+        - generic: ★
+        - img [ref=e57]
+        - generic [ref=e60]: AI Solutions
+        - generic [ref=e61]: Intelligent automation, custom LLMs, chatbots, and AI-powered features integrated into your existing systems or built from scratch.
+        - generic [ref=e62]: Trending
+      - link "01 01 Websites Marketing sites, landing pages, dashboards, and web apps. Fast, responsive, SEO-optimized." [ref=e63] [cursor=pointer]:
+        - /url: https://wa.me/918859820935?text=Hi!%20I%20need%20a%20quotation%20for%20a%20professional%20website.%20Here's%20what%20I%20need%3A%20%5Bdescribe%20your%20business%2C%20features%2C%20timeline%2C%20budget%20range%5D
+        - generic: "01"
+        - img [ref=e65]
+        - generic [ref=e67]: "01"
+        - generic [ref=e68]: Websites
+        - generic [ref=e69]: Marketing sites, landing pages, dashboards, and web apps. Fast, responsive, SEO-optimized.
+      - link "02 02 Mobile Apps Native and cross-platform apps for iOS and Android. Flutter, React Native, or fully native." [ref=e70] [cursor=pointer]:
+        - /url: https://wa.me/918859820935?text=Hi!%20I%20need%20a%20quotation%20for%20a%20mobile%20app.%20Requirements%3A%20%5Bapp%20purpose%2C%20platforms-iOS%2FAndroid%2Fboth%2C%20key%20features%2C%20launch%20timeline%5D
+        - generic: "02"
+        - img [ref=e72]
+        - generic [ref=e74]: "02"
+        - generic [ref=e75]: Mobile Apps
+        - generic [ref=e76]: Native and cross-platform apps for iOS and Android. Flutter, React Native, or fully native.
+      - link "03 03 E-Commerce Online stores with payments, inventory, and order management. Stripe, Razorpay, custom checkout." [ref=e77] [cursor=pointer]:
+        - /url: https://wa.me/918859820935?text=Hi!%20Can%20you%20give%20me%20a%20quotation%20for%20building%20an%20e-commerce%20store%3F%20Details%3A%20%5Bproduct%20types%2C%20features%20needed%2C%20monthly%20target%2C%20when%20needed%5D
+        - generic: "03"
+        - img [ref=e79]
+        - generic [ref=e82]: "03"
+        - generic [ref=e83]: E-Commerce
+        - generic [ref=e84]: Online stores with payments, inventory, and order management. Stripe, Razorpay, custom checkout.
+      - link "04 04 Business Applications CRMs, ERPs, internal dashboards, admin panels, and custom workflow tools tailored to your operations." [ref=e85] [cursor=pointer]:
+        - /url: https://wa.me/918859820935?text=Hi!%20Can%20you%20provide%20a%20quotation%20for%20a%20custom%20business%20tool%3F%20What%20I%20need%3A%20%5Bcurrent%20process%2C%20features%20required%2C%20team%20size%2C%20budget%5D
+        - generic: "04"
+        - img [ref=e87]
+        - generic [ref=e91]: "04"
+        - generic [ref=e92]: Business Applications
+        - generic [ref=e93]: CRMs, ERPs, internal dashboards, admin panels, and custom workflow tools tailored to your operations.
+  - generic [ref=e94]:
+    - generic [ref=e95]:
+      - generic [ref=e96]: ✦ How it works
+      - generic [ref=e97]: From idea to production
+      - generic [ref=e98]: A clear, four-step process designed for speed and transparency. No surprises, no scope creep.
+    - generic [ref=e100]:
+      - generic [ref=e101] [cursor=pointer]:
+        - generic [ref=e102]:
+          - generic [ref=e103]: "01"
+          - generic [ref=e104]: Discovery Call
+        - generic [ref=e105]: Tell us your idea — no forms, no gatekeeping. A quick conversation to understand your goals, timeline, and constraints.
+      - generic [ref=e106] [cursor=pointer]:
+        - generic [ref=e107]:
+          - generic [ref=e108]: "02"
+          - generic [ref=e109]: Blueprint & Scope
+        - generic: We architect the system, design the user flows, and deliver a clear roadmap with milestones and a firm quote.
+      - generic [ref=e110] [cursor=pointer]:
+        - generic [ref=e111]:
+          - generic [ref=e112]: "03"
+          - generic [ref=e113]: Build & Iterate
+        - generic: Weekly demos and agile sprints. You see real working software every week and can steer the direction at any point.
+      - generic [ref=e114] [cursor=pointer]:
+        - generic [ref=e115]:
+          - generic [ref=e116]: "04"
+          - generic [ref=e117]: Ship & You Own It
+        - generic: We push to your infrastructure. Full source code, docs, and zero vendor lock-in. It's yours. Permanently.
+  - generic [ref=e120]:
+    - generic [ref=e121]:
+      - generic [ref=e122]: ✦ Our stack
+      - generic [ref=e123]: Technologies we've mastered
+      - generic [ref=e124]: Battle-tested tools chosen for reliability, performance, and developer experience.
+    - generic [ref=e125]:
+      - generic [ref=e126]: React
+      - generic [ref=e128]: Next.js
+      - generic [ref=e130]: Node.js
+      - generic [ref=e132]: Python
+      - generic [ref=e134]: Flutter
+      - generic [ref=e136]: React Native
+      - generic [ref=e138]: TypeScript
+      - generic [ref=e140]: PostgreSQL
+      - generic [ref=e142]: AWS
+      - generic [ref=e144]: Docker
+      - generic [ref=e146]: OpenAI API
+      - generic [ref=e148]: Stripe
+      - generic [ref=e150]: Firebase
+      - generic [ref=e152]: Supabase
+      - generic [ref=e154]: GraphQL
+      - generic [ref=e156]: Tailwind CSS
+      - generic [ref=e158]: Redis
+      - generic [ref=e160]: LangChain
+  - generic [ref=e162]:
+    - generic [ref=e163]:
+      - generic [ref=e164]: ✦ Why us
+      - generic [ref=e165]: Why KraftAI
+      - generic [ref=e166]: We are builders, not agencies. Here is what makes us different.
+    - generic [ref=e167]:
+      - generic [ref=e168]:
+        - generic: "01"
+        - generic [ref=e169]: Ownership
+        - generic [ref=e170]: You own everything
+        - generic [ref=e171]: Every line of code, every asset, every credential. Deployed on your infrastructure with your accounts. No strings. No hostage situations.
+      - generic [ref=e172]:
+        - generic: "02"
+        - generic [ref=e173]: Precision
+        - generic [ref=e174]: No bloat. No fluff.
+        - generic [ref=e175]: We don't pad hours or stack features you never asked for. Lean builds, sharp code, nothing wasted. You pay for what matters.
+      - generic [ref=e176]:
+        - generic: "03"
+        - generic [ref=e177]: Direct
+        - generic [ref=e178]: Talk to the builder
+        - generic [ref=e179]: No account managers, no relay chains. You talk directly to the people writing the code. Faster decisions, fewer misunderstandings.
+      - generic [ref=e180]:
+        - generic: "04"
+        - generic [ref=e181]: Value
+        - generic [ref=e182]: India pricing, global quality
+        - generic [ref=e183]: World-class engineering at rates that make sense. We compete on skill, not geography. The value speaks for itself.
+  - generic [ref=e184]:
+    - generic [ref=e185]: // Your idea deserves to exist
+    - heading "Let's make something real." [level=2] [ref=e186]
+    - paragraph [ref=e187]: Whether it's a landing page, a full-stack platform, or an AI-powered system — let's talk. No pressure, no pitch decks. Just a conversation.
+    - generic [ref=e188]:
+      - link "Chat on WhatsApp" [ref=e189] [cursor=pointer]:
+        - /url: https://wa.me/918859820935?text=Hi!%20Can%20you%20provide%20a%20quotation%20for%20building%20a%20website%2Fapp%20for%20my%20business%3F%20Here's%20what%20I'm%20looking%20for...
+        - img [ref=e190]
+        - text: Chat on WhatsApp
+      - link "Send an email" [ref=e192] [cursor=pointer]:
+        - /url: mailto:hritikchaudhary016@gmail.com
+        - img [ref=e193]
+        - text: Send an email
+  - contentinfo [ref=e196]:
+    - link "KraftAI" [ref=e197] [cursor=pointer]:
+      - /url: /
+    - generic [ref=e198]:
+      - link "Services" [ref=e199] [cursor=pointer]:
+        - /url: "#services"
+      - link "Process" [ref=e200] [cursor=pointer]:
+        - /url: "#process"
+      - link "Why Us" [ref=e201] [cursor=pointer]:
+        - /url: "#why-us"
+    - generic [ref=e202]: © 2026 KraftAI · kraftai.in

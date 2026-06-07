@@ -1,9 +1,35 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
+const NICHE_SUBDOMAINS = new Set([
+  "homeservices",
+  "staffing",
+  "insurance",
+  "lawfirms",
+  "accounting",
+]);
+
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  // --- Subdomain routing for kraftai.in niche landing pages ---
+  const hostname = request.headers.get("host") || "";
+
+  // Match {niche}.kraftai.in or {niche}.localhost:3000 for local dev
+  const subdomainMatch = hostname.match(
+    /^([a-z0-9-]+)\.(?:kraftai\.in|localhost(?::\d+)?)$/
+  );
+
+  if (subdomainMatch) {
+    const niche = subdomainMatch[1];
+    if (NICHE_SUBDOMAINS.has(niche)) {
+      const url = request.nextUrl.clone();
+      url.pathname = `/sites/${niche}${pathname}`;
+      return NextResponse.rewrite(url);
+    }
+  }
+
+  // --- Existing auth redirect logic ---
   const cookies = request.cookies.getAll();
   const hasSession = cookies.some(
     (cookie) =>
@@ -40,5 +66,10 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/legal-docs/dashboard/:path*", "/padhai/:path*"],
+  matcher: [
+    "/legal-docs/dashboard/:path*",
+    "/padhai/:path*",
+    "/sites/:path*",
+    "/((?!_next/static|_next/image|favicon.ico).*)",
+  ],
 };

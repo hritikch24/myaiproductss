@@ -26,6 +26,13 @@ export async function GET(req: NextRequest) {
   const days = totalHours / 24;
   const since = new Date(Date.now() - totalHours * 60 * 60 * 1000).toISOString();
 
+  // Optional subdomain filter: ?subdomain=homeservices
+  // Filters visitors by page LIKE '/sites/{subdomain}/%' and leads by source LIKE '{subdomain}%'
+  const subdomain = searchParams.get("subdomain");
+  const vPageFilter = subdomain ? ` AND page LIKE '/sites/${subdomain.replace(/[^a-z]/g, '')}/%'` : "";
+  const lSourceFilter = subdomain ? ` AND source LIKE '${subdomain.replace(/[^a-z]/g, '')}%'` : "";
+  const ePageFilter = subdomain ? ` AND page LIKE '/sites/${subdomain.replace(/[^a-z]/g, '')}/%'` : "";
+
   try {
     const [
       totalVisitors,
@@ -53,30 +60,30 @@ export async function GET(req: NextRequest) {
       avgDuration,
       utmBreakdown,
     ] = await Promise.all([
-      pool.query("SELECT COUNT(*) as count FROM kraftai_visitors WHERE created_at >= $1 AND is_bot = false", [since]),
-      pool.query("SELECT COUNT(DISTINCT session_id) as count FROM kraftai_visitors WHERE created_at >= $1 AND is_bot = false", [since]),
-      pool.query("SELECT COUNT(*) as count FROM kraftai_visitors WHERE created_at >= CURRENT_DATE AND is_bot = false"),
-      pool.query("SELECT country, COUNT(*) as count FROM kraftai_visitors WHERE created_at >= $1 AND is_bot = false AND country IS NOT NULL GROUP BY country ORDER BY count DESC LIMIT 20", [since]),
-      pool.query("SELECT browser, COUNT(*) as count FROM kraftai_visitors WHERE created_at >= $1 AND is_bot = false GROUP BY browser ORDER BY count DESC", [since]),
-      pool.query("SELECT device, COUNT(*) as count FROM kraftai_visitors WHERE created_at >= $1 AND is_bot = false GROUP BY device ORDER BY count DESC", [since]),
-      pool.query("SELECT os, COUNT(*) as count FROM kraftai_visitors WHERE created_at >= $1 AND is_bot = false GROUP BY os ORDER BY count DESC", [since]),
-      pool.query("SELECT page, COUNT(*) as count FROM kraftai_visitors WHERE created_at >= $1 AND is_bot = false GROUP BY page ORDER BY count DESC LIMIT 10", [since]),
-      pool.query("SELECT referrer, COUNT(*) as count FROM kraftai_visitors WHERE created_at >= $1 AND is_bot = false AND referrer IS NOT NULL AND referrer != '' GROUP BY referrer ORDER BY count DESC LIMIT 10", [since]),
-      pool.query("SELECT ip, COUNT(*) as count FROM kraftai_visitors WHERE created_at >= $1 AND is_bot = false GROUP BY ip ORDER BY count DESC LIMIT 20", [since]),
-      pool.query("SELECT id, session_id, ip, country, city, device, browser, os, page, referrer, utm_source, duration, scroll_depth, created_at FROM kraftai_visitors WHERE is_bot = false ORDER BY created_at DESC LIMIT 50"),
-      pool.query("SELECT DATE(created_at) as date, COUNT(*) as views FROM kraftai_visitors WHERE created_at >= $1 AND is_bot = false GROUP BY DATE(created_at) ORDER BY date", [since]),
-      pool.query("SELECT COUNT(*) as count FROM kraftai_leads WHERE created_at >= $1", [since]),
-      pool.query("SELECT COUNT(*) as count FROM kraftai_leads WHERE status = 'new'"),
-      pool.query("SELECT status, COUNT(*)::int as count FROM kraftai_leads WHERE created_at >= $1 GROUP BY status ORDER BY count DESC", [since]),
-      pool.query("SELECT COALESCE(selected_tier, 'Not specified') as tier, COUNT(*)::int as count FROM kraftai_leads WHERE created_at >= $1 GROUP BY selected_tier ORDER BY count DESC", [since]),
-      pool.query("SELECT COALESCE(country, 'Unknown') as country, COUNT(*)::int as count FROM kraftai_leads WHERE created_at >= $1 GROUP BY country ORDER BY count DESC LIMIT 15", [since]),
-      pool.query("SELECT COALESCE(source, 'direct') as source, COUNT(*)::int as count FROM kraftai_leads WHERE created_at >= $1 GROUP BY source ORDER BY count DESC", [since]),
-      pool.query("SELECT DATE(created_at) as date, COUNT(*)::int as count FROM kraftai_leads WHERE created_at >= $1 GROUP BY DATE(created_at) ORDER BY date", [since]),
-      pool.query("SELECT * FROM kraftai_leads WHERE created_at >= $1 ORDER BY created_at DESC LIMIT 50", [since]),
-      pool.query("SELECT event_type, COUNT(*)::int as count FROM kraftai_events WHERE created_at >= $1 GROUP BY event_type ORDER BY count DESC", [since]),
-      pool.query("SELECT COUNT(*) as count FROM kraftai_visitors WHERE created_at >= $1 AND is_bot = true", [since]),
-      pool.query("SELECT ROUND(AVG(duration)) as avg FROM kraftai_visitors WHERE created_at >= $1 AND is_bot = false AND duration > 0", [since]),
-      pool.query("SELECT utm_source, utm_medium, utm_campaign, COUNT(*)::int as count FROM kraftai_visitors WHERE created_at >= $1 AND is_bot = false AND utm_source IS NOT NULL GROUP BY utm_source, utm_medium, utm_campaign ORDER BY count DESC LIMIT 15", [since]),
+      pool.query(`SELECT COUNT(*) as count FROM kraftai_visitors WHERE created_at >= $1 AND is_bot = false${vPageFilter}`, [since]),
+      pool.query(`SELECT COUNT(DISTINCT session_id) as count FROM kraftai_visitors WHERE created_at >= $1 AND is_bot = false${vPageFilter}`, [since]),
+      pool.query(`SELECT COUNT(*) as count FROM kraftai_visitors WHERE created_at >= CURRENT_DATE AND is_bot = false${vPageFilter}`),
+      pool.query(`SELECT country, COUNT(*) as count FROM kraftai_visitors WHERE created_at >= $1 AND is_bot = false AND country IS NOT NULL${vPageFilter} GROUP BY country ORDER BY count DESC LIMIT 20`, [since]),
+      pool.query(`SELECT browser, COUNT(*) as count FROM kraftai_visitors WHERE created_at >= $1 AND is_bot = false${vPageFilter} GROUP BY browser ORDER BY count DESC`, [since]),
+      pool.query(`SELECT device, COUNT(*) as count FROM kraftai_visitors WHERE created_at >= $1 AND is_bot = false${vPageFilter} GROUP BY device ORDER BY count DESC`, [since]),
+      pool.query(`SELECT os, COUNT(*) as count FROM kraftai_visitors WHERE created_at >= $1 AND is_bot = false${vPageFilter} GROUP BY os ORDER BY count DESC`, [since]),
+      pool.query(`SELECT page, COUNT(*) as count FROM kraftai_visitors WHERE created_at >= $1 AND is_bot = false${vPageFilter} GROUP BY page ORDER BY count DESC LIMIT 10`, [since]),
+      pool.query(`SELECT referrer, COUNT(*) as count FROM kraftai_visitors WHERE created_at >= $1 AND is_bot = false AND referrer IS NOT NULL AND referrer != ''${vPageFilter} GROUP BY referrer ORDER BY count DESC LIMIT 10`, [since]),
+      pool.query(`SELECT ip, COUNT(*) as count FROM kraftai_visitors WHERE created_at >= $1 AND is_bot = false${vPageFilter} GROUP BY ip ORDER BY count DESC LIMIT 20`, [since]),
+      pool.query(`SELECT id, session_id, ip, country, city, device, browser, os, page, referrer, utm_source, duration, scroll_depth, created_at FROM kraftai_visitors WHERE is_bot = false${vPageFilter} ORDER BY created_at DESC LIMIT 50`),
+      pool.query(`SELECT DATE(created_at) as date, COUNT(*) as views FROM kraftai_visitors WHERE created_at >= $1 AND is_bot = false${vPageFilter} GROUP BY DATE(created_at) ORDER BY date`, [since]),
+      pool.query(`SELECT COUNT(*) as count FROM kraftai_leads WHERE created_at >= $1${lSourceFilter}`, [since]),
+      pool.query(`SELECT COUNT(*) as count FROM kraftai_leads WHERE status = 'new'${lSourceFilter}`),
+      pool.query(`SELECT status, COUNT(*)::int as count FROM kraftai_leads WHERE created_at >= $1${lSourceFilter} GROUP BY status ORDER BY count DESC`, [since]),
+      pool.query(`SELECT COALESCE(selected_tier, 'Not specified') as tier, COUNT(*)::int as count FROM kraftai_leads WHERE created_at >= $1${lSourceFilter} GROUP BY selected_tier ORDER BY count DESC`, [since]),
+      pool.query(`SELECT COALESCE(country, 'Unknown') as country, COUNT(*)::int as count FROM kraftai_leads WHERE created_at >= $1${lSourceFilter} GROUP BY country ORDER BY count DESC LIMIT 15`, [since]),
+      pool.query(`SELECT COALESCE(source, 'direct') as source, COUNT(*)::int as count FROM kraftai_leads WHERE created_at >= $1${lSourceFilter} GROUP BY source ORDER BY count DESC`, [since]),
+      pool.query(`SELECT DATE(created_at) as date, COUNT(*)::int as count FROM kraftai_leads WHERE created_at >= $1${lSourceFilter} GROUP BY DATE(created_at) ORDER BY date`, [since]),
+      pool.query(`SELECT * FROM kraftai_leads WHERE created_at >= $1${lSourceFilter} ORDER BY created_at DESC LIMIT 50`, [since]),
+      pool.query(`SELECT event_type, COUNT(*)::int as count FROM kraftai_events WHERE created_at >= $1${ePageFilter} GROUP BY event_type ORDER BY count DESC`, [since]),
+      pool.query(`SELECT COUNT(*) as count FROM kraftai_visitors WHERE created_at >= $1 AND is_bot = true${vPageFilter}`, [since]),
+      pool.query(`SELECT ROUND(AVG(duration)) as avg FROM kraftai_visitors WHERE created_at >= $1 AND is_bot = false AND duration > 0${vPageFilter}`, [since]),
+      pool.query(`SELECT utm_source, utm_medium, utm_campaign, COUNT(*)::int as count FROM kraftai_visitors WHERE created_at >= $1 AND is_bot = false AND utm_source IS NOT NULL${vPageFilter} GROUP BY utm_source, utm_medium, utm_campaign ORDER BY count DESC LIMIT 15`, [since]),
     ]);
 
     const uSessions = parseInt(uniqueSessions.rows[0].count);

@@ -16,17 +16,25 @@ export function getKraftSessionId() {
   return typeof window !== "undefined" ? sessionStorage.getItem("k_sid") || "" : "";
 }
 
-export function trackEvent(eventType: string, eventData?: Record<string, unknown>) {
+/** Prefix page path with /sites/{niche} for subdomain tracking */
+function resolvePage(path: string, niche?: string): string {
+  if (!niche) return path;
+  // Avoid double-prefixing
+  if (path.startsWith(`/sites/${niche}`)) return path;
+  return `/sites/${niche}${path.startsWith("/") ? path : `/${path}`}`;
+}
+
+export function trackEvent(eventType: string, eventData?: Record<string, unknown>, niche?: string) {
   const sid = getSessionId();
   if (!sid) return;
   fetch("/api/kraftai/track", {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ session_id: sid, event_type: eventType, event_data: eventData, page: window.location.pathname }),
+    body: JSON.stringify({ session_id: sid, event_type: eventType, event_data: eventData, page: resolvePage(window.location.pathname, niche) }),
   }).catch(() => {});
 }
 
-export default function KraftAITracker() {
+export default function KraftAITracker({ niche }: { niche?: string } = {}) {
   const tracked = useRef(false);
   const startTime = useRef(Date.now());
   const maxScroll = useRef(0);
@@ -37,6 +45,7 @@ export default function KraftAITracker() {
 
     const sid = getSessionId();
     const params = new URLSearchParams(window.location.search);
+    const pagePath = resolvePage(window.location.pathname + window.location.search, niche);
 
     // Track page view
     fetch("/api/kraftai/track", {
@@ -44,7 +53,7 @@ export default function KraftAITracker() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         session_id: sid,
-        page: window.location.pathname + window.location.search,
+        page: pagePath,
         page_title: document.title,
         referrer: document.referrer || null,
         language: navigator.language,
@@ -69,7 +78,7 @@ export default function KraftAITracker() {
     const onUnload = () => {
       const duration = Math.round((Date.now() - startTime.current) / 1000);
       const blob = new Blob(
-        [JSON.stringify({ session_id: sid, event_type: "page_exit", event_data: { duration, scroll_depth: maxScroll.current }, page: window.location.pathname })],
+        [JSON.stringify({ session_id: sid, event_type: "page_exit", event_data: { duration, scroll_depth: maxScroll.current }, page: resolvePage(window.location.pathname, niche) })],
         { type: "application/json" }
       );
       navigator.sendBeacon("/api/kraftai/track", blob);
@@ -85,11 +94,13 @@ export default function KraftAITracker() {
       const text = link.textContent?.trim().substring(0, 80) || "";
 
       if (href.includes("wa.me") || href.includes("whatsapp")) {
-        trackEvent("cta_whatsapp", { text, href });
+        trackEvent("cta_whatsapp", { text, href }, niche);
       } else if (href.includes("mailto:")) {
-        trackEvent("cta_email", { text, href });
+        trackEvent("cta_email", { text, href }, niche);
       } else if (href === "#pricing" || text.toLowerCase().includes("quote")) {
-        trackEvent("cta_pricing", { text });
+        trackEvent("cta_pricing", { text }, niche);
+      } else if (href === "#lead-form" || text.toLowerCase().includes("free") || text.toLowerCase().includes("get started")) {
+        trackEvent("cta_lead_form", { text }, niche);
       }
     };
     document.addEventListener("click", onClick);
@@ -99,7 +110,7 @@ export default function KraftAITracker() {
       window.removeEventListener("beforeunload", onUnload);
       document.removeEventListener("click", onClick);
     };
-  }, []);
+  }, [niche]);
 
   return null;
 }
