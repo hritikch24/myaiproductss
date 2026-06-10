@@ -75,6 +75,7 @@ export function NicheMetricsDashboard({ nicheSlug }: { nicheSlug: string }) {
   const [key, setKey] = useState('');
   const [days, setDays] = useState(30);
   const [tab, setTab] = useState<'overview' | 'traffic' | 'leads' | 'events'>('overview');
+  const [expandedLead, setExpandedLead] = useState<string | null>(null);
 
   useEffect(() => {
     const saved = typeof window !== 'undefined' ? sessionStorage.getItem('_kraft_niche_key') : null;
@@ -510,44 +511,86 @@ export function NicheMetricsDashboard({ nicheSlug }: { nicheSlug: string }) {
               </div>
             </div>
 
-            {/* Recent Leads Table */}
+            {/* Recent Leads — Card List */}
             <div style={{ ...card, marginBottom: 24 }}>
               <div style={cardHeader}>
                 <h2 style={cardTitle}>Recent Leads</h2>
                 <span style={subtleText}>{leads.recent.length} shown</span>
               </div>
-              <div style={{ overflowX: 'auto' }}>
-                <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-                  <thead>
-                    <tr>
-                      {['Name', 'Email', 'Phone', 'Company', 'Source', 'Country', 'When'].map((h) => (
-                        <th key={h} style={{ textAlign: 'left', fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', color: '#52525b', padding: '10px 12px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>{h}</th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {leads.recent.length === 0 ? (
-                      <tr><td colSpan={7} style={{ textAlign: 'center', padding: 48, color: '#3f3f46', fontSize: 13 }}>No leads captured yet</td></tr>
-                    ) : leads.recent.map((lead) => (
-                      <tr key={lead.id} style={{ borderBottom: '1px solid rgba(255,255,255,0.03)' }}>
-                        <td style={{ padding: '10px 12px', fontSize: 13 }}>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                            <div style={{ width: 28, height: 28, borderRadius: '50%', background: 'rgba(99,91,255,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, fontWeight: 700, color: '#a78bfa', flexShrink: 0 }}>
+              <div style={{ padding: 12 }}>
+                {leads.recent.length === 0 ? (
+                  <p style={{ textAlign: 'center', color: '#3f3f46', fontSize: 13, padding: 48 }}>No leads captured yet. They&apos;ll appear here when someone submits the form.</p>
+                ) : (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                    {leads.recent.map((lead) => {
+                      const isOpen = expandedLead === lead.id;
+                      return (
+                        <div key={lead.id}
+                          style={{ border: '1px solid rgba(255,255,255,0.06)', borderRadius: 12, background: isOpen ? 'rgba(99,91,255,0.05)' : '#0f0f12', overflow: 'hidden', transition: 'background 0.2s' }}>
+                          {/* Summary row — click to expand */}
+                          <button
+                            onClick={() => setExpandedLead(isOpen ? null : lead.id)}
+                            style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 12, padding: '14px 16px', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', fontFamily: 'inherit', color: '#fafafa' }}>
+                            <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'rgba(99,91,255,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, fontWeight: 700, color: '#a78bfa', flexShrink: 0 }}>
                               {lead.name?.charAt(0).toUpperCase() || '?'}
                             </div>
-                            <span style={{ fontWeight: 600 }}>{lead.name}</span>
-                          </div>
-                        </td>
-                        <td style={{ padding: '10px 12px', fontSize: 12, color: '#d4d4d8' }}>{lead.email}</td>
-                        <td style={{ padding: '10px 12px', fontSize: 12, color: '#d4d4d8' }}>{lead.phone}</td>
-                        <td style={{ padding: '10px 12px', fontSize: 12, color: '#d4d4d8' }}>{lead.company}</td>
-                        <td style={{ padding: '10px 12px', fontSize: 12, color: '#a78bfa' }}>{lead.source}</td>
-                        <td style={{ padding: '10px 12px', fontSize: 12, color: '#d4d4d8' }}>{lead.country || '—'}</td>
-                        <td style={{ padding: '10px 12px', fontSize: 11, color: '#71717a', whiteSpace: 'nowrap' }} title={new Date(lead.created_at).toLocaleString()}>{getTimeAgo(lead.created_at)}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                            <div style={{ flex: 1, minWidth: 0 }}>
+                              <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+                                <span style={{ fontWeight: 700, fontSize: 14 }}>{lead.name}</span>
+                                <span style={{ fontSize: 11, color: '#71717a', background: 'rgba(255,255,255,0.04)', padding: '2px 8px', borderRadius: 6 }}>{lead.company}</span>
+                              </div>
+                              <div style={{ fontSize: 12, color: '#71717a', marginTop: 2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                                {lead.email} · {lead.phone}
+                              </div>
+                            </div>
+                            <div style={{ textAlign: 'right', flexShrink: 0 }}>
+                              <div style={{ fontSize: 11, color: '#71717a' }} title={new Date(lead.created_at).toLocaleString()}>{getTimeAgo(lead.created_at)}</div>
+                              {lead.message && <div style={{ fontSize: 10, color: '#635bff', marginTop: 2 }}>has message</div>}
+                            </div>
+                            <span style={{ fontSize: 14, color: '#52525b', transition: 'transform 0.2s', transform: isOpen ? 'rotate(90deg)' : 'none' }}>▸</span>
+                          </button>
+                          {/* Expanded detail */}
+                          {isOpen && (
+                            <div style={{ padding: '0 16px 16px', borderTop: '1px solid rgba(255,255,255,0.04)' }}>
+                              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12, padding: '14px 0 0' }}>
+                                <div>
+                                  <div style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', color: '#52525b', marginBottom: 4 }}>Email</div>
+                                  <a href={`mailto:${lead.email}`} style={{ fontSize: 13, color: '#a78bfa', textDecoration: 'none' }}>{lead.email}</a>
+                                </div>
+                                <div>
+                                  <div style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', color: '#52525b', marginBottom: 4 }}>Phone</div>
+                                  <a href={`tel:${lead.phone}`} style={{ fontSize: 13, color: '#a78bfa', textDecoration: 'none' }}>{lead.phone}</a>
+                                </div>
+                                <div>
+                                  <div style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', color: '#52525b', marginBottom: 4 }}>Source</div>
+                                  <div style={{ fontSize: 13, color: '#d4d4d8' }}>{lead.source}</div>
+                                </div>
+                                <div>
+                                  <div style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', color: '#52525b', marginBottom: 4 }}>Company</div>
+                                  <div style={{ fontSize: 13, color: '#d4d4d8' }}>{lead.company}</div>
+                                </div>
+                                <div>
+                                  <div style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', color: '#52525b', marginBottom: 4 }}>Country</div>
+                                  <div style={{ fontSize: 13, color: '#d4d4d8' }}>{lead.country || '—'}</div>
+                                </div>
+                                <div>
+                                  <div style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', color: '#52525b', marginBottom: 4 }}>Submitted</div>
+                                  <div style={{ fontSize: 13, color: '#d4d4d8' }}>{new Date(lead.created_at).toLocaleString()}</div>
+                                </div>
+                              </div>
+                              {lead.message && (
+                                <div style={{ marginTop: 14, padding: 14, background: 'rgba(255,255,255,0.03)', borderRadius: 10, border: '1px solid rgba(255,255,255,0.04)' }}>
+                                  <div style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', color: '#52525b', marginBottom: 6 }}>Message</div>
+                                  <p style={{ fontSize: 13, color: '#d4d4d8', lineHeight: 1.6, margin: 0, whiteSpace: 'pre-wrap' }}>{lead.message}</p>
+                                </div>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
             </div>
           </>
