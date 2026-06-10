@@ -52,11 +52,11 @@ export default function InsurancePage() {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-indigo-600/5 rounded-full blur-3xl" aria-hidden="true" />
 
         <div className="relative mx-auto max-w-5xl px-6 text-center">
-          {/* Urgency badge */}
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-4 py-1.5">
-            <span className="h-2 w-2 rounded-full bg-amber-400 animate-pulse" aria-hidden="true" />
-            <span className="text-xs font-medium text-amber-300">
-              Only 3 onboarding slots left this month
+          {/* Niche badge */}
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-indigo-500/30 bg-indigo-500/10 px-4 py-1.5">
+            <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" aria-hidden="true" />
+            <span className="text-xs font-medium text-indigo-300">
+              AI Automation for Insurance Agents
             </span>
           </div>
 
