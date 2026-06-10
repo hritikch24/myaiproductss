@@ -8,10 +8,18 @@ import {
   CheckCircle2,
   ChevronRight,
   ArrowRight,
+  Shield,
+  Clock,
+  TrendingUp,
+  Zap,
+  Star,
+  Phone,
+  Mail,
+  Briefcase,
 } from 'lucide-react';
 import { generateNicheMetadata } from '@/components/kraftai/SEOHead';
-import HeroSection from '@/components/kraftai/HeroSection';
 import LeadForm from '@/components/kraftai/LeadForm';
+import GuaranteeSection from '@/components/kraftai/GuaranteeSection';
 import { getNicheBySlug } from '@/lib/kraftai-niches';
 import { serviceSchema, faqPageSchema, breadcrumbSchema } from '@/lib/kraftai-schemas';
 
@@ -38,36 +46,124 @@ const useCaseIcons: Record<string, React.ElementType> = {
 export default function StaffingPage() {
   return (
     <>
-      {/* Hero */}
-      <HeroSection
-        headline={niche.headline}
-        subheadline={niche.subheadline}
-        ctaText={niche.ctaText}
-        nicheName={niche.name}
-      />
+      {/* ========================= HERO ========================= */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-950 py-20 sm:py-28" aria-label="Staffing hero">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-indigo-500/10 via-transparent to-transparent" aria-hidden="true" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-indigo-600/5 rounded-full blur-3xl" aria-hidden="true" />
 
-      {/* Use Cases */}
-      <section className="bg-slate-950 py-20 sm:py-24" aria-labelledby="use-cases-heading">
-        <div className="mx-auto max-w-6xl px-6">
-          <h2 id="use-cases-heading" className="text-3xl font-bold text-white text-center sm:text-4xl">
-            How KraftAI Transforms Your Recruiting Workflow
-          </h2>
-          <p className="mt-4 text-center text-slate-400 max-w-2xl mx-auto">
-            Automate the repetitive tasks that keep your recruiters from closing placements.
+        <div className="relative mx-auto max-w-5xl px-6 text-center">
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-indigo-500/30 bg-indigo-500/10 px-4 py-1.5">
+            <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" aria-hidden="true" />
+            <span className="text-xs font-medium text-indigo-300">
+              AI Automation for Staffing & Recruiting
+            </span>
+          </div>
+
+          <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl leading-tight">
+            Your Recruiters Are Drowning in<br className="hidden sm:block" />
+            <span className="text-indigo-400"> Scheduling, Not Closing</span>
+          </h1>
+          <p className="mt-6 text-lg text-slate-300 leading-relaxed max-w-2xl mx-auto sm:text-xl">
+            KraftAI automates candidate outreach, interview scheduling, and pipeline reporting — so your recruiters spend time placing candidates, not coordinating calendars.
           </p>
-          <div className="mt-14 grid gap-8 sm:grid-cols-2">
-            {niche.useCases.map((uc) => {
+
+          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a href="#lead-form"
+              className="group inline-flex items-center gap-2 rounded-xl bg-indigo-600 px-8 py-4 text-base font-bold text-white shadow-lg shadow-indigo-500/25 transition-all hover:bg-indigo-500 hover:shadow-indigo-500/40 hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-slate-950">
+              Get Your Free Automation Audit
+              <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+            </a>
+            <a href="#how-it-works"
+              className="inline-flex items-center rounded-xl border border-slate-600 px-6 py-3.5 text-sm font-medium text-slate-300 transition-colors hover:bg-slate-800 hover:text-white">
+              See How It Works
+            </a>
+          </div>
+
+          <div className="mt-12 flex flex-wrap items-center justify-center gap-8 text-slate-400 text-sm">
+            <div className="flex items-center gap-2">
+              <Briefcase className="h-4 w-4 text-emerald-400" aria-hidden="true" />
+              <span>Works with Bullhorn & Greenhouse</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Users className="h-4 w-4 text-indigo-400" aria-hidden="true" />
+              <span>Trusted by 100+ Agencies</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Clock className="h-4 w-4 text-amber-400" aria-hidden="true" />
+              <span>Live in 2 Weeks</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Zap className="h-4 w-4 text-purple-400" aria-hidden="true" />
+              <span>No Long-Term Contract</span>
+            </div>
+          </div>
+
+          <div className="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
+            {niche.roiStats.map((stat) => (
+              <div key={stat.label} className="rounded-xl border border-slate-800 bg-slate-900/80 backdrop-blur p-5 text-center">
+                <p className="text-3xl font-bold text-indigo-400">{stat.value}</p>
+                <p className="mt-1 text-sm font-medium text-white">{stat.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ========================= PAIN POINTS ========================= */}
+      <section className="bg-slate-950 py-20 sm:py-24 border-t border-slate-800/50" aria-labelledby="pain-heading">
+        <div className="mx-auto max-w-5xl px-6">
+          <h2 id="pain-heading" className="text-3xl font-bold text-white text-center sm:text-4xl">
+            Sound Familiar?
+          </h2>
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {[
+              { emoji: '📧', text: 'Recruiters spending 5-7 emails just to schedule a single interview' },
+              { emoji: '👻', text: 'Candidates ghosting because your follow-up was too slow or inconsistent' },
+              { emoji: '💾', text: 'Thousands of pre-screened candidates sitting untouched in your ATS' },
+              { emoji: '📊', text: 'Hours wasted compiling manual pipeline reports for hiring managers' },
+              { emoji: '😓', text: 'Top recruiters burning out on admin instead of closing placements' },
+              { emoji: '🐢', text: 'Time-to-fill creeping up while competitors with AI tools fill faster' },
+            ].map((pain) => (
+              <div key={pain.text} className="flex items-start gap-4 rounded-xl border border-red-500/10 bg-red-500/5 p-5">
+                <span className="text-2xl flex-shrink-0" aria-hidden="true">{pain.emoji}</span>
+                <p className="text-sm text-slate-300 leading-relaxed">{pain.text}</p>
+              </div>
+            ))}
+          </div>
+          <div className="mt-12 text-center">
+            <p className="text-lg text-slate-400">
+              You&apos;re not alone — <span className="text-white font-semibold">recruiters spend 60% of their day</span> on tasks that don&apos;t involve talking to candidates or clients.
+            </p>
+            <a href="#lead-form" className="mt-6 inline-flex items-center gap-2 text-indigo-400 font-semibold hover:text-indigo-300 transition-colors">
+              Let us fix that for you <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* ========================= USE CASES ========================= */}
+      <section className="bg-slate-900 py-20 sm:py-24" aria-labelledby="use-cases-heading">
+        <div className="mx-auto max-w-6xl px-6">
+          <div className="text-center mb-14">
+            <p className="text-indigo-400 font-semibold text-sm uppercase tracking-wider mb-3">What We Automate</p>
+            <h2 id="use-cases-heading" className="text-3xl font-bold text-white sm:text-4xl">
+              Four Automations That Pay for Themselves
+            </h2>
+          </div>
+          <div className="grid gap-8 sm:grid-cols-2">
+            {niche.useCases.map((uc, idx) => {
               const Icon = useCaseIcons[uc.icon] || Users;
               return (
-                <article
-                  key={uc.title}
-                  className="rounded-2xl border border-slate-800 bg-slate-900 p-6 sm:p-8 transition-colors hover:border-indigo-500/40"
-                >
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-500/10 mb-5">
-                    <Icon className="h-6 w-6 text-indigo-400" aria-hidden="true" />
+                <article key={uc.title}
+                  className="group rounded-2xl border border-slate-800 bg-slate-950 p-6 sm:p-8 transition-all hover:border-indigo-500/40 hover:shadow-lg hover:shadow-indigo-500/5">
+                  <div className="flex items-center gap-4 mb-5">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-500/10 group-hover:bg-indigo-500/20 transition-colors">
+                      <Icon className="h-6 w-6 text-indigo-400" aria-hidden="true" />
+                    </div>
+                    <span className="text-xs font-bold text-slate-600 uppercase tracking-wider">0{idx + 1}</span>
                   </div>
                   <h3 className="text-lg font-semibold text-white">{uc.title}</h3>
-                  <p className="mt-2 text-sm text-slate-400 leading-relaxed">{uc.description}</p>
+                  <p className="mt-3 text-sm text-slate-400 leading-relaxed">{uc.description}</p>
                 </article>
               );
             })}
@@ -75,36 +171,55 @@ export default function StaffingPage() {
         </div>
       </section>
 
-      {/* ROI Stats */}
-      <section className="bg-gradient-to-b from-slate-950 to-slate-900 py-20 sm:py-24" aria-labelledby="roi-heading">
+      {/* ========================= TESTIMONIALS ========================= */}
+      <section className="bg-slate-950 py-20 sm:py-24 border-t border-slate-800/50" aria-labelledby="testimonials-heading">
         <div className="mx-auto max-w-6xl px-6">
-          <h2 id="roi-heading" className="text-3xl font-bold text-white text-center sm:text-4xl">
-            Results That Speak for Themselves
-          </h2>
-          <div className="mt-14 grid gap-8 sm:grid-cols-3">
-            {niche.roiStats.map((stat) => (
-              <div key={stat.label} className="text-center">
-                <p className="text-5xl font-bold text-indigo-400">{stat.value}</p>
-                <p className="mt-2 text-lg font-semibold text-white">{stat.label}</p>
-                <p className="mt-2 text-sm text-slate-400 leading-relaxed max-w-xs mx-auto">
-                  {stat.description}
+          <div className="text-center mb-14">
+            <p className="text-amber-400 font-semibold text-sm uppercase tracking-wider mb-3">Real Results</p>
+            <h2 id="testimonials-heading" className="text-3xl font-bold text-white sm:text-4xl">
+              Agencies That Made the Switch
+            </h2>
+          </div>
+          <div className="grid gap-8 sm:grid-cols-3">
+            {niche.testimonials.map((t) => (
+              <blockquote key={t.name}
+                className="rounded-2xl border border-slate-800 bg-slate-900 p-6 sm:p-8 flex flex-col">
+                <div className="flex gap-0.5 mb-4" aria-label={`${t.rating} out of 5 stars`}>
+                  {Array.from({ length: t.rating }).map((_, i) => (
+                    <Star key={i} className="h-4 w-4 text-amber-400 fill-amber-400" aria-hidden="true" />
+                  ))}
+                </div>
+                <p className="text-slate-300 text-sm leading-relaxed flex-1">
+                  &ldquo;{t.quote}&rdquo;
                 </p>
-              </div>
+                <footer className="mt-5 flex items-center gap-3">
+                  <div className="h-10 w-10 rounded-full bg-indigo-500/15 flex items-center justify-center text-sm font-bold text-indigo-400">
+                    {t.name.charAt(0)}
+                  </div>
+                  <div>
+                    <p className="text-white font-medium text-sm">{t.name}</p>
+                    <p className="text-slate-500 text-xs">{t.role}, {t.company}</p>
+                  </div>
+                </footer>
+              </blockquote>
             ))}
           </div>
         </div>
       </section>
 
-      {/* How It Works */}
+      {/* ========================= HOW IT WORKS ========================= */}
       <section id="how-it-works" className="bg-slate-900 py-20 sm:py-24 scroll-mt-20" aria-labelledby="how-it-works-heading">
         <div className="mx-auto max-w-4xl px-6">
-          <h2 id="how-it-works-heading" className="text-3xl font-bold text-white text-center sm:text-4xl">
-            How It Works
-          </h2>
-          <div className="mt-14 space-y-12">
+          <div className="text-center mb-14">
+            <p className="text-indigo-400 font-semibold text-sm uppercase tracking-wider mb-3">Simple Process</p>
+            <h2 id="how-it-works-heading" className="text-3xl font-bold text-white sm:text-4xl">
+              Live in 2 Weeks — Here&apos;s How
+            </h2>
+          </div>
+          <div className="space-y-8">
             {niche.howItWorks.map((step) => (
-              <div key={step.step} className="flex gap-6">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-indigo-600 text-white font-bold" aria-hidden="true">
+              <div key={step.step} className="flex gap-6 items-start">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-indigo-600 text-white text-lg font-bold shadow-lg shadow-indigo-500/20">
                   {step.step}
                 </div>
                 <div>
@@ -117,35 +232,37 @@ export default function StaffingPage() {
         </div>
       </section>
 
-      {/* Comparison Table */}
+      {/* ========================= GUARANTEE ========================= */}
+      <GuaranteeSection />
+
+      {/* ========================= COMPARISON TABLE ========================= */}
       <section className="bg-slate-950 py-20 sm:py-24" aria-labelledby="comparison-heading">
         <div className="mx-auto max-w-4xl px-6">
-          <h2 id="comparison-heading" className="text-3xl font-bold text-white text-center sm:text-4xl">
-            {niche.comparison.title}
-          </h2>
-          <p className="mt-4 text-center text-slate-400 max-w-2xl mx-auto">
-            KraftAI replaces slow, manual recruiting processes with AI-driven automation that sources, screens, and schedules around the clock.
-          </p>
-          <div className="mt-12 overflow-x-auto">
+          <div className="text-center mb-12">
+            <h2 id="comparison-heading" className="text-3xl font-bold text-white sm:text-4xl">
+              {niche.comparison.title}
+            </h2>
+          </div>
+          <div className="overflow-x-auto rounded-2xl border border-slate-800">
             <table className="w-full text-left text-sm" role="table">
               <thead>
-                <tr className="border-b border-slate-700">
-                  <th className="py-3 pr-4 text-slate-400 font-medium" scope="col">Feature</th>
-                  <th className="py-3 px-4 text-indigo-400 font-medium" scope="col">KraftAI Automation</th>
-                  <th className="py-3 pl-4 text-slate-400 font-medium" scope="col">Traditional / VA</th>
+                <tr className="bg-slate-900">
+                  <th className="py-4 px-5 text-slate-400 font-medium" scope="col">Feature</th>
+                  <th className="py-4 px-5 text-indigo-400 font-medium" scope="col">KraftAI</th>
+                  <th className="py-4 px-5 text-slate-500 font-medium" scope="col">Traditional</th>
                 </tr>
               </thead>
               <tbody>
-                {niche.comparison.rows.map((row) => (
-                  <tr key={row.feature} className="border-b border-slate-800">
-                    <td className="py-4 pr-4 text-white font-medium">{row.feature}</td>
-                    <td className="py-4 px-4 text-slate-300">
+                {niche.comparison.rows.map((row, idx) => (
+                  <tr key={row.feature} className={idx % 2 === 0 ? 'bg-slate-950' : 'bg-slate-900/50'}>
+                    <td className="py-4 px-5 text-white font-medium">{row.feature}</td>
+                    <td className="py-4 px-5 text-slate-300">
                       <span className="inline-flex items-start gap-2">
                         <CheckCircle2 className="h-4 w-4 text-emerald-400 mt-0.5 shrink-0" aria-hidden="true" />
                         {row.ai}
                       </span>
                     </td>
-                    <td className="py-4 pl-4 text-slate-500">{row.traditional}</td>
+                    <td className="py-4 px-5 text-slate-500">{row.traditional}</td>
                   </tr>
                 ))}
               </tbody>
@@ -154,18 +271,16 @@ export default function StaffingPage() {
         </div>
       </section>
 
-      {/* FAQ Accordion */}
+      {/* ========================= FAQ ========================= */}
       <section className="bg-slate-900 py-20 sm:py-24" aria-labelledby="faq-heading">
         <div className="mx-auto max-w-3xl px-6">
           <h2 id="faq-heading" className="text-3xl font-bold text-white text-center sm:text-4xl">
             Frequently Asked Questions
           </h2>
-          <div className="mt-12 space-y-4">
+          <div className="mt-12 space-y-3">
             {niche.faqs.map((faq, idx) => (
-              <details
-                key={idx}
-                className="group rounded-xl border border-slate-800 bg-slate-950 overflow-hidden"
-              >
+              <details key={idx}
+                className="group rounded-xl border border-slate-800 bg-slate-950 overflow-hidden">
                 <summary className="flex cursor-pointer items-center justify-between p-5 text-white font-medium hover:bg-slate-800/50 transition-colors list-none [&::-webkit-details-marker]:hidden">
                   <span className="pr-4">{faq.question}</span>
                   <ChevronRight className="h-5 w-5 shrink-0 text-slate-500 transition-transform group-open:rotate-90" aria-hidden="true" />
@@ -179,101 +294,86 @@ export default function StaffingPage() {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="bg-slate-950 py-20 sm:py-24" aria-labelledby="testimonials-heading">
-        <div className="mx-auto max-w-6xl px-6">
-          <h2 id="testimonials-heading" className="text-3xl font-bold text-white text-center sm:text-4xl">
-            What Our Clients Say
-          </h2>
-          <div className="mt-14 grid gap-8 sm:grid-cols-3">
-            {niche.testimonials.map((t) => (
-              <blockquote
-                key={t.name}
-                className="rounded-2xl border border-slate-800 bg-slate-900 p-6 sm:p-8"
-              >
-                <div className="flex gap-1 mb-4" aria-label={`${t.rating} out of 5 stars`}>
-                  {Array.from({ length: t.rating }).map((_, i) => (
-                    <span key={i} className="text-amber-400 text-lg" aria-hidden="true">&#9733;</span>
-                  ))}
-                </div>
-                <p className="text-slate-300 text-sm leading-relaxed italic">
-                  &ldquo;{t.quote}&rdquo;
-                </p>
-                <footer className="mt-4">
-                  <p className="text-white font-medium text-sm">{t.name}</p>
-                  <p className="text-slate-500 text-xs">{t.role}, {t.company}</p>
-                </footer>
-              </blockquote>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Blog Preview / Internal Links */}
-      <section className="bg-slate-900 py-20 sm:py-24" aria-labelledby="blog-preview-heading">
+      {/* ========================= BLOG PREVIEW ========================= */}
+      <section className="bg-slate-950 py-20 sm:py-24 border-t border-slate-800/50" aria-labelledby="blog-preview-heading">
         <div className="mx-auto max-w-6xl px-6">
           <h2 id="blog-preview-heading" className="text-3xl font-bold text-white text-center sm:text-4xl">
             Latest Insights for Staffing Agencies
           </h2>
           <div className="mt-14 grid gap-8 sm:grid-cols-3">
             {niche.blogPosts.map((post) => (
-              <article key={post.slug} className="rounded-2xl border border-slate-800 bg-slate-950 p-6 flex flex-col">
-                <p className="text-xs text-slate-500 mb-2">{post.date} &middot; {post.readTime}</p>
+              <article key={post.slug} className="rounded-2xl border border-slate-800 bg-slate-900 p-6 flex flex-col hover:border-indigo-500/30 transition-colors">
+                <p className="text-xs text-slate-500 mb-2">{post.date} · {post.readTime}</p>
                 <h3 className="text-lg font-semibold text-white leading-snug">{post.title}</h3>
                 <p className="mt-2 text-sm text-slate-400 leading-relaxed flex-1">{post.excerpt}</p>
-                <Link
-                  href={`/blog/${post.slug}`}
-                  className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-indigo-400 hover:text-indigo-300 transition-colors"
-                >
+                <Link href={`/blog/${post.slug}`}
+                  className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-indigo-400 hover:text-indigo-300 transition-colors">
                   Read article <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </Link>
               </article>
             ))}
           </div>
           <div className="mt-10 text-center">
-            <Link
-              href="/blog"
-              className="inline-flex items-center gap-2 text-sm font-medium text-indigo-400 hover:text-indigo-300 transition-colors"
-            >
+            <Link href="/blog"
+              className="inline-flex items-center gap-2 text-sm font-medium text-indigo-400 hover:text-indigo-300 transition-colors">
               View all articles <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
           </div>
         </div>
       </section>
 
-      {/* Lead Form */}
-      <section className="bg-slate-950 py-20 sm:py-24" aria-labelledby="cta-heading">
-        <div className="mx-auto max-w-xl px-6">
-          <LeadForm source="staffing-landing" />
+      {/* ========================= CTA + LEAD FORM ========================= */}
+      <section className="bg-gradient-to-b from-slate-900 via-indigo-950/30 to-slate-950 py-20 sm:py-28" aria-labelledby="cta-heading">
+        <div className="mx-auto max-w-4xl px-6">
+          <div className="text-center mb-12">
+            <h2 id="cta-heading" className="text-3xl font-bold text-white sm:text-4xl">
+              Ready to Place More Candidates?
+            </h2>
+            <p className="mt-4 text-lg text-slate-400 max-w-xl mx-auto">
+              Get a free automation audit — we&apos;ll show you exactly where your recruiters are losing time and how to reclaim it.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10 max-w-2xl mx-auto">
+            {[
+              { icon: Zap, text: 'Free Audit' },
+              { icon: Clock, text: '30-Min Call' },
+              { icon: Shield, text: 'No Obligation' },
+              { icon: TrendingUp, text: 'ROI Guaranteed' },
+            ].map((b) => (
+              <div key={b.text} className="flex items-center gap-2 justify-center text-sm text-slate-300">
+                <b.icon className="h-4 w-4 text-emerald-400" aria-hidden="true" />
+                <span>{b.text}</span>
+              </div>
+            ))}
+          </div>
+
+          <div className="max-w-xl mx-auto">
+            <LeadForm source="staffing-landing" />
+          </div>
+
+          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-slate-500">
+            <span>Prefer to talk directly?</span>
+            <div className="flex items-center gap-4">
+              <a href="mailto:hey@kraftai.in" className="inline-flex items-center gap-1.5 text-indigo-400 hover:text-indigo-300 transition-colors">
+                <Mail className="h-4 w-4" aria-hidden="true" /> hey@kraftai.in
+              </a>
+              <a href="https://wa.me/919876543210" target="_blank" rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-emerald-400 hover:text-emerald-300 transition-colors">
+                <Phone className="h-4 w-4" aria-hidden="true" /> WhatsApp Us
+              </a>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Service JSON-LD */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(serviceSchema(niche)),
-        }}
-      />
-
-      {/* FAQPage JSON-LD */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(faqPageSchema(niche)),
-        }}
-      />
-
-      {/* BreadcrumbList JSON-LD */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(breadcrumbSchema([
-            { name: 'KraftAI', url: 'https://kraftai.in' },
-            { name: 'Staffing & Recruiting', url: BASE_URL },
-          ])),
-        }}
-      />
+      {/* JSON-LD */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema(niche)) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema(niche)) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema([
+        { name: 'KraftAI', url: 'https://kraftai.in' },
+        { name: 'Staffing & Recruiting', url: BASE_URL },
+      ])) }} />
     </>
   );
 }
