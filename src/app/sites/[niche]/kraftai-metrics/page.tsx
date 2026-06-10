@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 
-const NICHE_NAMES: Record<string, string> = {
+export const NICHE_NAMES: Record<string, string> = {
   homeservices: 'Home Services',
   staffing: 'Staffing & Recruiting',
   insurance: 'Insurance',
@@ -64,9 +64,8 @@ const cardHeader = { padding: '16px 20px', borderBottom: '1px solid rgba(255,255
 const cardTitle = { fontSize: 14, fontWeight: 700, margin: 0 };
 const subtleText = { fontSize: 11, color: '#52525b' };
 
-export default function NicheMetricsPage() {
-  const params = useParams();
-  const niche = params.niche as string;
+export function NicheMetricsDashboard({ nicheSlug }: { nicheSlug: string }) {
+  const niche = nicheSlug;
   const nicheName = NICHE_NAMES[niche] || niche;
 
   const [data, setData] = useState<MetricsData | null>(null);
@@ -596,4 +595,10 @@ export default function NicheMetricsPage() {
       `}</style>
     </div>
   );
+}
+
+// Default export for the [niche] dynamic route fallback
+export default function NicheMetricsPage() {
+  const params = useParams();
+  return <NicheMetricsDashboard nicheSlug={params.niche as string} />;
 }

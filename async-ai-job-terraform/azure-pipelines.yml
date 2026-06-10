@@ -1,0 +1,223 @@
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - 'async-ai-job-terraform/*.tf'
+      - 'async-ai-job-terraform/*.tfvars'
+
+parameters:
+  - name: action
+    displayName: 'Action'
+    type: string
+    default: 'apply'
+    values:
+      - apply
+      - destroy
+
+variables:
+  - name: terraformVersion
+    value: '1.5.0'
+  - name: awsRegion
+    value: 'us-east-1'
+  - name: tfWorkingDirectory
+    value: '$(Build.SourcesDirectory)/async-ai-job-terraform'
+
+stages:
+  - stage: Validate
+    displayName: 'Validate Terraform'
+    jobs:
+      - job: terraform_validate
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          - script: |
+              curl -Lo /tmp/terraform.zip https://releases.hashicorp.com/terraform/$(terraformVersion)/terraform_$(terraformVersion)_linux_amd64.zip
+              unzip -o /tmp/terraform.zip -d /usr/local/bin/
+              terraform --version
+            displayName: 'Install Terraform'
+
+          - script: terraform init -reconfigure
+            workingDirectory: $(tfWorkingDirectory)
+            displayName: 'Terraform Init'
+            env:
+              AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
+              AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
+              AWS_DEFAULT_REGION: $(AWS_DEFAULT_REGION)
+
+          - script: terraform validate
+            workingDirectory: $(tfWorkingDirectory)
+            displayName: 'Terraform Validate'
+
+          - script: terraform fmt -check -recursive
+            workingDirectory: $(tfWorkingDirectory)
+            displayName: 'Terraform Format Check'
+
+  # ---------------- APPLY FLOW ---------------- #
+
+  - stage: Plan
+    displayName: 'Create Terraform Plan'
+    dependsOn: Validate
+    condition: eq('${{ parameters.action }}', 'apply')
+    jobs:
+      - job: terraform_plan
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          - script: |
+              curl -Lo /tmp/terraform.zip https://releases.hashicorp.com/terraform/$(terraformVersion)/terraform_$(terraformVersion)_linux_amd64.zip
+              unzip -o /tmp/terraform.zip -d /usr/local/bin/
+              terraform --version
+            displayName: 'Install Terraform'
+
+          - script: terraform init -reconfigure
+            workingDirectory: $(tfWorkingDirectory)
+            displayName: 'Terraform Init'
+            env:
+              AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
+              AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
+              AWS_DEFAULT_REGION: $(AWS_DEFAULT_REGION)
+
+          - script: |
+              terraform plan -var-file=terraform.tfvars -out=tfplan
+            workingDirectory: $(tfWorkingDirectory)
+            displayName: 'Terraform Plan'
+            env:
+              AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
+              AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
+              AWS_DEFAULT_REGION: $(AWS_DEFAULT_REGION)
+
+          - publish: $(tfWorkingDirectory)/tfplan
+            artifact: tfplan
+
+  - stage: Approval
+    displayName: 'Manual Approval (Apply)'
+    dependsOn: Plan
+    condition: eq('${{ parameters.action }}', 'apply')
+    jobs:
+      - job: wait_for_approval
+        pool: server
+        steps:
+          - task: ManualValidation@0
+            timeoutInMinutes: 1440
+            inputs:
+              users: '$(Build.RequestedFor)'
+              instructions: 'Review Terraform plan and approve APPLY for async AI job infrastructure.'
+              onTimeout: 'reject'
+
+  - stage: Apply
+    displayName: 'Apply Terraform'
+    dependsOn: Approval
+    condition: eq('${{ parameters.action }}', 'apply')
+    jobs:
+      - job: terraform_apply
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          - script: |
+              curl -Lo /tmp/terraform.zip https://releases.hashicorp.com/terraform/$(terraformVersion)/terraform_$(terraformVersion)_linux_amd64.zip
+              unzip -o /tmp/terraform.zip -d /usr/local/bin/
+              terraform --version
+            displayName: 'Install Terraform'
+
+          - script: terraform init -reconfigure
+            workingDirectory: $(tfWorkingDirectory)
+            displayName: 'Terraform Init'
+            env:
+              AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
+              AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
+              AWS_DEFAULT_REGION: $(AWS_DEFAULT_REGION)
+
+          - download: current
+            artifact: tfplan
+
+          - script: |
+              cp $(Pipeline.Workspace)/tfplan/tfplan $(tfWorkingDirectory)/tfplan
+              terraform apply tfplan
+            workingDirectory: $(tfWorkingDirectory)
+            displayName: 'Terraform Apply'
+            env:
+              AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
+              AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
+              AWS_DEFAULT_REGION: $(AWS_DEFAULT_REGION)
+
+  - stage: Output
+    displayName: 'Show Outputs'
+    dependsOn: Apply
+    condition: eq('${{ parameters.action }}', 'apply')
+    jobs:
+    - job: show_output
+      pool:
+        vmImage: 'ubuntu-latest'
+      steps:
+        - script: |
+            curl -Lo /tmp/terraform.zip https://releases.hashicorp.com/terraform/$(terraformVersion)/terraform_$(terraformVersion)_linux_amd64.zip
+            unzip -o /tmp/terraform.zip -d /usr/local/bin/
+            terraform --version
+          displayName: 'Install Terraform'
+
+        - script: terraform init -reconfigure
+          workingDirectory: $(tfWorkingDirectory)
+          displayName: 'Terraform Init'
+          env:
+            AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
+            AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
+            AWS_DEFAULT_REGION: $(AWS_DEFAULT_REGION)
+
+        - script: terraform output
+          workingDirectory: $(tfWorkingDirectory)
+          displayName: 'Terraform Output'
+          env:
+            AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
+            AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
+            AWS_DEFAULT_REGION: $(AWS_DEFAULT_REGION)
+
+  # ---------------- DESTROY FLOW ---------------- #
+
+  - stage: DestroyApproval
+    displayName: 'Manual Approval (Destroy)'
+    dependsOn: Validate
+    condition: eq('${{ parameters.action }}', 'destroy')
+    jobs:
+      - job: wait_for_destroy_approval
+        pool: server
+        steps:
+          - task: ManualValidation@0
+            timeoutInMinutes: 1440
+            inputs:
+              users: '$(Build.RequestedFor)'
+              instructions: 'WARNING: This will DESTROY async AI job infrastructure. Approve to continue.'
+              onTimeout: 'reject'
+
+  - stage: Destroy
+    displayName: 'Terraform Destroy'
+    dependsOn: DestroyApproval
+    condition: eq('${{ parameters.action }}', 'destroy')
+    jobs:
+      - job: terraform_destroy
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          - script: |
+              curl -Lo /tmp/terraform.zip https://releases.hashicorp.com/terraform/$(terraformVersion)/terraform_$(terraformVersion)_linux_amd64.zip
+              unzip -o /tmp/terraform.zip -d /usr/local/bin/
+              terraform --version
+            displayName: 'Install Terraform'
+
+          - script: terraform init -reconfigure
+            workingDirectory: $(tfWorkingDirectory)
+            displayName: 'Terraform Init'
+            env:
+              AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
+              AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
+              AWS_DEFAULT_REGION: $(AWS_DEFAULT_REGION)
+
+          - script: |
+              terraform destroy -var-file=terraform.tfvars -auto-approve
+            workingDirectory: $(tfWorkingDirectory)
+            displayName: 'Terraform Destroy'
+            env:
+              AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
+              AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
+              AWS_DEFAULT_REGION: $(AWS_DEFAULT_REGION)
