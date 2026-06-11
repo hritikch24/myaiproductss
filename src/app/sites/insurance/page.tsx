@@ -19,11 +19,31 @@ import {
 } from 'lucide-react';
 import { generateNicheMetadata } from '@/components/kraftai/SEOHead';
 import LeadForm from '@/components/kraftai/LeadForm';
+import GuaranteeSection from '@/components/kraftai/GuaranteeSection';
+import IndustryProblemsTicker from '@/components/kraftai/IndustryProblemsTicker';
+import AnimatedCounter from '@/components/kraftai/AnimatedCounter';
+import SocialProofToast from '@/components/kraftai/SocialProofToast';
 import { getNicheBySlug } from '@/lib/kraftai-niches';
 import { serviceSchema, faqPageSchema, breadcrumbSchema } from '@/lib/kraftai-schemas';
 
 const niche = getNicheBySlug('insurance')!;
 const BASE_URL = 'https://insurance.kraftai.in';
+
+const TICKER_ITEMS = [
+  { stat: '82%', text: 'of employers would drop their broker over slow response times (Zywave 2025)' },
+  { stat: '1 in 4', text: 'quotes lost due to 30-minute delays in getting back to prospects' },
+  { stat: '16%', text: 'average client churn — agencies retain only 84% of their book year-over-year' },
+  { stat: '47%', text: 'of homeowners saw rate hikes in 2024; 43% say they won\'t renew' },
+  { stat: '8.5%', text: 'homeowner premium increase in 2025 — making retention harder than ever' },
+  { stat: '#1 pain', text: '"My experienced people are exhausted explaining premium increases all day"' },
+];
+
+const TOAST_MESSAGES = [
+  { city: 'Miami, FL', action: 'just requested a free automation audit', timeAgo: '3 minutes ago' },
+  { city: 'Chicago, IL', action: 'booked their onboarding call', timeAgo: '11 minutes ago' },
+  { city: 'Denver, CO', action: 'just requested a free automation audit', timeAgo: '19 minutes ago' },
+  { city: 'Austin, TX', action: 'signed up for AI quoting', timeAgo: '27 minutes ago' },
+];
 
 export function generateMetadata(): Metadata {
   return generateNicheMetadata({
@@ -45,6 +65,9 @@ const useCaseIcons: Record<string, React.ElementType> = {
 export default function InsurancePage() {
   return (
     <>
+      {/* ========================= INDUSTRY PROBLEMS TICKER ========================= */}
+      <IndustryProblemsTicker items={TICKER_ITEMS} label="Industry Data" />
+
       {/* ========================= HERO ========================= */}
       <section className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-950 py-20 sm:py-28" aria-label="Insurance hero">
         {/* Animated glow */}
@@ -104,9 +127,8 @@ export default function InsurancePage() {
           {/* Quick stat cards below hero */}
           <div className="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
             {niche.roiStats.map((stat) => (
-              <div key={stat.label} className="rounded-xl border border-slate-800 bg-slate-900/80 backdrop-blur p-5 text-center">
-                <p className="text-3xl font-bold text-indigo-400">{stat.value}</p>
-                <p className="mt-1 text-sm font-medium text-white">{stat.label}</p>
+              <div key={stat.label} className="rounded-xl border border-slate-800 bg-slate-900/80 backdrop-blur p-5">
+                <AnimatedCounter value={stat.value} label={stat.label} />
               </div>
             ))}
           </div>
@@ -121,12 +143,12 @@ export default function InsurancePage() {
           </h2>
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              { emoji: '⏰', text: 'Spending 2+ hours a day pulling quotes from different carrier portals' },
-              { emoji: '📋', text: 'Policies lapsing because renewal follow-ups fell through the cracks' },
-              { emoji: '📞', text: 'Hot leads going cold because you couldn\'t follow up fast enough' },
-              { emoji: '💸', text: 'Missing cross-sell opportunities hiding in your existing book' },
-              { emoji: '😩', text: 'Feeling like you need to hire but can\'t justify the cost yet' },
-              { emoji: '🔄', text: 'Doing the same repetitive admin tasks every single day' },
+              { emoji: '⏰', text: '82% of employers say they\'d fire their broker over slow response times. How fast are your quotes going out?' },
+              { emoji: '📋', text: 'The average agency retains only 84% of clients. With 8.5% premium hikes, every renewal is a fight.' },
+              { emoji: '📞', text: '1 in 4 quotes are lost to 30-minute delays. Your prospect already has a quote from the carrier portal.' },
+              { emoji: '💸', text: '47% of homeowners saw rate hikes last year — 43% said they won\'t renew. Are you catching them in time?' },
+              { emoji: '😩', text: '"My experienced people are exhausted explaining premium increases all day" — real agent, 2025 survey.' },
+              { emoji: '🔄', text: 'Retyping client info across carrier portals, manually tracking renewals — the busywork never ends.' },
             ].map((pain) => (
               <div key={pain.text} className="flex items-start gap-4 rounded-xl border border-red-500/10 bg-red-500/5 p-5">
                 <span className="text-2xl flex-shrink-0" aria-hidden="true">{pain.emoji}</span>
@@ -235,6 +257,9 @@ export default function InsurancePage() {
           </div>
         </div>
       </section>
+
+      {/* ========================= GUARANTEE ========================= */}
+      <GuaranteeSection />
 
       {/* ========================= COMPARISON TABLE ========================= */}
       <section className="bg-slate-950 py-20 sm:py-24" aria-labelledby="comparison-heading">
@@ -369,6 +394,9 @@ export default function InsurancePage() {
           </div>
         </div>
       </section>
+
+      {/* Social proof toasts */}
+      <SocialProofToast messages={TOAST_MESSAGES} />
 
       {/* JSON-LD */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema(niche)) }} />

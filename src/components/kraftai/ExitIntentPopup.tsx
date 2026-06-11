@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { X, Gift } from 'lucide-react';
 
 interface ExitIntentPopupProps {
@@ -16,43 +16,72 @@ export default function ExitIntentPopup({
 }: ExitIntentPopupProps) {
   const [visible, setVisible] = useState(false);
   const [closing, setClosing] = useState(false);
+  const shown = useRef(false);
 
   const dismiss = useCallback(() => {
     setClosing(true);
-    sessionStorage.setItem('_kraft_exit_dismissed', '1');
+    try { sessionStorage.setItem('_kraft_exit_dismissed', '1'); } catch {}
     setTimeout(() => setVisible(false), 300);
   }, []);
 
-  useEffect(() => {
-    if (sessionStorage.getItem('_kraft_exit_dismissed')) return;
+  const show = useCallback(() => {
+    if (shown.current) return;
+    try { if (sessionStorage.getItem('_kraft_exit_dismissed')) return; } catch {}
+    shown.current = true;
+    setVisible(true);
+  }, []);
 
-    // Desktop: mouse leaves viewport from top
+  useEffect(() => {
+    try { if (sessionStorage.getItem('_kraft_exit_dismissed')) return; } catch {}
+
+    // ─── 1. Desktop: mouse leaves viewport top ───
     const onMouseLeave = (e: MouseEvent) => {
-      if (e.clientY <= 5 && !visible) {
-        setVisible(true);
+      if (e.clientY <= 5) show();
+    };
+
+    // ─── 2. Scroll-back trigger: read 40%+, then scroll up significantly ───
+    let maxScroll = 0;
+    const onScroll = () => {
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      if (total <= 0) return;
+      const pct = window.scrollY / total;
+      if (pct > maxScroll) maxScroll = pct;
+      if (maxScroll > 0.4 && pct < maxScroll - 0.15) {
+        show();
       }
     };
 
-    // Mobile fallback: show after 45s on page if they haven't scrolled to form
+    // ─── 3. Mobile: 15s idle if form not visible ───
     const mobileTimer = setTimeout(() => {
-      if (window.innerWidth < 768 && !visible) {
+      if (window.innerWidth < 768) {
         const form = document.getElementById('lead-form');
-        if (form) {
-          const rect = form.getBoundingClientRect();
-          // Only show if form is NOT in viewport
-          if (rect.top > window.innerHeight || rect.bottom < 0) {
-            setVisible(true);
-          }
-        }
+        if (!form) { show(); return; }
+        const rect = form.getBoundingClientRect();
+        if (rect.top > window.innerHeight || rect.bottom < 0) show();
       }
-    }, 45000);
+    }, 15000);
+
+    // ─── 4. Tab switch: away 5s+ then return ───
+    let leftAt = 0;
+    const onVisChange = () => {
+      if (document.hidden) {
+        leftAt = Date.now();
+      } else if (leftAt && Date.now() - leftAt > 5000) {
+        show();
+      }
+    };
 
     document.addEventListener('mouseleave', onMouseLeave);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    document.addEventListener('visibilitychange', onVisChange);
+
     return () => {
       document.removeEventListener('mouseleave', onMouseLeave);
+      window.removeEventListener('scroll', onScroll);
+      document.removeEventListener('visibilitychange', onVisChange);
       clearTimeout(mobileTimer);
     };
-  }, [visible]);
+  }, [show]);
 
   if (!visible) return null;
 
@@ -64,15 +93,12 @@ export default function ExitIntentPopup({
       aria-modal="true"
       aria-label="Special offer"
     >
-      {/* Backdrop */}
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
 
-      {/* Modal */}
       <div
         className={`relative w-full max-w-md rounded-2xl bg-slate-900 border border-slate-700 shadow-2xl shadow-indigo-500/10 overflow-hidden transition-transform duration-300 ${closing ? 'scale-95' : 'scale-100'}`}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Gradient top bar */}
         <div className="h-1.5 bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-500" />
 
         <button
@@ -84,7 +110,7 @@ export default function ExitIntentPopup({
         </button>
 
         <div className="p-8 text-center">
-          <div className="mx-auto w-16 h-16 rounded-2xl bg-indigo-500/15 flex items-center justify-center mb-6">
+          <div className="mx-auto w-16 h-16 rounded-2xl bg-indigo-500/15 flex items-center justify-center mb-6 animate-bounce">
             <Gift className="h-8 w-8 text-indigo-400" aria-hidden="true" />
           </div>
 

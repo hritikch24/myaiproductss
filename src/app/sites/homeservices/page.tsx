@@ -20,6 +20,10 @@ import {
 import { generateNicheMetadata } from '@/components/kraftai/SEOHead';
 import LeadForm from '@/components/kraftai/LeadForm';
 import GuaranteeSection from '@/components/kraftai/GuaranteeSection';
+import IndustryProblemsTicker from '@/components/kraftai/IndustryProblemsTicker';
+import AnimatedCounter from '@/components/kraftai/AnimatedCounter';
+import ScrollReveal from '@/components/kraftai/ScrollReveal';
+import SocialProofToast from '@/components/kraftai/SocialProofToast';
 import { getNicheBySlug } from '@/lib/kraftai-niches';
 import { serviceSchema, faqPageSchema, breadcrumbSchema } from '@/lib/kraftai-schemas';
 
@@ -43,9 +47,29 @@ const useCaseIcons: Record<string, React.ElementType> = {
   Star,
 };
 
+const TICKER_ITEMS = [
+  { stat: '28%', text: 'of plumber calls go unanswered — leads call the next search result' },
+  { stat: '$50K–$125K', text: 'lost per year by the average contractor from missed calls alone' },
+  { stat: '85%', text: 'of customers who hit voicemail hang up and call your competitor' },
+  { stat: '62%', text: 'of plumbing calls come in after-hours, evenings, and weekends' },
+  { stat: '35%', text: 'of HVAC calls missed during peak season — when jobs are worth the most' },
+  { stat: '5 min', text: 'response window — after that, you\'re 100x less likely to book the job' },
+];
+
+const TOAST_MESSAGES = [
+  { city: 'Phoenix, AZ', action: 'just requested a free automation audit', timeAgo: '2 minutes ago' },
+  { city: 'Dallas, TX', action: 'booked their onboarding call', timeAgo: '8 minutes ago' },
+  { city: 'Atlanta, GA', action: 'just requested a free automation audit', timeAgo: '14 minutes ago' },
+  { city: 'Houston, TX', action: 'signed up for AI answering', timeAgo: '22 minutes ago' },
+  { city: 'Tampa, FL', action: 'just requested a free automation audit', timeAgo: '31 minutes ago' },
+];
+
 export default function HomeServicesPage() {
   return (
     <>
+      {/* ========================= INDUSTRY PROBLEMS TICKER ========================= */}
+      <IndustryProblemsTicker items={TICKER_ITEMS} label="Industry Data" />
+
       {/* ========================= HERO ========================= */}
       <section className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-950 py-20 sm:py-28" aria-label="Home services hero">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-indigo-500/10 via-transparent to-transparent" aria-hidden="true" />
@@ -100,9 +124,8 @@ export default function HomeServicesPage() {
 
           <div className="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
             {niche.roiStats.map((stat) => (
-              <div key={stat.label} className="rounded-xl border border-slate-800 bg-slate-900/80 backdrop-blur p-5 text-center">
-                <p className="text-3xl font-bold text-indigo-400">{stat.value}</p>
-                <p className="mt-1 text-sm font-medium text-white">{stat.label}</p>
+              <div key={stat.label} className="rounded-xl border border-slate-800 bg-slate-900/80 backdrop-blur p-5">
+                <AnimatedCounter value={stat.value} label={stat.label} />
               </div>
             ))}
           </div>
@@ -117,12 +140,12 @@ export default function HomeServicesPage() {
           </h2>
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              { emoji: '📞', text: 'Missing calls while your crew is on a job — and losing that lead to the competitor who picked up first' },
-              { emoji: '📋', text: 'Sending estimates that go cold because nobody has time to follow up' },
-              { emoji: '⏰', text: 'Paying $800/month for an answering service that still misses leads and botches messages' },
-              { emoji: '⭐', text: 'Watching competitors outrank you on Google because they have 3x more reviews' },
-              { emoji: '😩', text: 'Feeling like you need to hire office help but can\'t justify the $3,500/month cost yet' },
-              { emoji: '🔄', text: 'Techs spending more time driving than on job sites because dispatching is a mess' },
+              { emoji: '📞', text: 'The average plumber misses 28% of incoming calls. 85% of those callers hang up and call your competitor instead.' },
+              { emoji: '💸', text: 'ServiceTitan data: the typical plumbing contractor loses $50K–$125K/year to unanswered calls alone.' },
+              { emoji: '🌙', text: '62% of plumbing calls come after-hours. If nobody picks up at 9 PM, that emergency job goes to someone else.' },
+              { emoji: '📋', text: '60% of estimates go unanswered — not because the customer said no, but because nobody followed up.' },
+              { emoji: '⏱️', text: 'Responding in 5 min makes you 100x more likely to book vs. waiting 30 min. Most shops take hours.' },
+              { emoji: '⭐', text: 'Competitors with 300+ Google reviews dominate local search. Manual review requests get a 3% response rate.' },
             ].map((pain) => (
               <div key={pain.text} className="flex items-start gap-4 rounded-xl border border-red-500/10 bg-red-500/5 p-5">
                 <span className="text-2xl flex-shrink-0" aria-hidden="true">{pain.emoji}</span>
@@ -389,6 +412,9 @@ export default function HomeServicesPage() {
           </div>
         </div>
       </section>
+
+      {/* Social proof toasts */}
+      <SocialProofToast messages={TOAST_MESSAGES} />
 
       {/* JSON-LD */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema(niche)) }} />

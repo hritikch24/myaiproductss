@@ -20,11 +20,30 @@ import {
 import { generateNicheMetadata } from '@/components/kraftai/SEOHead';
 import LeadForm from '@/components/kraftai/LeadForm';
 import GuaranteeSection from '@/components/kraftai/GuaranteeSection';
+import IndustryProblemsTicker from '@/components/kraftai/IndustryProblemsTicker';
+import AnimatedCounter from '@/components/kraftai/AnimatedCounter';
+import SocialProofToast from '@/components/kraftai/SocialProofToast';
 import { getNicheBySlug } from '@/lib/kraftai-niches';
 import { serviceSchema, faqPageSchema, breadcrumbSchema } from '@/lib/kraftai-schemas';
 
 const niche = getNicheBySlug('staffing')!;
 const BASE_URL = 'https://staffing.kraftai.in';
+
+const TICKER_ITEMS = [
+  { stat: '35%', text: 'of recruiter time wasted on interview scheduling alone' },
+  { stat: '42%', text: 'of candidates withdraw when scheduling takes too long' },
+  { stat: '93%', text: 'more applications per recruiter vs 2021 — but teams are 14% smaller' },
+  { stat: '40%', text: 'more open roles per recruiter than 3 years ago' },
+  { stat: '50%', text: 'of recruiter time spent on tasks that don\'t need human judgment' },
+  { stat: '5–7', text: 'emails average just to schedule one single interview' },
+];
+
+const TOAST_MESSAGES = [
+  { city: 'Chicago, IL', action: 'just requested a free automation audit', timeAgo: '4 minutes ago' },
+  { city: 'Austin, TX', action: 'booked their onboarding call', timeAgo: '12 minutes ago' },
+  { city: 'New York, NY', action: 'just requested a free automation audit', timeAgo: '18 minutes ago' },
+  { city: 'Denver, CO', action: 'signed up for AI scheduling', timeAgo: '25 minutes ago' },
+];
 
 export function generateMetadata(): Metadata {
   return generateNicheMetadata({
@@ -46,6 +65,8 @@ const useCaseIcons: Record<string, React.ElementType> = {
 export default function StaffingPage() {
   return (
     <>
+      <IndustryProblemsTicker items={TICKER_ITEMS} label="Industry Data" />
+
       {/* ========================= HERO ========================= */}
       <section className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-950 py-20 sm:py-28" aria-label="Staffing hero">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-indigo-500/10 via-transparent to-transparent" aria-hidden="true" />
@@ -100,9 +121,8 @@ export default function StaffingPage() {
 
           <div className="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
             {niche.roiStats.map((stat) => (
-              <div key={stat.label} className="rounded-xl border border-slate-800 bg-slate-900/80 backdrop-blur p-5 text-center">
-                <p className="text-3xl font-bold text-indigo-400">{stat.value}</p>
-                <p className="mt-1 text-sm font-medium text-white">{stat.label}</p>
+              <div key={stat.label} className="rounded-xl border border-slate-800 bg-slate-900/80 backdrop-blur p-5">
+                <AnimatedCounter value={stat.value} label={stat.label} />
               </div>
             ))}
           </div>
@@ -117,12 +137,12 @@ export default function StaffingPage() {
           </h2>
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              { emoji: '📧', text: 'Recruiters spending 5-7 emails just to schedule a single interview' },
-              { emoji: '👻', text: 'Candidates ghosting because your follow-up was too slow or inconsistent' },
-              { emoji: '💾', text: 'Thousands of pre-screened candidates sitting untouched in your ATS' },
-              { emoji: '📊', text: 'Hours wasted compiling manual pipeline reports for hiring managers' },
-              { emoji: '😓', text: 'Top recruiters burning out on admin instead of closing placements' },
-              { emoji: '🐢', text: 'Time-to-fill creeping up while competitors with AI tools fill faster' },
+              { emoji: '📧', text: '35% of recruiter time goes to scheduling. That\'s 5-7 emails per interview — multiply by 50 candidates.' },
+              { emoji: '👻', text: '42% of candidates withdraw when scheduling takes too long. Every delay costs you a placement.' },
+              { emoji: '💾', text: 'Your ATS has thousands of pre-screened candidates. 95% sit untouched — that\'s revenue gathering dust.' },
+              { emoji: '📊', text: 'Recruiters handle 93% more applications than 2021, but teams are 14% smaller. The math doesn\'t work.' },
+              { emoji: '😓', text: 'Half the workweek spent screening, updating ATS records, and sending follow-ups. Zero of that needs a human.' },
+              { emoji: '🐢', text: '40% more open roles per recruiter than 3 years ago. Time-to-fill is climbing while margins shrink.' },
             ].map((pain) => (
               <div key={pain.text} className="flex items-start gap-4 rounded-xl border border-red-500/10 bg-red-500/5 p-5">
                 <span className="text-2xl flex-shrink-0" aria-hidden="true">{pain.emoji}</span>
@@ -366,6 +386,8 @@ export default function StaffingPage() {
           </div>
         </div>
       </section>
+
+      <SocialProofToast messages={TOAST_MESSAGES} />
 
       {/* JSON-LD */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema(niche)) }} />

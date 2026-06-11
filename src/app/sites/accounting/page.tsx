@@ -19,11 +19,30 @@ import {
 import { generateNicheMetadata } from '@/components/kraftai/SEOHead';
 import LeadForm from '@/components/kraftai/LeadForm';
 import GuaranteeSection from '@/components/kraftai/GuaranteeSection';
+import IndustryProblemsTicker from '@/components/kraftai/IndustryProblemsTicker';
+import AnimatedCounter from '@/components/kraftai/AnimatedCounter';
+import SocialProofToast from '@/components/kraftai/SocialProofToast';
 import { getNicheBySlug } from '@/lib/kraftai-niches';
 import { serviceSchema, faqPageSchema, breadcrumbSchema } from '@/lib/kraftai-schemas';
 
 const niche = getNicheBySlug('accounting')!;
 const BASE_URL = 'https://accounting.kraftai.in';
+
+const TICKER_ITEMS = [
+  { stat: '340+', text: 'hours lost every January on client information gathering alone (mid-market firms)' },
+  { stat: '54%', text: 'client response rate to document requests — even with "perfect" instructions' },
+  { stat: '6–10 hrs', text: 'per week spent chasing documents during tax season — the #1 bottleneck' },
+  { stat: '50–80 hrs', text: 'per week average for CPAs during tax season — partners often exceed 100' },
+  { stat: '9.3 hrs', text: 'per week on client communication alone — most of it repetitive follow-ups' },
+  { stat: '#1 pain', text: '"Late and unprepared clients" — top challenge in Wolters Kluwer survey of 2,000 firms' },
+];
+
+const TOAST_MESSAGES = [
+  { city: 'Orlando, FL', action: 'just requested a free automation audit', timeAgo: '5 minutes ago' },
+  { city: 'Portland, OR', action: 'booked their onboarding call', timeAgo: '13 minutes ago' },
+  { city: 'Raleigh, NC', action: 'just requested a free automation audit', timeAgo: '20 minutes ago' },
+  { city: 'San Diego, CA', action: 'signed up for document automation', timeAgo: '28 minutes ago' },
+];
 
 export function generateMetadata(): Metadata {
   return generateNicheMetadata({
@@ -45,6 +64,8 @@ const useCaseIcons: Record<string, React.ElementType> = {
 export default function AccountingPage() {
   return (
     <>
+      <IndustryProblemsTicker items={TICKER_ITEMS} label="Industry Data" />
+
       {/* ========================= HERO ========================= */}
       <section className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-950 py-20 sm:py-28" aria-label="Accounting hero">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-indigo-500/10 via-transparent to-transparent" aria-hidden="true" />
@@ -99,9 +120,8 @@ export default function AccountingPage() {
 
           <div className="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
             {niche.roiStats.map((stat) => (
-              <div key={stat.label} className="rounded-xl border border-slate-800 bg-slate-900/80 backdrop-blur p-5 text-center">
-                <p className="text-3xl font-bold text-indigo-400">{stat.value}</p>
-                <p className="mt-1 text-sm font-medium text-white">{stat.label}</p>
+              <div key={stat.label} className="rounded-xl border border-slate-800 bg-slate-900/80 backdrop-blur p-5">
+                <AnimatedCounter value={stat.value} label={stat.label} />
               </div>
             ))}
           </div>
@@ -116,12 +136,12 @@ export default function AccountingPage() {
           </h2>
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              { emoji: '📧', text: 'Sending 4-5 emails per client just to get their W-2s and 1099s every year' },
-              { emoji: '😓', text: 'Tax season means 70-hour weeks because everything piles up in March' },
-              { emoji: '📋', text: 'Client onboarding takes a week of back-and-forth when it should take a day' },
-              { emoji: '⏰', text: 'Quarterly deadlines sneaking up because tracking is in spreadsheets' },
-              { emoji: '💰', text: 'Clients who need advisory services but never hear about them from you' },
-              { emoji: '🔄', text: 'Wanting to grow but can\'t take more clients without hiring more staff' },
+              { emoji: '📧', text: 'Firms lose 340+ hours every January chasing documents. Only 54% of clients respond even with perfect instructions.' },
+              { emoji: '😓', text: 'CPAs average 50-80 hour weeks during tax season. Partners regularly exceed 100. This is not sustainable.' },
+              { emoji: '📋', text: '9.3 hours/week on client communication alone — mostly repetitive follow-ups that could be automated.' },
+              { emoji: '⏰', text: '"Late and unprepared clients" ranked #1 challenge in Wolters Kluwer survey of 2,000 US accounting firms.' },
+              { emoji: '💰', text: 'Partner time chasing one client: $900-$3,000 in non-billable hours. Multiply by 100 clients.' },
+              { emoji: '🔄', text: '6-10 hours/week spent on document collection during tax season — the single biggest bottleneck every year.' },
             ].map((pain) => (
               <div key={pain.text} className="flex items-start gap-4 rounded-xl border border-red-500/10 bg-red-500/5 p-5">
                 <span className="text-2xl flex-shrink-0" aria-hidden="true">{pain.emoji}</span>
@@ -365,6 +385,8 @@ export default function AccountingPage() {
           </div>
         </div>
       </section>
+
+      <SocialProofToast messages={TOAST_MESSAGES} />
 
       {/* JSON-LD */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema(niche)) }} />

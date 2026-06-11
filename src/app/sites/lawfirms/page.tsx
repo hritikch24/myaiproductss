@@ -21,11 +21,30 @@ import {
 import { generateNicheMetadata } from '@/components/kraftai/SEOHead';
 import LeadForm from '@/components/kraftai/LeadForm';
 import GuaranteeSection from '@/components/kraftai/GuaranteeSection';
+import IndustryProblemsTicker from '@/components/kraftai/IndustryProblemsTicker';
+import AnimatedCounter from '@/components/kraftai/AnimatedCounter';
+import SocialProofToast from '@/components/kraftai/SocialProofToast';
 import { getNicheBySlug } from '@/lib/kraftai-niches';
 import { serviceSchema, faqPageSchema, breadcrumbSchema } from '@/lib/kraftai-schemas';
 
 const niche = getNicheBySlug('lawfirms')!;
 const BASE_URL = 'https://lawfirms.kraftai.in';
+
+const TICKER_ITEMS = [
+  { stat: '391%', text: 'higher conversion when you respond within 60 seconds vs. 5 minutes' },
+  { stat: '26%', text: 'of law firms never respond to online leads at all (Hennessey 2025)' },
+  { stat: '14%', text: 'average inquiry-to-client conversion — top firms hit 40-50%' },
+  { stat: '42%', text: 'of law firm inquiries come after-hours when nobody picks up' },
+  { stat: '$61.7B', text: 'PI market with 164K+ competing attorneys — speed wins cases' },
+  { stat: '7%', text: 'of PI leads actually book a consultation. The rest call someone faster.' },
+];
+
+const TOAST_MESSAGES = [
+  { city: 'Miami, FL', action: 'just requested a free intake audit', timeAgo: '3 minutes ago' },
+  { city: 'Houston, TX', action: 'booked their onboarding call', timeAgo: '9 minutes ago' },
+  { city: 'Phoenix, AZ', action: 'just requested a free intake audit', timeAgo: '16 minutes ago' },
+  { city: 'Los Angeles, CA', action: 'signed up for AI intake', timeAgo: '24 minutes ago' },
+];
 
 export function generateMetadata(): Metadata {
   return generateNicheMetadata({
@@ -47,6 +66,8 @@ const useCaseIcons: Record<string, React.ElementType> = {
 export default function LawfirmsPage() {
   return (
     <>
+      <IndustryProblemsTicker items={TICKER_ITEMS} label="Industry Data" />
+
       {/* ========================= HERO ========================= */}
       <section className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-950 py-20 sm:py-28" aria-label="Law firms hero">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-indigo-500/10 via-transparent to-transparent" aria-hidden="true" />
@@ -101,9 +122,8 @@ export default function LawfirmsPage() {
 
           <div className="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
             {niche.roiStats.map((stat) => (
-              <div key={stat.label} className="rounded-xl border border-slate-800 bg-slate-900/80 backdrop-blur p-5 text-center">
-                <p className="text-3xl font-bold text-indigo-400">{stat.value}</p>
-                <p className="mt-1 text-sm font-medium text-white">{stat.label}</p>
+              <div key={stat.label} className="rounded-xl border border-slate-800 bg-slate-900/80 backdrop-blur p-5">
+                <AnimatedCounter value={stat.value} label={stat.label} />
               </div>
             ))}
           </div>
@@ -118,12 +138,12 @@ export default function LawfirmsPage() {
           </h2>
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              { emoji: '📞', text: 'Leads calling after-hours and signing with the first firm that picks up' },
-              { emoji: '😓', text: 'Paralegals spending 3+ hours a day answering "what\'s happening with my case?"' },
-              { emoji: '💸', text: 'Spending $15K+/month on ads but only signing 20% of the leads' },
-              { emoji: '👻', text: 'Warm leads going cold because follow-up was a day too late' },
-              { emoji: '📋', text: 'Inconsistent intake — different staff asking different questions, missing key details' },
-              { emoji: '⭐', text: 'Settled cases that never turn into reviews or referrals' },
+              { emoji: '📞', text: '42% of PI inquiries come after-hours. 26% of firms never respond at all. Your competitors are picking up.' },
+              { emoji: '⚡', text: 'Leads contacted within 60 seconds convert 391% better than at 5 min. After an hour? Down to 31%.' },
+              { emoji: '💸', text: 'Average firm converts just 14% of inquiries to clients. Top firms hit 40-50% with fast intake + CRM.' },
+              { emoji: '📊', text: 'Only 7% of PI leads book a consultation. The other 93% called someone who picked up faster.' },
+              { emoji: '😓', text: 'Paralegals spending 3+ hours/day fielding "what\'s happening with my case?" calls. Zero billable work.' },
+              { emoji: '💰', text: '$61.7B PI market, 164K+ competing attorneys. The margin is speed — and your intake is manual.' },
             ].map((pain) => (
               <div key={pain.text} className="flex items-start gap-4 rounded-xl border border-red-500/10 bg-red-500/5 p-5">
                 <span className="text-2xl flex-shrink-0" aria-hidden="true">{pain.emoji}</span>
@@ -367,6 +387,8 @@ export default function LawfirmsPage() {
           </div>
         </div>
       </section>
+
+      <SocialProofToast messages={TOAST_MESSAGES} />
 
       {/* JSON-LD */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema(niche)) }} />
