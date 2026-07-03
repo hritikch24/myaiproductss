@@ -9,7 +9,6 @@ import ROIStats from '@/components/kraftai/ROIStats';
 import HowItWorks from '@/components/kraftai/HowItWorks';
 import ComparisonTable from '@/components/kraftai/ComparisonTable';
 import FAQAccordion from '@/components/kraftai/FAQAccordion';
-import TestimonialSection from '@/components/kraftai/TestimonialSection';
 import LeadForm from '@/components/kraftai/LeadForm';
 
 const niche = getNicheBySlug('homeservices')!;
@@ -190,16 +189,35 @@ export default async function CityPage({ params }: CityPageProps) {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="bg-slate-950 py-16 sm:py-20" aria-labelledby="testimonials-heading">
+      {/* Why Us — Honest Pitch */}
+      <section className="bg-slate-950 py-16 sm:py-20" aria-labelledby="why-us-heading">
         <div className="mx-auto max-w-6xl px-6">
           <h2
-            id="testimonials-heading"
+            id="why-us-heading"
             className="text-3xl font-bold text-white text-center sm:text-4xl mb-12"
           >
-            What Our Clients Say
+            Why Work With Us
           </h2>
-          <TestimonialSection testimonials={niche.testimonials} />
+          <div className="grid gap-8 sm:grid-cols-3">
+            <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 sm:p-8">
+              <h3 className="text-white font-semibold">You talk to the engineer</h3>
+              <p className="mt-3 text-slate-300 text-sm leading-relaxed">
+                No account managers or relay chains. The person who scopes your automation is the same senior engineer who builds it, deploys it, and answers your messages.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 sm:p-8">
+              <h3 className="text-white font-semibold">Founding-client pricing</h3>
+              <p className="mt-3 text-slate-300 text-sm leading-relaxed">
+                Early clients get reduced rates and priority support in exchange for honest feedback — and, if you are happy, a case study we can publish with real numbers.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 sm:p-8">
+              <h3 className="text-white font-semibold">Guaranteed or refunded</h3>
+              <p className="mt-3 text-slate-300 text-sm leading-relaxed">
+                If the automations do not deliver measurable results within 60 days, you get a full refund and keep everything we built. The risk is ours, not yours.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 

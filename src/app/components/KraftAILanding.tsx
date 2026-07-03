@@ -67,10 +67,10 @@ const portfolio = [
 ];
 
 const testimonials = [
-  { name: "Alex Morrison", role: "Founder, TechStart", text: "KraftAI delivered our MVP in 3 weeks. The quality was exceptional — our investors were blown away during the demo. Best money we ever spent.", rating: 5 },
-  { name: "Sarah Chen", role: "CEO, GreenLeaf", text: "We switched from a $15K agency to KraftAI. Got better results at a fraction of the cost. The team communicates directly — no middlemen, no BS.", rating: 5 },
-  { name: "Michael Rodriguez", role: "CTO, DataFlow", text: "The AI integration they built saved us 40 hours/week in manual processing. ROI was positive within the first month. Incredibly sharp team.", rating: 5 },
-  { name: "Priya Sharma", role: "Dir. of Ops, FastShip", text: "Our e-commerce store went from idea to live in 4 weeks with KraftAI. Revenue hit $50K in the first quarter. Their work speaks for itself.", rating: 5 },
+  { name: "Direct to the builder", role: "How we work", text: "You talk to the senior engineer writing your code. No account managers, no relay chains, no ghosting. Faster decisions, zero miscommunication." },
+  { name: "Fixed price, in writing", role: "Before we start", text: "You get a firm quote before we write a single line of code. No hourly billing, no scope-creep invoices, no surprises. 50% upfront, 50% on delivery." },
+  { name: "100% code ownership", role: "When we ship", text: "Every line of code, every asset, every credential is yours — deployed on your infrastructure. No vendor lock-in, no recurring license fees, ever." },
+  { name: "Money-back guarantee", role: "If we fall short", text: "If we do not deliver what was agreed, you get your money back. We would rather refund a project than argue about it." },
 ];
 
 const techPills = [
@@ -98,7 +98,7 @@ const faqItems = [
   { q: "How much does a custom website cost?", a: "Our projects start at $499 for landing pages. Business websites start at $1,499, e-commerce at $2,999, and custom web apps at $4,999. Use our instant quote calculator above for a detailed breakdown, or message us for a custom estimate. All prices are fixed — no hourly billing." },
   { q: "How long does it take to build a website?", a: "Landing pages: 5-7 business days. Business websites: 2-3 weeks. E-commerce stores: 3-5 weeks. Complex web apps: 4-8 weeks. We also offer express delivery for urgent projects." },
   { q: "How are you different from Upwork or Fiverr freelancers?", a: "Fixed-price quotes (no hourly surprises), weekly demos, direct access to senior engineers, money-back guarantee, and 100% code ownership. No middlemen, no ghosting. You talk to the person writing your code." },
-  { q: "I have an app idea but I'm not technical. Can you help?", a: "Absolutely. Most of our clients are non-technical founders. We handle everything from requirements to deployment. Start with a free 30-minute discovery call — just describe your idea and we'll map out the entire project." },
+  { q: "I have an app idea but I'm not technical. Can you help?", a: "Absolutely. Many founders we work with are non-technical. We handle everything from requirements to deployment. Start with a free 30-minute discovery call — just describe your idea and we'll map out the entire project." },
   { q: "Can you replace my WordPress or Wix site?", a: "Yes, we frequently migrate from WordPress, Wix, Squarespace to custom-built sites. Custom sites are faster, more secure, fully SEO-optimized, and you never pay recurring platform fees. Migration takes 2-3 weeks." },
   { q: "Can you add AI chatbots or AI features to my website?", a: "Yes. We integrate chatbots, content generation, recommendation engines, and custom LLM solutions using OpenAI, Claude, and open-source models. AI integrations start at $1,999." },
   { q: "Do I own the source code?", a: "Yes, 100%. Every line of code, every asset, every credential is yours. We deploy on your infrastructure with your accounts. Zero vendor lock-in, zero recurring license fees." },
@@ -810,7 +810,7 @@ export default function KraftAILanding() {
         <div className="k-hero-content">
           <div className="k-hero-badge">
             <span className="k-badge-dot" />
-            Trusted by 50+ businesses worldwide
+            Fixed pricing · Full code ownership · No lock-in
           </div>
           <h1 className="k-hero-h1">
             <span className="k-hero-line"><span className="k-hero-line-i">You think it.</span></span>
@@ -834,16 +834,9 @@ export default function KraftAILanding() {
             </a>
           </div>
           <div className="k-hero-proof">
-            <div className="k-avatars">
-              {["#635bff", "#00d4aa", "#ff6b35", "#fbbf24", "#ec4899"].map((c, i) => (
-                <div key={i} className="k-avatar" style={{ background: c }}>
-                  {["A", "S", "M", "P", "R"][i]}
-                </div>
-              ))}
-            </div>
             <div className="k-proof-text">
-              <strong>4.9/5</strong> from 47+ reviews<br />
-              Trusted by startups & enterprises
+              <strong>Talk directly to the engineer</strong> writing your code<br />
+              Free 30-minute discovery call — no pressure, no pitch decks
             </div>
           </div>
         </div>
@@ -877,21 +870,21 @@ export default function KraftAILanding() {
       <div className="k-stats sr">
         <div className="k-stat">
           <div className="k-stat-num" style={{ color: "var(--accent)" }}>
-            <span data-count="50" data-suffix="+">0</span>
+            <span data-count="100" data-suffix="%">0</span>
           </div>
-          <div className="k-stat-label">Projects Delivered</div>
+          <div className="k-stat-label">Code Ownership</div>
         </div>
         <div className="k-stat">
           <div className="k-stat-num" style={{ color: "var(--accent2)" }}>
-            <span data-count="98" data-suffix="%">0</span>
+            <span data-count="24" data-suffix="h">0</span>
           </div>
-          <div className="k-stat-label">Client Satisfaction</div>
+          <div className="k-stat-label">Quote Turnaround</div>
         </div>
         <div className="k-stat">
           <div className="k-stat-num" style={{ color: "var(--accent3)" }}>
-            <span data-count="12" data-suffix="">0</span>
+            <span data-count="0" data-suffix="">0</span>
           </div>
-          <div className="k-stat-label">Countries Served</div>
+          <div className="k-stat-label">Hidden Fees, Ever</div>
         </div>
         <div className="k-stat">
           <div className="k-stat-num">
@@ -1130,7 +1123,7 @@ export default function KraftAILanding() {
         <div className="k-section-header sr">
           <div className="k-tag">Our Work</div>
           <h2 className="k-title">Projects that delivered results</h2>
-          <p className="k-subtitle">Real projects, real outcomes. Every project comes with full code ownership.</p>
+          <p className="k-subtitle">The kind of work we take on — and every project ships with full code ownership.</p>
         </div>
         <div className="k-portfolio-grid sr">
           {portfolio.map((p, i) => (
@@ -1150,13 +1143,12 @@ export default function KraftAILanding() {
       {/* Testimonials */}
       <section className="k-section k-testimonials-section">
         <div className="k-section-header sr" style={{ textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center" }}>
-          <div className="k-tag">Testimonials</div>
-          <h2 className="k-title">What our clients say</h2>
+          <div className="k-tag">Our Commitments</div>
+          <h2 className="k-title">What you can count on</h2>
         </div>
         <div className="sr">
           <div className="k-testimonial-card">
             <div className="k-testimonial-quote">&ldquo;</div>
-            <div className="k-testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
             <div className="k-testimonial-text">{testimonials[currentTestimonial].text}</div>
             <div className="k-testimonial-name">{testimonials[currentTestimonial].name}</div>
             <div className="k-testimonial-role">{testimonials[currentTestimonial].role}</div>
@@ -1195,7 +1187,7 @@ export default function KraftAILanding() {
       <section className="k-section k-why-section">
         <div className="k-section-header sr">
           <div className="k-tag">Why KraftAI</div>
-          <h2 className="k-title">Why 50+ businesses chose us</h2>
+          <h2 className="k-title">Why businesses choose us</h2>
           <p className="k-subtitle">We are builders, not an agency. Here is what makes the difference.</p>
         </div>
         <div className="k-why-grid sr">

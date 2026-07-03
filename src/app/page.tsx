@@ -4,7 +4,7 @@ import KraftAILanding from "./components/KraftAILanding";
 
 export const metadata: Metadata = {
   title: "KraftAI — Custom Websites, Apps & AI Agents from $499 | Fixed Pricing, No Freelancer BS",
-  description: "Tired of unreliable freelancers and overpriced agencies? KraftAI builds custom websites ($499), web apps ($4,999), mobile apps ($3,999), AI agents & chatbots ($1,999) with fixed pricing — no hourly billing, no surprises. 7-day express delivery. 100% source code ownership. Talk directly to the senior engineer writing your code. Free instant quote calculator. Trusted by 50+ businesses in US, UK, Canada, Australia.",
+  description: "Tired of unreliable freelancers and overpriced agencies? KraftAI builds custom websites ($499), web apps ($4,999), mobile apps ($3,999), AI agents & chatbots ($1,999) with fixed pricing — no hourly billing, no surprises. 7-day express delivery. 100% source code ownership. Talk directly to the senior engineer writing your code. Free instant quote calculator. Serving businesses in the US, UK, Canada & Australia.",
   keywords: [
     // Underserved intent queries - people searching but not finding solutions
     "someone to build my website idea",
@@ -85,7 +85,7 @@ const faqData = [
   },
   {
     question: "I have an app idea but no technical background. Can you help?",
-    answer: "Absolutely. Most of our clients are non-technical founders and business owners. We handle everything from requirements gathering to architecture, design, development, testing, and deployment. We start with a free 30-minute discovery call to understand your vision.",
+    answer: "Absolutely. Many founders we work with are non-technical. We handle everything from requirements gathering to architecture, design, development, testing, and deployment. We start with a free 30-minute discovery call to understand your vision.",
   },
   {
     question: "Can you replace my WordPress or Wix site with a custom one?",
@@ -117,7 +117,7 @@ const faqData = [
   },
   {
     question: "Do you work with clients outside India?",
-    answer: "Yes, most of our clients are from the US, UK, Canada, and Australia. We work in your timezone, communicate in English, and accept payments via wire transfer, PayPal, Stripe, and crypto. All prices are in USD.",
+    answer: "Yes, we serve clients in the US, UK, Canada, and Australia. We work in your timezone, communicate in English, and accept payments via wire transfer, PayPal, Stripe, and crypto. All prices are in USD.",
   },
   {
     question: "What's the difference between KraftAI and a freelancer on Upwork?",
@@ -156,12 +156,6 @@ export default function Home() {
             priceRange: "$499 - $25,000+",
             currenciesAccepted: "USD",
             paymentAccepted: "Wire Transfer, PayPal, Stripe, Crypto",
-            aggregateRating: {
-              "@type": "AggregateRating",
-              ratingValue: "4.9",
-              reviewCount: "47",
-              bestRating: "5",
-            },
           }),
         }}
       />

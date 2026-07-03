@@ -13,7 +13,6 @@ import {
   TrendingUp,
   Users,
   Zap,
-  Star,
   Phone,
   Mail,
 } from 'lucide-react';
@@ -22,9 +21,11 @@ import LeadForm from '@/components/kraftai/LeadForm';
 import GuaranteeSection from '@/components/kraftai/GuaranteeSection';
 import IndustryProblemsTicker from '@/components/kraftai/IndustryProblemsTicker';
 import AnimatedCounter from '@/components/kraftai/AnimatedCounter';
-import SocialProofToast from '@/components/kraftai/SocialProofToast';
+import ScrollReveal from '@/components/kraftai/ScrollReveal';
+import GEOContentSection from '@/components/kraftai/GEOContentSection';
 import { getNicheBySlug } from '@/lib/kraftai-niches';
 import { serviceSchema, faqPageSchema, breadcrumbSchema } from '@/lib/kraftai-schemas';
+import { getProblemsByNiche } from '@/lib/kraftai-seo-problems';
 
 const niche = getNicheBySlug('insurance')!;
 const BASE_URL = 'https://insurance.kraftai.in';
@@ -36,13 +37,6 @@ const TICKER_ITEMS = [
   { stat: '47%', text: 'of homeowners saw rate hikes in 2024; 43% say they won\'t renew' },
   { stat: '8.5%', text: 'homeowner premium increase in 2025 — making retention harder than ever' },
   { stat: '#1 pain', text: '"My experienced people are exhausted explaining premium increases all day"' },
-];
-
-const TOAST_MESSAGES = [
-  { city: 'Miami, FL', action: 'just requested a free automation audit', timeAgo: '3 minutes ago' },
-  { city: 'Chicago, IL', action: 'booked their onboarding call', timeAgo: '11 minutes ago' },
-  { city: 'Denver, CO', action: 'just requested a free automation audit', timeAgo: '19 minutes ago' },
-  { city: 'Austin, TX', action: 'signed up for AI quoting', timeAgo: '27 minutes ago' },
 ];
 
 export function generateMetadata(): Metadata {
@@ -108,11 +102,11 @@ export default function InsurancePage() {
           <div className="mt-12 flex flex-wrap items-center justify-center gap-8 text-slate-400 text-sm">
             <div className="flex items-center gap-2">
               <Shield className="h-4 w-4 text-emerald-400" aria-hidden="true" />
-              <span>SOC 2 Compliant</span>
+              <span>60-Day Money-Back Guarantee</span>
             </div>
             <div className="flex items-center gap-2">
               <Users className="h-4 w-4 text-indigo-400" aria-hidden="true" />
-              <span>Trusted by 200+ Insurance Agents</span>
+              <span>Founding-Client Pricing Available</span>
             </div>
             <div className="flex items-center gap-2">
               <Clock className="h-4 w-4 text-amber-400" aria-hidden="true" />
@@ -132,6 +126,7 @@ export default function InsurancePage() {
               </div>
             ))}
           </div>
+          <p className="mt-3 text-center text-xs text-slate-500">Figures are industry benchmarks from published studies — the upside fast, automated follow-up typically unlocks. Not claims about our client base.</p>
         </div>
       </section>
 
@@ -197,38 +192,37 @@ export default function InsurancePage() {
         </div>
       </section>
 
-      {/* ========================= SOCIAL PROOF — TESTIMONIALS ========================= */}
-      <section className="bg-slate-950 py-20 sm:py-24 border-t border-slate-800/50" aria-labelledby="testimonials-heading">
+      {/* ========================= WHY US — THE HONEST PITCH ========================= */}
+      <section className="bg-slate-950 py-20 sm:py-24 border-t border-slate-800/50" aria-labelledby="why-us-heading">
         <div className="mx-auto max-w-6xl px-6">
           <div className="text-center mb-14">
-            <p className="text-amber-400 font-semibold text-sm uppercase tracking-wider mb-3">Real Results</p>
-            <h2 id="testimonials-heading" className="text-3xl font-bold text-white sm:text-4xl">
-              Agents Who Made the Switch
+            <p className="text-amber-400 font-semibold text-sm uppercase tracking-wider mb-3">The Honest Pitch</p>
+            <h2 id="why-us-heading" className="text-3xl font-bold text-white sm:text-4xl">
+              No Fake Logos. No Inflated Numbers.
             </h2>
+            <p className="mt-4 text-slate-400 max-w-2xl mx-auto">
+              We are a small engineering studio onboarding our first cohort of independent agencies — so instead of renting credibility, here is exactly what you get.
+            </p>
           </div>
           <div className="grid gap-8 sm:grid-cols-3">
-            {niche.testimonials.map((t) => (
-              <blockquote key={t.name}
-                className="rounded-2xl border border-slate-800 bg-slate-900 p-6 sm:p-8 flex flex-col">
-                <div className="flex gap-0.5 mb-4" aria-label={`${t.rating} out of 5 stars`}>
-                  {Array.from({ length: t.rating }).map((_, i) => (
-                    <Star key={i} className="h-4 w-4 text-amber-400 fill-amber-400" aria-hidden="true" />
-                  ))}
-                </div>
-                <p className="text-slate-300 text-sm leading-relaxed flex-1">
-                  &ldquo;{t.quote}&rdquo;
-                </p>
-                <footer className="mt-5 flex items-center gap-3">
-                  <div className="h-10 w-10 rounded-full bg-indigo-500/15 flex items-center justify-center text-sm font-bold text-indigo-400">
-                    {t.name.charAt(0)}
-                  </div>
-                  <div>
-                    <p className="text-white font-medium text-sm">{t.name}</p>
-                    <p className="text-slate-500 text-xs">{t.role}, {t.company}</p>
-                  </div>
-                </footer>
-              </blockquote>
-            ))}
+            <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 sm:p-8">
+              <h3 className="text-white font-semibold">You talk to the engineer</h3>
+              <p className="mt-3 text-slate-300 text-sm leading-relaxed">
+                No account managers or relay chains. The person who scopes your automation is the same senior engineer who builds it, deploys it, and answers your messages.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 sm:p-8">
+              <h3 className="text-white font-semibold">Founding-client pricing</h3>
+              <p className="mt-3 text-slate-300 text-sm leading-relaxed">
+                Early independent agencies get reduced rates and priority support in exchange for honest feedback — and, if you are happy, a case study we can publish with real numbers.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 sm:p-8">
+              <h3 className="text-white font-semibold">Guaranteed or refunded</h3>
+              <p className="mt-3 text-slate-300 text-sm leading-relaxed">
+                If the automations do not deliver measurable results within 60 days, you get a full refund and keep everything we built. The risk is ours, not yours.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -320,6 +314,66 @@ export default function InsurancePage() {
         </div>
       </section>
 
+      {/* ========================= GEO CONTENT — AI SEARCH OPTIMIZATION ========================= */}
+      <GEOContentSection
+        heading="What Insurance Agents Ask About AI Automation"
+        subheading="Direct answers to the questions independent agents search for — backed by 2026 agency data."
+        questions={[
+          {
+            question: 'How can independent insurance agents speed up the quoting process?',
+            answer: '40% of insurance prospects abandon the process if they don\'t receive a proposal within 15 minutes. Yet the average independent agent spends 20-30 minutes per quote logging into multiple carrier portals and re-entering data. AI-powered quoting automation captures intake data once through a smart form, submits to all appointed carriers simultaneously, and delivers a branded comparative proposal in under 90 seconds. Agencies using automated quoting close 26% more policies per producer per month and achieve quote-to-bind ratios of 48-57% compared to 35-42% for manual agencies.',
+            stat: { value: '26% more policies closed per producer with automated quoting', source: 'US Tech Automations — Insurance Quoting Case Study 2026' },
+          },
+          {
+            question: 'Why do insurance agencies lose clients when premiums rise?',
+            answer: '82% of policyholders say they\'d drop their broker after a bad experience, and rising premiums are the #1 driver of shopping behavior. The difference between agencies with 80% retention and 90%+ retention is proactive communication. AI-powered retention automates the entire renewal lifecycle: 90-day early review triggers, automatic re-marketing to competitive carriers when rates spike, and personalized outreach explaining changes before the client hears from a competitor. Agencies with 90%+ retention rates grow 3x faster than those at 80%.',
+            stat: { value: '82% would drop their broker after one bad experience', source: 'Renaissance Insurance — Agent Challenges 2026' },
+          },
+          {
+            question: 'How do top insurance agencies automate lead follow-up?',
+            answer: 'The biggest revenue leak in most agencies is the 24-72 hours between quote delivery and follow-up. Producers forget, CSRs are busy, and prospects go cold. AI follow-up monitors every open quote and triggers smart sequences: when a prospect opens their quote email, AI sends a text within 5 minutes. If no response, it escalates through a 4-hour, 24-hour, and 72-hour sequence across text, email, and phone. Prospects not ready today enter a renewal-date-based nurture — AI re-engages 45 days before their current policy expires.',
+            stat: { value: '$180K+ in annual premium recovered from better follow-up', source: 'US Tech Automations — Agency Automation Guide' },
+          },
+        ]}
+      />
+
+      {/* ========================= PROBLEMS WE SOLVE ========================= */}
+      <ScrollReveal>
+        <section className="bg-slate-950 py-20 sm:py-24 border-t border-slate-800/50" aria-labelledby="problems-heading">
+          <div className="mx-auto max-w-6xl px-6">
+            <h2 id="problems-heading" className="text-3xl font-bold text-white text-center sm:text-4xl">
+              Common Insurance Agency Problems We Solve
+            </h2>
+            <p className="mt-4 text-center text-slate-400 max-w-2xl mx-auto">
+              Real problems from real agents — researched from industry surveys and agency forums. Each one mapped to a KraftAI solution.
+            </p>
+            <div className="mt-12 grid gap-4 sm:grid-cols-2">
+              {getProblemsByNiche('insurance').map((problem) => (
+                <Link
+                  key={problem.slug}
+                  href={`/problems/${problem.slug}`}
+                  className="group rounded-xl border border-slate-700/50 bg-slate-800/30 p-5 transition-all hover:border-indigo-500/40 hover:bg-slate-800/50"
+                >
+                  <h3 className="font-semibold text-white mb-2 group-hover:text-indigo-400 transition-colors leading-snug text-sm">
+                    {problem.question}
+                  </h3>
+                  <div className="flex items-center gap-2 mt-3">
+                    <Zap className="h-3.5 w-3.5 text-emerald-400" />
+                    <span className="text-xs font-semibold text-emerald-400">{problem.roiStat.value}</span>
+                    <span className="text-xs text-slate-500">{problem.roiStat.label.slice(0, 35)}...</span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+            <div className="mt-8 text-center">
+              <Link href="/problems" className="inline-flex items-center gap-2 text-indigo-400 hover:text-indigo-300 font-medium transition-colors">
+                View all problems we solve <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+          </div>
+        </section>
+      </ScrollReveal>
+
       {/* ========================= BLOG PREVIEW ========================= */}
       <section className="bg-slate-950 py-20 sm:py-24 border-t border-slate-800/50" aria-labelledby="blog-preview-heading">
         <div className="mx-auto max-w-6xl px-6">
@@ -396,7 +450,6 @@ export default function InsurancePage() {
       </section>
 
       {/* Social proof toasts */}
-      <SocialProofToast messages={TOAST_MESSAGES} />
 
       {/* JSON-LD */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema(niche)) }} />

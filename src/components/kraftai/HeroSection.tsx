@@ -8,10 +8,10 @@ interface HeroSectionProps {
 }
 
 const trustBadges = [
-  { icon: Award, label: 'Trusted by 500+ US businesses', stat: '500+' },
-  { icon: Shield, label: 'SOC 2 Compliant', stat: 'SOC 2' },
-  { icon: Clock, label: '24/7 AI-Powered Support', stat: '24/7' },
-  { icon: CheckCircle2, label: '14-Day Free Trial', stat: 'Free Trial' },
+  { icon: Award, label: 'Built by Senior Engineers', stat: 'Senior' },
+  { icon: Shield, label: '60-Day Money-Back Guarantee', stat: '60-Day' },
+  { icon: Clock, label: '24/7 AI-Powered Automations', stat: '24/7' },
+  { icon: CheckCircle2, label: 'Live in 2 Weeks', stat: '2 Weeks' },
 ];
 
 export default function HeroSection({

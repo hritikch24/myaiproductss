@@ -34,16 +34,16 @@ export default function UrgencyBanner() {
           <div className="flex items-center gap-3 flex-1 justify-center">
             <span className="flex items-center gap-2 bg-white/15 rounded-full px-3 py-1 backdrop-blur-sm">
               <Zap className="h-4 w-4 text-amber-300 fill-amber-300" aria-hidden="true" />
-              <span className="text-xs font-bold text-amber-200 uppercase tracking-wider">Limited</span>
+              <span className="text-xs font-bold text-amber-200 uppercase tracking-wider">Free</span>
             </span>
             <p className="text-sm sm:text-base font-semibold text-white">
-              Only <span className="text-amber-300 font-extrabold">3 onboarding slots</span> left this month
+              Get a <span className="text-amber-300 font-extrabold">free automation audit</span> — see exactly where your leads leak
             </p>
             <a
               href="#lead-form"
               className="hidden sm:inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-1.5 text-xs font-bold text-indigo-700 hover:bg-indigo-50 transition-colors shadow-sm"
             >
-              Claim Yours
+              Book Mine
               <span aria-hidden="true">→</span>
             </a>
           </div>

@@ -12,7 +12,6 @@ import {
   Clock,
   TrendingUp,
   Zap,
-  Star,
   Phone,
   Mail,
   Briefcase,
@@ -22,9 +21,11 @@ import LeadForm from '@/components/kraftai/LeadForm';
 import GuaranteeSection from '@/components/kraftai/GuaranteeSection';
 import IndustryProblemsTicker from '@/components/kraftai/IndustryProblemsTicker';
 import AnimatedCounter from '@/components/kraftai/AnimatedCounter';
-import SocialProofToast from '@/components/kraftai/SocialProofToast';
+import ScrollReveal from '@/components/kraftai/ScrollReveal';
+import GEOContentSection from '@/components/kraftai/GEOContentSection';
 import { getNicheBySlug } from '@/lib/kraftai-niches';
 import { serviceSchema, faqPageSchema, breadcrumbSchema } from '@/lib/kraftai-schemas';
+import { getProblemsByNiche } from '@/lib/kraftai-seo-problems';
 
 const niche = getNicheBySlug('staffing')!;
 const BASE_URL = 'https://staffing.kraftai.in';
@@ -36,13 +37,6 @@ const TICKER_ITEMS = [
   { stat: '40%', text: 'more open roles per recruiter than 3 years ago' },
   { stat: '50%', text: 'of recruiter time spent on tasks that don\'t need human judgment' },
   { stat: '5–7', text: 'emails average just to schedule one single interview' },
-];
-
-const TOAST_MESSAGES = [
-  { city: 'Chicago, IL', action: 'just requested a free automation audit', timeAgo: '4 minutes ago' },
-  { city: 'Austin, TX', action: 'booked their onboarding call', timeAgo: '12 minutes ago' },
-  { city: 'New York, NY', action: 'just requested a free automation audit', timeAgo: '18 minutes ago' },
-  { city: 'Denver, CO', action: 'signed up for AI scheduling', timeAgo: '25 minutes ago' },
 ];
 
 export function generateMetadata(): Metadata {
@@ -107,7 +101,7 @@ export default function StaffingPage() {
             </div>
             <div className="flex items-center gap-2">
               <Users className="h-4 w-4 text-indigo-400" aria-hidden="true" />
-              <span>Trusted by 100+ Agencies</span>
+              <span>Founding-Client Pricing Available</span>
             </div>
             <div className="flex items-center gap-2">
               <Clock className="h-4 w-4 text-amber-400" aria-hidden="true" />
@@ -126,6 +120,7 @@ export default function StaffingPage() {
               </div>
             ))}
           </div>
+          <p className="mt-3 text-center text-xs text-slate-500">Figures are industry benchmarks from published studies — the upside fast, automated follow-up typically unlocks. Not claims about our client base.</p>
         </div>
       </section>
 
@@ -191,38 +186,37 @@ export default function StaffingPage() {
         </div>
       </section>
 
-      {/* ========================= TESTIMONIALS ========================= */}
-      <section className="bg-slate-950 py-20 sm:py-24 border-t border-slate-800/50" aria-labelledby="testimonials-heading">
+      {/* ========================= WHY US — THE HONEST PITCH ========================= */}
+      <section className="bg-slate-950 py-20 sm:py-24 border-t border-slate-800/50" aria-labelledby="why-us-heading">
         <div className="mx-auto max-w-6xl px-6">
           <div className="text-center mb-14">
-            <p className="text-amber-400 font-semibold text-sm uppercase tracking-wider mb-3">Real Results</p>
-            <h2 id="testimonials-heading" className="text-3xl font-bold text-white sm:text-4xl">
-              Agencies That Made the Switch
+            <p className="text-amber-400 font-semibold text-sm uppercase tracking-wider mb-3">The Honest Pitch</p>
+            <h2 id="why-us-heading" className="text-3xl font-bold text-white sm:text-4xl">
+              No Fake Logos. No Inflated Numbers.
             </h2>
+            <p className="mt-4 text-slate-400 max-w-2xl mx-auto">
+              We are a small engineering studio onboarding our first cohort of staffing agencies — so instead of renting credibility, here is exactly what you get.
+            </p>
           </div>
           <div className="grid gap-8 sm:grid-cols-3">
-            {niche.testimonials.map((t) => (
-              <blockquote key={t.name}
-                className="rounded-2xl border border-slate-800 bg-slate-900 p-6 sm:p-8 flex flex-col">
-                <div className="flex gap-0.5 mb-4" aria-label={`${t.rating} out of 5 stars`}>
-                  {Array.from({ length: t.rating }).map((_, i) => (
-                    <Star key={i} className="h-4 w-4 text-amber-400 fill-amber-400" aria-hidden="true" />
-                  ))}
-                </div>
-                <p className="text-slate-300 text-sm leading-relaxed flex-1">
-                  &ldquo;{t.quote}&rdquo;
-                </p>
-                <footer className="mt-5 flex items-center gap-3">
-                  <div className="h-10 w-10 rounded-full bg-indigo-500/15 flex items-center justify-center text-sm font-bold text-indigo-400">
-                    {t.name.charAt(0)}
-                  </div>
-                  <div>
-                    <p className="text-white font-medium text-sm">{t.name}</p>
-                    <p className="text-slate-500 text-xs">{t.role}, {t.company}</p>
-                  </div>
-                </footer>
-              </blockquote>
-            ))}
+            <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 sm:p-8">
+              <h3 className="text-white font-semibold">You talk to the engineer</h3>
+              <p className="mt-3 text-slate-300 text-sm leading-relaxed">
+                No account managers or relay chains. The person who scopes your automation is the same senior engineer who builds it, deploys it, and answers your messages.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 sm:p-8">
+              <h3 className="text-white font-semibold">Founding-client pricing</h3>
+              <p className="mt-3 text-slate-300 text-sm leading-relaxed">
+                Early staffing agencies get reduced rates and priority support in exchange for honest feedback — and, if you are happy, a case study we can publish with real numbers.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 sm:p-8">
+              <h3 className="text-white font-semibold">Guaranteed or refunded</h3>
+              <p className="mt-3 text-slate-300 text-sm leading-relaxed">
+                If the automations do not deliver measurable results within 60 days, you get a full refund and keep everything we built. The risk is ours, not yours.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -314,6 +308,66 @@ export default function StaffingPage() {
         </div>
       </section>
 
+      {/* ========================= GEO CONTENT — AI SEARCH OPTIMIZATION ========================= */}
+      <GEOContentSection
+        heading="What Staffing Agencies Ask About AI Automation"
+        subheading="Direct answers to the recruiting questions staffing professionals search for — backed by 2026 industry data."
+        questions={[
+          {
+            question: 'Why do 65% of candidates ghost recruiters and how can staffing agencies prevent it?',
+            answer: 'Candidate ghosting hit a record 65% in 2026, primarily driven by slow hiring processes. 60% of job seekers refuse to even submit resumes because they expect the process to drag on. The solution is AI-powered engagement that maintains constant, personalized contact: instant post-apply acknowledgment within 60 seconds, automated interview prep 24 hours before meetings, real-time status updates at every stage, and 3-touch re-engagement sequences when candidates go quiet. Staffing agencies using AI engagement report a 40% reduction in ghosting rates.',
+            stat: { value: '65% of candidates ghost mid-process', source: 'HiredAI — 2026 Candidate Ghosting Analysis' },
+          },
+          {
+            question: 'How can staffing agencies reduce time-to-fill when recruiters handle 93% more applications?',
+            answer: 'Hiring teams are 14% smaller while managing 40% more open roles than 2021, and hires per recruiter dropped 43%. The math only works with automation. AI takes over the transactional 80%: resume screening (seconds vs hours), candidate outreach (personalized messages at scale), interview scheduling (zero back-and-forth), and status updates. Recruiters then focus exclusively on relationship-building and closing — the 20% that drives revenue. Agencies using AI-powered screening and scheduling report 50% faster time-to-fill.',
+            stat: { value: '93% more applications per recruiter since 2021', source: 'Ongig — Hiring Trends 2026' },
+          },
+          {
+            question: 'What is the biggest bottleneck in the staffing agency recruiting process?',
+            answer: 'Interview scheduling is consistently cited as the #1 operational bottleneck. Recruiters spend an average of 30 minutes per interview on logistics alone. Back-and-forth scheduling emails add 3.5 days to the hiring process. With AI calendar automation, candidates self-schedule from real-time availability, rescheduling happens automatically, and both parties receive prep materials. This eliminates the bottleneck entirely — interviews get booked in under 2 minutes instead of days.',
+            stat: { value: '3.5 days added to each hire from scheduling alone', source: 'Metaview — Recruiting Automation 2026' },
+          },
+        ]}
+      />
+
+      {/* ========================= PROBLEMS WE SOLVE ========================= */}
+      <ScrollReveal>
+        <section className="bg-slate-950 py-20 sm:py-24 border-t border-slate-800/50" aria-labelledby="problems-heading">
+          <div className="mx-auto max-w-6xl px-6">
+            <h2 id="problems-heading" className="text-3xl font-bold text-white text-center sm:text-4xl">
+              Common Staffing Problems We Solve
+            </h2>
+            <p className="mt-4 text-center text-slate-400 max-w-2xl mx-auto">
+              Real problems from real recruiters — researched from industry data and staffing forums. Each one mapped to a KraftAI solution.
+            </p>
+            <div className="mt-12 grid gap-4 sm:grid-cols-2">
+              {getProblemsByNiche('staffing').map((problem) => (
+                <Link
+                  key={problem.slug}
+                  href={`/problems/${problem.slug}`}
+                  className="group rounded-xl border border-slate-700/50 bg-slate-800/30 p-5 transition-all hover:border-indigo-500/40 hover:bg-slate-800/50"
+                >
+                  <h3 className="font-semibold text-white mb-2 group-hover:text-indigo-400 transition-colors leading-snug text-sm">
+                    {problem.question}
+                  </h3>
+                  <div className="flex items-center gap-2 mt-3">
+                    <Zap className="h-3.5 w-3.5 text-emerald-400" />
+                    <span className="text-xs font-semibold text-emerald-400">{problem.roiStat.value}</span>
+                    <span className="text-xs text-slate-500">{problem.roiStat.label.slice(0, 35)}...</span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+            <div className="mt-8 text-center">
+              <Link href="/problems" className="inline-flex items-center gap-2 text-indigo-400 hover:text-indigo-300 font-medium transition-colors">
+                View all problems we solve <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+          </div>
+        </section>
+      </ScrollReveal>
+
       {/* ========================= BLOG PREVIEW ========================= */}
       <section className="bg-slate-950 py-20 sm:py-24 border-t border-slate-800/50" aria-labelledby="blog-preview-heading">
         <div className="mx-auto max-w-6xl px-6">
@@ -387,7 +441,6 @@ export default function StaffingPage() {
         </div>
       </section>
 
-      <SocialProofToast messages={TOAST_MESSAGES} />
 
       {/* JSON-LD */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema(niche)) }} />

@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     template: "%s | KraftAI",
   },
   description:
-    "Premium web development agency. Custom websites from $499, web apps, mobile apps, AI agents, chatbots & SaaS platforms built by senior engineers. 7-day express delivery. 100% code ownership. Fixed pricing — no hourly billing. Free instant quote calculator. Trusted by 50+ businesses in US, UK, Canada & Australia.",
+    "Premium web development agency. Custom websites from $499, web apps, mobile apps, AI agents, chatbots & SaaS platforms built by senior engineers. 7-day express delivery. 100% code ownership. Fixed pricing — no hourly billing. Free instant quote calculator. Serving businesses in the US, UK, Canada & Australia.",
   keywords: [
     "web development agency",
     "custom website development",
@@ -208,12 +208,6 @@ export default function RootLayout({
               openingHours: "Mo,Tu,We,Th,Fr,Sa,Su 00:00-23:59",
               paymentAccepted: "Wire Transfer, PayPal, Stripe, Cryptocurrency",
               currenciesAccepted: "USD, GBP, EUR, INR",
-              aggregateRating: {
-                "@type": "AggregateRating",
-                ratingValue: "4.9",
-                reviewCount: "47",
-                bestRating: "5",
-              },
             }),
           }}
         />

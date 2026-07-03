@@ -11,7 +11,6 @@ import {
   Shield,
   Users,
   Zap,
-  Star,
   Phone,
   Mail,
   Calculator,
@@ -21,9 +20,11 @@ import LeadForm from '@/components/kraftai/LeadForm';
 import GuaranteeSection from '@/components/kraftai/GuaranteeSection';
 import IndustryProblemsTicker from '@/components/kraftai/IndustryProblemsTicker';
 import AnimatedCounter from '@/components/kraftai/AnimatedCounter';
-import SocialProofToast from '@/components/kraftai/SocialProofToast';
+import ScrollReveal from '@/components/kraftai/ScrollReveal';
+import GEOContentSection from '@/components/kraftai/GEOContentSection';
 import { getNicheBySlug } from '@/lib/kraftai-niches';
 import { serviceSchema, faqPageSchema, breadcrumbSchema } from '@/lib/kraftai-schemas';
+import { getProblemsByNiche } from '@/lib/kraftai-seo-problems';
 
 const niche = getNicheBySlug('accounting')!;
 const BASE_URL = 'https://accounting.kraftai.in';
@@ -35,13 +36,6 @@ const TICKER_ITEMS = [
   { stat: '50–80 hrs', text: 'per week average for CPAs during tax season — partners often exceed 100' },
   { stat: '9.3 hrs', text: 'per week on client communication alone — most of it repetitive follow-ups' },
   { stat: '#1 pain', text: '"Late and unprepared clients" — top challenge in Wolters Kluwer survey of 2,000 firms' },
-];
-
-const TOAST_MESSAGES = [
-  { city: 'Orlando, FL', action: 'just requested a free automation audit', timeAgo: '5 minutes ago' },
-  { city: 'Portland, OR', action: 'booked their onboarding call', timeAgo: '13 minutes ago' },
-  { city: 'Raleigh, NC', action: 'just requested a free automation audit', timeAgo: '20 minutes ago' },
-  { city: 'San Diego, CA', action: 'signed up for document automation', timeAgo: '28 minutes ago' },
 ];
 
 export function generateMetadata(): Metadata {
@@ -106,7 +100,7 @@ export default function AccountingPage() {
             </div>
             <div className="flex items-center gap-2">
               <Users className="h-4 w-4 text-indigo-400" aria-hidden="true" />
-              <span>Trusted by 120+ Firms</span>
+              <span>Founding-Client Pricing Available</span>
             </div>
             <div className="flex items-center gap-2">
               <Clock className="h-4 w-4 text-amber-400" aria-hidden="true" />
@@ -125,6 +119,7 @@ export default function AccountingPage() {
               </div>
             ))}
           </div>
+          <p className="mt-3 text-center text-xs text-slate-500">Figures are industry benchmarks from published studies — the upside fast, automated follow-up typically unlocks. Not claims about our client base.</p>
         </div>
       </section>
 
@@ -190,38 +185,37 @@ export default function AccountingPage() {
         </div>
       </section>
 
-      {/* ========================= TESTIMONIALS ========================= */}
-      <section className="bg-slate-950 py-20 sm:py-24 border-t border-slate-800/50" aria-labelledby="testimonials-heading">
+      {/* ========================= WHY US — THE HONEST PITCH ========================= */}
+      <section className="bg-slate-950 py-20 sm:py-24 border-t border-slate-800/50" aria-labelledby="why-us-heading">
         <div className="mx-auto max-w-6xl px-6">
           <div className="text-center mb-14">
-            <p className="text-amber-400 font-semibold text-sm uppercase tracking-wider mb-3">Real Results</p>
-            <h2 id="testimonials-heading" className="text-3xl font-bold text-white sm:text-4xl">
-              Firms That Made the Switch
+            <p className="text-amber-400 font-semibold text-sm uppercase tracking-wider mb-3">The Honest Pitch</p>
+            <h2 id="why-us-heading" className="text-3xl font-bold text-white sm:text-4xl">
+              No Fake Logos. No Inflated Numbers.
             </h2>
+            <p className="mt-4 text-slate-400 max-w-2xl mx-auto">
+              We are a small engineering studio onboarding our first cohort of accounting firms — so instead of renting credibility, here is exactly what you get.
+            </p>
           </div>
           <div className="grid gap-8 sm:grid-cols-3">
-            {niche.testimonials.map((t) => (
-              <blockquote key={t.name}
-                className="rounded-2xl border border-slate-800 bg-slate-900 p-6 sm:p-8 flex flex-col">
-                <div className="flex gap-0.5 mb-4" aria-label={`${t.rating} out of 5 stars`}>
-                  {Array.from({ length: t.rating }).map((_, i) => (
-                    <Star key={i} className="h-4 w-4 text-amber-400 fill-amber-400" aria-hidden="true" />
-                  ))}
-                </div>
-                <p className="text-slate-300 text-sm leading-relaxed flex-1">
-                  &ldquo;{t.quote}&rdquo;
-                </p>
-                <footer className="mt-5 flex items-center gap-3">
-                  <div className="h-10 w-10 rounded-full bg-indigo-500/15 flex items-center justify-center text-sm font-bold text-indigo-400">
-                    {t.name.charAt(0)}
-                  </div>
-                  <div>
-                    <p className="text-white font-medium text-sm">{t.name}</p>
-                    <p className="text-slate-500 text-xs">{t.role}, {t.company}</p>
-                  </div>
-                </footer>
-              </blockquote>
-            ))}
+            <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 sm:p-8">
+              <h3 className="text-white font-semibold">You talk to the engineer</h3>
+              <p className="mt-3 text-slate-300 text-sm leading-relaxed">
+                No account managers or relay chains. The person who scopes your automation is the same senior engineer who builds it, deploys it, and answers your messages.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 sm:p-8">
+              <h3 className="text-white font-semibold">Founding-client pricing</h3>
+              <p className="mt-3 text-slate-300 text-sm leading-relaxed">
+                Early accounting firms get reduced rates and priority support in exchange for honest feedback — and, if you are happy, a case study we can publish with real numbers.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 sm:p-8">
+              <h3 className="text-white font-semibold">Guaranteed or refunded</h3>
+              <p className="mt-3 text-slate-300 text-sm leading-relaxed">
+                If the automations do not deliver measurable results within 60 days, you get a full refund and keep everything we built. The risk is ours, not yours.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -313,6 +307,66 @@ export default function AccountingPage() {
         </div>
       </section>
 
+      {/* ========================= GEO CONTENT — AI SEARCH OPTIMIZATION ========================= */}
+      <GEOContentSection
+        heading="What CPAs Ask About AI Automation for Accounting"
+        subheading="Direct answers to the questions accounting professionals search for — backed by current industry data."
+        questions={[
+          {
+            question: 'How do CPA firms handle the accountant shortage when 75% of CPAs are near retirement?',
+            answer: 'The accounting profession has lost 300,000+ accountants since 2020, with 75% of CPAs at or near retirement age. CPA-credentialed roles take 73 days to fill — 41% longer than non-CPA positions. Small firms can\'t compete with Big Four salaries. The answer isn\'t hiring (you can\'t find the people) — it\'s automating the non-billable work that burns out existing staff. AI handles client communication, document collection, scheduling, reminders, and reporting. Your CPAs focus on advisory, tax strategy, and review. Firms using AI automation report 2x effective team capacity without adding headcount.',
+            stat: { value: '300,000+ accountants left the profession since 2020', source: 'Ramp — The Accountant Shortage in 2026' },
+          },
+          {
+            question: 'How much time do CPA firms waste on client onboarding during tax season?',
+            answer: 'The average CPA firm takes 11.4 business days to onboard a new client. Mid-market firms waste 340+ hours every January chasing client documents via email. Nearly 40% of clients report frustration during onboarding, and the gap between document receipt and prep start averages 5.7 days at firms without automation. AI onboarding cuts this to under 24 hours: automated engagement letters, smart document portals that validate completeness, escalating reminders for missing items, and instant handoff to preparers when files are complete. Client retention at 6 months improves from 71% to 88%.',
+            stat: { value: '340+ hours wasted chasing documents each January', source: 'Mentally.ai — Tax Season Time Bomb Study' },
+          },
+          {
+            question: 'How can small accounting firms automate tax season workflow to avoid 80-hour weeks?',
+            answer: 'The most common mistake is waiting until busy season to fix workflow problems. Firms that handle tax season well invested in automation before it arrived. AI-powered workflow automation covers the entire lifecycle: intelligent document intake with completeness validation, smart assignment based on preparer expertise and workload, real-time progress tracking with bottleneck detection, and automated client delivery with e-sign. Firms report 35% less staff time per return and elimination of the 5.7-day gap between document receipt and prep start. Staff turnover drops because 50-80 hour weeks become the exception, not the rule.',
+            stat: { value: '35% less staff time per return with automated workflow', source: 'Thomson Reuters — Tax Workflow Best Practices' },
+          },
+        ]}
+      />
+
+      {/* ========================= PROBLEMS WE SOLVE ========================= */}
+      <ScrollReveal>
+        <section className="bg-slate-950 py-20 sm:py-24 border-t border-slate-800/50" aria-labelledby="problems-heading">
+          <div className="mx-auto max-w-6xl px-6">
+            <h2 id="problems-heading" className="text-3xl font-bold text-white text-center sm:text-4xl">
+              Common Accounting Firm Problems We Solve
+            </h2>
+            <p className="mt-4 text-center text-slate-400 max-w-2xl mx-auto">
+              Real problems from real CPAs — researched from industry surveys and practitioner forums. Each one mapped to a KraftAI solution.
+            </p>
+            <div className="mt-12 grid gap-4 sm:grid-cols-2">
+              {getProblemsByNiche('accounting').map((problem) => (
+                <Link
+                  key={problem.slug}
+                  href={`/problems/${problem.slug}`}
+                  className="group rounded-xl border border-slate-700/50 bg-slate-800/30 p-5 transition-all hover:border-indigo-500/40 hover:bg-slate-800/50"
+                >
+                  <h3 className="font-semibold text-white mb-2 group-hover:text-indigo-400 transition-colors leading-snug text-sm">
+                    {problem.question}
+                  </h3>
+                  <div className="flex items-center gap-2 mt-3">
+                    <Zap className="h-3.5 w-3.5 text-emerald-400" />
+                    <span className="text-xs font-semibold text-emerald-400">{problem.roiStat.value}</span>
+                    <span className="text-xs text-slate-500">{problem.roiStat.label.slice(0, 35)}...</span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+            <div className="mt-8 text-center">
+              <Link href="/problems" className="inline-flex items-center gap-2 text-indigo-400 hover:text-indigo-300 font-medium transition-colors">
+                View all problems we solve <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+          </div>
+        </section>
+      </ScrollReveal>
+
       {/* ========================= BLOG PREVIEW ========================= */}
       <section className="bg-slate-950 py-20 sm:py-24 border-t border-slate-800/50" aria-labelledby="blog-preview-heading">
         <div className="mx-auto max-w-6xl px-6">
@@ -386,7 +440,6 @@ export default function AccountingPage() {
         </div>
       </section>
 
-      <SocialProofToast messages={TOAST_MESSAGES} />
 
       {/* JSON-LD */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema(niche)) }} />

@@ -23,9 +23,10 @@ import GuaranteeSection from '@/components/kraftai/GuaranteeSection';
 import IndustryProblemsTicker from '@/components/kraftai/IndustryProblemsTicker';
 import AnimatedCounter from '@/components/kraftai/AnimatedCounter';
 import ScrollReveal from '@/components/kraftai/ScrollReveal';
-import SocialProofToast from '@/components/kraftai/SocialProofToast';
+import GEOContentSection from '@/components/kraftai/GEOContentSection';
 import { getNicheBySlug } from '@/lib/kraftai-niches';
 import { serviceSchema, faqPageSchema, breadcrumbSchema } from '@/lib/kraftai-schemas';
+import { getProblemsByNiche } from '@/lib/kraftai-seo-problems';
 
 const niche = getNicheBySlug('homeservices')!;
 const BASE_URL = 'https://homeservices.kraftai.in';
@@ -54,14 +55,6 @@ const TICKER_ITEMS = [
   { stat: '62%', text: 'of plumbing calls come in after-hours, evenings, and weekends' },
   { stat: '35%', text: 'of HVAC calls missed during peak season — when jobs are worth the most' },
   { stat: '5 min', text: 'response window — after that, you\'re 100x less likely to book the job' },
-];
-
-const TOAST_MESSAGES = [
-  { city: 'Phoenix, AZ', action: 'just requested a free automation audit', timeAgo: '2 minutes ago' },
-  { city: 'Dallas, TX', action: 'booked their onboarding call', timeAgo: '8 minutes ago' },
-  { city: 'Atlanta, GA', action: 'just requested a free automation audit', timeAgo: '14 minutes ago' },
-  { city: 'Houston, TX', action: 'signed up for AI answering', timeAgo: '22 minutes ago' },
-  { city: 'Tampa, FL', action: 'just requested a free automation audit', timeAgo: '31 minutes ago' },
 ];
 
 export default function HomeServicesPage() {
@@ -110,7 +103,7 @@ export default function HomeServicesPage() {
             </div>
             <div className="flex items-center gap-2">
               <Users className="h-4 w-4 text-indigo-400" aria-hidden="true" />
-              <span>Trusted by 150+ Contractors</span>
+              <span>Founding-Client Pricing Available</span>
             </div>
             <div className="flex items-center gap-2">
               <Clock className="h-4 w-4 text-amber-400" aria-hidden="true" />
@@ -129,6 +122,7 @@ export default function HomeServicesPage() {
               </div>
             ))}
           </div>
+          <p className="mt-3 text-center text-xs text-slate-500">Figures are industry benchmarks from published studies — the upside fast, automated follow-up typically unlocks. Not claims about our client base.</p>
         </div>
       </section>
 
@@ -194,38 +188,37 @@ export default function HomeServicesPage() {
         </div>
       </section>
 
-      {/* ========================= TESTIMONIALS ========================= */}
-      <section className="bg-slate-950 py-20 sm:py-24 border-t border-slate-800/50" aria-labelledby="testimonials-heading">
+      {/* ========================= WHY US — THE HONEST PITCH ========================= */}
+      <section className="bg-slate-950 py-20 sm:py-24 border-t border-slate-800/50" aria-labelledby="why-us-heading">
         <div className="mx-auto max-w-6xl px-6">
           <div className="text-center mb-14">
-            <p className="text-amber-400 font-semibold text-sm uppercase tracking-wider mb-3">Real Results</p>
-            <h2 id="testimonials-heading" className="text-3xl font-bold text-white sm:text-4xl">
-              Contractors Who Made the Switch
+            <p className="text-amber-400 font-semibold text-sm uppercase tracking-wider mb-3">The Honest Pitch</p>
+            <h2 id="why-us-heading" className="text-3xl font-bold text-white sm:text-4xl">
+              No Fake Logos. No Inflated Numbers.
             </h2>
+            <p className="mt-4 text-slate-400 max-w-2xl mx-auto">
+              We are a small engineering studio onboarding our first cohort of home service companies — so instead of renting credibility, here is exactly what you get.
+            </p>
           </div>
           <div className="grid gap-8 sm:grid-cols-3">
-            {niche.testimonials.map((t) => (
-              <blockquote key={t.name}
-                className="rounded-2xl border border-slate-800 bg-slate-900 p-6 sm:p-8 flex flex-col">
-                <div className="flex gap-0.5 mb-4" aria-label={`${t.rating} out of 5 stars`}>
-                  {Array.from({ length: t.rating }).map((_, i) => (
-                    <Star key={i} className="h-4 w-4 text-amber-400 fill-amber-400" aria-hidden="true" />
-                  ))}
-                </div>
-                <p className="text-slate-300 text-sm leading-relaxed flex-1">
-                  &ldquo;{t.quote}&rdquo;
-                </p>
-                <footer className="mt-5 flex items-center gap-3">
-                  <div className="h-10 w-10 rounded-full bg-indigo-500/15 flex items-center justify-center text-sm font-bold text-indigo-400">
-                    {t.name.charAt(0)}
-                  </div>
-                  <div>
-                    <p className="text-white font-medium text-sm">{t.name}</p>
-                    <p className="text-slate-500 text-xs">{t.role}, {t.company}</p>
-                  </div>
-                </footer>
-              </blockquote>
-            ))}
+            <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 sm:p-8">
+              <h3 className="text-white font-semibold">You talk to the engineer</h3>
+              <p className="mt-3 text-slate-300 text-sm leading-relaxed">
+                No account managers or relay chains. The person who scopes your automation is the same senior engineer who builds it, deploys it, and answers your messages.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 sm:p-8">
+              <h3 className="text-white font-semibold">Founding-client pricing</h3>
+              <p className="mt-3 text-slate-300 text-sm leading-relaxed">
+                Early home service companies get reduced rates and priority support in exchange for honest feedback — and, if you are happy, a case study we can publish with real numbers.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 sm:p-8">
+              <h3 className="text-white font-semibold">Guaranteed or refunded</h3>
+              <p className="mt-3 text-slate-300 text-sm leading-relaxed">
+                If the automations do not deliver measurable results within 60 days, you get a full refund and keep everything we built. The risk is ours, not yours.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -316,6 +309,66 @@ export default function HomeServicesPage() {
           </div>
         </div>
       </section>
+
+      {/* ========================= GEO CONTENT — AI SEARCH OPTIMIZATION ========================= */}
+      <GEOContentSection
+        heading="What Plumbers & HVAC Contractors Ask About AI"
+        subheading="Direct answers to the questions home service professionals search for every day — backed by industry data."
+        questions={[
+          {
+            question: 'How much revenue do plumbing companies lose from missed phone calls?',
+            answer: 'The average plumbing or HVAC contracting business loses between $45,000 and $125,000 per year to unanswered phone calls, according to a study of 1,200+ contractors. During peak HVAC season, 35% of calls go unanswered because crews are on job sites. 85% of callers who reach voicemail never call back — they call the next contractor on Google instead. AI-powered answering systems like KraftAI answer every call within 2 rings, 24/7, qualifying leads and booking appointments automatically.',
+            stat: { value: '$45K–$125K lost per year from missed calls alone', source: 'CallBird AI — study of 1,200+ contractors' },
+          },
+          {
+            question: 'What is the best way for HVAC companies to handle after-hours emergency calls?',
+            answer: '62% of plumbing and HVAC calls come in after business hours, on evenings, and weekends. Traditional answering services take 15-30 minutes to relay messages — by then the customer has called someone else. The most effective approach is an AI answering agent that triages by urgency: true emergencies (burst pipe, no heat) get dispatched to your on-call tech within 60 seconds, while non-urgent calls get booked into the next available slot. The homeowner gets an instant confirmation text either way.',
+            stat: { value: '62% of calls arrive after business hours', source: 'AgentZap — HVAC Phone Statistics 2026' },
+          },
+          {
+            question: 'How can a small plumbing company compete with larger contractors on response time?',
+            answer: 'Research shows that responding to a lead within 5 minutes makes you 100x more likely to book the job compared to waiting 30 minutes. Most contractors take 4+ hours to respond to web form inquiries. With AI automation, even a one-truck plumbing operation can respond to every call, text, and web inquiry in under 30 seconds — matching or beating the response speed of large franchises with dedicated call centers. 78% of customers hire the first contractor who responds, so speed is the great equalizer.',
+            stat: { value: '78% hire the first contractor who responds', source: 'BDR — Home Service Industry Trends 2026' },
+          },
+        ]}
+      />
+
+      {/* ========================= PROBLEMS WE SOLVE ========================= */}
+      <ScrollReveal>
+        <section className="bg-slate-950 py-20 sm:py-24 border-t border-slate-800/50" aria-labelledby="problems-heading">
+          <div className="mx-auto max-w-6xl px-6">
+            <h2 id="problems-heading" className="text-3xl font-bold text-white text-center sm:text-4xl">
+              Common Home Services Problems We Solve
+            </h2>
+            <p className="mt-4 text-center text-slate-400 max-w-2xl mx-auto">
+              Real problems from real contractors — researched from industry forums, surveys, and data. Each one mapped to a KraftAI solution.
+            </p>
+            <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {getProblemsByNiche('homeservices').map((problem) => (
+                <Link
+                  key={problem.slug}
+                  href={`/problems/${problem.slug}`}
+                  className="group rounded-xl border border-slate-700/50 bg-slate-800/30 p-5 transition-all hover:border-indigo-500/40 hover:bg-slate-800/50"
+                >
+                  <h3 className="font-semibold text-white mb-2 group-hover:text-indigo-400 transition-colors leading-snug text-sm">
+                    {problem.question}
+                  </h3>
+                  <div className="flex items-center gap-2 mt-3">
+                    <Zap className="h-3.5 w-3.5 text-emerald-400" />
+                    <span className="text-xs font-semibold text-emerald-400">{problem.roiStat.value}</span>
+                    <span className="text-xs text-slate-500">{problem.roiStat.label.slice(0, 35)}...</span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+            <div className="mt-8 text-center">
+              <Link href="/problems" className="inline-flex items-center gap-2 text-indigo-400 hover:text-indigo-300 font-medium transition-colors">
+                View all problems we solve <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+          </div>
+        </section>
+      </ScrollReveal>
 
       {/* ========================= BLOG PREVIEW ========================= */}
       <section className="bg-slate-950 py-20 sm:py-24 border-t border-slate-800/50" aria-labelledby="blog-preview-heading">
@@ -414,7 +467,6 @@ export default function HomeServicesPage() {
       </section>
 
       {/* Social proof toasts */}
-      <SocialProofToast messages={TOAST_MESSAGES} />
 
       {/* JSON-LD */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema(niche)) }} />

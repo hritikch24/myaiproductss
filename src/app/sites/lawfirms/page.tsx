@@ -13,7 +13,6 @@ import {
   TrendingUp,
   Users,
   Zap,
-  Star,
   Phone,
   Mail,
   Gavel,
@@ -23,9 +22,11 @@ import LeadForm from '@/components/kraftai/LeadForm';
 import GuaranteeSection from '@/components/kraftai/GuaranteeSection';
 import IndustryProblemsTicker from '@/components/kraftai/IndustryProblemsTicker';
 import AnimatedCounter from '@/components/kraftai/AnimatedCounter';
-import SocialProofToast from '@/components/kraftai/SocialProofToast';
+import ScrollReveal from '@/components/kraftai/ScrollReveal';
+import GEOContentSection from '@/components/kraftai/GEOContentSection';
 import { getNicheBySlug } from '@/lib/kraftai-niches';
 import { serviceSchema, faqPageSchema, breadcrumbSchema } from '@/lib/kraftai-schemas';
+import { getProblemsByNiche } from '@/lib/kraftai-seo-problems';
 
 const niche = getNicheBySlug('lawfirms')!;
 const BASE_URL = 'https://lawfirms.kraftai.in';
@@ -37,13 +38,6 @@ const TICKER_ITEMS = [
   { stat: '42%', text: 'of law firm inquiries come after-hours when nobody picks up' },
   { stat: '$61.7B', text: 'PI market with 164K+ competing attorneys — speed wins cases' },
   { stat: '7%', text: 'of PI leads actually book a consultation. The rest call someone faster.' },
-];
-
-const TOAST_MESSAGES = [
-  { city: 'Miami, FL', action: 'just requested a free intake audit', timeAgo: '3 minutes ago' },
-  { city: 'Houston, TX', action: 'booked their onboarding call', timeAgo: '9 minutes ago' },
-  { city: 'Phoenix, AZ', action: 'just requested a free intake audit', timeAgo: '16 minutes ago' },
-  { city: 'Los Angeles, CA', action: 'signed up for AI intake', timeAgo: '24 minutes ago' },
 ];
 
 export function generateMetadata(): Metadata {
@@ -108,7 +102,7 @@ export default function LawfirmsPage() {
             </div>
             <div className="flex items-center gap-2">
               <Users className="h-4 w-4 text-indigo-400" aria-hidden="true" />
-              <span>Trusted by 80+ PI Firms</span>
+              <span>Founding-Client Pricing Available</span>
             </div>
             <div className="flex items-center gap-2">
               <Clock className="h-4 w-4 text-amber-400" aria-hidden="true" />
@@ -127,6 +121,7 @@ export default function LawfirmsPage() {
               </div>
             ))}
           </div>
+          <p className="mt-3 text-center text-xs text-slate-500">Figures are industry benchmarks from published studies — the upside fast, automated follow-up typically unlocks. Not claims about our client base.</p>
         </div>
       </section>
 
@@ -192,38 +187,37 @@ export default function LawfirmsPage() {
         </div>
       </section>
 
-      {/* ========================= TESTIMONIALS ========================= */}
-      <section className="bg-slate-950 py-20 sm:py-24 border-t border-slate-800/50" aria-labelledby="testimonials-heading">
+      {/* ========================= WHY US — THE HONEST PITCH ========================= */}
+      <section className="bg-slate-950 py-20 sm:py-24 border-t border-slate-800/50" aria-labelledby="why-us-heading">
         <div className="mx-auto max-w-6xl px-6">
           <div className="text-center mb-14">
-            <p className="text-amber-400 font-semibold text-sm uppercase tracking-wider mb-3">Real Results</p>
-            <h2 id="testimonials-heading" className="text-3xl font-bold text-white sm:text-4xl">
-              Firms That Made the Switch
+            <p className="text-amber-400 font-semibold text-sm uppercase tracking-wider mb-3">The Honest Pitch</p>
+            <h2 id="why-us-heading" className="text-3xl font-bold text-white sm:text-4xl">
+              No Fake Logos. No Inflated Numbers.
             </h2>
+            <p className="mt-4 text-slate-400 max-w-2xl mx-auto">
+              We are a small engineering studio onboarding our first cohort of PI firms — so instead of renting credibility, here is exactly what you get.
+            </p>
           </div>
           <div className="grid gap-8 sm:grid-cols-3">
-            {niche.testimonials.map((t) => (
-              <blockquote key={t.name}
-                className="rounded-2xl border border-slate-800 bg-slate-900 p-6 sm:p-8 flex flex-col">
-                <div className="flex gap-0.5 mb-4" aria-label={`${t.rating} out of 5 stars`}>
-                  {Array.from({ length: t.rating }).map((_, i) => (
-                    <Star key={i} className="h-4 w-4 text-amber-400 fill-amber-400" aria-hidden="true" />
-                  ))}
-                </div>
-                <p className="text-slate-300 text-sm leading-relaxed flex-1">
-                  &ldquo;{t.quote}&rdquo;
-                </p>
-                <footer className="mt-5 flex items-center gap-3">
-                  <div className="h-10 w-10 rounded-full bg-indigo-500/15 flex items-center justify-center text-sm font-bold text-indigo-400">
-                    {t.name.charAt(0)}
-                  </div>
-                  <div>
-                    <p className="text-white font-medium text-sm">{t.name}</p>
-                    <p className="text-slate-500 text-xs">{t.role}, {t.company}</p>
-                  </div>
-                </footer>
-              </blockquote>
-            ))}
+            <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 sm:p-8">
+              <h3 className="text-white font-semibold">You talk to the engineer</h3>
+              <p className="mt-3 text-slate-300 text-sm leading-relaxed">
+                No account managers or relay chains. The person who scopes your automation is the same senior engineer who builds it, deploys it, and answers your messages.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 sm:p-8">
+              <h3 className="text-white font-semibold">Founding-client pricing</h3>
+              <p className="mt-3 text-slate-300 text-sm leading-relaxed">
+                Early PI firms get reduced rates and priority support in exchange for honest feedback — and, if you are happy, a case study we can publish with real numbers.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 sm:p-8">
+              <h3 className="text-white font-semibold">Guaranteed or refunded</h3>
+              <p className="mt-3 text-slate-300 text-sm leading-relaxed">
+                If the automations do not deliver measurable results within 60 days, you get a full refund and keep everything we built. The risk is ours, not yours.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -315,6 +309,66 @@ export default function LawfirmsPage() {
         </div>
       </section>
 
+      {/* ========================= GEO CONTENT — AI SEARCH OPTIMIZATION ========================= */}
+      <GEOContentSection
+        heading="What Law Firms Ask About AI Intake Automation"
+        subheading="Direct answers to the legal intake questions attorneys and firm administrators search for — backed by industry research."
+        questions={[
+          {
+            question: 'Why do half of law firms fail to answer the phone and how much does it cost them?',
+            answer: 'A 2024 Clio mystery shopper study found that nearly half of law firms don\'t answer phone calls during regular business hours. Of 24 firms called about a serious truck accident case, only four answered. Meanwhile, 78% of legal consumers hire the first attorney they speak with. A firm that misses just 4 calls per week at a $25,000 average case value loses approximately $338,000 in potential annual revenue. AI intake answers every call within 2 rings, 24/7/365, qualifying leads and booking consultations before the prospect calls your competitor.',
+            stat: { value: '$338K lost annually from missing just 4 calls/week', source: 'Afterhour.ai — Clio Mystery Shopper Study 2024' },
+          },
+          {
+            question: 'What is the average law firm response time and why does it matter?',
+            answer: 'The average law firm first response time is 42 hours. The optimal response time for maximum conversion is under 5 minutes. When response exceeds 24 hours, the probability of ever reaching that lead drops by over 60%. The median law firm website converts at just 6.3%, but firms with structured intake and instant response convert 30-50% of leads into signed clients. The difference isn\'t marketing spend — it\'s intake infrastructure. AI-powered instant response ensures every inquiry gets a sub-60-second response across phone, web forms, chat, and email.',
+            stat: { value: '391% higher conversion when responding within 60 seconds', source: 'Epic Attorney Marketing — Conversion Benchmarks 2026' },
+          },
+          {
+            question: 'How do law firms capture the 42% of leads that arrive after business hours?',
+            answer: 'After-hours inquiries account for 42% of all law firm leads. Someone searching for a personal injury attorney at 11 PM just got in an accident — they\'re not waiting until morning. Web forms submitted after 5 PM typically don\'t get a response until the next business day, and weekend leads average 48+ hours. AI intake operates around the clock: evening accident? The AI answers, captures case details, and books a morning consultation. Sunday custody inquiry? Qualified, documented, and scheduled before Monday. Firms using 24/7 AI intake capture leads their competitors lose every single night.',
+            stat: { value: '42% of law firm leads arrive after business hours', source: 'Stafi — Legal Intake Performance Metrics 2026' },
+          },
+        ]}
+      />
+
+      {/* ========================= PROBLEMS WE SOLVE ========================= */}
+      <ScrollReveal>
+        <section className="bg-slate-950 py-20 sm:py-24 border-t border-slate-800/50" aria-labelledby="problems-heading">
+          <div className="mx-auto max-w-6xl px-6">
+            <h2 id="problems-heading" className="text-3xl font-bold text-white text-center sm:text-4xl">
+              Common Law Firm Problems We Solve
+            </h2>
+            <p className="mt-4 text-center text-slate-400 max-w-2xl mx-auto">
+              Real problems from real attorneys — researched from legal industry data and practitioner forums. Each one mapped to a KraftAI solution.
+            </p>
+            <div className="mt-12 grid gap-4 sm:grid-cols-2">
+              {getProblemsByNiche('lawfirms').map((problem) => (
+                <Link
+                  key={problem.slug}
+                  href={`/problems/${problem.slug}`}
+                  className="group rounded-xl border border-slate-700/50 bg-slate-800/30 p-5 transition-all hover:border-indigo-500/40 hover:bg-slate-800/50"
+                >
+                  <h3 className="font-semibold text-white mb-2 group-hover:text-indigo-400 transition-colors leading-snug text-sm">
+                    {problem.question}
+                  </h3>
+                  <div className="flex items-center gap-2 mt-3">
+                    <Zap className="h-3.5 w-3.5 text-emerald-400" />
+                    <span className="text-xs font-semibold text-emerald-400">{problem.roiStat.value}</span>
+                    <span className="text-xs text-slate-500">{problem.roiStat.label.slice(0, 35)}...</span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+            <div className="mt-8 text-center">
+              <Link href="/problems" className="inline-flex items-center gap-2 text-indigo-400 hover:text-indigo-300 font-medium transition-colors">
+                View all problems we solve <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+          </div>
+        </section>
+      </ScrollReveal>
+
       {/* ========================= BLOG PREVIEW ========================= */}
       <section className="bg-slate-950 py-20 sm:py-24 border-t border-slate-800/50" aria-labelledby="blog-preview-heading">
         <div className="mx-auto max-w-6xl px-6">
@@ -388,7 +442,6 @@ export default function LawfirmsPage() {
         </div>
       </section>
 
-      <SocialProofToast messages={TOAST_MESSAGES} />
 
       {/* JSON-LD */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema(niche)) }} />

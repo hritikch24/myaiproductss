@@ -202,7 +202,7 @@ const homeservices: NicheConfig = {
     {
       question: 'How much does AI automation cost for a plumbing or HVAC business?',
       answer:
-        'Most of our home services clients invest between $1,500 and $4,000 per month depending on the number of automations and call volume. That is typically less than the cost of one part-time office employee and delivers significantly more consistent results. We also offer a pay-for-performance model for qualified businesses.',
+        'Most home services automation projects fall between $1,500 and $4,000 per month depending on the number of automations and call volume. That is typically less than the cost of one part-time office employee and delivers significantly more consistent results. We also offer a pay-for-performance model for qualified businesses.',
     },
     {
       question: 'Will AI automation work with ServiceTitan or Housecall Pro?',
@@ -306,7 +306,7 @@ Fifth, cost predictability. Unlike traditional answering services that charge pe
 
 When evaluating an AI answering service for your HVAC company, ask these questions: Does it integrate with my field service software? Can it handle both English and Spanish? What happens during a true emergency call? How quickly can I update my available appointment slots? And does the pricing change when call volume doubles during peak season?
 
-KraftAI builds custom AI answering solutions specifically for HVAC companies. We integrate with ServiceTitan, Housecall Pro, and Jobber, handle bilingual calls, and charge a flat monthly rate. Our clients typically save 40-60 percent compared to their previous answering service while booking more appointments and losing fewer leads.`,
+KraftAI builds custom AI answering solutions specifically for HVAC companies. We integrate with ServiceTitan, Housecall Pro, and Jobber, handle bilingual calls, and charge a flat monthly rate. This approach typically saves 40-60 percent compared to a traditional answering service while booking more appointments and losing fewer leads.`,
       author: 'KraftAI Team',
       date: '2026-04-28',
       readTime: '7 min read',
