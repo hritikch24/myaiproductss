@@ -2,6 +2,7 @@
 // Generates Google-compliant structured data for SEO and GEO
 
 import type { NicheConfig, CityConfig } from './kraftai-niches';
+import type { ProblemSolution } from './kraftai-seo-problems';
 
 const KRAFTAI_SOCIAL = [
   'https://twitter.com/kraftai',
@@ -244,5 +245,108 @@ export function collectionPageSchema(
       name: `AI Automation for ${niche.name}`,
     },
     inLanguage: 'en-US',
+  };
+}
+
+// ---------------------------------------------------------------------------
+// Problem/Solution page schemas — for programmatic SEO pages
+// ---------------------------------------------------------------------------
+
+/** QAPage schema — optimized for GEO/AI search citation */
+export function qaPageSchema(problem: ProblemSolution, nicheSubdomain: string) {
+  const baseUrl = `https://${nicheSubdomain}.kraftai.in`;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'QAPage',
+    '@id': `${baseUrl}/problems/${problem.slug}/#qapage`,
+    name: problem.question,
+    mainEntity: {
+      '@type': 'Question',
+      name: problem.question,
+      text: problem.problemDescription,
+      answerCount: 1,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: problem.solutionDescription,
+        url: `${baseUrl}/problems/${problem.slug}`,
+        author: {
+          '@type': 'Organization',
+          name: 'KraftAI',
+          url: 'https://kraftai.in',
+        },
+      },
+    },
+  };
+}
+
+/** HowTo schema — for problem solution steps */
+export function howToSchema(problem: ProblemSolution, nicheSubdomain: string) {
+  const baseUrl = `https://${nicheSubdomain}.kraftai.in`;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    '@id': `${baseUrl}/problems/${problem.slug}/#howto`,
+    name: problem.solutionTitle,
+    description: problem.solutionDescription,
+    step: problem.solutionSteps.map((s, i) => ({
+      '@type': 'HowToStep',
+      position: i + 1,
+      name: s.title,
+      text: s.description,
+      url: `${baseUrl}/problems/${problem.slug}#step-${i + 1}`,
+    })),
+    tool: {
+      '@type': 'HowToTool',
+      name: 'KraftAI Platform',
+    },
+  };
+}
+
+/** Problem page breadcrumb schema */
+export function problemBreadcrumbSchema(
+  problem: ProblemSolution,
+  nicheName: string,
+  nicheSubdomain: string
+) {
+  const baseUrl = `https://${nicheSubdomain}.kraftai.in`;
+  return breadcrumbSchema([
+    { name: `KraftAI ${nicheName}`, url: baseUrl },
+    { name: 'Problems We Solve', url: `${baseUrl}/problems` },
+    { name: problem.problemTitle.slice(0, 60), url: `${baseUrl}/problems/${problem.slug}` },
+  ]);
+}
+
+/** WebPage schema with speakable for GEO */
+export function problemWebPageSchema(problem: ProblemSolution, nicheSubdomain: string) {
+  const baseUrl = `https://${nicheSubdomain}.kraftai.in`;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': `${baseUrl}/problems/${problem.slug}/#webpage`,
+    url: `${baseUrl}/problems/${problem.slug}`,
+    name: problem.metaTitle,
+    description: problem.metaDescription,
+    isPartOf: { '@id': `${baseUrl}/#website` },
+    about: {
+      '@type': 'Thing',
+      name: problem.problemTitle,
+    },
+    mainEntity: { '@id': `${baseUrl}/problems/${problem.slug}/#qapage` },
+    speakable: {
+      '@type': 'SpeakableSpecification',
+      cssSelector: ['.problem-answer', '.solution-steps', 'h1'],
+    },
+    inLanguage: 'en-US',
+    datePublished: '2025-01-15',
+    dateModified: new Date().toISOString().split('T')[0],
+    author: {
+      '@type': 'Organization',
+      name: 'KraftAI',
+    },
+    citation: problem.sources.map((s) => ({
+      '@type': 'CreativeWork',
+      name: s.label,
+      url: s.url,
+    })),
   };
 }

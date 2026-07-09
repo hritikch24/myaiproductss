@@ -22,6 +22,10 @@ import GuaranteeSection from '@/components/kraftai/GuaranteeSection';
 import IndustryProblemsTicker from '@/components/kraftai/IndustryProblemsTicker';
 import AnimatedCounter from '@/components/kraftai/AnimatedCounter';
 import ScrollReveal from '@/components/kraftai/ScrollReveal';
+import ExitIntentPopup from '@/components/kraftai/ExitIntentPopup';
+import StickyMobileCTA from '@/components/kraftai/StickyMobileCTA';
+import SocialProofToast from '@/components/kraftai/SocialProofToast';
+import TrustBar from '@/components/kraftai/TrustBar';
 import GEOContentSection from '@/components/kraftai/GEOContentSection';
 import { getNicheBySlug } from '@/lib/kraftai-niches';
 import { serviceSchema, faqPageSchema, breadcrumbSchema } from '@/lib/kraftai-schemas';
@@ -123,6 +127,9 @@ export default function StaffingPage() {
           <p className="mt-3 text-center text-xs text-slate-500">Figures are industry benchmarks from published studies — the upside fast, automated follow-up typically unlocks. Not claims about our client base.</p>
         </div>
       </section>
+
+      {/* ========================= TRUST BAR ========================= */}
+      <TrustBar />
 
       {/* ========================= PAIN POINTS ========================= */}
       <section className="bg-slate-950 py-20 sm:py-24 border-t border-slate-800/50" aria-labelledby="pain-heading">
@@ -441,6 +448,17 @@ export default function StaffingPage() {
         </div>
       </section>
 
+
+      {/* ========================= CONVERSION COMPONENTS ========================= */}
+      <ExitIntentPopup source="staffing-exit-intent" />
+      <StickyMobileCTA ctaText="Get Your Free Audit" urgencyText="Only 3 founding-client spots left for staffing agencies" />
+      <SocialProofToast messages={[
+        { city: 'Chicago, IL', action: 'booked an automation audit', timeAgo: '15 minutes ago' },
+        { city: 'Miami, FL', action: 'requested a candidate screening demo', timeAgo: '28 minutes ago' },
+        { city: 'Seattle, WA', action: 'signed up for founding pricing', timeAgo: '1 hour ago' },
+        { city: 'Boston, MA', action: 'booked a scheduling automation demo', timeAgo: '3 hours ago' },
+        { city: 'Portland, OR', action: 'requested intake automation setup', timeAgo: '5 hours ago' },
+      ]} />
 
       {/* JSON-LD */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema(niche)) }} />

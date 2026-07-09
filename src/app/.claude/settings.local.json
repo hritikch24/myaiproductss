@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(/opt/homebrew/bin/psql --version)",
+      "Bash(/usr/local/bin/psql --version)",
+      "Read(//opt/homebrew/opt/**)",
+      "Read(//Applications/Postgres.app/Contents/**)",
+      "Bash(npx tsc:*)",
+      "Bash(npm run:*)",
+      "Bash(curl:*)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(f'Agents: {len\\(d[\\\\\"agents\\\\\"]\\)}, Categories: {d[\\\\\"categories\\\\\"]}'\\)\")",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); a=d['agent']; print\\(f'{a[\\\\\"icon\\\\\"]} {a[\\\\\"name\\\\\"]} [{a[\\\\\"category\\\\\"]}] - {a[\\\\\"description\\\\\"][:80]}'\\)\")",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); [print\\(f'{a[\\\\\"icon\\\\\"]} {a[\\\\\"name\\\\\"]}'\\) for a in d['agents']]\")",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(d.get\\('response',''\\)[:200] if 'response' in d else d\\)\")",
+      "mcp__playwright__browser_navigate",
+      "mcp__playwright__browser_take_screenshot",
+      "mcp__playwright__browser_resize",
+      "Bash(grep -n \"Mic\\\\|toggleListening\\\\|isListening\\\\|speechSupported\\\\|recognitionRef\" src/app/agents/\\\\\\\\[slug\\\\\\\\]/page.tsx)",
+      "Bash(node -e ':*)",
+      "Bash(npx next:*)"
+    ]
+  }
+}

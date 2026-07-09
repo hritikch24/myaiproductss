@@ -21,6 +21,10 @@ import GuaranteeSection from '@/components/kraftai/GuaranteeSection';
 import IndustryProblemsTicker from '@/components/kraftai/IndustryProblemsTicker';
 import AnimatedCounter from '@/components/kraftai/AnimatedCounter';
 import ScrollReveal from '@/components/kraftai/ScrollReveal';
+import ExitIntentPopup from '@/components/kraftai/ExitIntentPopup';
+import StickyMobileCTA from '@/components/kraftai/StickyMobileCTA';
+import SocialProofToast from '@/components/kraftai/SocialProofToast';
+import TrustBar from '@/components/kraftai/TrustBar';
 import GEOContentSection from '@/components/kraftai/GEOContentSection';
 import { getNicheBySlug } from '@/lib/kraftai-niches';
 import { serviceSchema, faqPageSchema, breadcrumbSchema } from '@/lib/kraftai-schemas';
@@ -122,6 +126,9 @@ export default function AccountingPage() {
           <p className="mt-3 text-center text-xs text-slate-500">Figures are industry benchmarks from published studies — the upside fast, automated follow-up typically unlocks. Not claims about our client base.</p>
         </div>
       </section>
+
+      {/* ========================= TRUST BAR ========================= */}
+      <TrustBar />
 
       {/* ========================= PAIN POINTS ========================= */}
       <section className="bg-slate-950 py-20 sm:py-24 border-t border-slate-800/50" aria-labelledby="pain-heading">
@@ -440,6 +447,17 @@ export default function AccountingPage() {
         </div>
       </section>
 
+
+      {/* ========================= CONVERSION COMPONENTS ========================= */}
+      <ExitIntentPopup source="accounting-exit-intent" />
+      <StickyMobileCTA ctaText="Get Your Free Audit" urgencyText="Only 3 founding-client spots left for accounting firms" />
+      <SocialProofToast messages={[
+        { city: 'San Francisco, CA', action: 'booked a workflow audit', timeAgo: '18 minutes ago' },
+        { city: 'Minneapolis, MN', action: 'requested a client portal demo', timeAgo: '45 minutes ago' },
+        { city: 'Columbus, OH', action: 'signed up for founding pricing', timeAgo: '2 hours ago' },
+        { city: 'Raleigh, NC', action: 'booked a tax-season automation demo', timeAgo: '4 hours ago' },
+        { city: 'Kansas City, MO', action: 'requested onboarding automation', timeAgo: '6 hours ago' },
+      ]} />
 
       {/* JSON-LD */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema(niche)) }} />

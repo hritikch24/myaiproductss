@@ -1,0 +1,29 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx next:*)",
+      "Bash(git add:*)",
+      "Bash(git push:*)",
+      "Bash(git remote:*)",
+      "Bash(curl -s \"https://kraftai.in/api/migrate?secret=migrate123\" | python3 -m json.tool)",
+      "WebFetch(domain:d.epicworld.tech)",
+      "Bash(npm info:*)",
+      "mcp__playwright__browser_navigate",
+      "mcp__playwright__browser_take_screenshot",
+      "mcp__playwright__browser_evaluate",
+      "Bash(node:*)",
+      "Bash(lsof -ti:3000)",
+      "mcp__playwright__browser_resize",
+      "mcp__playwright__browser_click",
+      "Bash(git commit:*)",
+      "Bash(grep -r \"study_session\\\\|timer\\\\|study_timer\" /Users/hritik/Projects/kanoon-simplified/src --include=*.ts --include=*.tsx)",
+      "Bash(grep -r 'CREATE TABLE.*padhai' /Users/hritik/Projects/kanoon-simplified/src/app/api/padhai --include=*.ts)",
+      "Bash(find /Users/hritik/Projects/kanoon-simplified/src -type f \\\\\\(-name *.ts -o -name *.tsx \\\\\\))",
+      "Bash(grep -r \"cron\\\\|schedule\\\\|interval\\\\|setTimeout\" /Users/hritik/Projects/kanoon-simplified/src --include=*.ts --include=*.tsx)",
+      "Bash(find /Users/hritik/Projects/kanoon-simplified/migrations -name \"*.sql\" -exec basename {})",
+      "Bash(grep -r \"padhai_parent_reports\\\\|padhai_parents\" /Users/hritik/Projects/kanoon-simplified/src --include=*.ts --include=*.tsx)",
+      "Bash(grep -r \"API.*route\\\\|api/.*reports\\\\|vercel\\\\|cron\\\\|trigger\" /Users/hritik/Projects/kanoon-simplified --include=*.json --include=*.ts)",
+      "Bash(grep -r \"Resend\\\\|resend\\\\|email.*service\\\\|mail\" /Users/hritik/Projects/kanoon-simplified/src --include=*.ts --include=*.tsx)"
+    ]
+  }
+}
