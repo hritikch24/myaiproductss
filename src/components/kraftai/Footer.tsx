@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Sparkles } from 'lucide-react';
+import { Sparkles, Phone } from 'lucide-react';
 
 interface FooterProps {
   nicheName: string;
@@ -83,11 +83,18 @@ export default function Footer({ nicheName, nicheSlug }: FooterProps) {
             <h3 className="text-sm font-semibold text-white mb-4">Contact</h3>
             <address className="not-italic space-y-2.5 text-sm text-slate-400">
               <p>
-                <a
-                  href="mailto:hello@kraftai.in"
-                  className="transition-colors hover:text-indigo-400"
-                >
-                  hello@kraftai.in
+                <a href="tel:+13314318078" className="inline-flex items-center gap-1.5 transition-colors hover:text-indigo-400">
+                  <Phone className="h-3.5 w-3.5" aria-hidden="true" /> +1 (331) 431-8078
+                </a>
+              </p>
+              <p>
+                <a href="https://wa.me/918859820935" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 transition-colors hover:text-emerald-400">
+                  <Phone className="h-3.5 w-3.5" aria-hidden="true" /> WhatsApp
+                </a>
+              </p>
+              <p>
+                <a href="mailto:hey@kraftai.in" className="transition-colors hover:text-indigo-400">
+                  hey@kraftai.in
                 </a>
               </p>
             </address>

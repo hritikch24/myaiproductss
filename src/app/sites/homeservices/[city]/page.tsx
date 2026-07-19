@@ -210,6 +210,7 @@ export default async function CityPage({ params }: CityPageProps) {
               <p className="mt-3 text-slate-300 text-sm leading-relaxed">
                 Early clients get reduced rates and priority support in exchange for honest feedback — and, if you are happy, a case study we can publish with real numbers.
               </p>
+              <p className="mt-2 text-indigo-400 text-sm font-medium">Plans from ₹21,000/mo (~$249)</p>
             </div>
             <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 sm:p-8">
               <h3 className="text-white font-semibold">Guaranteed or refunded</h3>

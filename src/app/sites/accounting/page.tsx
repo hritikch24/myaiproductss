@@ -216,6 +216,7 @@ export default function AccountingPage() {
               <p className="mt-3 text-slate-300 text-sm leading-relaxed">
                 Early accounting firms get reduced rates and priority support in exchange for honest feedback — and, if you are happy, a case study we can publish with real numbers.
               </p>
+              <p className="mt-2 text-indigo-400 text-sm font-medium">Plans from ₹21,000/mo (~$249)</p>
             </div>
             <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 sm:p-8">
               <h3 className="text-white font-semibold">Guaranteed or refunded</h3>
@@ -434,13 +435,16 @@ export default function AccountingPage() {
 
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-slate-500">
             <span>Prefer to talk directly?</span>
-            <div className="flex items-center gap-4">
-              <a href="mailto:hey@kraftai.in" className="inline-flex items-center gap-1.5 text-indigo-400 hover:text-indigo-300 transition-colors">
-                <Mail className="h-4 w-4" aria-hidden="true" /> hey@kraftai.in
+            <div className="flex flex-wrap items-center justify-center gap-4">
+              <a href="tel:+13314318078" className="inline-flex items-center gap-1.5 text-indigo-400 hover:text-indigo-300 transition-colors">
+                <Phone className="h-4 w-4" aria-hidden="true" /> +1 (331) 431-8078
               </a>
               <a href="https://wa.me/918859820935" target="_blank" rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 text-emerald-400 hover:text-emerald-300 transition-colors">
-                <Phone className="h-4 w-4" aria-hidden="true" /> WhatsApp Us
+                <Phone className="h-4 w-4" aria-hidden="true" /> WhatsApp
+              </a>
+              <a href="mailto:hey@kraftai.in" className="inline-flex items-center gap-1.5 text-slate-400 hover:text-slate-300 transition-colors">
+                <Mail className="h-4 w-4" aria-hidden="true" /> hey@kraftai.in
               </a>
             </div>
           </div>
