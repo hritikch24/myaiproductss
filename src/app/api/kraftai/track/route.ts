@@ -10,8 +10,21 @@ function getClientIp(req: NextRequest): string {
   );
 }
 
-function detectBot(ua: string): boolean {
-  return /bot|crawl|spider|slurp|baiduspider|yandex|sogou|exabot|facebookexternalhit|facebot|ia_archiver|linkedinbot|twitterbot|whatsapp|telegrambot|googlebot|bingbot/i.test(ua);
+// Known datacenter/VPN IP ranges that generate fake traffic
+const SUSPICIOUS_IP_PREFIXES = [
+  '185.227.151.', // Swiss scraper cluster
+];
+
+function detectBot(ua: string, ip?: string): boolean {
+  // Standard bot UA strings
+  if (/bot|crawl|spider|slurp|baiduspider|yandex|sogou|exabot|facebookexternalhit|facebot|ia_archiver|linkedinbot|twitterbot|whatsapp|telegrambot|googlebot|bingbot/i.test(ua)) return true;
+  // Headless browser indicators
+  if (/HeadlessChrome|PhantomJS|Selenium|puppeteer|playwright|webdriver/i.test(ua)) return true;
+  // Empty or suspiciously short UA
+  if (!ua || ua.length < 30) return true;
+  // Known suspicious IPs
+  if (ip && SUSPICIOUS_IP_PREFIXES.some(prefix => ip.startsWith(prefix))) return true;
+  return false;
 }
 
 function parseUA(ua: string) {
@@ -41,7 +54,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const ua = req.headers.get("user-agent") || "";
     const ip = getClientIp(req);
-    const isBot = detectBot(ua);
+    const isBot = detectBot(ua, ip);
     const { browser, os, isMobile, device } = parseUA(ua);
 
     const url = new URL(body.page || "/", "https://kraftai.in");

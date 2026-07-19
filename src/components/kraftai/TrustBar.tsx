@@ -9,7 +9,7 @@ interface TrustBarProps {
 const TRUST_ITEMS = [
   { icon: Shield, text: '60-Day Money-Back Guarantee' },
   { icon: Lock, text: 'SOC 2 Compliant Infrastructure' },
-  { icon: Headphones, text: 'US Business Hours Support' },
+  { icon: Headphones, text: 'Dedicated Support Team' },
   { icon: Clock, text: 'Live in 48 Hours' },
   { icon: Award, text: 'No Long-Term Contracts' },
 ];

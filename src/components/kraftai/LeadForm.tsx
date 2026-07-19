@@ -9,7 +9,8 @@ interface LeadFormProps {
 
 type FormStatus = 'idle' | 'loading' | 'success' | 'error';
 
-const US_PHONE_REGEX = /^\+?1?\s*\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/;
+// Accept international phone numbers: 7-15 digits, optional + prefix, spaces/dashes allowed
+const PHONE_REGEX = /^\+?\d[\d\s\-().]{6,18}\d$/;
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default function LeadForm({ source }: LeadFormProps) {
@@ -33,8 +34,8 @@ export default function LeadForm({ source }: LeadFormProps) {
     }
     if (!phone) {
       errors.phone = 'Phone number is required';
-    } else if (!US_PHONE_REGEX.test(phone)) {
-      errors.phone = 'Please enter a valid US phone number';
+    } else if (!PHONE_REGEX.test(phone)) {
+      errors.phone = 'Please enter a valid phone number';
     }
     if (!company) errors.company = 'Company name is required';
 
@@ -163,7 +164,7 @@ export default function LeadForm({ source }: LeadFormProps) {
                 required
                 autoComplete="tel"
                 className="w-full rounded-lg border border-slate-700 bg-slate-800 px-4 py-2.5 text-sm text-white placeholder-slate-500 transition-colors focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
-                placeholder="(555) 123-4567"
+                placeholder="+91 88598 20935"
               />
               {fieldErrors.phone && (
                 <p className="mt-1 text-xs text-red-400" role="alert">{fieldErrors.phone}</p>

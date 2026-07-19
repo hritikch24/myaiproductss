@@ -439,7 +439,7 @@ export default function StaffingPage() {
               <a href="mailto:hey@kraftai.in" className="inline-flex items-center gap-1.5 text-indigo-400 hover:text-indigo-300 transition-colors">
                 <Mail className="h-4 w-4" aria-hidden="true" /> hey@kraftai.in
               </a>
-              <a href="https://wa.me/919876543210" target="_blank" rel="noopener noreferrer"
+              <a href="https://wa.me/918859820935" target="_blank" rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 text-emerald-400 hover:text-emerald-300 transition-colors">
                 <Phone className="h-4 w-4" aria-hidden="true" /> WhatsApp Us
               </a>
