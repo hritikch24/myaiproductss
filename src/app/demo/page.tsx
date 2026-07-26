@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   MapPin,
   Phone,
@@ -8,491 +8,645 @@ import {
   Star,
   ShoppingCart,
   ChevronRight,
+  ChevronDown,
   Instagram,
   Facebook,
   MessageSquare,
-  Search,
   Menu as MenuIcon,
   X,
   ArrowRight,
+  ArrowUpRight,
   Utensils,
   Truck,
   CalendarDays,
   Users,
   Globe,
-  TrendingUp,
   CheckCircle2,
+  Minus,
+  Plus,
+  Flame,
+  Leaf,
+  Award,
+  Heart,
+  Mail,
+  Timer,
 } from 'lucide-react';
 
-const MENU_ITEMS = [
-  {
-    category: 'Signatures',
-    items: [
-      { name: 'Heritage Special Thali', price: '₹450', desc: 'Our legendary platter — 12 items including dal, sabzi, raita, papad, dessert', tag: 'Bestseller', img: '🍛' },
-      { name: 'Royal Biryani', price: '₹350', desc: 'Slow-cooked basmati with aromatic spices, saffron & caramelized onions', tag: 'Chef\'s Pick', img: '🍚' },
-      { name: 'Tandoori Platter', price: '₹550', desc: 'Assorted kebabs, tikka, and naan fresh from our clay oven', img: '🍢' },
-    ],
-  },
-  {
-    category: 'Street Favorites',
-    items: [
-      { name: 'Kulhad Chai & Samosa', price: '₹80', desc: 'Authentic clay-pot chai served with crispy potato samosa', tag: 'Popular', img: '☕' },
-      { name: 'Chole Bhature', price: '₹180', desc: 'Spiced chickpea curry with fluffy deep-fried bread', img: '🫓' },
-      { name: 'Pani Puri (6 pcs)', price: '₹60', desc: 'Crispy shells filled with spiced potato, tangy water & chutneys', img: '🥟' },
-    ],
-  },
-  {
-    category: 'Fresh Drinks',
-    items: [
-      { name: 'Mango Lassi', price: '₹120', desc: 'Creamy yogurt blended with Alphonso mango pulp', tag: 'Seasonal', img: '🥭' },
-      { name: 'Fresh Sugarcane Juice', price: '₹60', desc: 'Pressed to order with ginger and lime', img: '🧃' },
-      { name: 'Rose Falooda', price: '₹150', desc: 'Rose milk, basil seeds, vermicelli, and ice cream', img: '🍨' },
-    ],
-  },
+/* ─── Menu Data ─── */
+const CATEGORIES = ['All', 'Mains', 'Small plates', 'Breads', 'Drinks', 'Desserts'] as const;
+
+interface MenuItem {
+  name: string;
+  price: number;
+  desc: string;
+  category: string;
+  badge?: string;
+  spicy?: boolean;
+  veg?: boolean;
+  popular?: boolean;
+}
+
+const MENU: MenuItem[] = [
+  { name: 'Heritage Thali', price: 450, desc: 'Twelve-item platter. Dal makhani, seasonal sabzi, raita, papad, rice, roti, pickle, chutney, gulab jamun.', category: 'Mains', badge: 'Signature', popular: true, veg: true },
+  { name: 'Slow-cooked Dum Biryani', price: 380, desc: 'Aged basmati layered with saffron, caramelized onions, whole spices. Sealed and slow-cooked for 4 hours.', category: 'Mains', popular: true },
+  { name: 'Rogan Josh', price: 420, desc: 'Kashmiri-style braised lamb in aromatic fennel and dried ginger gravy.', category: 'Mains', spicy: true },
+  { name: 'Paneer Lababdar', price: 320, desc: 'House-made paneer in rich tomato-cashew gravy with fenugreek.', category: 'Mains', veg: true },
+  { name: 'Crispy Samosa', price: 80, desc: 'Hand-folded pastry with spiced potato and pea filling. Served with tamarind and mint chutney.', category: 'Small plates', veg: true, popular: true },
+  { name: 'Seekh Kebab', price: 280, desc: 'Charcoal-grilled minced lamb with green chilli, coriander, and a hint of mace.', category: 'Small plates', spicy: true },
+  { name: 'Dahi Puri', price: 120, desc: 'Crisp shells topped with yogurt, sev, sweet chutney, and pomegranate.', category: 'Small plates', veg: true },
+  { name: 'Amritsari Fish', price: 340, desc: 'Batter-fried river sole with carom seeds, chaat masala, and lime.', category: 'Small plates' },
+  { name: 'Garlic Naan', price: 60, desc: 'Clay-oven bread brushed with garlic butter and fresh coriander.', category: 'Breads', veg: true },
+  { name: 'Lachha Paratha', price: 70, desc: 'Multi-layered flaky whole wheat bread cooked on tawa.', category: 'Breads', veg: true },
+  { name: 'Kulhad Chai', price: 50, desc: 'Strong Assam tea with whole spices, served in traditional clay cup.', category: 'Drinks', veg: true, popular: true },
+  { name: 'Fresh Mango Lassi', price: 120, desc: 'Thick yogurt blended with Alphonso pulp and a touch of cardamom.', category: 'Drinks', veg: true, badge: 'Seasonal' },
+  { name: 'Rose Falooda', price: 150, desc: 'Layered rose milk, basil seeds, vermicelli, and kulfi ice cream.', category: 'Desserts', veg: true },
+  { name: 'Gulab Jamun', price: 100, desc: 'Soft milk-solid dumplings soaked in cardamom-saffron sugar syrup. Served warm.', category: 'Desserts', veg: true },
 ];
 
 const REVIEWS = [
-  { name: 'Priya M.', rating: 5, text: 'Best thali in the city! Been coming here for 15 years and the quality never drops.', date: '2 weeks ago' },
-  { name: 'Rahul S.', rating: 5, text: 'The biryani is incredible — perfectly layered, aromatic, generous portions. Worth every rupee.', date: '1 month ago' },
-  { name: 'Sarah K.', rating: 5, text: 'Found this gem on Google while traveling. The chai and samosa combo was life-changing!', date: '3 weeks ago' },
-  { name: 'Amit D.', rating: 4, text: 'Great food, amazing heritage. Online ordering made it so convenient for our office party.', date: '1 month ago' },
+  { name: 'Priya M.', text: "The thali here is unmatched. Twelve items, each one distinct. We've been coming every Sunday for three years — it's become family tradition.", rating: 5, date: 'Feb 2026', avatar: 'PM' },
+  { name: 'Rahul S.', text: "Ordered the biryani for a house party via their site. Arrived on time, piping hot, and the flavor was restaurant-quality. The direct ordering saved us a fortune vs Zomato.", rating: 5, date: 'Jan 2026', avatar: 'RS' },
+  { name: 'Sarah K.', text: "Found this place while traveling. The samosa and chai alone were worth the detour. You can taste the difference when everything is made fresh.", rating: 5, date: 'Mar 2026', avatar: 'SK' },
+  { name: 'Amit D.', text: "Booked catering for our office Diwali event — 80 people. Flawless execution, incredible food, and they handled everything from setup to cleanup.", rating: 5, date: 'Nov 2025', avatar: 'AD' },
+  { name: 'Jenny L.', text: "As a tourist, the website made it so easy to find the menu, hours, and directions. Wish every restaurant in India had this level of online presence.", rating: 4, date: 'Dec 2025', avatar: 'JL' },
 ];
 
+/* ─── Intersection Observer Hook ─── */
+function useInView(threshold = 0.15) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setVisible(true); obs.disconnect(); } }, { threshold });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [threshold]);
+  return { ref, visible };
+}
+
+function FadeIn({ children, className = '', delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
+  const { ref, visible } = useInView();
+  return (
+    <div
+      ref={ref}
+      className={className}
+      style={{
+        opacity: visible ? 1 : 0,
+        transform: visible ? 'translateY(0)' : 'translateY(24px)',
+        transition: `opacity 0.7s cubic-bezier(.16,1,.3,1) ${delay}s, transform 0.7s cubic-bezier(.16,1,.3,1) ${delay}s`,
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
+/* ─── Components ─── */
+function MenuCard({ item, onAdd }: { item: MenuItem; onAdd: () => void }) {
+  return (
+    <div className="group relative flex gap-4 p-4 rounded-2xl hover:bg-stone-50 transition-colors duration-200">
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center gap-2 mb-1 flex-wrap">
+          <h3 className="font-semibold text-stone-900 text-[15px]">{item.name}</h3>
+          {item.veg && (
+            <span className="inline-flex items-center justify-center h-4 w-4 rounded-sm border-2 border-green-600">
+              <span className="h-1.5 w-1.5 rounded-full bg-green-600" />
+            </span>
+          )}
+          {item.spicy && <Flame className="h-3.5 w-3.5 text-red-500" />}
+          {item.badge && (
+            <span className="text-[11px] font-medium text-amber-700 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-full">{item.badge}</span>
+          )}
+          {item.popular && !item.badge && (
+            <span className="text-[11px] font-medium text-stone-500 bg-stone-100 px-2 py-0.5 rounded-full">Popular</span>
+          )}
+        </div>
+        <p className="text-[13px] text-stone-500 leading-relaxed line-clamp-2 pr-4">{item.desc}</p>
+        <div className="flex items-center gap-3 mt-2.5">
+          <span className="text-[15px] font-semibold text-stone-900">&#8377;{item.price}</span>
+          <button
+            onClick={onAdd}
+            className="inline-flex items-center gap-1.5 text-[13px] font-medium text-stone-600 hover:text-stone-900 bg-stone-100 hover:bg-stone-200 px-3 py-1 rounded-full transition-all duration-150 active:scale-95"
+          >
+            <Plus className="h-3.5 w-3.5" /> Add
+          </button>
+        </div>
+      </div>
+      {/* Subtle decorative line on hover */}
+      <div className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-0 group-hover:h-8 bg-stone-900 rounded-full transition-all duration-300" />
+    </div>
+  );
+}
+
+/* ─── Main Page ─── */
 export default function DemoPage() {
   const [mobileMenu, setMobileMenu] = useState(false);
-  const [activeCategory, setActiveCategory] = useState('Signatures');
-  const [cartCount, setCartCount] = useState(0);
+  const [activeCategory, setActiveCategory] = useState<string>('All');
+  const [cart, setCart] = useState<Record<string, number>>({});
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  const cartCount = Object.values(cart).reduce((a, b) => a + b, 0);
+  const cartTotal = Object.entries(cart).reduce((sum, [name, qty]) => {
+    const item = MENU.find(m => m.name === name);
+    return sum + (item ? item.price * qty : 0);
+  }, 0);
+
+  const filteredMenu = activeCategory === 'All' ? MENU : MENU.filter(m => m.category === activeCategory);
+
+  const addToCart = (name: string) => {
+    setCart(prev => ({ ...prev, [name]: (prev[name] || 0) + 1 }));
+  };
 
   return (
-    <div className="min-h-screen bg-white text-gray-900">
-      {/* ── Top Bar ── */}
-      <div className="bg-amber-600 text-white text-center text-sm py-2 px-4">
-        <span className="font-medium">Order online & get 10% off your first order!</span>
-        <span className="ml-2 opacity-80">Use code: WELCOME10</span>
+    <div className="min-h-screen bg-white text-stone-900 antialiased">
+
+      {/* ── Announcement ── */}
+      <div className="bg-stone-900 text-center text-[13px] py-2.5 px-4">
+        <span className="text-stone-300">Order directly &amp; get </span>
+        <span className="text-white font-medium">10% off</span>
+        <span className="text-stone-300"> your first order </span>
+        <span className="text-stone-500 mx-1.5">·</span>
+        <span className="text-stone-400 font-mono text-xs tracking-wider">WELCOME10</span>
       </div>
 
       {/* ── Navbar ── */}
-      <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100 shadow-sm">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 flex items-center justify-between h-16">
-          <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-white font-bold text-lg">
-              H
+      <nav className={`sticky top-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white/80 backdrop-blur-xl shadow-[0_1px_0_0_rgba(0,0,0,0.04)]' : 'bg-white'}`}>
+        <div className="mx-auto max-w-6xl px-5 sm:px-8 flex items-center justify-between h-[64px]">
+          <a href="#" className="flex items-center gap-3 group">
+            <div className="h-9 w-9 rounded-[10px] bg-stone-900 flex items-center justify-center text-white font-semibold text-sm tracking-tight group-hover:scale-105 transition-transform duration-200">
+              HK
             </div>
-            <div>
-              <h1 className="text-lg font-bold text-gray-900 leading-tight">Heritage Kitchen</h1>
-              <p className="text-xs text-gray-500 leading-tight">Est. 1972 · Authentic Indian</p>
+            <div className="leading-none">
+              <div className="text-[15px] font-semibold text-stone-900 tracking-[-0.01em]">Heritage Kitchen</div>
+              <div className="text-[11px] text-stone-400 mt-0.5 tracking-wide uppercase">Since 1972</div>
             </div>
+          </a>
+
+          <div className="hidden md:flex items-center gap-1">
+            {['Menu', 'Order', 'Story', 'Catering', 'Locations'].map((item) => (
+              <a
+                key={item}
+                href={`#${item.toLowerCase()}`}
+                className="px-3.5 py-2 text-[13px] font-medium text-stone-500 hover:text-stone-900 rounded-lg hover:bg-stone-50 transition-all duration-150"
+              >
+                {item}
+              </a>
+            ))}
           </div>
 
-          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600">
-            <a href="#menu" className="hover:text-amber-600 transition-colors">Menu</a>
-            <a href="#order" className="hover:text-amber-600 transition-colors">Order Online</a>
-            <a href="#about" className="hover:text-amber-600 transition-colors">Our Story</a>
-            <a href="#catering" className="hover:text-amber-600 transition-colors">Catering</a>
-            <a href="#contact" className="hover:text-amber-600 transition-colors">Contact</a>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <button
-              className="relative p-2 rounded-full hover:bg-gray-100 transition-colors"
-              onClick={() => setCartCount(c => c + 1)}
-            >
-              <ShoppingCart className="h-5 w-5 text-gray-700" />
-              {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-amber-600 text-white text-xs flex items-center justify-center font-bold">
-                  {cartCount}
+          <div className="flex items-center gap-2">
+            {cartCount > 0 && (
+              <div className="hidden sm:flex items-center gap-2 bg-stone-900 text-white rounded-full pl-4 pr-1.5 py-1.5 text-[13px] font-medium">
+                <ShoppingCart className="h-4 w-4" />
+                <span>{cartCount} items · &#8377;{cartTotal.toLocaleString()}</span>
+                <span className="h-7 w-7 rounded-full bg-white text-stone-900 flex items-center justify-center">
+                  <ArrowRight className="h-3.5 w-3.5" />
                 </span>
-              )}
-            </button>
-            <button
-              className="md:hidden p-2 rounded-full hover:bg-gray-100"
-              onClick={() => setMobileMenu(!mobileMenu)}
-            >
+              </div>
+            )}
+            {cartCount > 0 && (
+              <button className="sm:hidden relative p-2">
+                <ShoppingCart className="h-5 w-5 text-stone-700" />
+                <span className="absolute -top-0.5 -right-0.5 h-4.5 w-4.5 min-w-[18px] rounded-full bg-stone-900 text-white text-[10px] flex items-center justify-center font-semibold">{cartCount}</span>
+              </button>
+            )}
+            <button className="md:hidden p-2 rounded-lg hover:bg-stone-50" onClick={() => setMobileMenu(!mobileMenu)}>
               {mobileMenu ? <X className="h-5 w-5" /> : <MenuIcon className="h-5 w-5" />}
             </button>
           </div>
         </div>
 
         {mobileMenu && (
-          <div className="md:hidden border-t border-gray-100 bg-white px-4 py-4 space-y-3 text-sm font-medium text-gray-600">
-            <a href="#menu" className="block py-2">Menu</a>
-            <a href="#order" className="block py-2">Order Online</a>
-            <a href="#about" className="block py-2">Our Story</a>
-            <a href="#catering" className="block py-2">Catering</a>
-            <a href="#contact" className="block py-2">Contact</a>
+          <div className="md:hidden border-t border-stone-100 bg-white px-5 py-3">
+            {['Menu', 'Order', 'Story', 'Catering', 'Locations'].map((item) => (
+              <a key={item} href={`#${item.toLowerCase()}`} onClick={() => setMobileMenu(false)} className="block py-2.5 text-[15px] font-medium text-stone-600 hover:text-stone-900">
+                {item}
+              </a>
+            ))}
           </div>
         )}
       </nav>
 
       {/* ── Hero ── */}
-      <section className="relative bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 overflow-hidden">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 py-16 sm:py-24">
-          <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 rounded-full bg-amber-100 text-amber-700 px-4 py-1.5 text-sm font-medium mb-6">
-              <Star className="h-4 w-4 fill-amber-500 text-amber-500" />
-              4.8 ★ · 2,400+ Google Reviews
+      <section className="relative overflow-hidden">
+        <div className="mx-auto max-w-6xl px-5 sm:px-8 pt-16 sm:pt-24 pb-20 sm:pb-32">
+          <FadeIn>
+            <div className="inline-flex items-center gap-2 rounded-full bg-stone-100 text-stone-600 px-4 py-1.5 text-[13px] font-medium mb-8">
+              <div className="flex -space-x-0.5">
+                {[...Array(5)].map((_, i) => <Star key={i} className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />)}
+              </div>
+              <span className="text-stone-400 mx-1">·</span>
+              4.8 from 2,400+ reviews
             </div>
-            <h2 className="text-4xl sm:text-5xl font-extrabold text-gray-900 leading-tight mb-4">
-              Authentic Flavors,<br />
-              <span className="text-amber-600">50+ Years of Legacy</span>
+          </FadeIn>
+
+          <FadeIn delay={0.05}>
+            <h2 className="text-[clamp(2.5rem,6vw,4.5rem)] font-extrabold text-stone-900 leading-[1.05] tracking-[-0.03em] max-w-3xl">
+              Three generations.<br />
+              One kitchen.<br />
+              <span className="text-stone-400">No shortcuts.</span>
             </h2>
-            <p className="text-lg text-gray-600 mb-8 max-w-lg">
-              From our grandmother&apos;s kitchen to your table. Serving traditional recipes passed down through three generations.
+          </FadeIn>
+
+          <FadeIn delay={0.1}>
+            <p className="mt-6 text-lg sm:text-xl text-stone-500 max-w-xl leading-relaxed font-normal">
+              We grind our spices every morning, roll our bread by hand, and cook everything to order. Since 1972.
             </p>
-            <div className="flex flex-wrap gap-3">
-              <a
-                href="#order"
-                className="inline-flex items-center gap-2 rounded-xl bg-amber-600 text-white px-6 py-3 font-semibold hover:bg-amber-700 transition-colors shadow-lg shadow-amber-200"
-              >
-                <ShoppingCart className="h-5 w-5" />
-                Order Online
+          </FadeIn>
+
+          <FadeIn delay={0.15}>
+            <div className="flex flex-wrap gap-3 mt-10">
+              <a href="#order" className="inline-flex items-center gap-2 rounded-full bg-stone-900 text-white px-7 py-3.5 text-[15px] font-semibold hover:bg-stone-800 transition-all duration-200 active:scale-[0.98]">
+                Order online
+                <ArrowRight className="h-4 w-4" />
               </a>
-              <a
-                href="#menu"
-                className="inline-flex items-center gap-2 rounded-xl bg-white text-gray-700 px-6 py-3 font-semibold border border-gray-200 hover:bg-gray-50 transition-colors"
-              >
-                View Full Menu
-                <ChevronRight className="h-4 w-4" />
+              <a href="#menu" className="inline-flex items-center gap-2 rounded-full bg-stone-100 text-stone-700 px-7 py-3.5 text-[15px] font-semibold hover:bg-stone-200 transition-all duration-200">
+                See the menu
               </a>
             </div>
-          </div>
+          </FadeIn>
+
+          <FadeIn delay={0.2}>
+            <div className="flex flex-wrap gap-x-8 gap-y-3 mt-14 text-[13px] text-stone-500">
+              <span className="flex items-center gap-2"><Clock className="h-4 w-4 text-stone-400" /> Open today 11 AM – 11 PM</span>
+              <span className="flex items-center gap-2"><MapPin className="h-4 w-4 text-stone-400" /> 3 locations</span>
+              <span className="flex items-center gap-2"><Truck className="h-4 w-4 text-stone-400" /> Free delivery above &#8377;500</span>
+            </div>
+          </FadeIn>
         </div>
-        {/* Decorative circles */}
-        <div className="absolute top-10 right-10 w-72 h-72 rounded-full bg-amber-200/30 blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 w-48 h-48 rounded-full bg-orange-200/40 blur-2xl" />
+
+        {/* Decorative grid dots */}
+        <div className="absolute top-0 right-0 w-1/2 h-full opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle, #000 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
       </section>
 
-      {/* ── Quick Info Bar ── */}
-      <section className="bg-gray-900 text-white">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 py-4 flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-sm">
-          <div className="flex items-center gap-2">
-            <Clock className="h-4 w-4 text-amber-400" />
-            <span>Open Today: 11 AM – 11 PM</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <MapPin className="h-4 w-4 text-amber-400" />
-            <span>3 Locations in City</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <Phone className="h-4 w-4 text-amber-400" />
-            <span>+91 98XXX XXXXX</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <Truck className="h-4 w-4 text-amber-400" />
-            <span>Free Delivery Above ₹500</span>
-          </div>
+      {/* ── Stats Bar ── */}
+      <section className="border-y border-stone-100">
+        <div className="mx-auto max-w-6xl px-5 sm:px-8 py-8 sm:py-10 grid grid-cols-2 sm:grid-cols-4 gap-8">
+          {[
+            { num: '52', label: 'Years of legacy', icon: Award },
+            { num: '3', label: 'City locations', icon: MapPin },
+            { num: '40+', label: 'Menu items', icon: Utensils },
+            { num: '2,400+', label: 'Happy reviews', icon: Heart },
+          ].map((s, i) => (
+            <FadeIn key={s.label} delay={i * 0.05}>
+              <div className="flex items-start gap-3">
+                <div className="mt-0.5 h-9 w-9 rounded-xl bg-stone-50 flex items-center justify-center shrink-0">
+                  <s.icon className="h-4.5 w-4.5 text-stone-400" />
+                </div>
+                <div>
+                  <div className="text-2xl sm:text-3xl font-bold text-stone-900 tracking-tight">{s.num}</div>
+                  <div className="text-[13px] text-stone-500 mt-0.5">{s.label}</div>
+                </div>
+              </div>
+            </FadeIn>
+          ))}
         </div>
       </section>
 
-      {/* ── Menu Section ── */}
-      <section id="menu" className="py-16 sm:py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="text-center mb-10">
-            <h2 className="text-3xl font-extrabold text-gray-900 mb-2">Our Menu</h2>
-            <p className="text-gray-500">Authentic recipes, fresh ingredients, made with love</p>
-          </div>
+      {/* ── Menu ── */}
+      <section id="menu" className="py-16 sm:py-24">
+        <div className="mx-auto max-w-6xl px-5 sm:px-8">
+          <FadeIn>
+            <div className="flex items-end justify-between mb-10">
+              <div>
+                <h2 className="text-3xl sm:text-4xl font-extrabold text-stone-900 tracking-[-0.02em]">The menu</h2>
+                <p className="text-stone-500 mt-2 text-[15px]">Every dish made from scratch, every day.</p>
+              </div>
+              <div className="hidden sm:flex items-center gap-1 text-[13px] text-stone-400">
+                <Leaf className="h-4 w-4 text-green-600" /> Veg
+                <span className="mx-2 text-stone-200">·</span>
+                <Flame className="h-4 w-4 text-red-500" /> Spicy
+              </div>
+            </div>
+          </FadeIn>
 
-          {/* Category Tabs */}
-          <div className="flex justify-center gap-2 mb-10 flex-wrap">
-            {MENU_ITEMS.map((cat) => (
-              <button
-                key={cat.category}
-                onClick={() => setActiveCategory(cat.category)}
-                className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${
-                  activeCategory === cat.category
-                    ? 'bg-amber-600 text-white shadow-md'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                }`}
-              >
-                {cat.category}
-              </button>
+          {/* Category pills */}
+          <FadeIn delay={0.05}>
+            <div className="flex gap-1.5 mb-8 overflow-x-auto pb-2 -mx-5 px-5 sm:mx-0 sm:px-0 no-scrollbar">
+              {CATEGORIES.map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => setActiveCategory(cat)}
+                  className={`px-4 py-2 rounded-full text-[13px] font-medium whitespace-nowrap transition-all duration-200 ${
+                    activeCategory === cat
+                      ? 'bg-stone-900 text-white'
+                      : 'bg-stone-50 text-stone-500 hover:bg-stone-100 hover:text-stone-700'
+                  }`}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
+          </FadeIn>
+
+          {/* Menu Grid */}
+          <div className="grid sm:grid-cols-2 gap-x-8 gap-y-1 divide-y sm:divide-y-0 divide-stone-100">
+            {filteredMenu.map((item, i) => (
+              <FadeIn key={item.name} delay={Math.min(i * 0.03, 0.3)}>
+                <MenuCard item={item} onAdd={() => addToCart(item.name)} />
+              </FadeIn>
             ))}
           </div>
+        </div>
+      </section>
 
-          {/* Menu Items */}
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {MENU_ITEMS.find(c => c.category === activeCategory)?.items.map((item) => (
-              <div
-                key={item.name}
-                className="group rounded-2xl border border-gray-100 bg-white p-5 hover:shadow-lg hover:border-amber-200 transition-all"
-              >
-                <div className="flex items-start justify-between mb-3">
-                  <div className="text-3xl">{item.img}</div>
-                  {item.tag && (
-                    <span className="rounded-full bg-amber-100 text-amber-700 px-3 py-0.5 text-xs font-medium">
-                      {item.tag}
-                    </span>
-                  )}
+      {/* ── Order CTA ── */}
+      <section id="order" className="relative overflow-hidden">
+        <div className="mx-auto max-w-6xl px-5 sm:px-8 py-16 sm:py-20">
+          <FadeIn>
+            <div className="rounded-3xl bg-stone-900 text-white px-8 sm:px-14 py-12 sm:py-16 relative overflow-hidden">
+              <div className="relative z-10 max-w-xl">
+                <div className="inline-flex items-center gap-2 text-[13px] font-medium text-stone-400 mb-4">
+                  <span className="h-1.5 w-1.5 rounded-full bg-green-400 animate-pulse" />
+                  Now accepting orders
                 </div>
-                <h3 className="font-bold text-gray-900 mb-1">{item.name}</h3>
-                <p className="text-sm text-gray-500 mb-3">{item.desc}</p>
-                <div className="flex items-center justify-between">
-                  <span className="text-lg font-bold text-amber-600">{item.price}</span>
-                  <button
-                    className="rounded-lg bg-amber-600 text-white px-4 py-1.5 text-sm font-medium hover:bg-amber-700 transition-colors flex items-center gap-1"
-                    onClick={() => setCartCount(c => c + 1)}
-                  >
-                    Add <ShoppingCart className="h-3.5 w-3.5" />
+                <h2 className="text-3xl sm:text-4xl font-extrabold tracking-[-0.02em] mb-4">
+                  Order directly.<br />Zero commission.
+                </h2>
+                <p className="text-stone-400 text-[15px] leading-relaxed mb-8">
+                  Why pay 25–30% to delivery apps? Order from us directly — same food, same speed, better price. Pickup in 20 minutes or delivery to your door.
+                </p>
+                <div className="flex flex-wrap gap-3">
+                  <button className="inline-flex items-center gap-2 rounded-full bg-white text-stone-900 px-7 py-3.5 text-[15px] font-semibold hover:bg-stone-100 transition-all duration-200 active:scale-[0.98]">
+                    <Timer className="h-4.5 w-4.5" />
+                    Order for pickup
+                  </button>
+                  <button className="inline-flex items-center gap-2 rounded-full bg-stone-800 text-white px-7 py-3.5 text-[15px] font-semibold hover:bg-stone-700 transition-all duration-200 border border-stone-700">
+                    <Truck className="h-4.5 w-4.5" />
+                    Order delivery
                   </button>
                 </div>
               </div>
-            ))}
-          </div>
-
-          <div className="text-center mt-8">
-            <button className="inline-flex items-center gap-2 text-amber-600 font-semibold hover:text-amber-700 transition-colors">
-              View Full Menu (40+ items) <ArrowRight className="h-4 w-4" />
-            </button>
-          </div>
+              {/* Decorative */}
+              <div className="absolute top-0 right-0 w-1/2 h-full opacity-[0.04] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle, #fff 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
+            </div>
+          </FadeIn>
         </div>
       </section>
 
-      {/* ── Online Ordering CTA ── */}
-      <section id="order" className="bg-gradient-to-r from-amber-600 to-orange-600 py-16">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 text-center text-white">
-          <h2 className="text-3xl font-extrabold mb-3">Order Directly — Zero Commission</h2>
-          <p className="text-amber-100 mb-8 max-w-lg mx-auto">
-            Skip the middlemen. Order directly from us and save. Pickup in 20 mins or delivery to your door.
-          </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <button className="inline-flex items-center gap-2 rounded-xl bg-white text-amber-700 px-8 py-3.5 font-bold hover:bg-amber-50 transition-colors shadow-lg">
-              <ShoppingCart className="h-5 w-5" />
-              Order for Pickup
-            </button>
-            <button className="inline-flex items-center gap-2 rounded-xl bg-amber-800 text-white px-8 py-3.5 font-bold hover:bg-amber-900 transition-colors border border-amber-500">
-              <Truck className="h-5 w-5" />
-              Order for Delivery
-            </button>
-          </div>
-          <p className="text-amber-200 text-sm mt-4">Use code WELCOME10 for 10% off your first order</p>
-        </div>
-      </section>
-
-      {/* ── About / Story ── */}
-      <section id="about" className="py-16 sm:py-20 bg-amber-50/50">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="grid sm:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-3xl font-extrabold text-gray-900 mb-4">Our Story</h2>
-              <p className="text-gray-600 mb-4 leading-relaxed">
-                What started as a small street stall in 1972 has grown into one of the city&apos;s most beloved restaurants. Our founder believed that great food doesn&apos;t need to be complicated — just honest ingredients, traditional techniques, and a whole lot of heart.
-              </p>
-              <p className="text-gray-600 mb-6 leading-relaxed">
-                Three generations later, we still grind our spices fresh every morning, make our bread by hand, and cook each dish to order. Some things are worth keeping the old way.
-              </p>
-              <div className="grid grid-cols-3 gap-4">
-                <div className="text-center p-3 rounded-xl bg-white border border-gray-100">
-                  <div className="text-2xl font-bold text-amber-600">50+</div>
-                  <div className="text-xs text-gray-500 mt-1">Years</div>
-                </div>
-                <div className="text-center p-3 rounded-xl bg-white border border-gray-100">
-                  <div className="text-2xl font-bold text-amber-600">3</div>
-                  <div className="text-xs text-gray-500 mt-1">Locations</div>
-                </div>
-                <div className="text-center p-3 rounded-xl bg-white border border-gray-100">
-                  <div className="text-2xl font-bold text-amber-600">2.4K+</div>
-                  <div className="text-xs text-gray-500 mt-1">Reviews</div>
+      {/* ── Story ── */}
+      <section id="story" className="py-16 sm:py-24 border-t border-stone-100">
+        <div className="mx-auto max-w-6xl px-5 sm:px-8">
+          <div className="grid sm:grid-cols-2 gap-16 items-start">
+            <FadeIn>
+              <div>
+                <div className="text-[13px] font-medium text-stone-400 uppercase tracking-wider mb-4">Our story</div>
+                <h2 className="text-3xl sm:text-4xl font-extrabold text-stone-900 tracking-[-0.02em] mb-6">
+                  Started at a street corner.<br />
+                  <span className="text-stone-400">Now in three locations.</span>
+                </h2>
+                <div className="space-y-4 text-[15px] text-stone-600 leading-relaxed">
+                  <p>
+                    In 1972, our grandmother set up a small stall with one tawa, five dishes, and a belief that honest food speaks for itself. Word spread. The stall became a shop. The shop became a restaurant.
+                  </p>
+                  <p>
+                    Three generations later, we still follow her rules: grind spices fresh every morning, never use frozen ingredients, and treat every plate like it&apos;s going to family. The kitchen has grown, but the standards haven&apos;t changed.
+                  </p>
+                  <p>
+                    Today, Heritage Kitchen serves 800+ meals daily across three locations — and every single one starts with the same recipe book our grandmother wrote by hand.
+                  </p>
                 </div>
               </div>
-            </div>
-            <div className="grid grid-cols-2 gap-3">
-              <div className="rounded-2xl bg-amber-200/60 h-40 flex items-center justify-center text-4xl">🍳</div>
-              <div className="rounded-2xl bg-orange-200/60 h-40 flex items-center justify-center text-4xl mt-6">🧑‍🍳</div>
-              <div className="rounded-2xl bg-yellow-200/60 h-40 flex items-center justify-center text-4xl -mt-3">🏪</div>
-              <div className="rounded-2xl bg-red-200/40 h-40 flex items-center justify-center text-4xl mt-3">🎉</div>
-            </div>
+            </FadeIn>
+
+            <FadeIn delay={0.1}>
+              <div className="space-y-4">
+                {[
+                  { year: '1972', event: 'Founded as a street-side stall with five dishes' },
+                  { year: '1985', event: 'Opened first permanent restaurant at Hazratganj' },
+                  { year: '2003', event: 'Second location at City Centre Mall' },
+                  { year: '2018', event: 'Third location on Airport Road' },
+                  { year: '2024', event: 'Launched direct online ordering — 0% commission' },
+                  { year: '2026', event: '2,400+ Google reviews, 200+ catered events' },
+                ].map((milestone, i) => (
+                  <div key={milestone.year} className="flex gap-4 group">
+                    <div className="flex flex-col items-center">
+                      <div className="h-8 w-8 rounded-full bg-stone-100 group-hover:bg-stone-900 text-stone-500 group-hover:text-white flex items-center justify-center text-[11px] font-bold transition-all duration-200 shrink-0">
+                        {milestone.year.slice(2)}
+                      </div>
+                      {i < 5 && <div className="w-px h-full bg-stone-100 mt-1" />}
+                    </div>
+                    <div className="pb-4">
+                      <div className="text-[13px] font-semibold text-stone-900">{milestone.year}</div>
+                      <div className="text-[13px] text-stone-500">{milestone.event}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </FadeIn>
           </div>
         </div>
       </section>
 
       {/* ── Reviews ── */}
-      <section className="py-16 sm:py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="text-center mb-10">
-            <h2 className="text-3xl font-extrabold text-gray-900 mb-2">What People Say</h2>
-            <div className="flex items-center justify-center gap-2 text-amber-500">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="h-5 w-5 fill-amber-400" />
-              ))}
-              <span className="text-gray-600 text-sm ml-2">4.8/5 from 2,400+ reviews</span>
-            </div>
-          </div>
-
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {REVIEWS.map((r, i) => (
-              <div key={i} className="rounded-2xl border border-gray-100 bg-white p-5">
-                <div className="flex items-center gap-1 mb-3">
-                  {[...Array(r.rating)].map((_, j) => (
-                    <Star key={j} className="h-4 w-4 fill-amber-400 text-amber-400" />
-                  ))}
-                </div>
-                <p className="text-sm text-gray-600 mb-4 leading-relaxed">&ldquo;{r.text}&rdquo;</p>
-                <div className="flex items-center justify-between text-sm">
-                  <span className="font-semibold text-gray-900">{r.name}</span>
-                  <span className="text-gray-400 text-xs">{r.date}</span>
-                </div>
+      <section className="py-16 sm:py-24 bg-stone-50/50">
+        <div className="mx-auto max-w-6xl px-5 sm:px-8">
+          <FadeIn>
+            <div className="flex items-end justify-between mb-10">
+              <div>
+                <h2 className="text-3xl sm:text-4xl font-extrabold text-stone-900 tracking-[-0.02em]">Reviews</h2>
+                <p className="text-stone-500 mt-2 text-[15px]">From Google, unedited.</p>
               </div>
+              <a href="#" className="hidden sm:inline-flex items-center gap-1.5 text-[13px] font-medium text-stone-500 hover:text-stone-900 transition-colors">
+                All reviews <ArrowUpRight className="h-3.5 w-3.5" />
+              </a>
+            </div>
+          </FadeIn>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {REVIEWS.slice(0, 3).map((r, i) => (
+              <FadeIn key={r.name} delay={i * 0.05}>
+                <div className="rounded-2xl bg-white border border-stone-100 p-6 h-full flex flex-col">
+                  <div className="flex gap-0.5 mb-4">
+                    {[...Array(r.rating)].map((_, j) => (
+                      <Star key={j} className="h-4 w-4 fill-amber-400 text-amber-400" />
+                    ))}
+                  </div>
+                  <p className="text-[14px] text-stone-600 leading-relaxed flex-1">{r.text}</p>
+                  <div className="flex items-center gap-3 mt-5 pt-5 border-t border-stone-100">
+                    <div className="h-8 w-8 rounded-full bg-stone-100 flex items-center justify-center text-[11px] font-semibold text-stone-500">
+                      {r.avatar}
+                    </div>
+                    <div>
+                      <div className="text-[13px] font-semibold text-stone-900">{r.name}</div>
+                      <div className="text-[11px] text-stone-400">{r.date}</div>
+                    </div>
+                  </div>
+                </div>
+              </FadeIn>
             ))}
           </div>
 
-          <div className="text-center mt-6">
-            <a href="#" className="inline-flex items-center gap-2 text-sm text-amber-600 font-medium hover:text-amber-700">
-              <Search className="h-4 w-4" />
-              See all reviews on Google
-            </a>
-          </div>
+          <FadeIn delay={0.2}>
+            <div className="mt-6 grid sm:grid-cols-2 gap-4">
+              {REVIEWS.slice(3).map((r, i) => (
+                <div key={r.name} className="rounded-2xl bg-white border border-stone-100 p-5 flex gap-4">
+                  <div className="h-8 w-8 rounded-full bg-stone-100 flex items-center justify-center text-[11px] font-semibold text-stone-500 shrink-0 mt-0.5">
+                    {r.avatar}
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-[13px] font-semibold text-stone-900">{r.name}</span>
+                      <div className="flex gap-0.5">
+                        {[...Array(r.rating)].map((_, j) => <Star key={j} className="h-3 w-3 fill-amber-400 text-amber-400" />)}
+                      </div>
+                    </div>
+                    <p className="text-[13px] text-stone-500 leading-relaxed">{r.text}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </FadeIn>
         </div>
       </section>
 
       {/* ── Catering ── */}
-      <section id="catering" className="bg-gray-900 text-white py-16 sm:py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="grid sm:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-3xl font-extrabold mb-4">Catering & Events</h2>
-              <p className="text-gray-300 mb-6 leading-relaxed">
-                From intimate gatherings to corporate events and weddings — we bring the full Heritage Kitchen experience to your venue. Custom menus, professional setup, and the same flavors that made us famous.
-              </p>
-              <div className="space-y-3 mb-8">
-                {['Weddings & Receptions', 'Corporate Events & Meetings', 'Birthday & Anniversary Parties', 'Festival & Holiday Catering'].map((item) => (
-                  <div key={item} className="flex items-center gap-3">
-                    <CheckCircle2 className="h-5 w-5 text-amber-400 shrink-0" />
-                    <span className="text-gray-200">{item}</span>
+      <section id="catering" className="py-16 sm:py-24">
+        <div className="mx-auto max-w-6xl px-5 sm:px-8">
+          <FadeIn>
+            <div className="rounded-3xl border border-stone-200 bg-white p-8 sm:p-14">
+              <div className="grid sm:grid-cols-2 gap-12 items-start">
+                <div>
+                  <div className="text-[13px] font-medium text-stone-400 uppercase tracking-wider mb-4">Catering</div>
+                  <h2 className="text-3xl font-extrabold text-stone-900 tracking-[-0.02em] mb-4">
+                    The full experience,<br />at your venue.
+                  </h2>
+                  <p className="text-[15px] text-stone-500 leading-relaxed mb-8">
+                    Weddings, corporate events, festivals. Custom menus from 50 to 500 guests. We handle everything from setup to cleanup.
+                  </p>
+                  <div className="space-y-2.5 mb-8">
+                    {['Custom menu planning with our chef', 'Professional setup and service staff', 'Dietary accommodations (veg, vegan, Jain)', 'Live counters available (chaat, dosa, kebab)'].map(item => (
+                      <div key={item} className="flex items-start gap-2.5">
+                        <CheckCircle2 className="h-4.5 w-4.5 text-stone-400 mt-0.5 shrink-0" />
+                        <span className="text-[14px] text-stone-600">{item}</span>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-              <button className="inline-flex items-center gap-2 rounded-xl bg-amber-600 text-white px-6 py-3 font-semibold hover:bg-amber-700 transition-colors">
-                <CalendarDays className="h-5 w-5" />
-                Get Catering Quote
-              </button>
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="rounded-2xl bg-gray-800 p-6 text-center">
-                <Users className="h-8 w-8 text-amber-400 mx-auto mb-3" />
-                <div className="text-2xl font-bold">50–500</div>
-                <div className="text-gray-400 text-sm">Guests</div>
-              </div>
-              <div className="rounded-2xl bg-gray-800 p-6 text-center">
-                <Utensils className="h-8 w-8 text-amber-400 mx-auto mb-3" />
-                <div className="text-2xl font-bold">40+</div>
-                <div className="text-gray-400 text-sm">Menu Items</div>
-              </div>
-              <div className="rounded-2xl bg-gray-800 p-6 text-center">
-                <Truck className="h-8 w-8 text-amber-400 mx-auto mb-3" />
-                <div className="text-2xl font-bold">Free</div>
-                <div className="text-gray-400 text-sm">Setup & Delivery</div>
-              </div>
-              <div className="rounded-2xl bg-gray-800 p-6 text-center">
-                <Star className="h-8 w-8 text-amber-400 mx-auto mb-3" />
-                <div className="text-2xl font-bold">200+</div>
-                <div className="text-gray-400 text-sm">Events Done</div>
+                  <button className="inline-flex items-center gap-2 rounded-full bg-stone-900 text-white px-7 py-3.5 text-[15px] font-semibold hover:bg-stone-800 transition-all duration-200 active:scale-[0.98]">
+                    <Mail className="h-4.5 w-4.5" />
+                    Get a quote
+                  </button>
+                </div>
+
+                <div className="grid grid-cols-2 gap-3">
+                  {[
+                    { num: '50–500', label: 'Guests', icon: Users },
+                    { num: '40+', label: 'Dishes', icon: Utensils },
+                    { num: '200+', label: 'Events done', icon: CalendarDays },
+                    { num: '4.9', label: 'Event rating', icon: Star },
+                  ].map(s => (
+                    <div key={s.label} className="rounded-2xl bg-stone-50 p-5 text-center">
+                      <s.icon className="h-5 w-5 text-stone-400 mx-auto mb-3" />
+                      <div className="text-xl font-bold text-stone-900">{s.num}</div>
+                      <div className="text-[12px] text-stone-500 mt-1">{s.label}</div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
+          </FadeIn>
         </div>
       </section>
 
-      {/* ── Location & Hours ── */}
-      <section id="contact" className="py-16 sm:py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <h2 className="text-3xl font-extrabold text-gray-900 text-center mb-10">Find Us</h2>
+      {/* ── Locations ── */}
+      <section id="locations" className="py-16 sm:py-24 border-t border-stone-100">
+        <div className="mx-auto max-w-6xl px-5 sm:px-8">
+          <FadeIn>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-stone-900 tracking-[-0.02em] mb-2">Locations</h2>
+            <p className="text-stone-500 text-[15px] mb-10">Three spots, one standard.</p>
+          </FadeIn>
 
-          <div className="grid sm:grid-cols-3 gap-6">
+          <div className="grid sm:grid-cols-3 gap-4">
             {[
-              { name: 'Main Branch — Hazratganj', addr: '14 MG Road, Hazratganj', hours: '11 AM – 11 PM', phone: '+91 98XXX XXXXX' },
-              { name: 'City Centre Mall', addr: 'Food Court, Level 3', hours: '10 AM – 10 PM', phone: '+91 98XXX XXXXX' },
-              { name: 'Airport Road', addr: 'Near Terminal 1, Airport Rd', hours: '8 AM – 12 AM', phone: '+91 98XXX XXXXX' },
-            ].map((loc) => (
-              <div key={loc.name} className="rounded-2xl border border-gray-100 bg-white p-6 hover:shadow-md transition-shadow">
-                {/* Map placeholder */}
-                <div className="rounded-xl bg-gray-100 h-32 mb-4 flex items-center justify-center">
-                  <MapPin className="h-8 w-8 text-gray-300" />
+              { name: 'Hazratganj', sub: 'Main branch · Flagship', addr: '14 MG Road, Hazratganj', hours: '11 AM – 11 PM', since: 'Since 1985' },
+              { name: 'City Centre Mall', sub: 'Food court · Level 3', addr: 'City Centre, Ashok Marg', hours: '10 AM – 10 PM', since: 'Since 2003' },
+              { name: 'Airport Road', sub: 'Near Terminal 1', addr: 'Plot 7, Airport Road', hours: '8 AM – 12 AM', since: 'Since 2018' },
+            ].map((loc, i) => (
+              <FadeIn key={loc.name} delay={i * 0.05}>
+                <div className="rounded-2xl border border-stone-100 bg-white p-6 hover:border-stone-300 transition-colors duration-200 group">
+                  {/* Map placeholder */}
+                  <div className="rounded-xl bg-stone-50 h-36 mb-5 flex items-center justify-center overflow-hidden relative">
+                    <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'radial-gradient(circle, #000 1px, transparent 1px)', backgroundSize: '16px 16px' }} />
+                    <MapPin className="h-6 w-6 text-stone-300 group-hover:text-stone-500 transition-colors" />
+                  </div>
+                  <h3 className="font-semibold text-stone-900 text-[15px]">{loc.name}</h3>
+                  <div className="text-[12px] text-stone-400 mt-0.5 mb-3">{loc.sub}</div>
+                  <div className="space-y-1.5 text-[13px] text-stone-500">
+                    <div className="flex items-center gap-2"><MapPin className="h-3.5 w-3.5 text-stone-400 shrink-0" />{loc.addr}</div>
+                    <div className="flex items-center gap-2"><Clock className="h-3.5 w-3.5 text-stone-400 shrink-0" />{loc.hours}</div>
+                  </div>
+                  <button className="mt-4 w-full rounded-xl bg-stone-50 text-stone-600 py-2.5 text-[13px] font-medium hover:bg-stone-100 transition-colors flex items-center justify-center gap-2">
+                    Get directions <ArrowUpRight className="h-3.5 w-3.5" />
+                  </button>
                 </div>
-                <h3 className="font-bold text-gray-900 mb-2">{loc.name}</h3>
-                <div className="space-y-2 text-sm text-gray-500">
-                  <div className="flex items-center gap-2">
-                    <MapPin className="h-4 w-4 text-gray-400 shrink-0" />
-                    {loc.addr}
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Clock className="h-4 w-4 text-gray-400 shrink-0" />
-                    {loc.hours}
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Phone className="h-4 w-4 text-gray-400 shrink-0" />
-                    {loc.phone}
-                  </div>
-                </div>
-                <button className="mt-4 w-full rounded-lg bg-gray-100 text-gray-700 py-2 text-sm font-medium hover:bg-gray-200 transition-colors flex items-center justify-center gap-2">
-                  <MapPin className="h-4 w-4" /> Get Directions
-                </button>
-              </div>
+              </FadeIn>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── WhatsApp Floating Button ── */}
-      <div className="fixed bottom-6 right-6 z-50">
-        <button className="h-14 w-14 rounded-full bg-green-500 text-white flex items-center justify-center shadow-lg hover:bg-green-600 transition-colors hover:scale-105 transform">
-          <MessageSquare className="h-7 w-7" />
+      {/* ── WhatsApp ── */}
+      <div className="fixed bottom-6 right-6 z-50 group">
+        <button className="h-14 w-14 rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-lg shadow-green-500/20 hover:shadow-green-500/30 hover:scale-105 transition-all duration-200">
+          <MessageSquare className="h-6 w-6" />
         </button>
+        <div className="absolute bottom-full right-0 mb-2 bg-stone-900 text-white text-[12px] font-medium px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+          Chat on WhatsApp
+        </div>
       </div>
 
       {/* ── Footer ── */}
-      <footer className="bg-gray-900 text-white pt-12 pb-6">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="grid sm:grid-cols-4 gap-8 mb-10">
-            <div>
+      <footer className="bg-stone-900 text-white">
+        <div className="mx-auto max-w-6xl px-5 sm:px-8 pt-14 pb-8">
+          <div className="grid sm:grid-cols-4 gap-10 mb-14">
+            <div className="sm:col-span-1">
               <div className="flex items-center gap-3 mb-4">
-                <div className="h-10 w-10 rounded-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-white font-bold text-lg">
-                  H
-                </div>
+                <div className="h-9 w-9 rounded-[10px] bg-white/10 flex items-center justify-center text-white font-semibold text-sm">HK</div>
                 <div>
-                  <div className="font-bold">Heritage Kitchen</div>
-                  <div className="text-xs text-gray-400">Est. 1972</div>
+                  <div className="font-semibold text-[15px]">Heritage Kitchen</div>
+                  <div className="text-[11px] text-stone-500 tracking-wide uppercase">Since 1972</div>
                 </div>
               </div>
-              <p className="text-sm text-gray-400">Authentic Indian cuisine, passed down through three generations.</p>
+              <p className="text-[13px] text-stone-500 leading-relaxed">Three generations of authentic Indian cuisine. No shortcuts, no compromises.</p>
             </div>
             <div>
-              <h3 className="font-semibold mb-3 text-gray-200">Quick Links</h3>
-              <div className="space-y-2 text-sm text-gray-400">
-                <a href="#menu" className="block hover:text-white">Menu</a>
-                <a href="#order" className="block hover:text-white">Order Online</a>
-                <a href="#catering" className="block hover:text-white">Catering</a>
-                <a href="#about" className="block hover:text-white">Our Story</a>
+              <div className="text-[12px] font-medium text-stone-500 uppercase tracking-wider mb-4">Navigate</div>
+              <div className="space-y-2.5 text-[14px]">
+                {['Menu', 'Order online', 'Our story', 'Catering', 'Locations'].map(link => (
+                  <a key={link} href="#" className="block text-stone-400 hover:text-white transition-colors">{link}</a>
+                ))}
               </div>
             </div>
             <div>
-              <h3 className="font-semibold mb-3 text-gray-200">Hours</h3>
-              <div className="space-y-2 text-sm text-gray-400">
-                <div>Mon–Thu: 11 AM – 10 PM</div>
-                <div>Fri–Sat: 11 AM – 11 PM</div>
-                <div>Sunday: 10 AM – 10 PM</div>
+              <div className="text-[12px] font-medium text-stone-500 uppercase tracking-wider mb-4">Hours</div>
+              <div className="space-y-2 text-[14px] text-stone-400">
+                <div>Mon – Thu <span className="text-stone-500 float-right">11a – 10p</span></div>
+                <div>Fri – Sat <span className="text-stone-500 float-right">11a – 11p</span></div>
+                <div>Sunday <span className="text-stone-500 float-right">10a – 10p</span></div>
               </div>
             </div>
             <div>
-              <h3 className="font-semibold mb-3 text-gray-200">Follow Us</h3>
-              <div className="flex gap-3">
-                <button className="h-10 w-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-colors">
-                  <Instagram className="h-5 w-5" />
-                </button>
-                <button className="h-10 w-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-colors">
-                  <Facebook className="h-5 w-5" />
-                </button>
-                <button className="h-10 w-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-colors">
-                  <Globe className="h-5 w-5" />
-                </button>
+              <div className="text-[12px] font-medium text-stone-500 uppercase tracking-wider mb-4">Connect</div>
+              <div className="space-y-2.5 text-[14px]">
+                <a href="#" className="flex items-center gap-2 text-stone-400 hover:text-white transition-colors"><Phone className="h-4 w-4" /> +91 98XXX XXXXX</a>
+                <a href="#" className="flex items-center gap-2 text-stone-400 hover:text-white transition-colors"><Mail className="h-4 w-4" /> hello@heritagekitchen.in</a>
+                <a href="#" className="flex items-center gap-2 text-stone-400 hover:text-white transition-colors"><Instagram className="h-4 w-4" /> @heritagekitchen</a>
               </div>
             </div>
           </div>
 
-          <div className="border-t border-gray-800 pt-6 flex flex-wrap items-center justify-between gap-4 text-xs text-gray-500">
-            <span>&copy; 2026 Heritage Kitchen. All rights reserved.</span>
-            <div className="flex items-center gap-1">
-              <span>Built by</span>
-              <a href="https://kraftai.in" className="text-amber-400 font-medium hover:text-amber-300">KraftAI</a>
+          <div className="border-t border-stone-800 pt-6 flex flex-wrap items-center justify-between gap-4 text-[12px] text-stone-600">
+            <span>&copy; 2026 Heritage Kitchen</span>
+            <div className="flex items-center gap-1.5">
+              <span>Website by</span>
+              <a href="https://kraftai.in" className="text-stone-400 hover:text-white font-medium transition-colors">KraftAI</a>
             </div>
           </div>
         </div>

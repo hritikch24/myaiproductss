@@ -135,6 +135,92 @@ export default function ProspectPage({
         </div>
       </section>
 
+      {/* Why Customers Leave — Real Stats */}
+      <section className="border-t border-slate-800 bg-slate-900/50 py-16 sm:py-20">
+        <div className="mx-auto max-w-4xl px-6">
+          <div className="text-center">
+            <p className="mb-3 text-sm font-medium uppercase tracking-widest text-amber-400">
+              Industry data
+            </p>
+            <h2 className="text-3xl font-bold sm:text-4xl">
+              Why Customers Leave Before They Arrive
+            </h2>
+            <p className="mt-4 text-lg text-slate-400 max-w-2xl mx-auto">
+              New customers and tourists don&apos;t walk into random restaurants. They search first.
+              Here&apos;s what happens when they can&apos;t find you.
+            </p>
+          </div>
+
+          {/* Big stat callout */}
+          <div className="mt-12 rounded-2xl border border-amber-500/20 bg-amber-500/5 p-8 text-center">
+            <p className="text-5xl sm:text-6xl font-extrabold text-amber-400">77%</p>
+            <p className="mt-3 text-lg text-slate-300">
+              of diners check a restaurant&apos;s website before visiting
+            </p>
+            <p className="mt-1 text-sm text-slate-500">
+              Source: Restaurant Dive — National Survey
+            </p>
+          </div>
+
+          {/* Stats grid */}
+          <div className="mt-8 grid gap-4 sm:grid-cols-2">
+            <div className="rounded-xl border border-slate-700/50 bg-slate-800/50 p-6">
+              <p className="text-3xl font-bold text-indigo-400">64%</p>
+              <p className="mt-2 text-sm text-slate-300">
+                of diners check Google Search or Google Maps before deciding where to eat
+              </p>
+              <p className="mt-1 text-xs text-slate-600">Source: Restroworks — Google Restaurant Search Statistics</p>
+            </div>
+            <div className="rounded-xl border border-slate-700/50 bg-slate-800/50 p-6">
+              <p className="text-3xl font-bold text-red-400">76%</p>
+              <p className="mt-2 text-sm text-slate-300">
+                of people who search &quot;restaurant near me&quot; visit a place within 24 hours
+              </p>
+              <p className="mt-1 text-xs text-slate-600">Source: Google / On The Map Marketing</p>
+            </div>
+            <div className="rounded-xl border border-slate-700/50 bg-slate-800/50 p-6">
+              <p className="text-3xl font-bold text-amber-400">500M</p>
+              <p className="mt-2 text-sm text-slate-300">
+                restaurant searches on Google Maps every month — and you&apos;re not showing up properly
+              </p>
+              <p className="mt-1 text-xs text-slate-600">Source: SQ Magazine — Google Maps Statistics 2026</p>
+            </div>
+            <div className="rounded-xl border border-slate-700/50 bg-slate-800/50 p-6">
+              <p className="text-3xl font-bold text-emerald-400">0%</p>
+              <p className="mt-2 text-sm text-slate-300">
+                of Google Maps &quot;Menu&quot; buttons work without a website — customers tap it, get nothing, and leave
+              </p>
+              <p className="mt-1 text-xs text-slate-600">Source: Marketpath — Why Restaurants Need A Website</p>
+            </div>
+          </div>
+
+          {/* The journey callout */}
+          <div className="mt-10 rounded-2xl border border-slate-700/50 bg-slate-800/30 p-6 sm:p-8">
+            <h3 className="text-lg font-semibold text-white mb-5">
+              What a new customer sees right now
+            </h3>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-0">
+              {[
+                { step: '1', text: `Searches "${businessName}" on Google Maps`, color: 'text-slate-300' },
+                { step: '2', text: 'Taps "Website" button', color: 'text-slate-300' },
+                { step: '3', text: 'Nothing loads — no website exists', color: 'text-red-400' },
+                { step: '4', text: 'Goes to the next restaurant that has one', color: 'text-red-400' },
+              ].map((item, i) => (
+                <div key={i} className="flex items-center gap-3 sm:flex-1">
+                  <div className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold ${i < 2 ? 'bg-slate-700 text-slate-300' : 'bg-red-500/20 text-red-400'}`}>
+                    {item.step}
+                  </div>
+                  <p className={`text-sm ${item.color}`}>{item.text}</p>
+                  {i < 3 && (
+                    <ArrowRight className="hidden sm:block h-4 w-4 text-slate-600 shrink-0 ml-auto mr-2" />
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* What We'd Build */}
       <section className="border-t border-slate-800 bg-slate-900/50 py-16 sm:py-20">
         <div className="mx-auto max-w-4xl px-6">
