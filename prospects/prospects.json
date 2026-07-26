@@ -116,27 +116,6 @@
       "pitchDeckBuilt": true
     },
     {
-      "id": "ooowee-bbq",
-      "name": "OooWee BBQ",
-      "type": "food truck",
-      "cuisine": "BBQ",
-      "city": "Charlotte",
-      "state": "NC",
-      "country": "US",
-      "locations": "2 trucks",
-      "established": "2010s",
-      "hasWebsite": false,
-      "websiteStatus": "No own website — only aggregator listings",
-      "onlinePresence": ["Yelp", "StreetFoodFinder", "Roaming Hunger", "Facebook"],
-      "contact": {
-        "phone": "(980) 345-6883"
-      },
-      "pitch": "Popular BBQ food truck operation in Charlotte with 10+ years in business and strong Yelp reviews — but NO website. Catering inquiries, event bookings, and menu info all go through fragmented third-party sites. A website would centralize everything and drive catering revenue.",
-      "packageValue": "$349/mo",
-      "pageBuilt": true,
-      "pitchDeckBuilt": true
-    },
-    {
       "id": "haji-ali-juice",
       "name": "Haji Ali Juice Centre",
       "type": "juice bar / restaurant",
@@ -173,50 +152,6 @@
       "contact": {},
       "pitch": "Legendary highway dhaba on NH1 since 1967 — nearly six decades of feeding travelers. NO website means the next generation of road trippers who search online before stopping can't find your menu, hours, or story.",
       "packageValue": "₹30,000/mo",
-      "pageBuilt": true,
-      "pitchDeckBuilt": true
-    },
-    {
-      "id": "boteco-atx",
-      "name": "Boteco Food Truck",
-      "type": "food truck",
-      "cuisine": "Brazilian Street Food",
-      "city": "Austin",
-      "state": "TX",
-      "country": "US",
-      "locations": "1 truck",
-      "rating": "463+ Yelp reviews, 570+ photos, Featured on Diners Drive-Ins & Dives",
-      "hasWebsite": false,
-      "websiteStatus": "No website — botecoatx.com does not resolve",
-      "onlinePresence": ["Yelp", "Instagram", "Facebook", "DoorDash", "TripAdvisor"],
-      "contact": {
-        "phone": "(347) 251-0671",
-        "instagram": "@botecoatx"
-      },
-      "pitch": "Featured on Diners, Drive-Ins & Dives, recommended by Matthew McConaughey, 463+ Yelp reviews — but NO website. DoorDash takes 20-30% of delivery orders. A website turns TV fame into permanent searchable traffic and direct orders.",
-      "packageValue": "$449/mo",
-      "pageBuilt": true,
-      "pitchDeckBuilt": true
-    },
-    {
-      "id": "la-pinata",
-      "name": "La Piñata Taqueria",
-      "type": "food truck",
-      "cuisine": "Mexican — Tacos, Burritos, Tortas",
-      "city": "Vallejo",
-      "state": "CA",
-      "country": "US",
-      "locations": "1 truck — 809 Broadway St",
-      "rating": "#6 Best Food Truck in US (Yelp 2025), 424+ reviews",
-      "hasWebsite": false,
-      "websiteStatus": "No website at all",
-      "onlinePresence": ["Yelp", "Facebook", "Apple Maps"],
-      "contact": {
-        "phone": "(707) 334-8381",
-        "email": "lapinata.taqueria@gmail.com"
-      },
-      "pitch": "Ranked #6 food truck in the entire US by Yelp, featured in SF Chronicle for best burritos in the Bay Area — but NO website. 424+ reviews and national recognition with no digital home. A website turns that ranking into a permanent sales engine.",
-      "packageValue": "$399/mo",
       "pageBuilt": true,
       "pitchDeckBuilt": true
     },
@@ -260,29 +195,6 @@
       },
       "pitch": "Chennai's oldest vegetarian restaurant chain — serving since 1948, famous sambar-idly, 4+ locations. NO website. 75 years of legacy with no official online presence. Direct ordering would save lakhs in Zomato commissions.",
       "packageValue": "₹40,000/mo",
-      "pageBuilt": true,
-      "pitchDeckBuilt": true
-    },
-    {
-      "id": "capitol-burger",
-      "name": "Capitol Burger",
-      "type": "food truck",
-      "cuisine": "Gourmet Burgers — Fresh Ground, House-Pickled",
-      "city": "Torrey",
-      "state": "UT",
-      "country": "US",
-      "locations": "1 truck",
-      "rating": "4.9★ TripAdvisor, #1 of 21 in Torrey, 282+ Yelp reviews",
-      "hasWebsite": false,
-      "websiteStatus": "No website — capitolburger.com does not resolve",
-      "onlinePresence": ["Yelp", "TripAdvisor", "Facebook", "Instagram"],
-      "contact": {
-        "phone": "(435) 491-0742",
-        "facebook": "@capitolburgertruck",
-        "instagram": "@capitolburgertruck"
-      },
-      "pitch": "#1 restaurant in Torrey, 4.9★ TripAdvisor, 282+ Yelp reviews — gateway to Capitol Reef National Park. NO website. Over a million park visitors per year search for food nearby and find only TripAdvisor listings. Owner has fine-dining background, grinds beef fresh daily.",
-      "packageValue": "$399/mo",
       "pageBuilt": true,
       "pitchDeckBuilt": true
     },
