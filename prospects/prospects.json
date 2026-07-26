@@ -1,0 +1,126 @@
+{
+  "generated": "2026-07-26",
+  "contact": {
+    "phone": "+1 (331) 431-8078",
+    "whatsapp": "+91 8859820935",
+    "email": "hey@kraftai.in",
+    "website": "https://kraftai.in"
+  },
+  "prospects": [
+    {
+      "id": "nandhana-palace",
+      "name": "Nandhana Palace",
+      "type": "restaurant",
+      "cuisine": "Andhra",
+      "city": "Bangalore",
+      "country": "India",
+      "locations": "10+",
+      "established": "2000s",
+      "hasWebsite": false,
+      "websiteStatus": "Domain nandhanarestaurants.com exists but is DEAD (times out)",
+      "onlinePresence": ["Zomato", "Instagram", "Facebook", "Swiggy"],
+      "contact": {
+        "phone": "080 46131111",
+        "instagram": "@nandhanapalace"
+      },
+      "pitch": "10+ location Andhra restaurant chain in Bangalore with a dead website — customers can't find menus, locations, or place orders online. Massive missed opportunity.",
+      "packageValue": "₹75,000/mo"
+    },
+    {
+      "id": "biryani-nawaabs",
+      "name": "Biryani Nawaabs",
+      "type": "restaurant",
+      "cuisine": "Biryani / Mughlai",
+      "city": "Lucknow",
+      "country": "India",
+      "locations": "1",
+      "established": "2010s",
+      "rating": "4.7★ (820+ reviews on Google)",
+      "hasWebsite": false,
+      "websiteStatus": "No website at all",
+      "onlinePresence": ["Zomato", "Instagram", "Facebook"],
+      "contact": {
+        "instagram": "@biryaninawaabs.india",
+        "location": "Kapoorthala Road, Lucknow"
+      },
+      "pitch": "4.7-star rated biryani restaurant with 820+ Google reviews but ZERO web presence. Customers searching online only find Zomato (which takes commission). Own website = direct orders + higher margins.",
+      "packageValue": "₹35,000/mo"
+    },
+    {
+      "id": "lalla-biryani",
+      "name": "Lalla Biryani",
+      "type": "restaurant",
+      "cuisine": "Biryani",
+      "city": "Lucknow",
+      "country": "India",
+      "locations": "1",
+      "established": "1985",
+      "hasWebsite": false,
+      "websiteStatus": "No website at all",
+      "onlinePresence": ["Zomato", "Instagram", "Swiggy"],
+      "contact": {
+        "phone": "9889194949"
+      },
+      "pitch": "Operating since 1985 with legendary status in Lucknow — but invisible online. No website means they're losing the entire tourist + delivery crowd to competitors who show up in Google.",
+      "packageValue": "₹35,000/mo"
+    },
+    {
+      "id": "haji-shabrati",
+      "name": "Haji Shabrati Nihari Wale",
+      "type": "restaurant",
+      "cuisine": "Nihari / Mughlai",
+      "city": "Old Delhi",
+      "country": "India",
+      "locations": "1",
+      "established": "1957",
+      "hasWebsite": false,
+      "websiteStatus": "No website at all",
+      "onlinePresence": ["Zomato", "TripAdvisor", "JustDial"],
+      "contact": {
+        "phone": "+91 9810 786 414",
+        "address": "Shop 722, Haveli Azam Khan, Chitli Qabar, Jama Masjid, Old Delhi"
+      },
+      "pitch": "Legendary nihari shop since 1957 near Jama Masjid — featured on food blogs and travel guides worldwide but has NO website. Tourists Google them and only find third-party reviews. A website with hours, menu, and location map would be transformative.",
+      "packageValue": "₹35,000/mo"
+    },
+    {
+      "id": "cheap-charlies",
+      "name": "Cheap Charlie's Taco Shop",
+      "type": "restaurant",
+      "cuisine": "Tacos / Mexican",
+      "city": "Nashville",
+      "state": "TN",
+      "country": "US",
+      "locations": "4",
+      "hasWebsite": false,
+      "websiteStatus": "No website at all",
+      "onlinePresence": ["Facebook", "Instagram", "DoorDash", "Grubhub"],
+      "contact": {
+        "phone": "(615) 967-7304",
+        "email": "charliezelaya1@gmail.com",
+        "facebook": "@cheapcharliestaco"
+      },
+      "pitch": "4-location taco chain in Nashville with strong reviews but ZERO web presence. Customers can't find menus, hours, or locations without scrolling through Facebook posts. A proper website + online ordering = more revenue per location.",
+      "packageValue": "$499/mo"
+    },
+    {
+      "id": "ooowee-bbq",
+      "name": "OooWee BBQ",
+      "type": "food truck",
+      "cuisine": "BBQ",
+      "city": "Charlotte",
+      "state": "NC",
+      "country": "US",
+      "locations": "2 trucks",
+      "established": "2010s",
+      "hasWebsite": false,
+      "websiteStatus": "No own website — only aggregator listings",
+      "onlinePresence": ["Yelp", "StreetFoodFinder", "Roaming Hunger", "Facebook"],
+      "contact": {
+        "phone": "(980) 345-6883"
+      },
+      "pitch": "Popular BBQ food truck operation in Charlotte with 10+ years in business and strong Yelp reviews — but NO website. Catering inquiries, event bookings, and menu info all go through fragmented third-party sites. A website would centralize everything and drive catering revenue.",
+      "packageValue": "$349/mo"
+    }
+  ]
+}
