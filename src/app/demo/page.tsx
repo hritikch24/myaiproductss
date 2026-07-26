@@ -30,6 +30,10 @@ import {
   Heart,
   Mail,
   Timer,
+  Sparkles,
+  Package,
+  ZoomIn,
+  ChevronLeft,
 } from 'lucide-react';
 
 /* ─── Menu Data ─── */
@@ -69,6 +73,64 @@ const REVIEWS = [
   { name: 'Sarah K.', text: "Found this place while traveling. The samosa and chai alone were worth the detour. You can taste the difference when everything is made fresh.", rating: 5, date: 'Mar 2026', avatar: 'SK' },
   { name: 'Amit D.', text: "Booked catering for our office Diwali event — 80 people. Flawless execution, incredible food, and they handled everything from setup to cleanup.", rating: 5, date: 'Nov 2025', avatar: 'AD' },
   { name: 'Jenny L.', text: "As a tourist, the website made it so easy to find the menu, hours, and directions. Wish every restaurant in India had this level of online presence.", rating: 4, date: 'Dec 2025', avatar: 'JL' },
+];
+
+/* ─── Gallery Data ─── */
+interface GalleryItem {
+  name: string;
+  desc: string;
+  gradient: string;
+  accent: string;
+}
+
+const GALLERY: GalleryItem[] = [
+  { name: 'Heritage Thali', desc: '12-item platter served on brass', gradient: 'from-amber-800 via-orange-700 to-yellow-600', accent: 'Signature' },
+  { name: 'Dum Biryani', desc: 'Sealed pot, 4-hour slow cook', gradient: 'from-amber-900 via-amber-700 to-yellow-500', accent: 'Best seller' },
+  { name: 'Rogan Josh', desc: 'Kashmiri-style braised lamb', gradient: 'from-red-900 via-red-700 to-orange-600', accent: 'Spicy' },
+  { name: 'Crispy Samosa', desc: 'Hand-folded, served with chutneys', gradient: 'from-yellow-800 via-amber-600 to-orange-400', accent: 'Popular' },
+  { name: 'Seekh Kebab', desc: 'Charcoal-grilled minced lamb', gradient: 'from-stone-800 via-red-900 to-orange-800', accent: 'Chef pick' },
+  { name: 'Kulhad Chai', desc: 'Whole-spice Assam in clay cup', gradient: 'from-amber-950 via-amber-800 to-amber-600', accent: 'Iconic' },
+];
+
+/* ─── Combo Data ─── */
+interface ComboOption {
+  category: string;
+  items: { name: string; price: number }[];
+}
+
+const COMBO_OPTIONS: ComboOption[] = [
+  { category: 'Starter', items: [
+    { name: 'Crispy Samosa (2pc)', price: 80 },
+    { name: 'Dahi Puri', price: 120 },
+    { name: 'Seekh Kebab', price: 280 },
+    { name: 'Amritsari Fish', price: 340 },
+  ]},
+  { category: 'Main course', items: [
+    { name: 'Heritage Thali', price: 450 },
+    { name: 'Dum Biryani', price: 380 },
+    { name: 'Rogan Josh + Naan', price: 480 },
+    { name: 'Paneer Lababdar + Roti', price: 380 },
+  ]},
+  { category: 'Drinks', items: [
+    { name: 'Kulhad Chai', price: 50 },
+    { name: 'Mango Lassi', price: 120 },
+    { name: 'Rose Falooda', price: 150 },
+    { name: 'Fresh Lime Soda', price: 60 },
+  ]},
+  { category: 'Dessert', items: [
+    { name: 'Gulab Jamun (2pc)', price: 100 },
+    { name: 'Rose Falooda', price: 150 },
+    { name: 'Kulfi Stick', price: 80 },
+    { name: 'Rasmalai (2pc)', price: 120 },
+  ]},
+];
+
+const PARTY_SIZES = [
+  { label: '2 people', multiplier: 1 },
+  { label: '4 people', multiplier: 2 },
+  { label: '6 people', multiplier: 3 },
+  { label: '10 people', multiplier: 5 },
+  { label: '20 people', multiplier: 10 },
 ];
 
 /* ─── Intersection Observer Hook ─── */
@@ -145,6 +207,10 @@ export default function DemoPage() {
   const [activeCategory, setActiveCategory] = useState<string>('All');
   const [cart, setCart] = useState<Record<string, number>>({});
   const [scrolled, setScrolled] = useState(false);
+  const [galleryIndex, setGalleryIndex] = useState(0);
+  const [zoomedGallery, setZoomedGallery] = useState(false);
+  const [comboSelections, setComboSelections] = useState<Record<string, number>>({});
+  const [partySize, setPartySize] = useState(0);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -163,6 +229,26 @@ export default function DemoPage() {
   const addToCart = (name: string) => {
     setCart(prev => ({ ...prev, [name]: (prev[name] || 0) + 1 }));
   };
+
+  const toggleComboItem = (catIndex: number, itemIndex: number) => {
+    const key = `${catIndex}-${itemIndex}`;
+    setComboSelections(prev => {
+      const next = { ...prev };
+      // Remove other selections in same category
+      Object.keys(next).forEach(k => { if (k.startsWith(`${catIndex}-`)) delete next[k]; });
+      if (prev[key]) return next;
+      next[key] = 1;
+      return next;
+    });
+  };
+
+  const comboTotal = Object.entries(comboSelections).reduce((sum, [key]) => {
+    const [catI, itemI] = key.split('-').map(Number);
+    return sum + (COMBO_OPTIONS[catI]?.items[itemI]?.price || 0);
+  }, 0) * (PARTY_SIZES[partySize]?.multiplier || 1);
+
+  const comboItemCount = Object.keys(comboSelections).length;
+  const comboSavings = Math.round(comboTotal * 0.15);
 
   return (
     <div className="min-h-screen bg-white text-stone-900 antialiased">
@@ -307,6 +393,241 @@ export default function DemoPage() {
               </div>
             </FadeIn>
           ))}
+        </div>
+      </section>
+
+      {/* ── Flavor Gallery ── */}
+      <section className="py-16 sm:py-24 bg-stone-950 text-white overflow-hidden">
+        <div className="mx-auto max-w-6xl px-5 sm:px-8">
+          <FadeIn>
+            <div className="flex items-end justify-between mb-10">
+              <div>
+                <div className="inline-flex items-center gap-2 text-[13px] font-medium text-stone-500 mb-3">
+                  <ZoomIn className="h-4 w-4" /> Tap any dish to zoom in
+                </div>
+                <h2 className="text-3xl sm:text-4xl font-extrabold tracking-[-0.02em]">From our kitchen</h2>
+              </div>
+              <div className="hidden sm:flex items-center gap-2">
+                <button
+                  onClick={() => setGalleryIndex(i => Math.max(0, i - 1))}
+                  className="h-9 w-9 rounded-full bg-stone-800 hover:bg-stone-700 flex items-center justify-center transition-colors"
+                >
+                  <ChevronLeft className="h-4 w-4 text-stone-400" />
+                </button>
+                <button
+                  onClick={() => setGalleryIndex(i => Math.min(GALLERY.length - 1, i + 1))}
+                  className="h-9 w-9 rounded-full bg-stone-800 hover:bg-stone-700 flex items-center justify-center transition-colors"
+                >
+                  <ChevronRight className="h-4 w-4 text-stone-400" />
+                </button>
+              </div>
+            </div>
+          </FadeIn>
+
+          {/* Gallery cards */}
+          <div className="flex gap-4 overflow-x-auto pb-4 -mx-5 px-5 sm:mx-0 sm:px-0 no-scrollbar snap-x snap-mandatory">
+            {GALLERY.map((item, i) => (
+              <button
+                key={item.name}
+                onClick={() => { setGalleryIndex(i); setZoomedGallery(true); }}
+                className="group relative shrink-0 w-[260px] sm:w-[300px] rounded-2xl overflow-hidden snap-start"
+              >
+                {/* Gradient placeholder simulating cinematic photo */}
+                <div className={`aspect-[4/5] bg-gradient-to-br ${item.gradient} relative`}>
+                  {/* Texture overlay */}
+                  <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 30% 40%, rgba(255,255,255,0.3) 0%, transparent 50%), radial-gradient(circle at 70% 60%, rgba(255,255,255,0.15) 0%, transparent 40%)' }} />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/0 to-transparent" />
+                  {/* Badge */}
+                  <div className="absolute top-4 left-4">
+                    <span className="text-[11px] font-semibold text-white/90 bg-white/15 backdrop-blur-sm px-2.5 py-1 rounded-full">{item.accent}</span>
+                  </div>
+                  {/* Zoom hint */}
+                  <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="h-8 w-8 rounded-full bg-white/15 backdrop-blur-sm flex items-center justify-center">
+                      <ZoomIn className="h-4 w-4 text-white" />
+                    </div>
+                  </div>
+                  {/* Info at bottom */}
+                  <div className="absolute bottom-0 left-0 right-0 p-5">
+                    <h3 className="text-lg font-bold text-white">{item.name}</h3>
+                    <p className="text-[13px] text-white/70 mt-0.5">{item.desc}</p>
+                  </div>
+                </div>
+              </button>
+            ))}
+          </div>
+
+          {/* Dot indicators */}
+          <div className="flex justify-center gap-1.5 mt-5">
+            {GALLERY.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setGalleryIndex(i)}
+                className={`h-1.5 rounded-full transition-all duration-300 ${i === galleryIndex ? 'w-6 bg-white' : 'w-1.5 bg-stone-700'}`}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Zoomed overlay */}
+        {zoomedGallery && (
+          <div
+            className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-sm flex items-center justify-center p-6"
+            onClick={() => setZoomedGallery(false)}
+          >
+            <div className="relative max-w-lg w-full" onClick={e => e.stopPropagation()}>
+              <div className={`aspect-[3/4] rounded-3xl bg-gradient-to-br ${GALLERY[galleryIndex].gradient} relative overflow-hidden`}>
+                <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 30% 40%, rgba(255,255,255,0.3) 0%, transparent 50%), radial-gradient(circle at 70% 60%, rgba(255,255,255,0.15) 0%, transparent 40%)' }} />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-8">
+                  <span className="text-[12px] font-semibold text-white/80 bg-white/15 backdrop-blur-sm px-3 py-1 rounded-full">{GALLERY[galleryIndex].accent}</span>
+                  <h3 className="text-2xl font-bold text-white mt-3">{GALLERY[galleryIndex].name}</h3>
+                  <p className="text-[15px] text-white/70 mt-1">{GALLERY[galleryIndex].desc}</p>
+                </div>
+              </div>
+              <button
+                onClick={() => setZoomedGallery(false)}
+                className="absolute -top-3 -right-3 h-10 w-10 rounded-full bg-stone-800 hover:bg-stone-700 flex items-center justify-center text-white transition-colors"
+              >
+                <X className="h-5 w-5" />
+              </button>
+              {/* Nav arrows */}
+              <div className="absolute top-1/2 -translate-y-1/2 -left-14 hidden sm:block">
+                <button
+                  onClick={() => setGalleryIndex(i => Math.max(0, i - 1))}
+                  className="h-10 w-10 rounded-full bg-stone-800/60 hover:bg-stone-700 flex items-center justify-center text-white transition-colors"
+                >
+                  <ChevronLeft className="h-5 w-5" />
+                </button>
+              </div>
+              <div className="absolute top-1/2 -translate-y-1/2 -right-14 hidden sm:block">
+                <button
+                  onClick={() => setGalleryIndex(i => Math.min(GALLERY.length - 1, i + 1))}
+                  className="h-10 w-10 rounded-full bg-stone-800/60 hover:bg-stone-700 flex items-center justify-center text-white transition-colors"
+                >
+                  <ChevronRight className="h-5 w-5" />
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </section>
+
+      {/* ── Party Combo Builder ── */}
+      <section className="py-16 sm:py-24 border-t border-stone-100">
+        <div className="mx-auto max-w-6xl px-5 sm:px-8">
+          <FadeIn>
+            <div className="text-center mb-10">
+              <div className="inline-flex items-center gap-2 rounded-full bg-amber-50 text-amber-700 px-4 py-1.5 text-[13px] font-medium mb-4">
+                <Sparkles className="h-4 w-4" /> Smart Feature
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-stone-900 tracking-[-0.02em]">
+                Party combo builder
+              </h2>
+              <p className="text-stone-500 mt-2 text-[15px] max-w-lg mx-auto">
+                Family gathering? Office lunch? Pick one from each category, set your group size, done. Complete order in one tap.
+              </p>
+            </div>
+          </FadeIn>
+
+          <FadeIn delay={0.05}>
+            <div className="rounded-2xl border border-stone-200 bg-stone-50/50 p-5 sm:p-8">
+              {/* Party size selector */}
+              <div className="mb-8">
+                <div className="text-[13px] font-semibold text-stone-900 mb-3">How many people?</div>
+                <div className="flex gap-2 flex-wrap">
+                  {PARTY_SIZES.map((size, i) => (
+                    <button
+                      key={size.label}
+                      onClick={() => setPartySize(i)}
+                      className={`px-4 py-2 rounded-full text-[13px] font-medium transition-all duration-200 ${
+                        partySize === i
+                          ? 'bg-stone-900 text-white'
+                          : 'bg-white border border-stone-200 text-stone-600 hover:border-stone-300'
+                      }`}
+                    >
+                      {size.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Category columns */}
+              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                {COMBO_OPTIONS.map((cat, catI) => {
+                  const selectedKey = Object.keys(comboSelections).find(k => k.startsWith(`${catI}-`));
+                  return (
+                    <div key={cat.category} className="rounded-xl bg-white border border-stone-100 overflow-hidden">
+                      <div className="px-4 py-3 bg-stone-50 border-b border-stone-100">
+                        <div className="text-[12px] font-semibold text-stone-500 uppercase tracking-wider">{cat.category}</div>
+                      </div>
+                      <div className="p-2">
+                        {cat.items.map((item, itemI) => {
+                          const key = `${catI}-${itemI}`;
+                          const selected = !!comboSelections[key];
+                          return (
+                            <button
+                              key={item.name}
+                              onClick={() => toggleComboItem(catI, itemI)}
+                              className={`w-full text-left px-3 py-2.5 rounded-lg transition-all duration-150 flex items-center justify-between gap-2 ${
+                                selected
+                                  ? 'bg-stone-900 text-white'
+                                  : 'hover:bg-stone-50 text-stone-700'
+                              }`}
+                            >
+                              <span className="text-[13px] font-medium truncate">{item.name}</span>
+                              <span className={`text-[12px] font-semibold shrink-0 ${selected ? 'text-stone-300' : 'text-stone-400'}`}>
+                                &#8377;{item.price}
+                              </span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Summary bar */}
+              <div className="rounded-xl bg-stone-900 text-white p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div>
+                  <div className="flex items-center gap-3 mb-1">
+                    <Package className="h-5 w-5 text-stone-400" />
+                    <span className="text-[15px] font-semibold">
+                      {comboItemCount === 0
+                        ? 'Select items to build your combo'
+                        : `${comboItemCount}/4 categories selected`}
+                    </span>
+                  </div>
+                  {comboItemCount > 0 && (
+                    <div className="flex items-center gap-3 text-[13px] text-stone-400 ml-8">
+                      <span>{PARTY_SIZES[partySize].label}</span>
+                      <span className="text-stone-600">·</span>
+                      <span>&#8377;{comboTotal.toLocaleString()} total</span>
+                      {comboItemCount === 4 && (
+                        <>
+                          <span className="text-stone-600">·</span>
+                          <span className="text-emerald-400 font-medium">Save &#8377;{comboSavings} with combo</span>
+                        </>
+                      )}
+                    </div>
+                  )}
+                </div>
+                <button
+                  className={`inline-flex items-center gap-2 rounded-full px-6 py-3 text-[14px] font-semibold transition-all duration-200 shrink-0 ${
+                    comboItemCount === 4
+                      ? 'bg-white text-stone-900 hover:bg-stone-100 active:scale-[0.98]'
+                      : 'bg-stone-800 text-stone-500 cursor-not-allowed'
+                  }`}
+                >
+                  <ShoppingCart className="h-4 w-4" />
+                  {comboItemCount === 4
+                    ? `Add combo · &#8377;${(comboTotal - comboSavings).toLocaleString()}`
+                    : `Pick ${4 - comboItemCount} more`}
+                </button>
+              </div>
+            </div>
+          </FadeIn>
         </div>
       </section>
 
