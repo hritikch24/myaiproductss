@@ -1,5 +1,7 @@
 {
   "generated": "2026-07-26",
+  "lastUpdated": "2026-07-26",
+  "status": "complete",
   "contact": {
     "phone": "+1 (331) 431-8078",
     "whatsapp": "+91 8859820935",
@@ -24,7 +26,9 @@
         "instagram": "@nandhanapalace"
       },
       "pitch": "10+ location Andhra restaurant chain in Bangalore with a dead website — customers can't find menus, locations, or place orders online. Massive missed opportunity.",
-      "packageValue": "₹75,000/mo"
+      "packageValue": "₹75,000/mo",
+      "pageBuilt": true,
+      "pitchDeckBuilt": true
     },
     {
       "id": "biryani-nawaabs",
@@ -44,7 +48,9 @@
         "location": "Kapoorthala Road, Lucknow"
       },
       "pitch": "4.7-star rated biryani restaurant with 820+ Google reviews but ZERO web presence. Customers searching online only find Zomato (which takes commission). Own website = direct orders + higher margins.",
-      "packageValue": "₹35,000/mo"
+      "packageValue": "₹35,000/mo",
+      "pageBuilt": true,
+      "pitchDeckBuilt": true
     },
     {
       "id": "lalla-biryani",
@@ -62,7 +68,9 @@
         "phone": "9889194949"
       },
       "pitch": "Operating since 1985 with legendary status in Lucknow — but invisible online. No website means they're losing the entire tourist + delivery crowd to competitors who show up in Google.",
-      "packageValue": "₹35,000/mo"
+      "packageValue": "₹35,000/mo",
+      "pageBuilt": true,
+      "pitchDeckBuilt": true
     },
     {
       "id": "haji-shabrati",
@@ -81,7 +89,9 @@
         "address": "Shop 722, Haveli Azam Khan, Chitli Qabar, Jama Masjid, Old Delhi"
       },
       "pitch": "Legendary nihari shop since 1957 near Jama Masjid — featured on food blogs and travel guides worldwide but has NO website. Tourists Google them and only find third-party reviews. A website with hours, menu, and location map would be transformative.",
-      "packageValue": "₹35,000/mo"
+      "packageValue": "₹35,000/mo",
+      "pageBuilt": true,
+      "pitchDeckBuilt": true
     },
     {
       "id": "cheap-charlies",
@@ -101,7 +111,9 @@
         "facebook": "@cheapcharliestaco"
       },
       "pitch": "4-location taco chain in Nashville with strong reviews but ZERO web presence. Customers can't find menus, hours, or locations without scrolling through Facebook posts. A proper website + online ordering = more revenue per location.",
-      "packageValue": "$499/mo"
+      "packageValue": "$499/mo",
+      "pageBuilt": true,
+      "pitchDeckBuilt": true
     },
     {
       "id": "ooowee-bbq",
@@ -120,7 +132,180 @@
         "phone": "(980) 345-6883"
       },
       "pitch": "Popular BBQ food truck operation in Charlotte with 10+ years in business and strong Yelp reviews — but NO website. Catering inquiries, event bookings, and menu info all go through fragmented third-party sites. A website would centralize everything and drive catering revenue.",
-      "packageValue": "$349/mo"
+      "packageValue": "$349/mo",
+      "pageBuilt": true,
+      "pitchDeckBuilt": true
+    },
+    {
+      "id": "haji-ali-juice",
+      "name": "Haji Ali Juice Centre",
+      "type": "juice bar / restaurant",
+      "cuisine": "Fresh Juices & Shakes",
+      "city": "Mumbai",
+      "country": "India",
+      "locations": "Multiple (Haji Ali, Bandra, Tardeo, Kochi)",
+      "established": "1960s",
+      "rating": "28,000+ reviews across platforms",
+      "hasWebsite": false,
+      "websiteStatus": "No website at all",
+      "onlinePresence": ["Facebook", "Zomato", "TripAdvisor", "JustDial"],
+      "contact": {
+        "phone": "9930007632 / 9930110957"
+      },
+      "pitch": "One of Mumbai's most iconic food landmarks — 60+ years, 28,000+ reviews, multiple branches — but ZERO web presence. Tourists searching 'Haji Ali Juice Centre' find only Zomato and blog posts. A website with menu, locations, and heritage story is overdue.",
+      "packageValue": "₹50,000/mo",
+      "pageBuilt": true,
+      "pitchDeckBuilt": true
+    },
+    {
+      "id": "lucky-dhaba",
+      "name": "Lucky Dhaba",
+      "type": "highway dhaba",
+      "cuisine": "Pure Veg Punjabi / North Indian",
+      "city": "Jalandhar",
+      "country": "India",
+      "locations": "1",
+      "established": "1967",
+      "rating": "Ranked #24 of 129 in Jalandhar (TripAdvisor)",
+      "hasWebsite": false,
+      "websiteStatus": "No website at all",
+      "onlinePresence": ["TripAdvisor", "Zomato", "JustDial"],
+      "contact": {},
+      "pitch": "Legendary highway dhaba on NH1 since 1967 — nearly six decades of feeding travelers. NO website means the next generation of road trippers who search online before stopping can't find your menu, hours, or story.",
+      "packageValue": "₹30,000/mo",
+      "pageBuilt": true,
+      "pitchDeckBuilt": true
+    },
+    {
+      "id": "boteco-atx",
+      "name": "Boteco Food Truck",
+      "type": "food truck",
+      "cuisine": "Brazilian Street Food",
+      "city": "Austin",
+      "state": "TX",
+      "country": "US",
+      "locations": "1 truck",
+      "rating": "463+ Yelp reviews, 570+ photos, Featured on Diners Drive-Ins & Dives",
+      "hasWebsite": false,
+      "websiteStatus": "No website — botecoatx.com does not resolve",
+      "onlinePresence": ["Yelp", "Instagram", "Facebook", "DoorDash", "TripAdvisor"],
+      "contact": {
+        "phone": "(347) 251-0671",
+        "instagram": "@botecoatx"
+      },
+      "pitch": "Featured on Diners, Drive-Ins & Dives, recommended by Matthew McConaughey, 463+ Yelp reviews — but NO website. DoorDash takes 20-30% of delivery orders. A website turns TV fame into permanent searchable traffic and direct orders.",
+      "packageValue": "$449/mo",
+      "pageBuilt": true,
+      "pitchDeckBuilt": true
+    },
+    {
+      "id": "la-pinata",
+      "name": "La Piñata Taqueria",
+      "type": "food truck",
+      "cuisine": "Mexican — Tacos, Burritos, Tortas",
+      "city": "Vallejo",
+      "state": "CA",
+      "country": "US",
+      "locations": "1 truck — 809 Broadway St",
+      "rating": "#6 Best Food Truck in US (Yelp 2025), 424+ reviews",
+      "hasWebsite": false,
+      "websiteStatus": "No website at all",
+      "onlinePresence": ["Yelp", "Facebook", "Apple Maps"],
+      "contact": {
+        "phone": "(707) 334-8381",
+        "email": "lapinata.taqueria@gmail.com"
+      },
+      "pitch": "Ranked #6 food truck in the entire US by Yelp, featured in SF Chronicle for best burritos in the Bay Area — but NO website. 424+ reviews and national recognition with no digital home. A website turns that ranking into a permanent sales engine.",
+      "packageValue": "$399/mo",
+      "pageBuilt": true,
+      "pitchDeckBuilt": true
+    },
+    {
+      "id": "sharma-ji-chai",
+      "name": "Sharma Ji Ki Chai",
+      "type": "chai stall",
+      "cuisine": "Kulhad Chai, Bun Makkhan, Samosa",
+      "city": "Lucknow",
+      "country": "India",
+      "locations": "1",
+      "established": "1970s",
+      "rating": "50+ year legacy, endorsed by UP Tourism, visited by PM Vajpayee, Kartik Aaryan, Sanjeev Kapoor",
+      "hasWebsite": false,
+      "websiteStatus": "No website at all",
+      "onlinePresence": ["JustDial", "Zomato", "TripAdvisor"],
+      "contact": {
+        "phone": "9807257786",
+        "address": "14 Maqbara Road, Hazratganj, Lucknow"
+      },
+      "pitch": "50+ year iconic chai stall in Lucknow's Hazratganj — visited by Prime Ministers, Bollywood stars, and endorsed by UP Tourism. NO website. Tourists and food lovers searching for legendary Lucknow chai find only JustDial listings.",
+      "packageValue": "₹25,000/mo",
+      "pageBuilt": true,
+      "pitchDeckBuilt": true
+    },
+    {
+      "id": "ratna-cafe",
+      "name": "Ratna Cafe",
+      "type": "restaurant chain",
+      "cuisine": "South Indian Vegetarian — Tiffins, Meals",
+      "city": "Chennai",
+      "country": "India",
+      "locations": "4+ (Triplicane, Mylapore, Kilpauk, Adyar)",
+      "established": "1948",
+      "rating": "75+ year legacy, Chennai's oldest veg restaurant chain",
+      "hasWebsite": false,
+      "websiteStatus": "No website at all — only Instagram and aggregator listings",
+      "onlinePresence": ["Instagram", "Facebook", "Zomato", "TripAdvisor"],
+      "contact": {
+        "instagram": "@ratnacafeindia"
+      },
+      "pitch": "Chennai's oldest vegetarian restaurant chain — serving since 1948, famous sambar-idly, 4+ locations. NO website. 75 years of legacy with no official online presence. Direct ordering would save lakhs in Zomato commissions.",
+      "packageValue": "₹40,000/mo",
+      "pageBuilt": true,
+      "pitchDeckBuilt": true
+    },
+    {
+      "id": "capitol-burger",
+      "name": "Capitol Burger",
+      "type": "food truck",
+      "cuisine": "Gourmet Burgers — Fresh Ground, House-Pickled",
+      "city": "Torrey",
+      "state": "UT",
+      "country": "US",
+      "locations": "1 truck",
+      "rating": "4.9★ TripAdvisor, #1 of 21 in Torrey, 282+ Yelp reviews",
+      "hasWebsite": false,
+      "websiteStatus": "No website — capitolburger.com does not resolve",
+      "onlinePresence": ["Yelp", "TripAdvisor", "Facebook", "Instagram"],
+      "contact": {
+        "phone": "(435) 491-0742",
+        "facebook": "@capitolburgertruck",
+        "instagram": "@capitolburgertruck"
+      },
+      "pitch": "#1 restaurant in Torrey, 4.9★ TripAdvisor, 282+ Yelp reviews — gateway to Capitol Reef National Park. NO website. Over a million park visitors per year search for food nearby and find only TripAdvisor listings. Owner has fine-dining background, grinds beef fresh daily.",
+      "packageValue": "$399/mo",
+      "pageBuilt": true,
+      "pitchDeckBuilt": true
+    },
+    {
+      "id": "tonys-catch",
+      "name": "Tony's Catch",
+      "type": "food truck",
+      "cuisine": "Zicatela-Style Fish Tacos, Poke, Seafood",
+      "city": "Kapaa",
+      "state": "HI",
+      "country": "US",
+      "locations": "1 truck",
+      "rating": "#1 Food Truck in America (Yelp 2025), 360+ reviews",
+      "hasWebsite": false,
+      "websiteStatus": "No website — tonyscatch.com does not resolve, only weeblyte placeholder",
+      "onlinePresence": ["Yelp", "TripAdvisor", "FindMeGlutenFree"],
+      "contact": {
+        "address": "4-1602 Kuhio Hwy, Kapaa, HI 96746"
+      },
+      "pitch": "Crowned #1 food truck in the entire United States by Yelp 2025 — 360+ reviews, Zicatela-style fish tacos on Kauai's coast. NO website. Every tourist planning a Kauai trip searches for food stops and finds only Yelp listings. A website turns that #1 ranking into a permanent sales engine.",
+      "packageValue": "$449/mo",
+      "pageBuilt": true,
+      "pitchDeckBuilt": true
     }
   ]
 }
