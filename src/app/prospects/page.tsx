@@ -322,18 +322,26 @@ export default function ProspectsPage() {
           </div>
         </section>
 
-        {/* ── Demo link ── */}
-        <div className="rounded-xl border border-stone-200 bg-stone-50/50 p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div>
-            <h3 className="text-[15px] font-semibold text-stone-900 mb-1">Sample restaurant website</h3>
-            <p className="text-[13px] text-stone-500">Show prospects what their website could look like.</p>
+        {/* ── Demo links ── */}
+        <div className="space-y-3">
+          <div className="rounded-xl border border-stone-200 bg-stone-50/50 p-5 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+              <h3 className="text-[15px] font-semibold text-stone-900 mb-0.5">Restaurant demo</h3>
+              <p className="text-[13px] text-stone-500">Heritage Kitchen — full restaurant website with menu, ordering, combo builder.</p>
+            </div>
+            <a href="/demo" className="inline-flex items-center gap-2 rounded-full bg-stone-900 text-white px-5 py-2.5 text-[13px] font-semibold hover:bg-stone-800 transition-all duration-200 shrink-0">
+              View <ArrowUpRight className="h-3.5 w-3.5" />
+            </a>
           </div>
-          <a
-            href="/demo"
-            className="inline-flex items-center gap-2 rounded-full bg-stone-900 text-white px-5 py-2.5 text-[13px] font-semibold hover:bg-stone-800 transition-all duration-200 shrink-0"
-          >
-            View demo <ArrowUpRight className="h-3.5 w-3.5" />
-          </a>
+          <div className="rounded-xl border border-stone-200 bg-stone-50/50 p-5 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+              <h3 className="text-[15px] font-semibold text-stone-900 mb-0.5">Airbnb / vacation rental demo</h3>
+              <p className="text-[13px] text-stone-500">The Banyan House — property listing with gallery, booking widget, experiences.</p>
+            </div>
+            <a href="/demo/airbnb" className="inline-flex items-center gap-2 rounded-full bg-stone-900 text-white px-5 py-2.5 text-[13px] font-semibold hover:bg-stone-800 transition-all duration-200 shrink-0">
+              View <ArrowUpRight className="h-3.5 w-3.5" />
+            </a>
+          </div>
         </div>
       </main>
 
