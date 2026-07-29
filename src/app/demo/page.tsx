@@ -81,15 +81,16 @@ interface GalleryItem {
   desc: string;
   gradient: string;
   accent: string;
+  img: string;
 }
 
 const GALLERY: GalleryItem[] = [
-  { name: 'Heritage Thali', desc: '12-item platter served on brass', gradient: 'from-amber-800 via-orange-700 to-yellow-600', accent: 'Signature' },
-  { name: 'Dum Biryani', desc: 'Sealed pot, 4-hour slow cook', gradient: 'from-amber-900 via-amber-700 to-yellow-500', accent: 'Best seller' },
-  { name: 'Rogan Josh', desc: 'Kashmiri-style braised lamb', gradient: 'from-red-900 via-red-700 to-orange-600', accent: 'Spicy' },
-  { name: 'Crispy Samosa', desc: 'Hand-folded, served with chutneys', gradient: 'from-yellow-800 via-amber-600 to-orange-400', accent: 'Popular' },
-  { name: 'Seekh Kebab', desc: 'Charcoal-grilled minced lamb', gradient: 'from-stone-800 via-red-900 to-orange-800', accent: 'Chef pick' },
-  { name: 'Kulhad Chai', desc: 'Whole-spice Assam in clay cup', gradient: 'from-amber-950 via-amber-800 to-amber-600', accent: 'Iconic' },
+  { name: 'Heritage Thali', desc: '12-item platter served on brass', gradient: 'from-amber-800 via-orange-700 to-yellow-600', accent: 'Signature', img: 'https://images.unsplash.com/photo-1585937421612-70a008356fbe?auto=format&fit=crop&w=800&q=80' },
+  { name: 'Dum Biryani', desc: 'Sealed pot, 4-hour slow cook', gradient: 'from-amber-900 via-amber-700 to-yellow-500', accent: 'Best seller', img: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f4?auto=format&fit=crop&w=800&q=80' },
+  { name: 'Rogan Josh', desc: 'Kashmiri-style braised lamb', gradient: 'from-red-900 via-red-700 to-orange-600', accent: 'Spicy', img: 'https://images.unsplash.com/photo-1545247181-516773cae754?auto=format&fit=crop&w=800&q=80' },
+  { name: 'Crispy Samosa', desc: 'Hand-folded, served with chutneys', gradient: 'from-yellow-800 via-amber-600 to-orange-400', accent: 'Popular', img: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=800&q=80' },
+  { name: 'Seekh Kebab', desc: 'Charcoal-grilled minced lamb', gradient: 'from-stone-800 via-red-900 to-orange-800', accent: 'Chef pick', img: 'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?auto=format&fit=crop&w=800&q=80' },
+  { name: 'Kulhad Chai', desc: 'Whole-spice Assam in clay cup', gradient: 'from-amber-950 via-amber-800 to-amber-600', accent: 'Iconic', img: 'https://images.unsplash.com/photo-1567922045116-2a00fae2ed03?auto=format&fit=crop&w=800&q=80' },
 ];
 
 /* ─── Combo Data ─── */
@@ -432,10 +433,9 @@ export default function DemoPage() {
                 onClick={() => { setGalleryIndex(i); setZoomedGallery(true); }}
                 className="group relative shrink-0 w-[260px] sm:w-[300px] rounded-2xl overflow-hidden snap-start"
               >
-                {/* Gradient placeholder simulating cinematic photo */}
                 <div className={`aspect-[4/5] bg-gradient-to-br ${item.gradient} relative`}>
-                  {/* Texture overlay */}
-                  <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 30% 40%, rgba(255,255,255,0.3) 0%, transparent 50%), radial-gradient(circle at 70% 60%, rgba(255,255,255,0.15) 0%, transparent 40%)' }} />
+                  {/* Real food image */}
+                  <img src={item.img} alt={item.name} className="absolute inset-0 w-full h-full object-cover" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/0 to-transparent" />
                   {/* Badge */}
                   <div className="absolute top-4 left-4">
@@ -477,7 +477,7 @@ export default function DemoPage() {
           >
             <div className="relative max-w-lg w-full" onClick={e => e.stopPropagation()}>
               <div className={`aspect-[3/4] rounded-3xl bg-gradient-to-br ${GALLERY[galleryIndex].gradient} relative overflow-hidden`}>
-                <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 30% 40%, rgba(255,255,255,0.3) 0%, transparent 50%), radial-gradient(circle at 70% 60%, rgba(255,255,255,0.15) 0%, transparent 40%)' }} />
+                <img src={GALLERY[galleryIndex].img} alt={GALLERY[galleryIndex].name} className="absolute inset-0 w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-8">
                   <span className="text-[12px] font-semibold text-white/80 bg-white/15 backdrop-blur-sm px-3 py-1 rounded-full">{GALLERY[galleryIndex].accent}</span>

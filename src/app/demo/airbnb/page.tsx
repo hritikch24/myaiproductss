@@ -73,15 +73,16 @@ interface GallerySlide {
   label: string;
   gradient: string;
   overlayText: string;
+  img: string;
 }
 
 const GALLERY: GallerySlide[] = [
-  { label: 'Living room', gradient: 'from-amber-100 via-orange-50 to-stone-100', overlayText: 'Sun-drenched open living with 20ft ceilings' },
-  { label: 'Master bedroom', gradient: 'from-slate-200 via-blue-50 to-indigo-100', overlayText: 'King bed, blackout curtains, city view' },
-  { label: 'Terrace garden', gradient: 'from-emerald-200 via-green-100 to-lime-50', overlayText: 'Private rooftop with jasmine and string lights' },
-  { label: 'Kitchen', gradient: 'from-stone-100 via-amber-50 to-yellow-50', overlayText: 'Full modular kitchen — cook or we cook for you' },
-  { label: 'Bathroom', gradient: 'from-cyan-100 via-sky-50 to-white', overlayText: 'Rain shower, heated towels, Aesop amenities' },
-  { label: 'Neighborhood', gradient: 'from-violet-100 via-pink-50 to-rose-50', overlayText: '12 min to Delhi metro, cafes within walking distance' },
+  { label: 'Living room', gradient: 'from-amber-100 via-orange-50 to-stone-100', overlayText: 'Sun-drenched open living with 20ft ceilings', img: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1400&q=80' },
+  { label: 'Master bedroom', gradient: 'from-slate-200 via-blue-50 to-indigo-100', overlayText: 'King bed, blackout curtains, city view', img: 'https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=1400&q=80' },
+  { label: 'Terrace garden', gradient: 'from-emerald-200 via-green-100 to-lime-50', overlayText: 'Private rooftop with jasmine and string lights', img: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1400&q=80' },
+  { label: 'Kitchen', gradient: 'from-stone-100 via-amber-50 to-yellow-50', overlayText: 'Full modular kitchen — cook or we cook for you', img: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=1400&q=80' },
+  { label: 'Bathroom', gradient: 'from-cyan-100 via-sky-50 to-white', overlayText: 'Rain shower, heated towels, Aesop amenities', img: 'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?auto=format&fit=crop&w=1400&q=80' },
+  { label: 'Neighborhood', gradient: 'from-violet-100 via-pink-50 to-rose-50', overlayText: '12 min to Delhi metro, cafes within walking distance', img: 'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=1400&q=80' },
 ];
 
 /* ─── Amenities ─── */
@@ -110,13 +111,14 @@ interface Experience {
   price: string;
   gradient: string;
   icon: React.ElementType;
+  img: string;
 }
 
 const EXPERIENCES: Experience[] = [
-  { title: 'Old Delhi food walk', desc: 'Street food tour through Chandni Chowk with a local guide. Paranthas, jalebis, kebabs — 8 stops.', duration: '4 hours', price: '$35/person', gradient: 'from-orange-200 via-amber-100 to-yellow-50', icon: UtensilsCrossed },
-  { title: 'Sunrise at Taj Mahal', desc: 'Private car to Agra at 4 AM. Watch sunrise paint the Taj pink. Breakfast at Oberoi.', duration: 'Full day', price: '$120/person', gradient: 'from-pink-200 via-rose-100 to-orange-50', icon: Sun },
-  { title: 'Yoga & chai morning', desc: 'In-house yoga session on the terrace followed by masala chai and paratha breakfast.', duration: '2 hours', price: '$15/person', gradient: 'from-emerald-200 via-teal-100 to-cyan-50', icon: TreePine },
-  { title: 'Delhi by night', desc: 'Qutub Minar, India Gate, Connaught Place. Private guide + driver. Dinner at Bukhara.', duration: '5 hours', price: '$55/person', gradient: 'from-indigo-200 via-violet-100 to-purple-50', icon: Moon },
+  { title: 'Old Delhi food walk', desc: 'Street food tour through Chandni Chowk with a local guide. Paranthas, jalebis, kebabs — 8 stops.', duration: '4 hours', price: '$35/person', gradient: 'from-orange-200 via-amber-100 to-yellow-50', icon: UtensilsCrossed, img: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=800&q=80' },
+  { title: 'Sunrise at Taj Mahal', desc: 'Private car to Agra at 4 AM. Watch sunrise paint the Taj pink. Breakfast at Oberoi.', duration: 'Full day', price: '$120/person', gradient: 'from-pink-200 via-rose-100 to-orange-50', icon: Sun, img: 'https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=800&q=80' },
+  { title: 'Yoga & chai morning', desc: 'In-house yoga session on the terrace followed by masala chai and paratha breakfast.', duration: '2 hours', price: '$15/person', gradient: 'from-emerald-200 via-teal-100 to-cyan-50', icon: TreePine, img: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=800&q=80' },
+  { title: 'Delhi by night', desc: 'Qutub Minar, India Gate, Connaught Place. Private guide + driver. Dinner at Bukhara.', duration: '5 hours', price: '$55/person', gradient: 'from-indigo-200 via-violet-100 to-purple-50', icon: Moon, img: 'https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=800&q=80' },
 ];
 
 /* ─── Reviews ─── */
@@ -218,10 +220,13 @@ export default function AirbnbDemoPage() {
       <section id="photos" className="relative">
         {/* Main hero image */}
         <div className="relative h-[50vh] sm:h-[60vh] lg:h-[70vh] overflow-hidden cursor-pointer" onClick={() => setLightbox(true)}>
-          <div className={`absolute inset-0 bg-gradient-to-br ${GALLERY[galleryIndex].gradient} transition-all duration-700`}>
-            {/* Texture */}
-            <div className="absolute inset-0 opacity-[0.08]" style={{ backgroundImage: 'radial-gradient(circle at 25% 35%, rgba(0,0,0,0.15) 0%, transparent 50%), radial-gradient(circle at 75% 65%, rgba(0,0,0,0.1) 0%, transparent 40%)' }} />
-          </div>
+          {/* Gradient fallback + real image */}
+          <div className={`absolute inset-0 bg-gradient-to-br ${GALLERY[galleryIndex].gradient}`} />
+          <img
+            src={GALLERY[galleryIndex].img}
+            alt={GALLERY[galleryIndex].label}
+            className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
+          />
           {/* Bottom overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
 
@@ -258,7 +263,9 @@ export default function AirbnbDemoPage() {
                 onClick={() => setGalleryIndex(i)}
                 className={`shrink-0 rounded-xl overflow-hidden transition-all duration-200 ${i === galleryIndex ? 'ring-2 ring-stone-900 ring-offset-2' : 'opacity-70 hover:opacity-100'}`}
               >
-                <div className={`w-20 h-14 sm:w-24 sm:h-16 bg-gradient-to-br ${slide.gradient}`} />
+                <div className={`w-20 h-14 sm:w-24 sm:h-16 bg-gradient-to-br ${slide.gradient} relative`}>
+                  <img src={slide.img} alt={slide.label} className="absolute inset-0 w-full h-full object-cover" />
+                </div>
               </button>
             ))}
           </div>
@@ -469,8 +476,8 @@ export default function AirbnbDemoPage() {
             {EXPERIENCES.map((exp, i) => (
               <FadeIn key={exp.title} delay={i * 0.05}>
                 <div className="group rounded-2xl border border-stone-100 overflow-hidden hover:border-stone-300 hover:shadow-lg hover:shadow-stone-100/80 transition-all duration-300">
-                  <div className={`h-40 bg-gradient-to-br ${exp.gradient} relative`}>
-                    <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle at 30% 40%, rgba(0,0,0,0.2) 0%, transparent 50%)' }} />
+                  <div className={`h-40 bg-gradient-to-br ${exp.gradient} relative overflow-hidden`}>
+                    <img src={exp.img} alt={exp.title} className="absolute inset-0 w-full h-full object-cover" />
                     <div className="absolute bottom-4 left-5">
                       <div className="h-10 w-10 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
                         <exp.icon className="h-5 w-5 text-stone-800" />
@@ -692,7 +699,7 @@ export default function AirbnbDemoPage() {
           </button>
           <div className="max-w-3xl w-full mx-6" onClick={e => e.stopPropagation()}>
             <div className={`aspect-[16/10] rounded-2xl bg-gradient-to-br ${GALLERY[galleryIndex].gradient} relative overflow-hidden`}>
-              <div className="absolute inset-0 opacity-[0.08]" style={{ backgroundImage: 'radial-gradient(circle at 25% 35%, rgba(0,0,0,0.15) 0%, transparent 50%), radial-gradient(circle at 75% 65%, rgba(0,0,0,0.1) 0%, transparent 40%)' }} />
+              <img src={GALLERY[galleryIndex].img} alt={GALLERY[galleryIndex].label} className="absolute inset-0 w-full h-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
               <div className="absolute bottom-6 left-6">
                 <span className="text-white/70 text-[13px]">{galleryIndex + 1} / {GALLERY.length}</span>
