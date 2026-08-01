@@ -51,36 +51,36 @@ function Sparks({x,y}:{x:number;y:number}){
    ═══════════════════════════════════════════════ */
 
 const IMGS=[
-  {src:'/tanya/lake-portrait.jpeg',cap:'Meri jaan, har angle se perfect'},
+  {src:'/tanya/lake-portrait.jpeg',cap:'Every angle, effortlessly perfect'},
   {src:'/tanya/portrait-hat.jpeg',cap:'Main character energy. Always.'},
-  {src:'/tanya/door-sitting.jpeg',cap:'Itni cute kaise ho yaar tum'},
-  {src:'/tanya/back-view.jpeg',cap:'Har view tumhare saath better hai'},
-  {src:'/tanya/collage.jpeg',cap:'Jaipur wali memories'},
+  {src:'/tanya/door-sitting.jpeg',cap:'That smile. That vibe. Meri jaan.'},
+  {src:'/tanya/back-view.jpeg',cap:'Every view is better with you in it'},
+  {src:'/tanya/collage.jpeg',cap:'Jaipur memories we keep going back to'},
 ];
 
 const REASONS=[
-  {icon:Sun,text:'Tumhari smile dekh ke bure se bura din bhi theek ho jaata hai',color:'from-amber-400 to-orange-500'},
-  {icon:Coffee,text:'Tum meri har choti si baat yaad rakhti ho — even I forget sometimes',color:'from-amber-600 to-rose-500'},
-  {icon:Music,text:'Tumhari hansi sunna — that is literally my favorite sound in this world',color:'from-pink-400 to-rose-500'},
+  {icon:Sun,text:'Your smile makes even the worst days feel okay',color:'from-amber-400 to-orange-500'},
+  {icon:Coffee,text:'You remember every little thing I say — even I forget sometimes',color:'from-amber-600 to-rose-500'},
+  {icon:Music,text:'Your laugh — literally my favorite sound in this whole world',color:'from-pink-400 to-rose-500'},
   {icon:Star,text:'Jab mujhe khud pe believe nahi hota, tab bhi tum karti ho',color:'from-violet-400 to-purple-500'},
-  {icon:Flower2,text:'Normal moments ko bhi tum unforgettable bana deti ho',color:'from-rose-400 to-pink-500'},
-  {icon:Moon,text:'Tumhari patience, warmth, aur vo quiet magic jo sirf tumhari hai',color:'from-blue-400 to-violet-500'},
-  {icon:Crown,text:'Because you chose me. Roz. Baar baar. Without giving up.',color:'from-amber-400 to-rose-500'},
+  {icon:Flower2,text:'You turn normal, ordinary moments into unforgettable ones',color:'from-rose-400 to-pink-500'},
+  {icon:Moon,text:'Your patience, warmth, aur vo quiet magic — it is only yours',color:'from-blue-400 to-violet-500'},
+  {icon:Crown,text:'Because you chose me. Roz. Every single day. Without giving up.',color:'from-amber-400 to-rose-500'},
 ];
 
 const QUIZ=[
-  {q:'Hritik ko tumhari sabse favorite cheez kya hai?',opts:['Looks','Cooking','Sab kuch','WiFi password'],ans:2},
-  {q:'Tumhare bina Hritik kya karega?',opts:['Bilkul theek rahega','Probably ro dega','Khana bhool jayega','Sab (pehle wala chhod ke)'],ans:3},
-  {q:'Hritik tumse kitna pyaar karta hai?',opts:['Bahut','Pizza se zyada','Neend se zyada','Measure hi nahi ho sakta'],ans:3},
-  {q:'Hritik ki favorite jagah kaunsi hai?',opts:['Beach','Mountains','Ghar','Jahan tum ho'],ans:3},
+  {q:'What does Hritik love most about you?',opts:['Your looks','Your cooking','Everything about you','Your WiFi password'],ans:2},
+  {q:'What would Hritik do without you?',opts:['Be totally fine','Probably cry','Forget to eat','All of the above (minus the first one)'],ans:3},
+  {q:'How much does Hritik love you?',opts:['A lot','More than pizza','More than sleep','Beyond measurement'],ans:3},
+  {q:'Hritik ki favorite jagah?',opts:['Beach','Mountains','Home','Wherever you are'],ans:3},
 ];
 
 const TIMELINE=[
-  {label:'Sab badal gaya',desc:'Jab pehli baar tumhe dekha — life interesting ho gayi.',img:'/tanya/lake-portrait.jpeg'},
-  {label:'Raat bhar baatein',desc:'Ghante minutes lagne lage. Silence bhi comfortable thi. Tab pata chala.',img:'/tanya/door-sitting.jpeg'},
-  {label:'Adventures',desc:'Jaipur, forts, sunsets — har jagah humari jagah ban gayi.',img:'/tanya/collage.jpeg'},
-  {label:'Abhi, isi waqt',desc:'Tum ye padh rahi ho, smile kar rahi ho. This is my favorite moment so far.',img:'/tanya/portrait-hat.jpeg'},
-  {label:'Aage aur bhi hai',desc:'Aur cities, aur memories, aur reasons tumhe choose karne ke.',img:'/tanya/back-view.jpeg'},
+  {label:'Everything changed',desc:'The day I first saw you — life got interesting real quick.',img:'/tanya/lake-portrait.jpeg'},
+  {label:'Late-night talks',desc:'Hours felt like minutes. Silence felt comfortable. That is when I knew.',img:'/tanya/door-sitting.jpeg'},
+  {label:'Adventures together',desc:'Jaipur, forts, sunsets — har jagah humari jagah ban gayi.',img:'/tanya/collage.jpeg'},
+  {label:'Right now',desc:'You, reading this, smiling at your phone. My favorite moment so far.',img:'/tanya/portrait-hat.jpeg'},
+  {label:'Everything ahead',desc:'More cities, more memories, more reasons to choose you.',img:'/tanya/back-view.jpeg'},
 ];
 
 const PAGES=[
@@ -208,13 +208,13 @@ export default function TanyaPage(){
               </div>
 
               <p className="text-[10px] text-white/15 uppercase tracking-[0.35em] mt-10 mb-3 font-medium">1 August 2026</p>
-              <h1 className="text-3xl sm:text-5xl font-black tracking-[-0.04em] text-white/80">Tumhare liye kuch hai</h1>
-              <p className="text-[13px] text-white/15 mt-3 max-w-[280px] mx-auto leading-relaxed">Koi boring text nahi. Kuch special banaya hai sirf tumhare liye. 8 pages.</p>
+              <h1 className="text-3xl sm:text-5xl font-black tracking-[-0.04em] text-white/80">You have something waiting</h1>
+              <p className="text-[13px] text-white/15 mt-3 max-w-[280px] mx-auto leading-relaxed">Not a boring text. Something I made just for you. 8 pages.</p>
 
               <button onClick={next} className="mt-14 group mx-auto">
                 <div className="gl2 rounded-full px-8 py-4 flex items-center gap-3 hover:bg-white/[0.06] transition-all duration-300" style={{animation:'glow 3s ease-in-out infinite'}}>
                   <Heart className="h-5 w-5 text-rose-400" fill="currentColor" style={{animation:'heartBeat 1.5s ease-in-out infinite'}}/>
-                  <span className="text-[14px] font-semibold text-white/70">Open karo, babu</span>
+                  <span className="text-[14px] font-semibold text-white/70">Open it, babu</span>
                   <ChevronRight className="h-4 w-4 text-white/25 group-hover:translate-x-1 transition-transform"/>
                 </div>
               </button>
@@ -241,12 +241,12 @@ export default function TanyaPage(){
               </h1>
 
               <p className="text-[14px] text-white/20 mt-7 max-w-xs mx-auto leading-relaxed" style={{animation:'fadeUp .7s ease-out .4s both'}}>
-                Internet ka ek chhota sa corner, sirf tumhara.
-                <br/><span className="text-white/12">Kyunki tum ek text se bahut zyada deserve karti ho.</span>
+                A tiny corner of the internet, just for you.
+                <br/><span className="text-white/12">Because you deserve so much more than a text.</span>
               </p>
 
               <button onClick={next} className="mt-12 flex items-center gap-2 text-[12px] text-rose-300/35 hover:text-rose-300/60 transition-colors group mx-auto" style={{animation:'fadeUp .7s ease-out .6s both'}}>
-                Aage dekho <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform"/>
+                Keep going <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform"/>
               </button>
             </div>
           </div>
@@ -258,27 +258,27 @@ export default function TanyaPage(){
             <div className="max-w-lg w-full mx-auto">
               <div className="text-center mb-8" style={{animation:'fadeUp .5s ease-out'}}>
                 <Mail className="h-5 w-5 text-pink-400/30 mx-auto mb-4"/>
-                <p className="text-[11px] font-semibold text-pink-400/40 uppercase tracking-[0.25em]">Ek letter tumhare liye</p>
+                <p className="text-[11px] font-semibold text-pink-400/40 uppercase tracking-[0.25em]">A letter for you</p>
               </div>
 
               {!letterOpen?(
                 <div className="text-center" style={{animation:'scaleIn .5s ease-out .2s both'}}>
                   <button onClick={()=>setLetterOpen(true)} className="gl2 rounded-2xl px-14 py-12 hover:scale-[1.02] transition-all duration-300 group" style={{animation:'glow 3s ease-in-out infinite'}}>
                     <Mail className="h-10 w-10 text-rose-400/50 mx-auto mb-4 group-hover:scale-110 transition-transform" style={{filter:'drop-shadow(0 0 12px rgba(251,113,133,.25))'}}/>
-                    <p className="text-[13px] text-white/25 font-medium">Tap karo, shona</p>
+                    <p className="text-[13px] text-white/25 font-medium">Tap to read, shona</p>
                   </button>
                 </div>
               ):(
                 <div className="gl2 rounded-2xl p-7 sm:p-9" style={{animation:'scaleIn .6s cubic-bezier(.16,1,.3,1)'}}>
                   <p className="text-[13px] text-rose-300/25 italic mb-5">Hey Shona,</p>
                   <div className="space-y-4 text-[13px] sm:text-[14px] text-white/35 leading-[1.75]">
-                    <p>Tujhe pata bhi nahi hoga ki Girlfriend&apos;s Day naam ki koi cheez hoti hai. Mujhe bhi nahi pata tha. But socha — tujhe remind karne ka ek aur excuse mil raha hai ki tu kitni amazing hai? Toh le liya.</p>
-                    <p>Tu sirf koi nahi hai jisse main pyaar karta hoon. Tu koi hai jise main genuinely admire karta hoon. Teri strength, teri softness, jis tarah se tu sab sambhaalti hai — itna effortlessly — <span className="text-rose-300/50">it&apos;s everything.</span></p>
-                    <p>Aaj koi grand gesture nahi hai. Bas main hoon, ye bata raha hoon ki: <span className="text-rose-300/60 font-medium">tu dikhti hai mujhe. Tu matter karti hai. Tu bahut zyada loved hai.</span></p>
-                    <p className="text-white/25">Aur scroll karo. Abhi aur bhi hai.</p>
+                    <p>You probably didn&apos;t even know Girlfriend&apos;s Day was a thing. Neither did I. But I thought — any excuse to remind you how amazing you are? I&apos;ll take it.</p>
+                    <p>You&apos;re not just someone I love. You&apos;re someone I genuinely admire. Teri strength, teri softness, the way you hold everything together so effortlessly — <span className="text-rose-300/50">it&apos;s everything.</span></p>
+                    <p>Today is not about grand gestures. It&apos;s just me, making sure you know: <span className="text-rose-300/60 font-medium">you are seen, you matter, and you are so deeply loved.</span></p>
+                    <p className="text-white/25">Keep scrolling. There&apos;s more.</p>
                   </div>
                   <div className="mt-6 pt-5 border-t border-white/[0.04]">
-                    <p className="text-[12px] text-white/20">Tumhara hi,</p>
+                    <p className="text-[12px] text-white/20">Forever yours,</p>
                     <p className="text-[15px] font-bold mt-1 holo-text inline-block">Hritik</p>
                   </div>
                 </div>
@@ -302,8 +302,8 @@ export default function TanyaPage(){
               <div className="text-center mb-7" style={{animation:'fadeUp .5s ease-out'}}>
                 <BookOpen className="h-5 w-5 text-violet-400/30 mx-auto mb-4"/>
                 <p className="text-[11px] font-semibold text-violet-400/40 uppercase tracking-[0.25em] mb-3">7 reasons</p>
-                <h2 className="text-2xl sm:text-3xl font-black tracking-[-0.03em] holo-text inline-block">Tum irreplaceable kyun ho</h2>
-                <p className="text-[11px] text-white/12 mt-2.5">Har line pe tap karo</p>
+                <h2 className="text-2xl sm:text-3xl font-black tracking-[-0.03em] holo-text inline-block">Why you&apos;re irreplaceable</h2>
+                <p className="text-[11px] text-white/12 mt-2.5">Tap anywhere on a line to reveal</p>
               </div>
 
               <div className="space-y-2.5">
@@ -336,9 +336,9 @@ export default function TanyaPage(){
 
               {revealed.size===REASONS.length&&(
                 <div className="text-center mt-8" style={{animation:'fadeUp .6s ease-out'}}>
-                  <p className="text-[12px] text-rose-300/25 italic mb-5">...aur hazaaron aur jo yahan fit nahi ho rahi</p>
+                  <p className="text-[12px] text-rose-300/25 italic mb-5">...and a thousand more that don&apos;t fit on one page</p>
                   <button onClick={next} className="flex items-center gap-2 mx-auto text-[12px] text-rose-300/35 hover:text-rose-300/60 transition-colors group">
-                    Next: Tumhari photos <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform"/>
+                    Next: Your photos <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform"/>
                   </button>
                 </div>
               )}
@@ -353,7 +353,7 @@ export default function TanyaPage(){
               <div className="text-center mb-5" style={{animation:'fadeUp .5s ease-out'}}>
                 <Camera className="h-5 w-5 text-amber-400/30 mx-auto mb-3"/>
                 <p className="text-[11px] font-semibold text-amber-400/40 uppercase tracking-[0.25em] mb-2">Gallery</p>
-                <h2 className="text-2xl sm:text-3xl font-black tracking-[-0.03em]" style={{background:'linear-gradient(135deg,#fbbf24,#fb923c,#fb7185)',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent'}}>Kitni sundar hai tu</h2>
+                <h2 className="text-2xl sm:text-3xl font-black tracking-[-0.03em]" style={{background:'linear-gradient(135deg,#fbbf24,#fb923c,#fb7185)',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent'}}>Seriously, how are you this pretty</h2>
               </div>
 
               {/* Main photo */}
@@ -399,8 +399,8 @@ export default function TanyaPage(){
             <div className="max-w-md w-full mx-auto">
               <div className="text-center mb-8" style={{animation:'fadeUp .5s ease-out'}}>
                 <Sparkles className="h-5 w-5 text-violet-400/30 mx-auto mb-3"/>
-                <p className="text-[11px] font-semibold text-violet-400/40 uppercase tracking-[0.25em] mb-3">Humari kahani</p>
-                <h2 className="text-2xl sm:text-3xl font-black tracking-[-0.03em]" style={{background:'linear-gradient(135deg,#c084fc,#818cf8,#38bdf8)',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent'}}>Yahan tak kaise aaye</h2>
+                <p className="text-[11px] font-semibold text-violet-400/40 uppercase tracking-[0.25em] mb-3">Our story</p>
+                <h2 className="text-2xl sm:text-3xl font-black tracking-[-0.03em]" style={{background:'linear-gradient(135deg,#c084fc,#818cf8,#38bdf8)',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent'}}>How we got here</h2>
               </div>
 
               <div className="relative">
@@ -422,7 +422,7 @@ export default function TanyaPage(){
 
               <div className="text-center mt-10" style={{animation:'fadeUp .5s ease-out .6s both'}}>
                 <button onClick={next} className="flex items-center gap-2 mx-auto text-[12px] text-rose-300/35 hover:text-rose-300/60 transition-colors group">
-                  Next: Ek chhota quiz <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform"/>
+                  Next: A little quiz <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform"/>
                 </button>
               </div>
             </div>
@@ -436,7 +436,7 @@ export default function TanyaPage(){
               <div className="text-center mb-7" style={{animation:'fadeUp .5s ease-out'}}>
                 <Gamepad2 className="h-5 w-5 text-sky-400/30 mx-auto mb-3"/>
                 <p className="text-[11px] font-semibold text-sky-400/40 uppercase tracking-[0.25em] mb-3">Quiz time</p>
-                <h2 className="text-2xl sm:text-3xl font-black tracking-[-0.03em]" style={{background:'linear-gradient(135deg,#38bdf8,#818cf8,#c084fc)',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent'}}>Kitna jaanti ho humein?</h2>
+                <h2 className="text-2xl sm:text-3xl font-black tracking-[-0.03em]" style={{background:'linear-gradient(135deg,#38bdf8,#818cf8,#c084fc)',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent'}}>How well do you know us?</h2>
               </div>
 
               <div className="flex items-center gap-2 justify-center mb-5">
@@ -478,7 +478,7 @@ export default function TanyaPage(){
                   </button>
                 ):qDone.size===QUIZ.length?(
                   <div style={{animation:'fadeUp .4s ease-out'}} className="flex flex-col items-end gap-1">
-                    <span className="text-[11px] text-white/25">{score}/{QUIZ.length} sahi</span>
+                    <span className="text-[11px] text-white/25">{score}/{QUIZ.length} correct</span>
                     <button onClick={next} className="text-[12px] text-rose-300/40 hover:text-rose-300/60 transition-colors flex items-center gap-1 group">
                       Last page <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform"/>
                     </button>
@@ -505,11 +505,11 @@ export default function TanyaPage(){
               <Infinity className="h-10 w-10 text-violet-400/20 mx-auto mb-8" style={{animation:'float 4s ease-in-out infinite',filter:'drop-shadow(0 0 15px rgba(139,92,246,.2))'}}/>
 
               <h2 className="text-3xl sm:text-4xl font-black tracking-[-0.04em] mb-5 holo-text inline-block" style={{animation:'fadeUp .6s ease-out .2s both'}}>
-                Aaj bhi. Kal bhi. Hamesha.
+                Today. Tomorrow. Hamesha.
               </h2>
 
               <p className="text-[14px] text-white/25 leading-[1.8] max-w-sm mx-auto" style={{animation:'fadeUp .6s ease-out .4s both'}}>
-                Mujhe kisi special day ki zaroorat nahi tujhse pyaar karne ke liye — but agar ek excuse milta hai tujhe feel karaane ka? Main le lunga. Tu meri favorite insaan hai, mera sabse accha decision, meri Tanya.
+                I don&apos;t need a special day to love you — but if I get an excuse to make you feel it? I&apos;ll take it. You&apos;re my favorite person, my best decision, meri Tanya.
               </p>
 
               <div className="mt-10 flex items-center justify-center gap-2.5" style={{animation:'fadeUp .6s ease-out .6s both'}}>
