@@ -232,12 +232,9 @@ export default function KraftAILanding() {
           <Reveal delay={0.2}>
             <p className="mt-6 text-[16px] sm:text-[18px] text-white/30 max-w-xl mx-auto leading-relaxed">
               We build stunning websites for{" "}
-              <span className="inline-block min-w-[160px] text-left">
-                <span className="gradient-text font-bold transition-all duration-300" style={{ opacity: nicheAnim ? 1 : 0, transform: nicheAnim ? "none" : "translateY(-8px)" }}>
-                  {NICHES[nicheIdx]}
-                </span>
-              </span>
-              <br className="sm:hidden" />
+              <span className="gradient-text font-bold transition-all duration-300" style={{ opacity: nicheAnim ? 1 : 0, transform: nicheAnim ? "none" : "translateY(-8px)", display: "inline-block" }}>
+                {NICHES[nicheIdx]}
+              </span>{" "}
               that turn Google searches into booked clients.
             </p>
           </Reveal>
