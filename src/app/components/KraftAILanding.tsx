@@ -145,7 +145,7 @@ export default function KraftAILanding() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#060608] text-white antialiased overflow-x-hidden" onMouseMove={handleMouse}>
+    <div className="min-h-screen bg-[#0b0b10] text-white antialiased overflow-x-hidden" onMouseMove={handleMouse}>
 
       <style jsx global>{`
         @keyframes float { 0%,100% { transform: translateY(0px); } 50% { transform: translateY(-12px); } }
@@ -161,8 +161,8 @@ export default function KraftAILanding() {
           background-clip: text;
           animation: shine 4s ease-in-out infinite;
         }
-        .glass { background: rgba(255,255,255,0.03); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.06); }
-        .glass-hover:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,140,50,0.15); box-shadow: 0 0 30px rgba(255,107,0,0.05); }
+        .glass { background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.08); }
+        .glass-hover:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,140,50,0.2); box-shadow: 0 0 30px rgba(255,107,0,0.06); }
         .glow-border { position: relative; }
         .glow-border::before {
           content: ''; position: absolute; inset: -1px; border-radius: inherit; padding: 1px;
@@ -183,16 +183,16 @@ export default function KraftAILanding() {
       `}</style>
 
       {/* ═══ Nav ═══ */}
-      <nav className="sticky top-0 z-50 bg-[#060608]/70 backdrop-blur-2xl border-b border-white/[0.04]">
+      <nav className="sticky top-0 z-50 bg-[#0b0b10]/80 backdrop-blur-2xl border-b border-white/[0.06]">
         <div className="max-w-6xl mx-auto px-5 flex items-center justify-between h-16">
           <a href="#" className="text-lg font-black tracking-tight">
             Kraft<span className="gradient-text">AI</span>
           </a>
-          <div className="hidden sm:flex items-center gap-8 text-[13px] text-white/30 font-medium">
-            <a href="#problem" className="hover:text-white/80 transition-colors duration-300">Why</a>
-            <a href="#gets" className="hover:text-white/80 transition-colors duration-300">What You Get</a>
-            <a href="#pricing" className="hover:text-white/80 transition-colors duration-300">Pricing</a>
-            <a href="#faq" className="hover:text-white/80 transition-colors duration-300">FAQ</a>
+          <div className="hidden sm:flex items-center gap-8 text-[13px] text-white/50 font-medium">
+            <a href="#problem" className="hover:text-white transition-colors duration-300">Why</a>
+            <a href="#gets" className="hover:text-white transition-colors duration-300">What You Get</a>
+            <a href="#pricing" className="hover:text-white transition-colors duration-300">Pricing</a>
+            <a href="#faq" className="hover:text-white transition-colors duration-300">FAQ</a>
           </div>
           <a href={wa("Hi, I want a website for my business")} target="_blank" rel="noopener"
             className="group flex items-center gap-2 bg-[#25D366] hover:bg-[#2ae672] text-white text-[12px] font-bold px-5 py-2.5 rounded-full transition-all duration-300 hover:shadow-[0_0_20px_rgba(37,211,102,0.3)]">
@@ -215,7 +215,7 @@ export default function KraftAILanding() {
           <Reveal>
             <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 mb-8">
               <span className="h-2 w-2 rounded-full bg-[#25D366] animate-pulse" />
-              <span className="text-[11px] font-semibold text-white/50 tracking-wide uppercase">Free mockup &middot; Pay only if you love it</span>
+              <span className="text-[11px] font-semibold text-white/60 tracking-wide uppercase">Free mockup &middot; Pay only if you love it</span>
             </div>
           </Reveal>
 
@@ -225,12 +225,12 @@ export default function KraftAILanding() {
               <br />
               <span className="gradient-text">Googling you.</span>
               <br />
-              <span className="text-white/15">They&apos;re finding nothing.</span>
+              <span className="text-white/30">They&apos;re finding nothing.</span>
             </h1>
           </Reveal>
 
           <Reveal delay={0.2}>
-            <p className="mt-6 text-[16px] sm:text-[18px] text-white/30 max-w-xl mx-auto leading-relaxed">
+            <p className="mt-6 text-[16px] sm:text-[18px] text-white/55 max-w-xl mx-auto leading-relaxed">
               We build stunning websites for{" "}
               <span className="gradient-text font-bold transition-all duration-300" style={{ opacity: nicheAnim ? 1 : 0, transform: nicheAnim ? "none" : "translateY(-8px)", display: "inline-block" }}>
                 {NICHES[nicheIdx]}
@@ -246,7 +246,7 @@ export default function KraftAILanding() {
                 Get your free mockup
                 <svg viewBox="0 0 20 20" className="h-4 w-4 fill-current transition-transform group-hover:translate-x-1"><path fillRule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clipRule="evenodd" /></svg>
               </a>
-              <a href="#demos" className="text-[13px] font-semibold text-white/20 hover:text-white/50 transition-colors duration-300 flex items-center gap-1.5">
+              <a href="#demos" className="text-[13px] font-semibold text-white/40 hover:text-white/70 transition-colors duration-300 flex items-center gap-1.5">
                 See demo sites
                 <svg className="h-3.5 w-3.5 animate-bounce" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
               </a>
@@ -254,18 +254,18 @@ export default function KraftAILanding() {
           </Reveal>
 
           <Reveal delay={0.4}>
-            <p className="mt-6 text-[11px] text-white/10 tracking-wide">No payment needed. Preview in 48 hours. Zero risk.</p>
+            <p className="mt-6 text-[11px] text-white/30 tracking-wide">No payment needed. Preview in 48 hours. Zero risk.</p>
           </Reveal>
         </div>
       </section>
 
       {/* ═══ Marquee Trust Bar ═══ */}
-      <div className="relative border-y border-white/[0.04] bg-white/[0.01] overflow-hidden py-4">
+      <div className="relative border-y border-white/[0.06] bg-white/[0.02] overflow-hidden py-4">
         <div className="flex whitespace-nowrap" style={{ animation: "marquee 30s linear infinite" }}>
           {[...Array(2)].map((_, ri) => (
             <div key={ri} className="flex items-center gap-8 mr-8">
               {["Custom-built, not templates", "Delivered in 5-7 days", "100% code ownership", "₹9,999 one-time", "Free mockup first", "WhatsApp booking", "Google Maps setup", "No monthly lock-in"].map((t, i) => (
-                <span key={i} className="flex items-center gap-3 text-[12px] text-white/20 font-medium">
+                <span key={i} className="flex items-center gap-3 text-[12px] text-white/40 font-medium">
                   <span className="h-1 w-1 rounded-full bg-[#ff6b00]/40" />
                   {t}
                 </span>
@@ -286,9 +286,9 @@ export default function KraftAILanding() {
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-[-0.03em] leading-tight max-w-2xl">
               Instagram alone is
               <br />
-              <span className="text-white/15">not enough anymore.</span>
+              <span className="text-white/30">not enough anymore.</span>
             </h2>
-            <p className="text-[15px] text-white/25 mt-4 max-w-lg leading-relaxed">
+            <p className="text-[15px] text-white/50 mt-4 max-w-lg leading-relaxed">
               You are great at what you do. But when a client Googles &quot;makeup artist near me&quot; — you don&apos;t exist. That client books someone who does.
             </p>
           </Reveal>
@@ -301,7 +301,7 @@ export default function KraftAILanding() {
                     <svg className="h-5 w-5 text-[#ff6b00]" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d={p.icon} /></svg>
                   </div>
                   <div className="text-3xl font-black gradient-text stat-glow tracking-tight">{p.stat}</div>
-                  <p className="text-[12px] text-white/30 mt-2 leading-relaxed">{p.text}</p>
+                  <p className="text-[13px] text-white/50 mt-2 leading-relaxed">{p.text}</p>
                 </div>
               </Reveal>
             ))}
@@ -317,7 +317,7 @@ export default function KraftAILanding() {
           <Reveal>
             <p className="text-[11px] font-bold text-[#ff6b00] uppercase tracking-[0.2em] mb-4">Live demos</p>
             <h2 className="text-3xl sm:text-4xl font-black tracking-[-0.03em]">This is what we build.</h2>
-            <p className="text-[14px] text-white/20 mt-2">Real sites. Click to explore.</p>
+            <p className="text-[14px] text-white/45 mt-2">Real sites. Click to explore.</p>
           </Reveal>
 
           <div className="grid sm:grid-cols-2 gap-5 mt-10">
@@ -329,11 +329,11 @@ export default function KraftAILanding() {
                 <a href={d.href} className="group block glass glass-hover rounded-2xl overflow-hidden transition-all duration-500 hover:scale-[1.01]">
                   <div className={`h-48 bg-gradient-to-br ${d.gradient} flex items-center justify-center relative overflow-hidden`}>
                     <span className="text-5xl transition-transform duration-500 group-hover:scale-110" style={{ animation: "float 4s ease-in-out infinite" }}>{d.emoji}</span>
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#060608] to-transparent opacity-50" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0b0b10] to-transparent opacity-50" />
                   </div>
                   <div className="p-6">
                     <h3 className="text-[15px] font-bold group-hover:text-[#ff9500] transition-colors duration-300">{d.title}</h3>
-                    <p className="text-[12px] text-white/25 mt-1.5 leading-relaxed">{d.desc}</p>
+                    <p className="text-[12px] text-white/45 mt-1.5 leading-relaxed">{d.desc}</p>
                     <span className="inline-flex items-center gap-1.5 mt-4 text-[11px] font-semibold text-[#ff6b00] group-hover:gap-2.5 transition-all duration-300">
                       View live site
                       <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
@@ -367,11 +367,11 @@ export default function KraftAILanding() {
             {GETS.map((g, i) => (
               <Reveal key={i} delay={i * 0.06}>
                 <div className="glass glass-hover rounded-2xl p-6 h-full transition-all duration-500 group">
-                  <div className="h-10 w-10 rounded-xl bg-white/[0.04] flex items-center justify-center mb-4 group-hover:bg-[#ff6b00]/10 transition-colors duration-500">
-                    <svg className="h-5 w-5 text-white/30 group-hover:text-[#ff6b00] transition-colors duration-500" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d={g.icon} /></svg>
+                  <div className="h-10 w-10 rounded-xl bg-white/[0.06] flex items-center justify-center mb-4 group-hover:bg-[#ff6b00]/10 transition-colors duration-500">
+                    <svg className="h-5 w-5 text-white/40 group-hover:text-[#ff6b00] transition-colors duration-500" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d={g.icon} /></svg>
                   </div>
                   <h3 className="text-[14px] font-bold">{g.title}</h3>
-                  <p className="text-[12px] text-white/25 mt-2 leading-relaxed">{g.desc}</p>
+                  <p className="text-[12px] text-white/50 mt-2 leading-relaxed">{g.desc}</p>
                 </div>
               </Reveal>
             ))}
@@ -401,13 +401,13 @@ export default function KraftAILanding() {
                 <div className="relative">
                   <div className="flex items-baseline gap-2">
                     <span className="text-5xl sm:text-6xl font-black gradient-text tracking-tight">₹9,999</span>
-                    <span className="text-[14px] text-white/20 font-medium">one-time</span>
+                    <span className="text-[14px] text-white/40 font-medium">one-time</span>
                   </div>
-                  <p className="text-[13px] text-white/25 mt-2">Everything you need to go from invisible on Google to fully booked.</p>
+                  <p className="text-[13px] text-white/50 mt-2">Everything you need to go from invisible on Google to fully booked.</p>
 
                   <div className="mt-8 space-y-3">
                     {FEATURES_LIST.map((f, i) => (
-                      <div key={i} className="flex items-start gap-3 text-[13px] text-white/40">
+                      <div key={i} className="flex items-start gap-3 text-[13px] text-white/60">
                         <div className="h-5 w-5 rounded-full bg-[#ff6b00]/10 flex items-center justify-center shrink-0 mt-0.5">
                           <svg className="h-3 w-3 text-[#ff6b00]" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
                         </div>
@@ -416,12 +416,12 @@ export default function KraftAILanding() {
                     ))}
                   </div>
 
-                  <div className="mt-8 pt-6 border-t border-white/[0.04]">
+                  <div className="mt-8 pt-6 border-t border-white/[0.06]">
                     <div className="flex items-baseline gap-2.5">
-                      <span className="text-[11px] text-white/15 uppercase tracking-wider font-semibold">Optional</span>
-                      <span className="text-[16px] font-bold">₹1,999<span className="text-white/20 font-medium">/month</span></span>
+                      <span className="text-[11px] text-white/30 uppercase tracking-wider font-semibold">Optional</span>
+                      <span className="text-[16px] font-bold">₹1,999<span className="text-white/40 font-medium">/month</span></span>
                     </div>
-                    <p className="text-[11px] text-white/15 mt-1">Updates, changes, hosting, support. Cancel anytime.</p>
+                    <p className="text-[11px] text-white/30 mt-1">Updates, changes, hosting, support. Cancel anytime.</p>
                   </div>
 
                   <a href={wa("Hi! I want a website. Here's what I do: ")} target="_blank" rel="noopener"
@@ -429,7 +429,7 @@ export default function KraftAILanding() {
                     Start with a free mockup
                     <svg viewBox="0 0 20 20" className="h-4 w-4 fill-current"><path fillRule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clipRule="evenodd" /></svg>
                   </a>
-                  <p className="text-[11px] text-white/10 mt-3 text-center">No payment until you see your mockup and love it.</p>
+                  <p className="text-[11px] text-white/30 mt-3 text-center">No payment until you see your mockup and love it.</p>
                 </div>
               </div>
             </div>
@@ -453,9 +453,9 @@ export default function KraftAILanding() {
                 <div className="glass glass-hover rounded-2xl p-6 transition-all duration-500 h-full relative group">
                   <div className="text-[48px] font-black gradient-text opacity-20 leading-none">{s.num}</div>
                   <h3 className="text-[15px] font-bold mt-2">{s.title}</h3>
-                  <p className="text-[12px] text-white/25 mt-2 leading-relaxed">{s.desc}</p>
+                  <p className="text-[12px] text-white/50 mt-2 leading-relaxed">{s.desc}</p>
                   {i < 2 && (
-                    <div className="hidden sm:block absolute top-1/2 -right-3 text-white/10">
+                    <div className="hidden sm:block absolute top-1/2 -right-3 text-white/20">
                       <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
                     </div>
                   )}
@@ -475,7 +475,7 @@ export default function KraftAILanding() {
             <p className="text-[11px] font-bold text-[#ff6b00] uppercase tracking-[0.2em] mb-4">Perfect for</p>
             <h2 className="text-3xl sm:text-4xl font-black tracking-[-0.03em] max-w-2xl leading-tight">
               Service providers who get clients from Instagram —
-              <span className="text-white/15"> but want more.</span>
+              <span className="text-white/30"> but want more.</span>
             </h2>
           </Reveal>
 
@@ -486,7 +486,7 @@ export default function KraftAILanding() {
               </Reveal>
             ))}
             <Reveal delay={0.4}>
-              <span className="inline-block text-white/10 text-[13px] font-semibold px-5 py-2.5 rounded-xl border border-white/[0.03]">+ any service business</span>
+              <span className="inline-block text-white/30 text-[13px] font-semibold px-5 py-2.5 rounded-xl border border-white/[0.06]">+ any service business</span>
             </Reveal>
           </div>
         </div>
@@ -507,13 +507,13 @@ export default function KraftAILanding() {
               <Reveal key={i} delay={i * 0.04}>
                 <div className="glass rounded-2xl overflow-hidden transition-all duration-500" style={{ borderColor: openFaq === i ? "rgba(255,107,0,0.15)" : undefined }}>
                   <button onClick={() => setOpenFaq(openFaq === i ? null : i)} className="w-full text-left px-6 py-5 flex items-center justify-between gap-4 group">
-                    <span className="text-[13px] font-semibold text-white/70 group-hover:text-white transition-colors duration-300">{f.q}</span>
-                    <div className={`h-6 w-6 rounded-full flex items-center justify-center shrink-0 transition-all duration-300 ${openFaq === i ? "bg-[#ff6b00]/20 rotate-180" : "bg-white/[0.04]"}`}>
-                      <svg className={`h-3 w-3 ${openFaq === i ? "text-[#ff6b00]" : "text-white/20"}`} fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
+                    <span className="text-[13px] font-semibold text-white/80 group-hover:text-white transition-colors duration-300">{f.q}</span>
+                    <div className={`h-6 w-6 rounded-full flex items-center justify-center shrink-0 transition-all duration-300 ${openFaq === i ? "bg-[#ff6b00]/20 rotate-180" : "bg-white/[0.06]"}`}>
+                      <svg className={`h-3 w-3 ${openFaq === i ? "text-[#ff6b00]" : "text-white/30"}`} fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
                     </div>
                   </button>
                   <div className="overflow-hidden transition-all duration-500" style={{ maxHeight: openFaq === i ? "300px" : "0", opacity: openFaq === i ? 1 : 0 }}>
-                    <div className="px-6 pb-5 text-[13px] text-white/25 leading-relaxed border-t border-white/[0.03] pt-4">
+                    <div className="px-6 pb-5 text-[13px] text-white/50 leading-relaxed border-t border-white/[0.06] pt-4">
                       {f.a}
                     </div>
                   </div>
@@ -536,7 +536,7 @@ export default function KraftAILanding() {
               <br />
               <span className="gradient-text">being invisible?</span>
             </h2>
-            <p className="text-[15px] text-white/20 mt-4 max-w-md mx-auto leading-relaxed">
+            <p className="text-[15px] text-white/50 mt-4 max-w-md mx-auto leading-relaxed">
               Send us a WhatsApp. Tell us what you do. Free mockup of your website within 48 hours.
             </p>
           </Reveal>
@@ -550,14 +550,14 @@ export default function KraftAILanding() {
           </Reveal>
 
           <Reveal delay={0.2}>
-            <p className="text-[11px] text-white/10 mt-6 tracking-wide">hey@kraftai.in &middot; +91 8859820935</p>
+            <p className="text-[11px] text-white/30 mt-6 tracking-wide">hey@kraftai.in &middot; +91 8859820935</p>
           </Reveal>
         </div>
       </section>
 
       {/* ═══ Footer ═══ */}
-      <footer className="border-t border-white/[0.04] py-8 px-5">
-        <div className="max-w-5xl mx-auto flex flex-wrap items-center justify-between gap-3 text-[11px] text-white/10">
+      <footer className="border-t border-white/[0.06] py-8 px-5">
+        <div className="max-w-5xl mx-auto flex flex-wrap items-center justify-between gap-3 text-[11px] text-white/30">
           <span>&copy; 2026 KraftAI</span>
           <span>Built by humans + AI. Owned by you.</span>
         </div>
