@@ -19,8 +19,8 @@ const PROBLEMS = [
 ];
 
 const DEMOS = [
-  { href: "/demo", title: "Restaurant & Cafe", desc: "Full menu, ordering, gallery, reviews — everything a food business needs to get online orders.", gradient: "from-amber-500/20 via-orange-500/10 to-red-500/5", accent: "#ff6b00", tag: "Food & Beverage" },
-  { href: "/demo/airbnb", title: "Airbnb & Stays", desc: "Booking widget, photo gallery, reviews, local experiences — futuristic hospitality site.", gradient: "from-violet-500/20 via-indigo-500/10 to-cyan-500/5", accent: "#8b5cf6", tag: "Hospitality" },
+  { href: "/demo", title: "Restaurant & Cafe", desc: "Full menu, ordering, gallery, reviews — everything a food business needs to get online orders.", accent: "#ff6b00", tag: "Food & Beverage", img: "/images/demo-restaurant.jpg" },
+  { href: "/demo/airbnb", title: "Airbnb & Stays", desc: "Booking widget, photo gallery, reviews, local experiences — futuristic hospitality site.", accent: "#8b5cf6", tag: "Hospitality", img: "/images/demo-airbnb.png" },
 ];
 
 const GETS = [
@@ -333,22 +333,17 @@ export default function KraftAILanding() {
             </Reveal>
           </div>
 
-          {/* right — browser mockup */}
+          {/* right — device mockups */}
           <Reveal delay={0.3} className="hidden lg:block">
-            <div style={{ animation: "tilt 6s ease-in-out infinite" }}>
-              <BrowserFrame url="kraftai.in/demo" className="transform-gpu">
-                <div className="h-[340px] bg-[#0d0d14] relative overflow-hidden">
-                  <iframe src="/demo" className="w-full h-full border-0 pointer-events-none scale-[0.6] origin-top-left" style={{ width: "166.67%", height: "166.67%" }} title="Demo preview" loading="lazy" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0d0d14] via-transparent to-transparent" />
-                  <div className="absolute bottom-4 left-0 right-0 text-center">
-                    <button onClick={() => setPreviewDemo(DEMOS[0])} className="glass rounded-full px-5 py-2 text-[12px] font-semibold text-white/70 hover:text-white transition-all inline-flex items-center gap-2">
-                      <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /><path strokeLinecap="round" strokeLinejoin="round" d="M15.91 11.672a.375.375 0 010 .656l-5.603 3.113a.375.375 0 01-.557-.328V8.887c0-.286.307-.466.557-.327l5.603 3.112z" /></svg>
-                      Preview this demo
-                    </button>
-                  </div>
-                </div>
-              </BrowserFrame>
+            <div className="relative" style={{ animation: "tilt 6s ease-in-out infinite" }}>
+              <img src="/images/hero-laptop.jpg" alt="Portfolio website on laptop" className="w-full rounded-2xl shadow-2xl shadow-black/50 transform-gpu" loading="eager" />
+              <img src="/images/hero-phone.png" alt="Booking website on phone" className="absolute -bottom-8 -right-6 w-[35%] rounded-2xl shadow-2xl shadow-black/60 border-2 border-white/[0.06] transform-gpu" loading="eager" />
             </div>
+          </Reveal>
+
+          {/* mobile — phone mockup */}
+          <Reveal delay={0.3} className="lg:hidden flex justify-center">
+            <img src="/images/hero-phone.png" alt="Booking website on phone" className="w-[55%] max-w-[240px] rounded-2xl shadow-2xl shadow-black/50" loading="eager" />
           </Reveal>
         </div>
       </section>
@@ -384,6 +379,26 @@ export default function KraftAILanding() {
         </div>
       </section>
 
+      {/* ═══ Social Proof Visual ═══ */}
+      <section className="relative py-16 sm:py-24 lg:py-28 px-4 sm:px-5">
+        <div className="max-w-5xl mx-auto">
+          <Reveal>
+            <p className="text-[11px] font-bold text-[#ff6b00] uppercase tracking-[0.2em] mb-3 sm:mb-4">The full picture</p>
+            <h2 className="text-2xl sm:text-4xl font-black tracking-[-0.03em] max-w-2xl leading-tight">
+              Google Search. Google Maps.<br /><span className="gradient-text">WhatsApp booking.</span>
+            </h2>
+            <p className="text-[14px] sm:text-[15px] text-white/50 mt-3 max-w-lg leading-relaxed">
+              Client Googles you → finds your website → sees your location on Maps → books via WhatsApp. All set up by us.
+            </p>
+          </Reveal>
+          <Reveal delay={0.15}>
+            <div className="mt-8 sm:mt-12 rounded-xl sm:rounded-2xl overflow-hidden border border-white/[0.08] shadow-2xl shadow-black/40">
+              <img src="/images/social-proof.jpg" alt="Google Search, Google Maps, and WhatsApp booking flow" className="w-full" loading="lazy" />
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       <div className="line-glow max-w-4xl mx-auto" />
 
       {/* ═══ Demos — browser chrome + popup ═══ */}
@@ -412,19 +427,14 @@ export default function KraftAILanding() {
                   </div>
 
                   {/* preview area */}
-                  <div className={`h-44 sm:h-56 bg-gradient-to-br ${d.gradient} relative overflow-hidden`}>
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="text-center">
-                        <div className="h-12 w-12 sm:h-14 sm:w-14 rounded-2xl mx-auto flex items-center justify-center mb-3" style={{ background: `${d.accent}20` }}>
-                          <svg className="h-6 w-6 sm:h-7 sm:w-7" style={{ color: d.accent }} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M15.91 11.672a.375.375 0 010 .656l-5.603 3.113a.375.375 0 01-.557-.328V8.887c0-.286.307-.466.557-.327l5.603 3.112z" />
-                          </svg>
-                        </div>
-                        <span className="text-[12px] sm:text-[13px] font-semibold text-white/60">Click to preview</span>
+                  <div className="h-44 sm:h-56 relative overflow-hidden cursor-pointer" onClick={() => setPreviewDemo(d)}>
+                    <img src={d.img} alt={d.title} className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105" loading="lazy" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0b0b10] via-transparent to-transparent opacity-60" />
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <div className="h-12 w-12 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center">
+                        <svg className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /><path strokeLinecap="round" strokeLinejoin="round" d="M15.91 11.672a.375.375 0 010 .656l-5.603 3.113a.375.375 0 01-.557-.328V8.887c0-.286.307-.466.557-.327l5.603 3.112z" /></svg>
                       </div>
                     </div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0b0b10] via-transparent to-transparent opacity-60" />
                   </div>
 
                   {/* info */}
