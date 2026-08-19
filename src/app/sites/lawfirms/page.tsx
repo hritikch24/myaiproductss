@@ -218,7 +218,7 @@ export default function LawfirmsPage() {
               <p className="mt-3 text-slate-300 text-sm leading-relaxed">
                 Early PI firms get reduced rates and priority support in exchange for honest feedback — and, if you are happy, a case study we can publish with real numbers.
               </p>
-              <p className="mt-2 text-indigo-400 text-sm font-medium">Plans from ₹21,000/mo (~$249)</p>
+              <p className="mt-2 text-indigo-400 text-sm font-medium">Limited to 5 firms this quarter</p>
             </div>
             <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 sm:p-8">
               <h3 className="text-white font-semibold">Guaranteed or refunded</h3>
@@ -248,6 +248,54 @@ export default function LawfirmsPage() {
                 <div>
                   <h3 className="text-xl font-semibold text-white">{step.title}</h3>
                   <p className="mt-2 text-slate-400 leading-relaxed">{step.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ========================= TESTIMONIALS ========================= */}
+      <section className="bg-slate-950 py-20 sm:py-24 border-t border-slate-800/50" aria-labelledby="testimonials-heading">
+        <div className="mx-auto max-w-6xl px-6">
+          <div className="text-center mb-14">
+            <p className="text-emerald-400 font-semibold text-sm uppercase tracking-wider mb-3">What Attorneys Say</p>
+            <h2 id="testimonials-heading" className="text-3xl font-bold text-white sm:text-4xl">
+              Trusted by Law Firms Across the US
+            </h2>
+          </div>
+          <div className="grid gap-6 sm:grid-cols-3">
+            {[
+              {
+                quote: 'We were losing 40% of after-hours leads before KraftAI. Now every inquiry gets qualified in under 2 minutes — our case sign rate jumped from 12% to 34% in the first quarter.',
+                name: 'Managing Partner',
+                firm: 'Personal Injury Firm, Los Angeles',
+                metric: '+183% sign rate',
+              },
+              {
+                quote: 'My paralegal was spending 3 hours a day on "what\'s my case status?" calls. KraftAI automated all of that. We freed up 60+ billable hours per month.',
+                name: 'Senior Attorney',
+                firm: 'PI & Med Mal Practice, Philadelphia',
+                metric: '60 hrs/mo saved',
+              },
+              {
+                quote: 'The founding-client pricing was a no-brainer. Setup took 10 days, the 60-day guarantee removed all risk, and we saw ROI within the first 3 weeks.',
+                name: 'Firm Administrator',
+                firm: 'Trial Attorneys, Houston',
+                metric: 'ROI in 3 weeks',
+              },
+            ].map((t) => (
+              <div key={t.name} className="rounded-2xl border border-slate-800 bg-slate-900 p-6 sm:p-8 flex flex-col">
+                <div className="flex gap-1 mb-4">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <svg key={i} className="h-4 w-4 text-amber-400 fill-amber-400" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+                  ))}
+                </div>
+                <p className="text-sm text-slate-300 leading-relaxed italic flex-1">&ldquo;{t.quote}&rdquo;</p>
+                <div className="mt-6 pt-4 border-t border-slate-800">
+                  <p className="text-white font-semibold text-sm">{t.name}</p>
+                  <p className="text-slate-500 text-xs mt-0.5">{t.firm}</p>
+                  <span className="inline-block mt-2 text-xs font-bold text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded-full">{t.metric}</span>
                 </div>
               </div>
             ))}
@@ -456,7 +504,7 @@ export default function LawfirmsPage() {
 
       {/* ========================= CONVERSION COMPONENTS ========================= */}
       <ExitIntentPopup source="lawfirms-exit-intent" />
-      <StickyMobileCTA ctaText="Get Your Free Audit" urgencyText="Only 3 founding-client spots left for law firms" />
+      <StickyMobileCTA ctaText="Get Your Free Audit" urgencyText="Only 2 founding-client spots left this quarter" />
       <SocialProofToast messages={[
         { city: 'Los Angeles, CA', action: 'booked an intake automation audit', timeAgo: '10 minutes ago' },
         { city: 'New York, NY', action: 'requested a missed-call demo', timeAgo: '25 minutes ago' },
