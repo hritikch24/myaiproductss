@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PAIRE_PLANS, PAIRE_SITE } from "@/lib/paire";
+import { PAYMENT_NAMES } from "@/lib/payment-names";
 
 export const metadata: Metadata = {
   title: "Paire pricing",
   description:
-    "Paire, India's dating app where women set the rules, is a KraftAI product. Free to use, with Paire Plus passes of ₹20 a day, ₹99 a week or ₹299 for 2 months, and Unlimited Chat for ₹49 once. Nothing auto-renews.",
+    `Paire, India's dating app where women set the rules, is a KraftAI product. Free to use, with ${PAYMENT_NAMES.plus} passes of ₹20 a day, ₹99 a week or ₹299 for 2 months, and ${PAYMENT_NAMES.chat} for ₹49 once. Nothing auto-renews.`,
   alternates: { canonical: "/paire" },
 };
 
@@ -82,7 +83,7 @@ export default function PairePricingPage() {
           <span className="absolute -top-3 left-6 rounded-full bg-rose-600 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-white">
             Buy 1 month, get 1 free
           </span>
-          <p className="text-xs font-semibold uppercase tracking-wider text-rose-700">Paire Plus · Month · Best value</p>
+          <p className="text-xs font-semibold uppercase tracking-wider text-rose-700">{PAYMENT_NAMES.plus} · Month · Best value</p>
           <p className="mt-3 flex items-baseline gap-2">
             <span className="text-4xl font-semibold">₹{month.priceInr}</span>
             <span className="text-sm text-slate-500">for {month.days} days</span>
@@ -96,7 +97,7 @@ export default function PairePricingPage() {
         </article>
 
         <article className="flex flex-col rounded-3xl border border-black/10 bg-white p-6">
-          <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">Paire Plus · Day or week</p>
+          <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">{PAYMENT_NAMES.plus} · Day or week</p>
           <p className="mt-3 flex items-baseline gap-2">
             <span className="text-4xl font-semibold">₹{day.priceInr}</span>
             <span className="text-sm text-slate-500">/ 24 hours</span>
@@ -105,16 +106,16 @@ export default function PairePricingPage() {
             <span className="text-2xl font-semibold">₹{week.priceInr}</span>
             <span className="text-sm text-slate-500">/ 7 days · about ₹14 a day</span>
           </p>
-          <p className="mt-6 text-sm leading-6 text-slate-600">The same Plus benefits for a shorter stretch. Paying never guarantees a match, and safety is never for sale.</p>
+          <p className="mt-6 text-sm leading-6 text-slate-600">The same {PAYMENT_NAMES.plus} benefits for a shorter stretch. Paying never guarantees a match, and safety is never for sale.</p>
         </article>
       </section>
 
       <section className="mx-auto max-w-5xl px-4 pb-14">
         <article className="flex flex-col gap-4 rounded-3xl border border-black/10 bg-white p-6 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">Unlimited Chat</p>
+            <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">{PAYMENT_NAMES.chat}</p>
             <p className="mt-2 text-lg font-semibold">₹{chat.priceInr} once, for all your current and future matches</p>
-            <p className="mt-1 text-sm text-slate-600">No expiry. An alternative to Plus if you only want to message.</p>
+            <p className="mt-1 text-sm text-slate-600">No expiry. An alternative to {PAYMENT_NAMES.plus} if you only want to message.</p>
           </div>
           <a href={`${PAIRE_SITE}/app/`} className="inline-flex h-11 flex-none items-center justify-center rounded-xl bg-slate-900 px-5 text-sm font-medium text-white hover:bg-slate-800">
             Get started on Paire
@@ -128,7 +129,7 @@ export default function PairePricingPage() {
             <h2 className="font-semibold">How to buy</h2>
             <p className="mt-2 text-sm leading-6 text-slate-600">
               Sign in at <a href={`${PAIRE_SITE}/app/`} className="underline underline-offset-2">paire.in/app</a>, pick a pass in
-              Paire Plus (or Unlimited Chat in a chat), and you&apos;ll be taken to KraftAI&apos;s secure checkout and straight back.
+              {PAYMENT_NAMES.plus} (or {PAYMENT_NAMES.chat} in a chat), and you&apos;ll be taken to KraftAI&apos;s secure checkout and straight back.
             </p>
           </div>
           <div>

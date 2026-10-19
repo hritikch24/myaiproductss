@@ -26,10 +26,11 @@ function loadRazorpay(): Promise<RazorpayCtor> {
 
 type Phase = "loading" | "open" | "closed" | "error";
 
-export function PaireCheckout({ keyId, orderId, plan, callbackUrl, backUrl }: {
+export function PaireCheckout({ keyId, orderId, plan, merchantName, callbackUrl, backUrl }: {
   keyId: string;
   orderId: string;
   plan: PairePlan;
+  merchantName: string;
   callbackUrl: string;
   backUrl: string;
 }) {
@@ -44,8 +45,8 @@ export function PaireCheckout({ keyId, orderId, plan, callbackUrl, backUrl }: {
         order_id: orderId,
         amount: plan.amountPaise,
         currency: "INR",
-        name: "KraftAI",
-        description: plan.label,
+        name: merchantName,
+        description: plan.razorpayDescription,
         image: `${window.location.origin}/icon.svg`,
         // Redirect mode: Razorpay POSTs the result to our callback, which survives
         // UPI app switches on phones better than an in-page handler.
@@ -58,7 +59,7 @@ export function PaireCheckout({ keyId, orderId, plan, callbackUrl, backUrl }: {
     } catch {
       setPhase("error");
     }
-  }, [keyId, orderId, plan, callbackUrl]);
+  }, [keyId, orderId, plan, merchantName, callbackUrl]);
 
   // Open Checkout as soon as the page is up (cancelled and re-run cleanly under Strict Mode).
   useEffect(() => {

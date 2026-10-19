@@ -15,13 +15,17 @@
  * order whose amount differs from this table, so a mismatch can never be charged.
  */
 
+import { PAYMENT_NAMES } from "./payment-names";
+
 export type PaireKind = "plus" | "chat";
 
 export type PairePlan = {
   id: "day" | "week" | "month" | "chat";
   kind: PaireKind;
-  /** What the buyer sees in Checkout and on the receipt. */
+  /** What the buyer sees on our payment page. */
   label: string;
+  /** Description sent to Razorpay; may differ from our UI label. */
+  razorpayDescription: string;
   amountPaise: number;
   priceInr: number;
   /** Days the pass runs on the web (paid days + offer days). Unlimited Chat has no expiry. */
@@ -30,10 +34,10 @@ export type PairePlan = {
 };
 
 export const PAIRE_PLANS: readonly PairePlan[] = [
-  { id: "day", kind: "plus", label: "Paire Plus · 1 day", amountPaise: 2000, priceInr: 20, days: 1, detail: "24 hours · try it" },
-  { id: "week", kind: "plus", label: "Paire Plus · 7 days", amountPaise: 9900, priceInr: 99, days: 7, detail: "7 days · about ₹14 a day" },
-  { id: "month", kind: "plus", label: "Paire Plus · 1 month + 1 month free", amountPaise: 29900, priceInr: 299, days: 60, detail: "60 days · about ₹5 a day" },
-  { id: "chat", kind: "chat", label: "Paire Unlimited Chat · one-time ₹49 unlock", amountPaise: 4900, priceInr: 49, days: null, detail: "Once, for all your matches · no expiry" },
+  { id: "day", kind: "plus", label: PAYMENT_NAMES.labels.day, razorpayDescription: PAYMENT_NAMES.razorpayLabels.day, amountPaise: 2000, priceInr: 20, days: 1, detail: "24 hours · try it" },
+  { id: "week", kind: "plus", label: PAYMENT_NAMES.labels.week, razorpayDescription: PAYMENT_NAMES.razorpayLabels.week, amountPaise: 9900, priceInr: 99, days: 7, detail: "7 days · about ₹14 a day" },
+  { id: "month", kind: "plus", label: PAYMENT_NAMES.labels.month, razorpayDescription: PAYMENT_NAMES.razorpayLabels.month, amountPaise: 29900, priceInr: 299, days: 60, detail: "60 days · about ₹5 a day" },
+  { id: "chat", kind: "chat", label: PAYMENT_NAMES.labels.chat, razorpayDescription: PAYMENT_NAMES.razorpayLabels.chat, amountPaise: 4900, priceInr: 49, days: null, detail: "Once, for all your matches · no expiry" },
 ];
 
 /** The `notes.product` Paire's server writes on each Razorpay order. */

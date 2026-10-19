@@ -4,6 +4,7 @@ import Link from "next/link";
 import { razorpay } from "@/lib/razorpay";
 import { CheckoutRefusal, isRazorpayId, PAIRE_SITE, paireCheckout, paireReturnUrl } from "@/lib/paire";
 import { PaireCheckout } from "./PaireCheckout";
+import { PAYMENT_NAMES } from "@/lib/payment-names";
 
 export const dynamic = "force-dynamic";
 
@@ -72,6 +73,7 @@ export default async function PaireCheckoutPage({ searchParams }: { searchParams
             keyId={process.env.RAZORPAY_KEY_ID ?? ""}
             orderId={orderId!}
             plan={verdict.plan}
+            merchantName={PAYMENT_NAMES.hostedMerchant}
             callbackUrl={`${await origin()}/pay/paire/callback?order=${orderId}&kind=${verdict.plan.kind}`}
             backUrl={backToPaire}
           />
