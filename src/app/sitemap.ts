@@ -22,6 +22,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // Products (lower priority — not core revenue)
     { url: `${baseUrl}/padhai`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.6 },
     { url: `${baseUrl}/legal-docs`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.5 },
-    { url: `${baseUrl}/paire`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.5 },
+    { url: `${baseUrl}/website-builder`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.6 },
   ];
 }

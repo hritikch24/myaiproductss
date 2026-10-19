@@ -21,6 +21,8 @@ const entry = require('../src/app/pay/start/route.ts');
 const legacyEntry = require('../src/app/pay/paire/route.ts');
 const callback = require('../src/app/pay/checkout/callback/route.ts');
 const legacyCallback = require('../src/app/pay/paire/callback/route.ts');
+const { middleware } = require('../src/middleware.ts');
+const retiredPage = require('../src/app/paire/route.ts');
 
 test('new and historical product IDs retain strict price and order validation', () => {
   for (const plan of PAIRE_PLANS) {
@@ -39,10 +41,26 @@ test('new and historical product IDs retain strict price and order validation', 
 test('entry and legacy links redirect to the neutral page with no-referrer', () => {
   for (const route of [entry, legacyEntry]) {
     const response = route.GET(new NextRequest('https://kraftai.in/pay/start?order=order_CHECKOUT001&source=paire'));
-    assert.equal(response.headers.get('location'), 'https://kraftai.in/pay/checkout?order=order_CHECKOUT001');
+    assert.equal(response.headers.get('location'), 'https://kraftai.in/?order=order_CHECKOUT001');
     assert.equal(response.headers.get('referrer-policy'), 'no-referrer');
     assert.equal(response.headers.get('cache-control'), 'no-store');
   }
+});
+
+test('root payment links rewrite to validated checkout without changing the normal homepage', async () => {
+  const response = await middleware(new NextRequest('https://kraftai.in/?order=order_CHECKOUT001&source=paire'));
+  assert.equal(response.headers.get('x-middleware-rewrite'), 'https://kraftai.in/pay/checkout?order=order_CHECKOUT001');
+  assert.equal(response.headers.get('referrer-policy'), 'no-referrer');
+  assert.equal(response.headers.get('cache-control'), 'no-store');
+  assert.equal(response.headers.get('x-robots-tag'), 'noindex, nofollow');
+  const referred = await middleware(new NextRequest('https://kraftai.in/?order=order_CHECKOUT001&source=paire', { headers: { referer: 'https://www.paire.in/app/' } }));
+  assert.equal(referred.status, 303);
+  assert.equal(referred.headers.get('location'), 'https://kraftai.in/?order=order_CHECKOUT001');
+  assert.equal(referred.headers.get('referrer-policy'), 'no-referrer');
+  assert.equal((await middleware(new NextRequest('https://kraftai.in/'))).headers.get('x-middleware-rewrite'), null);
+  const retired = retiredPage.GET(new NextRequest('https://kraftai.in/paire'));
+  assert.equal(retired.status, 308);
+  assert.equal(retired.headers.get('location'), 'https://kraftai.in/');
 });
 
 test('current and legacy callbacks still verify signatures and exact order IDs', async () => {

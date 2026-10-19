@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
+import { WebsiteBuilderPlans } from "./WebsiteBuilderPlans";
 
 const WA = "918859820935";
 const wa = (msg: string) => `https://wa.me/${WA}?text=${encodeURIComponent(msg)}`;
@@ -277,6 +278,7 @@ export default function KraftAILanding() {
             <a href="#problem" className="hover:text-white transition-colors">Why</a>
             <a href="#demos" className="hover:text-white transition-colors">Demos</a>
             <a href="#pricing" className="hover:text-white transition-colors">Pricing</a>
+            <a href="#builder-plans" className="hover:text-white transition-colors">Builder credits</a>
             <a href="#faq" className="hover:text-white transition-colors">FAQ</a>
           </div>
           <a href={wa("Hi, I want a website for my business")} target="_blank" rel="noopener"
@@ -494,6 +496,8 @@ export default function KraftAILanding() {
       </section>
 
       <div className="line-glow max-w-4xl mx-auto" />
+
+      <WebsiteBuilderPlans />
 
       {/* ═══ Pricing ═══ */}
       <section id="pricing" className="relative py-16 sm:py-24 lg:py-32 px-4 sm:px-5">

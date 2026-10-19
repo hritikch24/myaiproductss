@@ -2,8 +2,8 @@
  * Paire (paire.in) is a KraftAI product. Its web payments run through KraftAI's
  * Razorpay account, so Checkout opens here on kraftai.in:
  *
- *   paire.in  ──(Paire's server creates the Razorpay order)──▶  kraftai.in/pay/start?order=…
- *   kraftai.in ──(no-referrer entry)──▶ /pay/checkout ──(Razorpay)──▶ /pay/checkout/callback
+ *   paire.in  ──(Paire's server creates the Razorpay order)──▶  kraftai.in/?order=…
+ *   kraftai.in ──(internal rewrite)──▶ /pay/checkout ──(Razorpay)──▶ /pay/checkout/callback
  *   kraftai.in ──(signature checked)──▶  paire.in/app/?kraftai=paid&… (Paire's server verifies again and grants)
  *
  * KraftAI holds no Paire data and grants nothing: the Razorpay order (only a
@@ -22,7 +22,7 @@ export type PaireKind = "plus" | "chat";
 export type PairePlan = {
   id: "day" | "week" | "month" | "chat";
   kind: PaireKind;
-  /** What the buyer sees on our payment page. */
+  /** Retained app catalog label, independent of website builder credits. */
   label: string;
   /** Description sent to Razorpay; may differ from our UI label. */
   razorpayDescription: string;

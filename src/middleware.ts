@@ -33,6 +33,26 @@ export async function middleware(request: NextRequest) {
     }
   }
 
+  // Payment links stay on the main domain while retaining the validated,
+  // icon-only checkout. Other homepage visits keep the normal website.
+  if (pathname === "/" && request.nextUrl.searchParams.has("order")) {
+    const url = new URL("/pay/checkout", request.url);
+    url.searchParams.set("order", request.nextUrl.searchParams.get("order") ?? "");
+    // Old clients may still navigate with a referrer. A single redirect to the
+    // same root URL clears document.referrer before loading the payment SDK.
+    const entry = new URL("/", request.url);
+    entry.searchParams.set("order", request.nextUrl.searchParams.get("order") ?? "");
+    const response = request.headers.get("referer")
+      ? NextResponse.redirect(entry, 303)
+      : NextResponse.rewrite(url);
+    response.headers.set("Referrer-Policy", "no-referrer");
+    response.headers.set("Cache-Control", "no-store");
+    response.headers.set("X-Content-Type-Options", "nosniff");
+    response.headers.set("X-Frame-Options", "DENY");
+    response.headers.set("X-Robots-Tag", "noindex, nofollow");
+    return response;
+  }
+
   // --- Existing auth redirect logic ---
   const cookies = request.cookies.getAll();
   const hasSession = cookies.some(
