@@ -36,7 +36,13 @@ RAZORPAY_CHAT_NAME="KraftAI Unlimited Chat"
 ```
 
 The app and `/paire` pricing page retain the app names. The hosted payment page
-and Razorpay popup both use the KraftAI payment descriptions. Full
+shows only the supplied artwork (`public/payments/checkout-icon.jpg`) and opens
+Razorpay automatically. Plan names, prices and merchant details are shown inside
+Razorpay's own payment window. The same artwork is sent as Razorpay's checkout
+image. Closing the payment window returns to the app; if the script fails to
+load, activating the icon retries. Error explanations remain available to
+screen readers. Invalid or paid orders cannot open checkout; their icon links
+back to the app. Full
 `RAZORPAY_*_LABEL` overrides take priority over generated Razorpay descriptions.
 Unset/blank Razorpay settings use KraftAI defaults and never inherit app names.
 

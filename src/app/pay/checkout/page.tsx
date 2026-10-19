@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
-import Link from "next/link";
 import { fetchCheckoutOrder } from "@/lib/checkout-server";
 import { CheckoutRefusal, isRazorpayId, paireCheckout } from "@/lib/paire";
 import { Checkout } from "./Checkout";
 import { PAYMENT_NAMES } from "@/lib/payment-names";
+import { PAYMENT_ICON, PaymentIcon } from "./PaymentIcon";
 
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Secure checkout",
+  title: { absolute: "Secure payment" },
+  icons: { icon: PAYMENT_ICON, shortcut: PAYMENT_ICON, apple: PAYMENT_ICON },
   robots: { index: false, follow: false },
   referrer: "no-referrer",
 };
@@ -54,44 +55,24 @@ export default async function SecureCheckoutPage({ searchParams }: { searchParam
   const backUrl = `/pay/checkout/callback?${back}`;
 
   return (
-    <main className="min-h-screen bg-slate-50 text-slate-900 flex flex-col">
-      <header className="border-b border-slate-200 bg-white">
-        <div className="mx-auto max-w-lg px-4 h-14 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 font-semibold tracking-tight">
-            <img src="/icon.svg" alt="" width={24} height={24} />
-            KraftAI
-          </Link>
-          <span className="flex items-center gap-1.5 text-xs text-slate-500">
-            <svg aria-hidden width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><rect x="4" y="11" width="16" height="10" rx="2" /><path d="M8 11V7a4 4 0 0 1 8 0v4" /></svg>
-            Secure checkout
-          </span>
-        </div>
-      </header>
-
-      <div className="flex-1 mx-auto w-full max-w-lg px-4 py-8 sm:py-12">
-        {verdict.ok ? (
-          <Checkout
-            keyId={process.env.RAZORPAY_KEY_ID ?? ""}
-            orderId={orderId!}
-            plan={{ description: verdict.plan.razorpayDescription, amountPaise: verdict.plan.amountPaise, priceInr: verdict.plan.priceInr, detail: verdict.plan.detail }}
-            merchantName={PAYMENT_NAMES.hostedMerchant}
-            callbackUrl={`${await origin()}/pay/checkout/callback?order=${orderId}&kind=${verdict.plan.kind}`}
-            backUrl={backUrl}
-          />
-        ) : (
-          <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <h1 className="text-lg font-semibold">{REFUSALS[verdict.reason].title}</h1>
-            <p className="mt-2 text-sm leading-6 text-slate-600">{REFUSALS[verdict.reason].body}</p>
-            <a href={backUrl} className="mt-5 inline-flex h-11 items-center rounded-xl bg-slate-900 px-5 text-sm font-medium text-white hover:bg-slate-800">
-              Return to app
-            </a>
-          </section>
-        )}
-
-        <p className="mt-6 text-center text-xs leading-5 text-slate-500">
-          Payments are processed by KraftAI through Razorpay. This is a one-time digital membership purchase for your app.
-        </p>
-      </div>
+    <main className="min-h-dvh bg-white text-slate-900 grid place-items-center p-6">
+      {verdict.ok ? (
+        <Checkout
+          keyId={process.env.RAZORPAY_KEY_ID ?? ""}
+          orderId={orderId!}
+          plan={{ description: verdict.plan.razorpayDescription, amountPaise: verdict.plan.amountPaise }}
+          merchantName={PAYMENT_NAMES.hostedMerchant}
+          callbackUrl={`${await origin()}/pay/checkout/callback?order=${orderId}&kind=${verdict.plan.kind}`}
+          backUrl={backUrl}
+        />
+      ) : (
+        <>
+          <p id="checkout-refusal" role="alert" className="sr-only">{REFUSALS[verdict.reason].title}. {REFUSALS[verdict.reason].body}</p>
+          <a href={backUrl} aria-label="Return to app" aria-describedby="checkout-refusal" className="rounded-3xl outline-offset-8 focus-visible:outline-2 focus-visible:outline-slate-900">
+            <PaymentIcon />
+          </a>
+        </>
+      )}
     </main>
   );
 }
