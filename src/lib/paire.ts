@@ -2,8 +2,8 @@
  * Paire (paire.in) is a KraftAI product. Its web payments run through KraftAI's
  * Razorpay account, so Checkout opens here on kraftai.in:
  *
- *   paire.in  ──(Paire's server creates the Razorpay order)──▶  kraftai.in/pay/paire?order=…
- *   kraftai.in ──(Razorpay Checkout, redirect mode)──▶  kraftai.in/pay/paire/callback
+ *   paire.in  ──(Paire's server creates the Razorpay order)──▶  kraftai.in/pay/start?order=…
+ *   kraftai.in ──(no-referrer entry)──▶ /pay/checkout ──(Razorpay)──▶ /pay/checkout/callback
  *   kraftai.in ──(signature checked)──▶  paire.in/app/?kraftai=paid&… (Paire's server verifies again and grants)
  *
  * KraftAI holds no Paire data and grants nothing: the Razorpay order (only a
@@ -41,7 +41,11 @@ export const PAIRE_PLANS: readonly PairePlan[] = [
 ];
 
 /** The `notes.product` Paire's server writes on each Razorpay order. */
-const PRODUCTS: Record<string, PaireKind> = { paire_plus: "plus", paire_unlimited_chat: "chat" };
+const PRODUCTS: Record<string, PaireKind> = {
+  kraftai_plus: "plus", kraftai_unlimited_chat: "chat",
+  // Existing orders and payment callbacks remain valid during the migration.
+  paire_plus: "plus", paire_unlimited_chat: "chat"
+};
 
 export const PAIRE_SITE = "https://www.paire.in";
 
@@ -95,7 +99,7 @@ export type CheckoutRefusal = "not-paire" | "price-mismatch" | "already-paid" | 
 export function paireCheckout(order: RazorpayOrder): { ok: true; plan: PairePlan } | { ok: false; reason: CheckoutRefusal } {
   if (!isRazorpayId(order.id, "order")) return { ok: false, reason: "invalid" };
   const notes = order.notes && !Array.isArray(order.notes) ? order.notes : {};
-  const kind = typeof notes.product === "string" ? PRODUCTS[notes.product] : undefined;
+  const kind = typeof notes.product === "string" && Object.prototype.hasOwnProperty.call(PRODUCTS, notes.product) ? PRODUCTS[notes.product] : undefined;
   if (!kind) return { ok: false, reason: "not-paire" };
   if (order.status === "paid") return { ok: false, reason: "already-paid" };
   if (order.status !== "created" && order.status !== "attempted") return { ok: false, reason: "invalid" };

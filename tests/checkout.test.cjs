@@ -1,0 +1,78 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
+const { test } = require('node:test');
+const assert = require('node:assert/strict');
+const { createHmac } = require('node:crypto');
+const fs = require('node:fs');
+const path = require('node:path');
+const Module = require('node:module');
+const ts = require('typescript');
+
+// Run the real route handlers without a Next server or payment credentials.
+const resolve = Module._resolveFilename;
+Module._resolveFilename = function (name, ...rest) {
+  return resolve.call(this, name.startsWith('@/') ? path.resolve(__dirname, '../src', name.slice(2)) : name, ...rest);
+};
+require.extensions['.ts'] = (module, filename) => module._compile(ts.transpileModule(fs.readFileSync(filename, 'utf8'), {
+  compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020, esModuleInterop: true },
+}).outputText, filename);
+const { NextRequest } = require('next/server');
+const { paireCheckout, PAIRE_PLANS } = require('../src/lib/paire.ts');
+const entry = require('../src/app/pay/start/route.ts');
+const legacyEntry = require('../src/app/pay/paire/route.ts');
+const callback = require('../src/app/pay/checkout/callback/route.ts');
+const legacyCallback = require('../src/app/pay/paire/callback/route.ts');
+
+test('new and historical product IDs retain strict price and order validation', () => {
+  for (const plan of PAIRE_PLANS) {
+    for (const prefix of ['kraftai', 'paire']) {
+      const order = { id: 'order_CHECKOUT001', amount: plan.amountPaise, currency: 'INR', status: 'created', notes: { product: plan.kind === 'chat' ? `${prefix}_unlimited_chat` : `${prefix}_plus`, plan: plan.id } };
+      assert.deepEqual(paireCheckout(order), { ok: true, plan });
+      assert.deepEqual(paireCheckout({ ...order, amount: plan.amountPaise + 1 }), { ok: false, reason: 'price-mismatch' });
+      assert.deepEqual(paireCheckout({ ...order, status: 'paid' }), { ok: false, reason: 'already-paid' });
+      for (const product of ['other_product', '__proto__', 'constructor']) {
+        assert.deepEqual(paireCheckout({ ...order, notes: { product, plan: plan.id } }), { ok: false, reason: 'not-paire' });
+      }
+    }
+  }
+});
+
+test('entry and legacy links redirect to the neutral page with no-referrer', () => {
+  for (const route of [entry, legacyEntry]) {
+    const response = route.GET(new NextRequest('https://kraftai.in/pay/start?order=order_CHECKOUT001&source=paire'));
+    assert.equal(response.headers.get('location'), 'https://kraftai.in/pay/checkout?order=order_CHECKOUT001');
+    assert.equal(response.headers.get('referrer-policy'), 'no-referrer');
+    assert.equal(response.headers.get('cache-control'), 'no-store');
+  }
+});
+
+test('current and legacy callbacks still verify signatures and exact order IDs', async () => {
+  process.env.RAZORPAY_KEY_SECRET = 'local-checkout-test-secret';
+  const order = 'order_CHECKOUT001', payment = 'pay_CHECKOUT001';
+  const signature = createHmac('sha256', process.env.RAZORPAY_KEY_SECRET).update(`${order}|${payment}`).digest('hex');
+  for (const route of [callback, legacyCallback]) {
+    for (const [submittedOrder, expected] of [[order, 'paid'], ['order_DIFFERENT01', 'failed']]) {
+      const response = await route.POST(new NextRequest(`https://kraftai.in/pay/checkout/callback?kind=plus&order=${order}`, {
+        method: 'POST', body: new URLSearchParams({ razorpay_order_id: submittedOrder, razorpay_payment_id: payment, razorpay_signature: signature }),
+      }));
+      assert.equal(new URL(response.headers.get('location')).searchParams.get('kraftai'), expected);
+      assert.equal(response.status, 303);
+      assert.equal(response.headers.get('referrer-policy'), 'no-referrer');
+    }
+  }
+});
+
+test('the server fetch forwards no user cookie or referrer', async () => {
+  const old = global.fetch;
+  try {
+    global.fetch = async (url, options) => {
+      assert.equal(url, 'https://api.razorpay.com/v1/orders/order_CHECKOUT001');
+      assert.equal(options.credentials, 'omit');
+      assert.equal(options.referrerPolicy, 'no-referrer');
+      assert.deepEqual(Object.keys(options.headers), ['authorization', 'user-agent', 'accept']);
+      assert.equal(options.headers['user-agent'], 'KraftAI/1.0');
+      return new Response(JSON.stringify({ id: 'order_CHECKOUT001' }));
+    };
+    const { fetchCheckoutOrder } = require('../src/lib/checkout-server.ts');
+    assert.deepEqual(await fetchCheckoutOrder('order_CHECKOUT001'), { id: 'order_CHECKOUT001' });
+  } finally { global.fetch = old; }
+});

@@ -12,13 +12,12 @@ or in the Vercel project's environment for production. Use matching values in
 | `PAIRE_PLUS_WEEK_LABEL` | Optional full label; default `<Plus name> · 7 days` |
 | `PAIRE_PLUS_MONTH_LABEL` | Optional full label; default `<Plus name> · 1 month + 1 month free` |
 | `PAIRE_CHAT_LABEL` | Optional full label; default `<Chat name> · one-time ₹49 unlock` |
-| `RAZORPAY_PLUS_NAME` | Optional separate Plus name for Razorpay; unset inherits the UI labels |
-| `RAZORPAY_CHAT_NAME` | Optional separate Chat name for Razorpay; unset inherits the UI label |
+| `RAZORPAY_PLUS_NAME` | `KraftAI Plus`; independent of the app labels |
+| `RAZORPAY_CHAT_NAME` | `KraftAI Unlimited Chat`; independent of the app labels |
 | `RAZORPAY_PLUS_DAY_LABEL` | Optional full Razorpay description for the day plan |
 | `RAZORPAY_PLUS_WEEK_LABEL` | Optional full Razorpay description for the week plan |
 | `RAZORPAY_PLUS_MONTH_LABEL` | Optional full Razorpay description for the month plan |
 | `RAZORPAY_CHAT_LABEL` | Optional full Razorpay description for Chat |
-| `PAIRE_CHECKOUT_NAME` | `Paire`; merchant display name for direct checkout on paire.in (used by Muse) |
 | `KRAFTAI_CHECKOUT_NAME` | `KraftAI`; merchant display name for hosted checkout on kraftai.in |
 
 For example, set `PAIRE_PLUS_NAME="Premium"` and `PAIRE_CHAT_NAME="Messaging"`
@@ -36,14 +35,29 @@ RAZORPAY_PLUS_NAME="KraftAI Plus"
 RAZORPAY_CHAT_NAME="KraftAI Unlimited Chat"
 ```
 
-Our payment page uses `plan.label`, while Razorpay receives
-`plan.razorpayDescription`. For a day pass this means `Paire Plus · 1 day` on
-our page and `KraftAI Plus · 1 day` in the Razorpay popup. The popup is visible
-to buyers too. Full `RAZORPAY_*_LABEL` overrides take priority over the generated
-Razorpay descriptions. If neither a Razorpay name nor a full description is set,
-Razorpay inherits the corresponding UI label, including `PAIRE_*_LABEL` overrides.
-These settings change display descriptions, not order metadata: Razorpay still
-receives stable Paire product IDs and the existing page/callback addresses.
+The app and `/paire` pricing page retain the app names. The hosted payment page
+and Razorpay popup both use the KraftAI payment descriptions. Full
+`RAZORPAY_*_LABEL` overrides take priority over generated Razorpay descriptions.
+Unset/blank Razorpay settings use KraftAI defaults and never inherit app names.
+
+New Razorpay order notes use `kraftai_plus` (with `plan`) or
+`kraftai_unlimited_chat`. The member uid stays in Muse's Firestore order record.
+Both new and legacy product IDs are accepted when validating an order, so old
+payments and refunds remain supported. Prices and ownership checks are unchanged.
+
+The browser enters `/pay/start`, which clears the incoming referrer before
+redirecting to `/pay/checkout`. Checkout and callback responses use a
+`Referrer-Policy: no-referrer` header. `/pay/paire` is a redirect for old links;
+the old callback remains accepted for existing checkout windows. Razorpay's
+script loads only on the KraftAI payment page, with a neutral callback path:
+`/pay/checkout/callback`. Client props contain only merchant payment fields;
+the destination app URL is resolved on the callback server.
+
+Server API requests forward no browser cookies/referrers and identify their
+client as `KraftAI/1.0`. Browser origin headers remain truthful, app cookies keep
+their real domain scope, and Razorpay controls its own cookies and telemetry.
+This does not erase historical metadata or change the registered business,
+webhooks or public pricing/legal disclosures.
 
 Restart the dev server after editing local settings. For production, redeploy
 KraftAI and the Muse functions that return checkout details (`createPlusOrder`
@@ -51,12 +65,16 @@ and `createChatUnlockOrder`). Names are resolved on the server and passed to the
 checkout component as props; `NEXT_PUBLIC_` variables are not needed. The pricing
 page is rendered with these settings during the KraftAI build.
 
+Muse requires `KRAFTAI_CHECKOUT_URL=https://kraftai.in/pay/start`; missing or
+invalid host settings refuse new checkout instead of loading Razorpay on the app.
+
 Configuration lives in `src/lib/payment-names.ts` and
 `muse/firebase/functions/src/lib/payment-names.ts`. Both expose the same contract.
-The plan IDs (`day`, `week`, `month`, `chat`) and product IDs (`paire_plus`,
-`paire_unlimited_chat`) are stable order-routing identifiers, independent of
-display names. Prices, durations, existing orders and entitlements do not change.
+The plan IDs (`day`, `week`, `month`, `chat`) and internal entitlement IDs remain
+independent of the public payment branding. Prices, durations, existing orders
+and entitlements do not change.
 
-This config controls payment plan names and the Razorpay merchant display name.
-It does not rename the Paire app, legal ownership text, domains, callback paths,
-webhooks, or the merchant/bank-statement identity configured in Razorpay.
+Name settings control payment descriptions and the merchant display name.
+They do not rename the app, legal ownership text, webhooks, or the
+merchant/bank-statement identity configured in Razorpay. The checkout migration
+uses the neutral routes described above while preserving old callbacks.

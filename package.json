@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test:checkout": "node --test tests/checkout.test.cjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.78.0",

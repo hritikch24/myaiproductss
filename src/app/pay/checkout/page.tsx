@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 import Link from "next/link";
-import { razorpay } from "@/lib/razorpay";
-import { CheckoutRefusal, isRazorpayId, PAIRE_SITE, paireCheckout, paireReturnUrl } from "@/lib/paire";
-import { PaireCheckout } from "./PaireCheckout";
+import { fetchCheckoutOrder } from "@/lib/checkout-server";
+import { CheckoutRefusal, isRazorpayId, paireCheckout } from "@/lib/paire";
+import { Checkout } from "./Checkout";
 import { PAYMENT_NAMES } from "@/lib/payment-names";
 
 export const dynamic = "force-dynamic";
@@ -11,13 +11,14 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   title: "Secure checkout",
   robots: { index: false, follow: false },
+  referrer: "no-referrer",
 };
 
 const REFUSALS: Record<CheckoutRefusal | "unavailable", { title: string; body: string }> = {
-  "already-paid": { title: "This order is already paid", body: "Nothing more to pay. Head back to Paire: your purchase is on your account." },
-  "price-mismatch": { title: "We couldn't open this checkout", body: "This order doesn't match our published prices, so we won't charge it. Start again from Paire and you'll get a fresh order." },
-  "not-paire": { title: "We couldn't find this order", body: "Start again from Paire and you'll get a fresh checkout link." },
-  invalid: { title: "We couldn't find this order", body: "Start again from Paire and you'll get a fresh checkout link." },
+  "already-paid": { title: "This order is already paid", body: "Nothing more to pay. Return to your app: your purchase is on your account." },
+  "price-mismatch": { title: "We couldn't open this checkout", body: "This order doesn't match our published prices, so we won't charge it. Start again from your app for a fresh order." },
+  "not-paire": { title: "We couldn't find this order", body: "Start again from your app for a fresh checkout link." },
+  invalid: { title: "We couldn't find this order", body: "Start again from your app for a fresh checkout link." },
   unavailable: { title: "Checkout is busy right now", body: "We couldn't reach the payment service. You haven't been charged. Please try again in a moment." },
 };
 
@@ -25,10 +26,10 @@ async function origin(): Promise<string> {
   const h = await headers();
   const host = h.get("x-forwarded-host") ?? h.get("host") ?? "kraftai.in";
   const local = /^(localhost|127\.0\.0\.1)(:\d+)?$/.test(host);
-  return `${local ? "http" : "https"}://${host}`;
+  return local ? `http://${host}` : "https://kraftai.in";
 }
 
-export default async function PaireCheckoutPage({ searchParams }: { searchParams: Promise<{ order?: string }> }) {
+export default async function SecureCheckoutPage({ searchParams }: { searchParams: Promise<{ order?: string }> }) {
   const { order: orderId } = await searchParams;
 
   let verdict: ReturnType<typeof paireCheckout> | { ok: false; reason: "unavailable" };
@@ -37,20 +38,20 @@ export default async function PaireCheckoutPage({ searchParams }: { searchParams
   } else {
     try {
       // The order itself is the hand-off: only a holder of our key can have created it.
-      verdict = paireCheckout(await razorpay.orders.fetch(orderId));
+      verdict = paireCheckout(await fetchCheckoutOrder(orderId));
     } catch (error) {
       const status = (error as { statusCode?: number }).statusCode;
       const missing = status === 400 || status === 404;
-      if (!missing) console.error("Paire checkout: order fetch failed", { status });
+      if (!missing) console.error("Secure checkout: order fetch failed", { status });
       verdict = { ok: false, reason: missing ? "invalid" : "unavailable" };
     }
   }
 
-  const backToPaire = paireReturnUrl({
-    status: "cancelled",
-    kind: verdict.ok ? verdict.plan.kind : null,
-    orderId: isRazorpayId(orderId, "order") ? orderId : null,
-  });
+  // Resolve the app destination only on the server after leaving this page.
+  const back = new URLSearchParams();
+  if (verdict.ok) back.set("kind", verdict.plan.kind);
+  if (isRazorpayId(orderId, "order")) back.set("order", orderId);
+  const backUrl = `/pay/checkout/callback?${back}`;
 
   return (
     <main className="min-h-screen bg-slate-50 text-slate-900 flex flex-col">
@@ -69,32 +70,26 @@ export default async function PaireCheckoutPage({ searchParams }: { searchParams
 
       <div className="flex-1 mx-auto w-full max-w-lg px-4 py-8 sm:py-12">
         {verdict.ok ? (
-          <PaireCheckout
+          <Checkout
             keyId={process.env.RAZORPAY_KEY_ID ?? ""}
             orderId={orderId!}
-            plan={verdict.plan}
+            plan={{ description: verdict.plan.razorpayDescription, amountPaise: verdict.plan.amountPaise, priceInr: verdict.plan.priceInr, detail: verdict.plan.detail }}
             merchantName={PAYMENT_NAMES.hostedMerchant}
-            callbackUrl={`${await origin()}/pay/paire/callback?order=${orderId}&kind=${verdict.plan.kind}`}
-            backUrl={backToPaire}
+            callbackUrl={`${await origin()}/pay/checkout/callback?order=${orderId}&kind=${verdict.plan.kind}`}
+            backUrl={backUrl}
           />
         ) : (
           <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
             <h1 className="text-lg font-semibold">{REFUSALS[verdict.reason].title}</h1>
             <p className="mt-2 text-sm leading-6 text-slate-600">{REFUSALS[verdict.reason].body}</p>
-            <a href={backToPaire} className="mt-5 inline-flex h-11 items-center rounded-xl bg-slate-900 px-5 text-sm font-medium text-white hover:bg-slate-800">
-              Back to Paire
+            <a href={backUrl} className="mt-5 inline-flex h-11 items-center rounded-xl bg-slate-900 px-5 text-sm font-medium text-white hover:bg-slate-800">
+              Return to app
             </a>
           </section>
         )}
 
         <p className="mt-6 text-center text-xs leading-5 text-slate-500">
-          Paire is a KraftAI product. Payments are processed by KraftAI through Razorpay, so your bank statement shows KraftAI.
-          <br />
-          <Link href="/paire" className="underline underline-offset-2 hover:text-slate-700">Paire pricing</Link>
-          {" · "}
-          <a href={`${PAIRE_SITE}/refunds/`} className="underline underline-offset-2 hover:text-slate-700">Refunds</a>
-          {" · "}
-          <a href={`${PAIRE_SITE}/terms/`} className="underline underline-offset-2 hover:text-slate-700">Terms</a>
+          Payments are processed by KraftAI through Razorpay. This is a one-time digital membership purchase for your app.
         </p>
       </div>
     </main>
