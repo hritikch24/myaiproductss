@@ -47,6 +47,18 @@ test('entry and legacy links redirect to the neutral page with no-referrer', () 
   }
 });
 
+test('day passes use ₹29 while previously issued ₹20 orders keep their quoted amount', () => {
+  assert.equal(PAIRE_PLANS.find(plan => plan.id === 'day').amountPaise, 2900);
+  for (const product of ['kraftai_plus', 'paire_plus']) {
+    const order = { id: 'order_CHECKOUT001', amount: 2000, currency: 'INR', status: 'attempted', notes: { product, plan: 'day' } };
+    assert.deepEqual(paireCheckout(order), { ok: true, plan: { ...PAIRE_PLANS.find(plan => plan.id === 'day'), amountPaise: 2000, priceInr: 20 } });
+    for (const amount of [1999, 2001, 2899, 2901]) assert.deepEqual(paireCheckout({ ...order, amount }), { ok: false, reason: 'price-mismatch' });
+    assert.deepEqual(paireCheckout({ ...order, currency: 'USD' }), { ok: false, reason: 'price-mismatch' });
+    assert.deepEqual(paireCheckout({ ...order, notes: { product, plan: 'week' } }), { ok: false, reason: 'price-mismatch' });
+    assert.deepEqual(paireCheckout({ ...order, status: 'paid' }), { ok: false, reason: 'already-paid' });
+  }
+});
+
 test('root payment links rewrite to validated checkout without changing the normal homepage', async () => {
   const response = await middleware(new NextRequest('https://kraftai.in/?order=order_CHECKOUT001&source=paire'));
   assert.equal(response.headers.get('x-middleware-rewrite'), 'https://kraftai.in/pay/checkout?order=order_CHECKOUT001');
