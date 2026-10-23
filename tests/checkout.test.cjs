@@ -25,6 +25,9 @@ const { middleware } = require('../src/middleware.ts');
 const retiredPage = require('../src/app/paire/route.ts');
 
 test('new and historical product IDs retain strict price and order validation', () => {
+  const lifetime = PAIRE_PLANS.find(plan => plan.id === 'lifetime');
+  assert.equal(lifetime.amountPaise, 149900);
+  assert.equal(lifetime.days, null);
   for (const plan of PAIRE_PLANS) {
     for (const prefix of ['kraftai', 'paire']) {
       const order = { id: 'order_CHECKOUT001', amount: plan.amountPaise, currency: 'INR', status: 'created', notes: { product: plan.kind === 'chat' ? `${prefix}_unlimited_chat` : `${prefix}_plus`, plan: plan.id } };

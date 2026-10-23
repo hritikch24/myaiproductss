@@ -100,3 +100,7 @@ The operator replies manually with confirmation, credentials and a private
 portal URL. No credit purchase, charge or automatic credential issuance happens
 on this form. It uses the visitor's email app; the local email-provider key
 returned 401 during a read-only check, so server-side sending is not enabled.
+
+## Lifetime Plus (2026-10-23)
+
+The app checkout catalog now includes `lifetime`: ₹1,499 once (`149900` paise), with `days: null`. The existing product family and signed callback stay `plus`; app entitlement fulfillment remains on Paire. Both catalogs must match before the app offers this plan. Display names support `PAIRE_PLUS_LIFETIME_LABEL` and `RAZORPAY_PLUS_LIFETIME_LABEL`, falling back to the configured Plus name plus “Lifetime”. Native/store products and website-builder credit plans are unchanged. Checkout validates lifetime prices with the same strict server-fetched order checks as other plans.
