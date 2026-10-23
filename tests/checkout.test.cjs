@@ -50,15 +50,23 @@ test('entry and legacy links redirect to the neutral page with no-referrer', () 
   }
 });
 
-test('day passes use ₹29 while previously issued ₹20 orders keep their quoted amount', () => {
-  assert.equal(PAIRE_PLANS.find(plan => plan.id === 'day').amountPaise, 2900);
-  for (const product of ['kraftai_plus', 'paire_plus']) {
-    const order = { id: 'order_CHECKOUT001', amount: 2000, currency: 'INR', status: 'attempted', notes: { product, plan: 'day' } };
-    assert.deepEqual(paireCheckout(order), { ok: true, plan: { ...PAIRE_PLANS.find(plan => plan.id === 'day'), amountPaise: 2000, priceInr: 20 } });
-    for (const amount of [1999, 2001, 2899, 2901]) assert.deepEqual(paireCheckout({ ...order, amount }), { ok: false, reason: 'price-mismatch' });
-    assert.deepEqual(paireCheckout({ ...order, currency: 'USD' }), { ok: false, reason: 'price-mismatch' });
-    assert.deepEqual(paireCheckout({ ...order, notes: { product, plan: 'week' } }), { ok: false, reason: 'price-mismatch' });
-    assert.deepEqual(paireCheckout({ ...order, status: 'paid' }), { ok: false, reason: 'already-paid' });
+test('new prices and exact historical day/month quotes stay valid without accepting arbitrary amounts', () => {
+  assert.equal(PAIRE_PLANS.find(plan => plan.id === 'day').amountPaise, 2000);
+  assert.equal(PAIRE_PLANS.find(plan => plan.id === 'month').amountPaise, 39900);
+  assert.equal(PAIRE_PLANS.find(plan => plan.id === 'halfyear').amountPaise, 79900);
+  for (const [id, historicalAmount] of [['day', 2900], ['month', 29900]]) {
+    for (const product of ['kraftai_plus', 'paire_plus']) {
+      const order = { id: 'order_CHECKOUT001', amount: historicalAmount, currency: 'INR', status: 'attempted', notes: { product, plan: id } };
+      const result = paireCheckout(order);
+      assert.equal(result.ok, true);
+      assert.equal(result.plan.amountPaise, historicalAmount);
+      assert.equal(result.plan.priceInr, historicalAmount / 100);
+      assert.equal(result.plan.days, id === 'month' ? 60 : 1);
+      for (const amount of [1, historicalAmount - 1, historicalAmount + 1]) assert.deepEqual(paireCheckout({ ...order, amount }), { ok: false, reason: 'price-mismatch' });
+      assert.deepEqual(paireCheckout({ ...order, currency: 'USD' }), { ok: false, reason: 'price-mismatch' });
+      assert.deepEqual(paireCheckout({ ...order, notes: { product, plan: 'week' } }), { ok: false, reason: 'price-mismatch' });
+      assert.deepEqual(paireCheckout({ ...order, status: 'paid' }), { ok: false, reason: 'already-paid' });
+    }
   }
 });
 
