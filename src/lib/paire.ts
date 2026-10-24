@@ -34,7 +34,7 @@ export type PairePlan = {
 };
 
 export const PAIRE_PLANS: readonly PairePlan[] = [
-  { id: "day", kind: "plus", label: PAYMENT_NAMES.labels.day, razorpayDescription: PAYMENT_NAMES.razorpayLabels.day, amountPaise: 2000, priceInr: 20, days: 1, detail: "24 hours · try it" },
+  { id: "day", kind: "plus", label: PAYMENT_NAMES.labels.day, razorpayDescription: PAYMENT_NAMES.razorpayLabels.day, amountPaise: 3500, priceInr: 35, days: 1, detail: "24 hours · try it" },
   { id: "week", kind: "plus", label: PAYMENT_NAMES.labels.week, razorpayDescription: PAYMENT_NAMES.razorpayLabels.week, amountPaise: 9900, priceInr: 99, days: 7, detail: "7 days · about ₹14 a day" },
   { id: "month", kind: "plus", label: PAYMENT_NAMES.labels.month, razorpayDescription: PAYMENT_NAMES.razorpayLabels.month, amountPaise: 39900, priceInr: 399, days: 60, detail: "60 days · ₹6.65 a day" },
   { id: "halfyear", kind: "plus", label: PAYMENT_NAMES.labels.halfyear, razorpayDescription: PAYMENT_NAMES.razorpayLabels.halfyear, amountPaise: 79900, priceInr: 799, days: 180, detail: "180 days · about ₹4.44 a day" },
@@ -109,8 +109,8 @@ export function paireCheckout(order: RazorpayOrder): { ok: true; plan: PairePlan
   // Only these exact historical server quotes remain payable. Never accept a
   // browser price or another plan's amount. Existing purchases keep their days.
   const amount = Number(order.amount);
-  const legacyQuote = (plan?.id === "day" && amount === 2900) || (plan?.id === "month" && amount === 29900);
+  const legacyQuote = (plan?.id === "day" && [2000, 2900].includes(amount)) || (plan?.id === "month" && amount === 29900);
   if (!plan || order.currency !== "INR" || (amount !== plan.amountPaise && !legacyQuote)) return { ok: false, reason: "price-mismatch" };
   return { ok: true, plan: legacyQuote ? { ...plan, amountPaise: amount, priceInr: amount / 100,
-    detail: plan.id === "month" ? "60 days · original ₹299 quote" : "24 hours · original ₹29 quote" } : plan };
+    detail: plan.id === "month" ? "60 days · original ₹299 quote" : `24 hours · original ₹${amount / 100} quote` } : plan };
 }

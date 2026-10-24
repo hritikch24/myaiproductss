@@ -51,10 +51,10 @@ test('entry and legacy links redirect to the neutral page with no-referrer', () 
 });
 
 test('new prices and exact historical day/month quotes stay valid without accepting arbitrary amounts', () => {
-  assert.equal(PAIRE_PLANS.find(plan => plan.id === 'day').amountPaise, 2000);
+  assert.equal(PAIRE_PLANS.find(plan => plan.id === 'day').amountPaise, 3500);
   assert.equal(PAIRE_PLANS.find(plan => plan.id === 'month').amountPaise, 39900);
   assert.equal(PAIRE_PLANS.find(plan => plan.id === 'halfyear').amountPaise, 79900);
-  for (const [id, historicalAmount] of [['day', 2900], ['month', 29900]]) {
+  for (const [id, historicalAmount] of [['day', 2000], ['day', 2900], ['month', 29900]]) {
     for (const product of ['kraftai_plus', 'paire_plus']) {
       const order = { id: 'order_CHECKOUT001', amount: historicalAmount, currency: 'INR', status: 'attempted', notes: { product, plan: id } };
       const result = paireCheckout(order);
